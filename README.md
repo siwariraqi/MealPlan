@@ -1,27 +1,36 @@
-# Getting Started
- # Prerequisites
-List any prerequisites that are required to run the project, such as specific software or libraries.
+# Meal Plan
+A brief description of the project.
 
-Installing
-1. Clone the repository: 
+## Prerequisites
+1. Visual Studio Code
+2. IntelliJ IDEA
+2. MySQL
+
+## Getting Started
+
+Clone the repository: 
+```bash
 git clone https://github.com/siwariraqi/MealPlan.git
-
-2. Navigate to the project directory:
-
+```
+Navigate to the project directory:
+```bash
  cd mealplan-repo
+```
 
 
-Angular
-3. Navigate to the Angular project directory:
+### Frontend Side: Angular
 
+Navigate to the Angular project directory:
+```bash
  cd frontendmealplan
-
-4. Install dependencies:
-
+```
+Install dependencies:
+```bash
  npm install
-
-5. Start the Angular project:
-
+```
+Start the Angular project:
+```bash
  ng serve -o
+```
 
-Java SpringBoot
+### Backend side: Java SpringBoot
