@@ -10,5 +10,4 @@ public class BackendmealplanApplication {
 		SpringApplication.run(BackendmealplanApplication.class, args);
     //muhammed
 	}
-
 }
