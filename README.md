@@ -8,19 +8,20 @@ git clone https://github.com/siwariraqi/MealPlan.git
 
 2. Navigate to the project directory:
 
-cd mealplan-repo
+ cd mealplan-repo
+
 
 Angular
 3. Navigate to the Angular project directory:
 
-cd frontendmealplan
+ cd frontendmealplan
 
 4. Install dependencies:
 
-npm install
+ npm install
 
 5. Start the Angular project:
 
-ng serve -o
+ ng serve -o
 
 Java SpringBoot
