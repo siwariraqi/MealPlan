@@ -149,4 +149,4 @@ If you encounter any issues or have any questions, don't hesitate to reach out. 
 ## Conclusion
 Congratulations, you're now ready to start contributing to this project! Whether you're fixing a bug, adding a new feature, or just exploring the codebase, I appreciate your interest and willingness to help.
 
-Thank you for your contributions and happy coding :)!
+Thank you for your contributions and happy coding :) ;
