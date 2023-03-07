@@ -21,7 +21,6 @@ Navigate to the project directory:
  cd mealplan-repo
 ```
 
-
 ### Frontend Side: Angular
 
 Navigate to the Angular project directory:
