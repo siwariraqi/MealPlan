@@ -1,5 +1,5 @@
 # Meal Plan
-A brief description of the project.
+link to ERD: https://lucid.app/lucidchart/8cbba300-ab68-4356-8ffd-f5231016d3c1/edit?beaconFlowId=3DBA3FA3E7FCF487&invitationId=inv_221eb2b3-de92-4ee4-86f4-e36ebef7400c&page=0_0#
 
 ## Prerequisites
 1. Visual Studio Code
