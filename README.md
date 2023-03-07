@@ -144,7 +144,7 @@ Frontend changes:
 
 
 ## Need Help?
-If you encounter any issues or have any questions, don't hesitate to reach out. I'm always to offer assistance and support.
+If you encounter any issues or have any questions, don't hesitate to reach out. I'm available to offer assistance and support.
 
 ## Conclusion
 Congratulations, you're now ready to start contributing to this project! Whether you're fixing a bug, adding a new feature, or just exploring the codebase, I appreciate your interest and willingness to help.
