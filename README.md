@@ -4,7 +4,8 @@ A brief description of the project.
 ## Prerequisites
 1. Visual Studio Code
 2. IntelliJ IDEA
-2. MySQL
+3. MySQL
+4. GitHub Desktop / Git Bash
 
 ## Getting Started
 
