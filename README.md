@@ -49,7 +49,7 @@ Ready, Just Run!
 ## Branches Explanation:
 ### Existed branches:
 The MealPlan repository contains 7 branches that serve different purposes. 
-1. The main branch is the default branch and acts as the release branch, where the code is stable and ready to be released. 
+1. The main branch acts as the release branch, where the code is stable and ready to be released. 
 2. The dev-branch acts as the development branch, where new features and changes are made before being merged into the main branch.
 3. Teams branches:
 - Team1 : dev-team1
