@@ -87,7 +87,7 @@ When you are ready to merge your changes back into the team branch, you can crea
 you can do that using following command:
 ```terminal
 git status
-//here you we see your modified files
+//here you can see your modified files
 git add specific-files
 git commit -m "Your commit message"
 git push origin your-private-branch-name
