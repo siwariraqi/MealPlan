@@ -125,8 +125,7 @@ git push origin your-team-branch
 
 ### Important to notice:
 
-1. If you accidently pushed to the dev-branch or main branch, no worries :).
-you need to create PR and 3 approves. so low chance ruining the dev & main branches.
+1. If you accidentally push to the dev-branch or main branch, no worries! you will need three approvals before merging. This helps ensure that changes to the dev and main branches are carefully reviewed and reduces the chance of any accidental damage.
 
 ***Anyway please avoid pushing to main***
 
