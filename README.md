@@ -1,6 +1,9 @@
 # Meal Plan
 link to ERD: https://lucid.app/lucidchart/8cbba300-ab68-4356-8ffd-f5231016d3c1/edit?beaconFlowId=3DBA3FA3E7FCF487&invitationId=inv_221eb2b3-de92-4ee4-86f4-e36ebef7400c&page=0_0#
 
+link to Trello : 
+https://trello.com/invite/b/suXVJZvT/ATTI555dcc3e36063e1484eccbbd8124a3aa5371EBF2/meal-plan-project
+
 ## Prerequisites
 1. Visual Studio Code
 2. IntelliJ IDEA
