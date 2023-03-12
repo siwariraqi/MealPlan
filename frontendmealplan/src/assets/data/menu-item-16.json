@@ -1,0 +1,19 @@
+{
+    "id": 16,
+    "name": "Crispy Eggplant Salad", 
+    "description": "Eggplants, tomatoes, oyster sauce, white sesame seeds.",
+    "price": 8.20,
+    "image": {
+        "small": "assets/images/foods/salads/3/small.jpg",
+        "medium": "assets/images/foods/salads/3/medium.jpg",
+        "big": "assets/images/foods/salads/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 130,
+    "isVegetarian": true,
+    "categoryId": 3
+}

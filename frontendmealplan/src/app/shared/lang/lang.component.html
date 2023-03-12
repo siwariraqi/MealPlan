@@ -1,0 +1,10 @@
+<button mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger" class="lang-btn">
+    <img [src]="'assets/images/flags/'+translateService.currentLang+'.svg'" width="22" [alt]="translateService.currentLang" class="mat-elevation-z1">   
+</button>
+<mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-menu-panel lang">
+    <span (mouseleave)="langMenuTrigger.closeMenu()">  
+        <button *ngFor="let lang of translateService.getLangs()" mat-menu-item (click)="changeLang(lang)">  
+            <img [src]="'assets/images/flags/'+lang+'.svg'" width="22" [alt]="lang" class="mat-elevation-z1">  
+        </button> 
+    </span>
+</mat-menu>

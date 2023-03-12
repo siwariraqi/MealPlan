@@ -1,0 +1,27 @@
+<mat-card class="p-0">
+    <div class="mat-table theme-table header-sm truncated">
+        <div class="mat-header-row">
+            <div class="mat-header-cell">Order</div>
+            <div class="mat-header-cell">Date</div>
+            <div class="mat-header-cell">Status</div>
+            <div class="mat-header-cell">Total</div>
+            <div class="mat-header-cell"></div>
+        </div>
+        <div *ngFor="let order of orders" class="mat-row">
+            <div class="mat-cell"><span class="order">{{order.number}}</span></div>
+            <div class="mat-cell">{{order.date}}</div>
+            <div class="mat-cell">{{order.status}}</div>
+            <div class="mat-cell">{{order.total}}</div>     
+            <div class="mat-cell">
+                <div class="p-1 actions">          
+                    <button mat-icon-button color="primary" matTooltip="View">
+                        <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                    <button *ngIf="order.invoice" mat-icon-button color="warn" matTooltip="View invoice">
+                        <mat-icon>receipt</mat-icon>
+                    </button>
+                </div>
+            </div>      
+        </div>
+    </div>
+</mat-card>

@@ -1,0 +1,17 @@
+<app-header-image [backgroundImage]="'assets/images/others/reservation.jpg'" 
+                  [bgImageAnimate]="true" 
+                  [contentOffsetToTop]="true"  
+                  [title]="'Reservation'"
+                  [desc]="'We provide free, secure and instantly confirmed online reservation.'">
+</app-header-image>  
+
+<div class="px-3">
+    <div class="theme-container pb-7">
+        <mat-card class="main-content-header">  
+            <h3 class="fw-500 text-center mb-4">Book a table online. Details will reach in your email.</h3> 
+            <app-reservation-form (onFormSubmit)="onMakeReservation($event)"></app-reservation-form>  
+        </mat-card>  
+    </div> 
+</div> 
+
+<app-get-app></app-get-app>

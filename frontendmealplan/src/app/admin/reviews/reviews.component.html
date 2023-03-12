@@ -1,0 +1,68 @@
+<mat-card class="m-2 p-0">  
+    <div class="table-wrapper"> 
+        <table mat-table [dataSource]="dataSource" matSort class="w-100"> 
+
+            <!-- StatusId Column -->
+            <ng-container matColumnDef="statusId">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let review">
+                    <mat-icon [color]="(review.statusId == 1) ? 'primary' : 'warn'" [matTooltip]="( statuses | filterById : review.statusId )?.name">{{ (review.statusId == 1) ? 'check_circle' : 'access_time' }}</mat-icon>
+                </td>
+            </ng-container> 
+            
+            <!-- Image Column -->
+            <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
+                <td mat-cell *matCellDef="let review"> <img [src]="review.image" alt="user" width="60" class="d-block"> </td>
+            </ng-container> 
+
+            <!-- Author Column -->
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
+                <td mat-cell *matCellDef="let review"> {{ review.author}} </td>
+            </ng-container> 
+
+            <!-- Menu Item Column -->
+            <ng-container matColumnDef="menuItem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Menu Item </th>
+                <td mat-cell *matCellDef="let review"> for <span class="fw-500">{{review.menuItem}}</span> </td>
+            </ng-container>  
+
+            <!-- Comment Column -->
+            <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comment </th>
+                <td mat-cell *matCellDef="let review"> {{ review.comment}} </td>
+            </ng-container> 
+
+            <!-- Raiting Column -->
+            <ng-container matColumnDef="rating">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+                <td mat-cell *matCellDef="let review">  <app-rating [ratingsCount]="review?.ratingsCount" [ratingsValue]="review?.ratingsValue"></app-rating> </td>
+            </ng-container> 
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let review">{{review.date | date:"dd MMMM, yyyy 'at' HH:mm" }}</td>
+            </ng-container> 
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Remove </th>
+                <td mat-cell *matCellDef="let review"> 
+                    <button *ngIf="review.statusId == 1" mat-icon-button color="primary" matTooltip="UnApprove" (click)="unApprove(review)">
+                        <mat-icon>undo</mat-icon>
+                    </button> 
+                    <button mat-icon-button color="warn" (click)="remove(review)" matTooltip="Remove">
+                        <mat-icon>delete</mat-icon>
+                    </button>   
+                </td>
+            </ng-container>  
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let review; columns: displayedColumns;"></tr>
+        </table> 
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+</mat-card>

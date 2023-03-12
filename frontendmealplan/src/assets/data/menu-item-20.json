@@ -1,0 +1,19 @@
+{
+    "id": 20,
+    "name": "Beef Languet With Potato", 
+    "description": "Beef tenderloin, butter, black pepper, tomatoes, potato.",
+    "price": 18.50,
+    "image": {
+        "small": "assets/images/foods/meat-courses/1/small.jpg",
+        "medium": "assets/images/foods/meat-courses/1/medium.jpg",
+        "big": "assets/images/foods/meat-courses/1/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 220,
+    "isVegetarian": false,
+    "categoryId": 5
+}

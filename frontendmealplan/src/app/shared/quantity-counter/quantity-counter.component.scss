@@ -1,0 +1,39 @@
+.quantity-counter{
+    display: flex;
+    align-items: center; 
+    input[type=text]{
+        width: 60px;
+        height: 36px;
+        outline: none;
+        text-align: center;
+        background: transparent;
+        color: inherit;
+        box-sizing: border-box;  
+        border-left: none;
+        border-right: none;
+        margin: 0 -1px;
+        position: relative; 
+    } 
+    button{ 
+        display: flex;
+        line-height: 0;
+        width: 36px;
+        height: 36px;
+        align-items: center;
+        place-content: center;
+        // background: transparent;
+        // border: 0;
+        outline: none;
+        cursor: pointer;
+    }
+    &.sm{
+        input[type=text]{
+            width: 36px;
+            height: 18px; 
+        } 
+        button{  
+            width: 18px;
+            height: 18px; 
+        }
+    } 
+}

@@ -1,0 +1,69 @@
+<form [formGroup]="form" (ngSubmit)="submit()" fxLayout="row wrap" class="reservation-form" autocomplete="off">
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field appearance="outline" class="w-100"> 
+            <mat-label>Full Name</mat-label>
+            <input matInput placeholder="Your Full Name" formControlName="fullName" required>
+            <mat-icon matSuffix class="text-muted">person</mat-icon>
+            <mat-error *ngIf="form.controls.fullName.errors?.required">Full Name is required</mat-error>
+        </mat-form-field> 
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1"> 
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Your Phone Number" formControlName="phoneNumber" required appPhoneMask>
+            <mat-icon matSuffix class="text-muted">call</mat-icon>
+            <mat-error *ngIf="form.controls.phoneNumber.errors?.required">Phone Number is required</mat-error>
+        </mat-form-field> 
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1"> 
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Your Email" formControlName="email" required>
+            <mat-icon matSuffix class="text-muted">email</mat-icon>
+            <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+            <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+        </mat-form-field>
+    </div> 
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Date</mat-label>
+            <input matInput placeholder="Pick a date" formControlName="date" required [matDatepicker]="datePicker" [min]="today" appMaskDate>
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>  
+            <mat-error *ngIf="form.controls.date.errors?.required">Date is required</mat-error>
+        </mat-form-field> 
+    </div> 
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Time</mat-label> 
+            <mat-select formControlName="time" required> 
+                <mat-option *ngFor="let hour of hours" [value]="hour">{{hour}}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix class="text-muted">schedule</mat-icon>
+            <mat-error *ngIf="form.controls.time.errors?.required">Time is required</mat-error>
+        </mat-form-field>  
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Guests</mat-label>
+            <input matInput placeholder="How many of you?" formControlName="guests" required onlyNumber>
+            <mat-icon matSuffix class="text-muted">group</mat-icon>
+            <mat-error *ngIf="form.controls.guests.errors?.required">Guests is required</mat-error>
+        </mat-form-field> 
+    </div> 
+    <div fxFlex="100" class="px-3 mt-1">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Message</mat-label> 
+            <textarea matInput placeholder="Your Message" formControlName="message" rows="6"></textarea> 
+            <mat-error *ngIf="form.controls.message.errors?.required">Message is required</mat-error>
+        </mat-form-field>
+    </div>  
+    <div class="w-100 py-2 text-center">
+        <button mat-raised-button color="primary" type="submit" class="uppercase">Make reservation</button>
+    </div>  
+</form>
+<div class="reservation-form-footer primary-color">
+    You can also call: (+100) 123 456 7890 to make a reservation
+</div>         
+                
+ 

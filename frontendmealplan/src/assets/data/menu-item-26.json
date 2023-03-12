@@ -1,0 +1,19 @@
+{
+    "id": 26,
+    "name": "Chick Saj", 
+    "description": "Chick, onion, tomatoes, bell pepper, eggplants, potato, lavash.",
+    "price": 18.50,
+    "image": {
+        "small": "assets/images/foods/chicken-courses/3/small.jpg",
+        "medium": "assets/images/foods/chicken-courses/3/medium.jpg",
+        "big": "assets/images/foods/chicken-courses/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 230,
+    "isVegetarian": false,
+    "categoryId": 6
+}

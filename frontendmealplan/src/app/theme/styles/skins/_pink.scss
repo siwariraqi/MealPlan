@@ -1,0 +1,5 @@
+$pink-primary: mat.define-palette(mat.$pink-palette, 700, 50, 900);
+$pink-accent: mat.define-palette(mat.$indigo-palette, 600, 100, 900);
+$pink-warn: mat.define-palette(mat.$deep-orange-palette, A400);
+
+$pink-theme: mat.define-light-theme($pink-primary, $pink-accent, $pink-warn);

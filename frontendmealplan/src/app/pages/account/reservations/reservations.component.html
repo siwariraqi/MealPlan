@@ -1,0 +1,55 @@
+<div class="table-wrapper"> 
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.id}} </td>
+        </ng-container>  
+  
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.date}}</td>
+        </ng-container> 
+    
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.time}}</td>
+        </ng-container>  
+
+        <!-- Guests Column -->
+        <ng-container matColumnDef="guests">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Guests </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.guests}}</td>
+        </ng-container> 
+
+        <!-- Table Number Column -->
+        <ng-container matColumnDef="tableNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Table Number </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.tableNumber}}</td>
+        </ng-container> 
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status.name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="status.name"> Status </th>
+            <td mat-cell *matCellDef="let reservation"> {{reservation.status.name}}</td>
+        </ng-container> 
+  
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Remove </th>
+            <td mat-cell *matCellDef="let reservation"> 
+                <button mat-icon-button color="warn" (click)="remove(reservation)" matTooltip="Remove">
+                    <mat-icon>delete</mat-icon>
+                </button> 
+            </td>
+        </ng-container> 
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let reservation; columns: displayedColumns;"></tr>
+    </table> 
+    <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>

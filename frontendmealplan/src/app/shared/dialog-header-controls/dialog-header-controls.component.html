@@ -1,0 +1,8 @@
+<div>
+    <button *ngIf="showFullscreenIcon" mat-icon-button type="button" (click)="toggleFullScreen()">
+        <mat-icon>{{(isFullScreen)? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+    </button>
+    <button mat-icon-button type="button" (click)="close()">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>

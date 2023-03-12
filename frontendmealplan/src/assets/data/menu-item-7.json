@@ -1,0 +1,19 @@
+{
+    "id": 7,
+    "name": "Mixed Omelet", 
+    "description": "Eggs, chicken fillet, Gouda cheese, arugula and tomatoes salad.",
+    "price": 9.50,
+    "image": {
+        "small": "assets/images/foods/breakfast/7/small.jpg",
+        "medium": "assets/images/foods/breakfast/7/medium.jpg",
+        "big": "assets/images/foods/breakfast/7/big.jpg"
+    },
+    "discount": 10,
+    "ratingsCount": 4,
+    "ratingsValue": 380, 
+    "availibilityCount": 6,
+    "cartCount": 0,
+    "weight": 170,
+    "isVegetarian": false,
+    "categoryId": 1
+}

@@ -1,0 +1,19 @@
+{
+    "id": 11,
+    "name": "Special Eggplants Snack", 
+    "description": "Marinated eggplants, special sauce, greens.",
+    "price": 5.50,
+    "image": {
+        "small": "assets/images/foods/appetizers/4/small.jpg",
+        "medium": "assets/images/foods/appetizers/4/medium.jpg",
+        "big": "assets/images/foods/appetizers/4/big.jpg"
+    },
+    "discount": 10,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": true,
+    "categoryId": 2
+}

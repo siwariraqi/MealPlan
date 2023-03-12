@@ -1,0 +1,19 @@
+{
+    "id": 27,
+    "name": "Seasonal Fruits", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 9.50,
+    "image": {
+        "small": "assets/images/foods/desserts/1/small.jpg",
+        "medium": "assets/images/foods/desserts/1/medium.jpg",
+        "big": "assets/images/foods/desserts/1/big.jpg"
+    },
+    "discount": 10,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 250,
+    "isVegetarian": false,
+    "categoryId": 7
+}

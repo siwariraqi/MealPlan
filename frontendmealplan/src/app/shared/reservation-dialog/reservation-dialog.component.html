@@ -1,0 +1,12 @@
+<div class="header bg-primary">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h2 class="fw-500 secondary-font">Online Reservation</h2>
+        <app-dialog-header-controls [dialogRef]="dialogRef"></app-dialog-header-controls> 
+    </div>   
+</div> 
+<mat-dialog-content>  
+    <div class="pt-3">
+        <h3 class="fw-500 text-center mb-3">Book a table online. Details will reach in your email.</h3>
+        <app-reservation-form (onFormSubmit)="onMakeReservation($event)"></app-reservation-form> 
+    </div>  
+</mat-dialog-content> 

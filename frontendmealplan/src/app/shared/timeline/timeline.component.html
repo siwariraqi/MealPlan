@@ -1,0 +1,17 @@
+<div class="section timeline pb-0">
+    <div class="px-3">
+        <div class="theme-container"> 
+            <div fxLayout="row wrap" class="services-wrapper">
+                <div *ngFor="let time of times" fxFlex="100" fxFlex.gt-md="25" fxFlex.gt-xs="50" class="p-2"> 
+                    <div fxLayout="column" fxLayoutAlign="start center" class="h-100 w-100 text-center">  
+                        <span class="timeline-icon primary-color" [ngClass]="'flaticon-'+time.icon"></span>   
+                        <h1 class="secondary-font capitalize fw-600 my-3">{{time.title}}</h1>
+                        <h3 class="fw-500">{{time.hours}}</h3>           
+                    </div> 
+                </div>  
+            </div> 
+        </div>
+    </div>   
+</div>
+
+ 

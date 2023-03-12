@@ -1,0 +1,149 @@
+<div class="px-3">     
+    <div class="theme-container"> 
+        <mat-card class="menu-single my-5">
+            <div *ngIf="menuItem" fxLayout="row wrap" class="flex-wrapper">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+                    <mat-chip-list *ngIf="menuItem.discount">
+                        <mat-chip color="warn" selected="true">{{menuItem.discount}}% OFF</mat-chip>
+                    </mat-chip-list>
+                    <img [src]="menuItem.image.medium" class="w-100">
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+                    <h1 class="secondary-font">{{menuItem.name}}</h1> 
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <app-rating [ratingsCount]="menuItem.ratingsCount" [ratingsValue]="menuItem.ratingsValue"></app-rating> 
+                        <span class="mx-2 text-muted">({{menuItem.ratingsCount}} Customer Reviews)</span>
+                    </div> 
+                    <h1 *ngIf="!menuItem.discount" class="primary-color py-3"> 
+                        {{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}  
+                    </h1> 
+                    <h1 *ngIf="menuItem.discount" class="py-3">  
+                        <span class="text-muted old-price">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> 
+                        <span class="primary-color mx-2">{{ (menuItem.price - (menuItem.price * (menuItem.discount / 100))) | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+                    </h1>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <app-quantity-counter [value]="menuItem.cartCount" [step]="1" [min]="1" [max]="1000" (onCounterChange)="counterChange($event)"></app-quantity-counter>
+                        <button mat-raised-button color="primary" class="uppercase mx-3" (click)="addToCart()">Add To Cart</button> 
+                        <button mat-icon-button (click)="addToFavorites()" class="text-muted" matTooltip="Add To Favorite">
+                            <mat-icon class="mat-icon-lg">favorite_border</mat-icon>
+                        </button>
+                    </div> 
+                    <div class="py-3"> 
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                            <mat-icon color="primary" class="mat-icon-sm">local_offer</mat-icon>
+                            <span class="px-1">Category:</span> 
+                            <span class="fw-500">{{ ( appService.Data.categories | filterById : menuItem.categoryId )?.name }}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                            <mat-icon color="primary" class="mat-icon-sm">{{ (menuItem.availibilityCount > 0) ? 'check_circle' : 'unpublished'}}</mat-icon>
+                            <span class="px-1">Availibility:</span> 
+                            <span class="fw-500">{{ (menuItem.availibilityCount > 0) ? 'Available':'Unavailable'}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                            <span fxLayout="row" fxLayoutAlign="start center">
+                                <span class="mat-icon mat-icon-sm primary-color">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
+                                    </svg>
+                                </span> 
+                                <span class="px-1">Weight:</span>
+                            </span>    
+                            <span class="fw-500">{{ menuItem.weight }} g</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                            <span fxLayout="row" fxLayoutAlign="start center"> 
+                                <span class="mat-icon mat-icon-sm primary-color">
+                                    <svg viewBox="0 0 24 24">
+                                        <path *ngIf="!menuItem.isVegetarian" d="M20.84 22.73L15.14 17.03C13.26 18.79 10.92 20 8 20C7.64 20 7.14 19.87 6.66 19.7L5.71 22L3.82 21.34C5.15 18.03 6.5 14.32 9.66 11.55L8.77 10.66C6.76 12.03 4.86 14.1 3.75 17.25C3.75 17.25 2 15.5 2 13.5C2 12 3.12 9.32 5.72 7.61L1.11 3L2.39 1.73C2.39 1.73 16.39 15.74 16.39 15.74L22.11 21.46L20.84 22.73M17 8C15.35 8.37 13.93 8.88 12.7 9.5L17.5 14.29C20.87 9.35 22 3 22 3C21.03 4.95 14.35 5.24 9.38 6.18L12.15 8.95C14.81 8 17 8 17 8Z" />
+                                        <path *ngIf="menuItem.isVegetarian"  d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+                                    </svg>
+                                </span> 
+                            </span>  
+                            <span class="px-1">Vegetarian:</span> 
+                            <span class="fw-500">{{ (menuItem.isVegetarian) ? 'Yes':'No'}}</span>
+                        </p>   
+                    </div>   
+                    <h3>Ingredients</h3>
+                    <p>{{menuItem.description}}</p> 
+                    <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
+                        <span class="fw-500">Share: </span>
+                        <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> 
+                    </div>  
+                    <ul class="p-3">
+                        <li>Free global shipping on all orders</li>
+                        <li>30 days easy returns if you change your mind</li>
+                        <li>Order before noon for same day dispatch</li>
+                    </ul> 
+                    <div fxLayout="row" fxLayoutAlign="start center" class="divider pt-3">
+                        <span class="fw-500">Guaranteed Safe Checkout</span>
+                        <img src="assets/images/others/payments.png" alt="payments" class="mx-3">
+                    </div> 
+                </div>  
+             
+                <div fxFlex="100" class="px-3 mt-5">
+        
+                    <mat-tab-group [@.disabled]="true" [selectedIndex]="0">       
+                        <mat-tab label="Description">
+                            <div class="full-desc">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id nulla metus. Maecenas commodo turpis dui, porttitor tincidunt enim mollis a. Curabitur eu velit mi. Nullam congue turpis id metus sollicitudin, id cursus nulla laoreet. Proin commodo eu felis at malesuada. Nulla ac facilisis justo, eget vulputate ex. Nulla nec laoreet nulla. Cras auctor leo at diam congue, quis convallis urna pulvinar. Nunc ut mi nulla. Nunc ligula massa, vulputate sed scelerisque sit amet, dapibus semper est. Sed sed blandit turpis. Vestibulum id porttitor ligula, at iaculis ligula. Pellentesque vel tellus sit amet mauris aliquet bibendum id et lorem.</p>
+                                <ul class="px-2 mt-1">
+                                    <li>Phasellus eu justo dictum, varius eros ut, posuere sapien.</li>
+                                    <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
+                                    <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
+                                    <li>Nam sagittis augue at pretium pharetra.</li>
+                                    <li>Sed a sem id massa egestas porta a sit amet felis.</li>
+                                    <li>Duis aliquam urna in sapien cursus consequat.</li>
+                                </ul>
+                                <p class="mt-1">Duis eu felis ultricies urna pharetra efficitur nec non elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur posuere eu justo eget mollis. Sed semper accumsan urna vel rutrum. Nulla condimentum quis lacus ut semper. Quisque at massa pretium, porta ligula ut, rutrum elit. Pellentesque et orci sit amet dolor laoreet tempor sed eu sem. Morbi lacinia pellentesque tellus euismod eleifend.</p>
+                                <p class="mt-1">Quisque fringilla eros id ligula luctus, a gravida augue sodales. Sed eget augue ut lectus condimentum volutpat. Morbi quis nunc viverra, gravida arcu quis, varius metus. Praesent tincidunt ipsum est, quis molestie ligula efficitur ut. Nunc interdum erat eu tortor maximus suscipit. Vivamus nec laoreet dui. Nullam dignissim laoreet metus quis pretium.</p>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Additional information">
+                            <div class="full-desc">
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <ul class="px-2 mt-1">
+                                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                                    <li>Aenean vehicula, tortor gravida elementum tincidunt, justo lorem vestibulum ex, eget egestas arcu tellus in magna. Vivamus gravida, ipsum vel luctus luctus, nisi felis vestibulum est, nec interdum tellus leo quis tellus. Sed sit amet convallis enim, in laoreet orci.</li>
+                                    <li>Donec et elit at nulla congue interdum sit amet varius erat.</li>
+                                    <li>Nulla sit amet risus pellentesque, dignissim massa ut, dignissim arcu.</li>
+                                    <li>Morbi dapibus ligula at faucibus tempus. Aenean vehicula, tortor gravida elementum tincidunt, justo lorem vestibulum ex, eget egestas arcu tellus in magna. Vivamus gravida, ipsum vel luctus luctus, nisi felis vestibulum est, nec interdum tellus leo quis tellus. Sed sit amet convallis enim, in laoreet orci.</li>
+                                    <li>Nunc sodales justo ut nisi euismod, quis condimentum leo varius.</li>
+                                </ul>
+                                <ul class="px-2 mt-1">
+                                    <li>Phasellus eu justo dictum, varius eros ut, posuere sapien.</li>
+                                    <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
+                                    <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
+                                    <li>Nam sagittis augue at pretium pharetra.</li>
+                                    <li>Sed a sem id massa egestas porta a sit amet felis.</li>
+                                    <li>Duis aliquam urna in sapien cursus consequat. Aenean vehicula, tortor gravida elementum tincidunt, justo lorem vestibulum ex, eget egestas arcu tellus in magna. Vivamus gravida, ipsum vel luctus luctus, nisi felis vestibulum est, nec interdum tellus leo quis tellus. Sed sit amet convallis enim, in laoreet orci.</li>
+                                </ul>
+                            </div>
+                        
+        
+                        </mat-tab>
+                        <mat-tab label="Reviews">
+                            <div class="full-desc">
+                                <app-comments [menuItemId]="menuItem.id"></app-comments> 
+                            </div>  
+                        </mat-tab>
+                    </mat-tab-group>
+                    
+                </div> 
+
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+<div class="section mt-3">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">Related Products</h1>
+            <p class="section-desc text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> 
+            <app-menu-items-carousel [menuItems]="relatedMenuItems"></app-menu-items-carousel>
+        </div>
+    </div>   
+</div> 
+ 
+<app-get-in-touch></app-get-in-touch>

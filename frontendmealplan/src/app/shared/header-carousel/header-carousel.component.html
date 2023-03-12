@@ -1,0 +1,22 @@
+<div class="header-carousel" [class.offset-bottom]="contentOffsetToTop" [class.fullscreen]="fullscreen" [ngClass]="'toolbar-'+settings.toolbar">
+    <div *ngIf="slides.length > 1"  class="swiper-container h-100" [swiper]="config" (indexChange)="onIndexChange($event)">
+        <div class="swiper-wrapper h-100">      
+            <div *ngFor="let slide of slides;" class="swiper-slide">
+                <div [attr.data-background]="slide.image" class="slide-item swiper-lazy">
+                    <div class="swiper-lazy-preloader"></div>
+                </div>
+            </div>
+        </div>     
+        <button mat-raised-button color="primary" class="swiper-button-prev swipe-arrow"><mat-icon class="mat-icon-lg">keyboard_arrow_left</mat-icon></button>
+        <button mat-raised-button color="primary" class="swiper-button-next swipe-arrow"><mat-icon class="mat-icon-lg">keyboard_arrow_right</mat-icon></button>
+      
+        <div fxLayout="column" fxLayoutAlign="center center" class="slide-info" [dir]="(settings.rtl) ? 'rtl' : 'ltr'">
+            <mat-card class="p-4">
+                <h1 class="slide-title">{{currentSlide.title}}</h1>
+                <p class="desc">{{currentSlide.desc}}</p> 
+                <a routerLink="/menu" mat-raised-button color="primary" class="link">Take a look at our menu</a> 
+            </mat-card>  
+        </div> 
+        <div class="mask"></div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<mat-card class="m-2 p-0">
+    <div class="table-wrapper"> 
+        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        
+            <!-- RequestId Column -->
+            <ng-container matColumnDef="requestId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Request Id </th>
+                <td mat-cell *matCellDef="let refund">#{{refund.requestId}} </td>
+            </ng-container>  
+
+            <!-- Order Id Column -->
+            <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+                <td mat-cell *matCellDef="let refund"> 
+                    <span class="primary-color pointer" (click)="viewOrder(refund.orderId)">
+                        #{{refund.orderId}}
+                    </span>
+                </td>
+            </ng-container> 
+    
+            <!-- Store Column -->
+            <ng-container matColumnDef="storeId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Store </th>
+                <td mat-cell *matCellDef="let refund">{{( stores | filterById : refund.storeId )?.name}}</td>
+            </ng-container>  
+            
+            <!-- Amount Column -->
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                <td mat-cell *matCellDef="let refund">{{refund.amount | currency : 'USD' : 'symbol' : '1.2-2'}}</td>
+            </ng-container>   
+
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                <td mat-cell *matCellDef="let refund">{{refund.type}}</td>
+            </ng-container> 
+
+            <!-- Reason Column -->
+            <ng-container matColumnDef="reason">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+                <td mat-cell *matCellDef="let refund">{{refund.reason}}</td>
+            </ng-container> 
+            
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.date | date:"dd MMMM, yyyy 'at' HH:mm" }}</td>
+            </ng-container> 
+    
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let refund">  
+                    <button mat-icon-button  color="primary" (click)="approve(refund)" matTooltip="Approve">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button mat-icon-button  color="warn" (click)="reject(refund)" matTooltip="Reject">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </td>
+            </ng-container> 
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let refund; columns: displayedColumns;"></tr>
+        </table> 
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+</mat-card>
