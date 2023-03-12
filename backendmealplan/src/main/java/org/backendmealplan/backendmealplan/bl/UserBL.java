@@ -9,7 +9,7 @@ import org.backendmealplan.backendmealplan.dao.MealsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +28,19 @@ public class UserBL {
       User user = users.get();
       Plan plan = user.getPlan();
       List<DayPlanId> dayPlanIds = plan.getDayPlanIdList();
-      DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-      return dayPlanId.getMeals();
+      if(dayNumber!=0 ){
+        DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
+        return dayPlanId.getMeals();
+      }
+      else {
+        LocalDate currentDate = LocalDate.now();
+        int dayOfMonth = currentDate.getDayOfMonth();
+
+        //=dayNumber= palnDatePurnched-cuurentDate
+        //  DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
+        //        return dayPlanId.getMeals();
+      }
+
     }
     else {
       throw new userNotFoundException();
