@@ -1,0 +1,19 @@
+{
+    "id": 31,
+    "name": "Red Wine", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 25.50,
+    "image": {
+        "small": "assets/images/foods/drinks/1/small.jpg",
+        "medium": "assets/images/foods/drinks/1/medium.jpg",
+        "big": "assets/images/foods/drinks/1/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 250,
+    "isVegetarian": false,
+    "categoryId": 8
+}

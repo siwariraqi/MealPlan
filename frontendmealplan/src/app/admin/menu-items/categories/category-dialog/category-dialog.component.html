@@ -1,0 +1,32 @@
+<div class="header bg-primary">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h2 class="fw-500 secondary-font">{{(category) ? 'Edit' : 'Add'}} Category</h2>
+        <app-dialog-header-controls [dialogRef]="dialogRef"></app-dialog-header-controls> 
+    </div>   
+</div>  
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off" class="pt-3">
+    <div mat-dialog-content>
+        <div fxLayout="row wrap">
+            <div fxFlex="100">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error> 
+                </mat-form-field>
+            </div> 
+            <div fxFlex="100">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Description</mat-label> 
+                    <textarea matInput placeholder="Enter description" formControlName="description" rows="6"></textarea>  
+                </mat-form-field>
+            </div>   
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100"> 
+            <button mat-raised-button color="warn" type="button" mat-dialog-close>Close</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div> 
+    </div>
+</form> 
+ 

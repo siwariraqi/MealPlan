@@ -1,0 +1,323 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin theme-reset($theme) {
+    $color-config:  mat.get-color-config($theme);
+    $primary:       map.get($color-config, 'primary');
+    $accent:        map.get($color-config, 'accent');
+    $warn:          map.get($color-config, 'warn'); 
+    $foreground:    map.get($color-config, 'foreground');
+    $background:    map.get($color-config, 'background');
+
+    .bg-primary { 
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
+    }
+    .bg-accent {
+        background: mat.get-color-from-palette($accent);
+        color: mat.get-color-from-palette($accent, default-contrast);
+    }
+    .bg-warn {
+        background: mat.get-color-from-palette($warn);
+        color: mat.get-color-from-palette($warn, default-contrast);
+    }
+
+    .text-muted {
+        color: mat.get-color-from-palette($foreground, secondary-text) !important;
+    }
+    .primary-color{
+        color: mat.get-color-from-palette($primary);
+    }
+    .secondary-color{
+        color: mat.get-color-from-palette($primary, 100);
+    }
+    .v-divider{
+        background-color: mat.get-color-from-palette($foreground, divider);
+    }
+    .divider{
+        border-top: 1px solid mat.get-color-from-palette($foreground, divider);
+    }
+
+    .top-toolbar.mat-toolbar .v-divider{
+        background-color: mat.get-color-from-palette($primary, lighter, 0.2);
+    }
+    .border-bottom-lighter{
+        border-bottom: 1px solid mat.get-color-from-palette($primary, lighter, 0.2);
+    }
+    .border-lighter{
+        border-color: mat.get-color-from-palette($primary, lighter, 0.2);
+    }
+    .border-accent{
+        border-color: mat.get-color-from-palette($accent);        
+    }
+
+    .toolbar-1 #top-toolbar{
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
+    } 
+    #main-toolbar{
+        background: mat.get-color-from-palette($background, card);
+    }
+    .toolbar-2 #main-toolbar{
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
+    }
+    header{
+        .logo svg{
+            fill: mat.get-color-from-palette($primary);
+        } 
+        &.toolbar-1{        
+            &.has-bg-image:not(.main-toolbar-fixed), &.has-bg-video:not(.main-toolbar-fixed){
+                .logo svg{
+                    fill: #fff;
+                }
+                .horizontal-menu{
+                    .mat-button{
+                        color:#fff;
+                        &.horizontal-active-link{
+                            background: rgba(mat.get-color-from-palette($primary), 0.38);
+                        }                       
+                    }
+                }                
+                .mat-icon{
+                    color:#fff;
+                }
+            } 
+        }
+        &.toolbar-2{
+            .logo svg{
+                fill: #fff;
+            }
+            .horizontal-menu{
+                .mat-button{
+                    color:#fff;
+                    &.horizontal-active-link{
+                        color:#fff;
+                    }                       
+                }
+            }
+            &.has-bg-image:not(.main-toolbar-fixed), &.has-bg-video:not(.main-toolbar-fixed){
+                .horizontal-menu{
+                    .mat-button{
+                        &.horizontal-active-link{
+                            background: rgba(mat.get-color-from-palette($primary), 0.38);
+                        }                       
+                    }
+                }
+            }  
+            
+        }      
+    }
+
+    .header-image-wrapper.toolbar-2{
+        border-top: 4px solid mat.get-color-from-palette($primary);
+    }
+
+    .header-carousel .slide-info .mat-card{
+        background: rgba(mat.get-color-from-palette($background, card), 0.85);
+        &:hover{
+            background: mat.get-color-from-palette($background, card);
+        }
+    }
+    
+    .user-menu .user-info {
+        color: mat.get-color-from-palette($foreground, text);
+    }
+
+    main.content-offset-to-top{
+        .main-content-header{
+            border-top: 5px solid mat.get-color-from-palette($primary);
+        }
+    }
+
+    
+    .hoverable-image .title a:hover{
+        color: mat.get-color-from-palette($primary);
+    } 
+    
+    .features p span.dots{
+        border-bottom: 1px dotted  mat.get-color-from-palette($foreground, divider); 
+    }
+
+    .small-carousel .swiper-slide.active-thumb img{ 
+        border-color: mat.get-color-from-palette($primary);
+    }
+  
+
+    .ps__thumb-y{
+        background-color: mat.get-color-from-palette($primary, 900);
+    }
+
+
+    .active-link{
+        background-color: mat.get-color-from-palette($primary); 
+        color: #fff;
+    }
+    .horizontal-active-link {
+        background: mat.get-color-from-palette($background, hover);
+        color: mat.get-color-from-palette($primary); 
+    }
+    .horizontal-sub-menu{ 
+        .mat-button, .mat-menu-item{
+            color: mat.get-color-from-palette($foreground, text);
+            &.horizontal-active-link { 
+                color: mat.get-color-from-palette($primary); 
+            }
+        }
+    }
+    
+ 
+    .section .section-title:after,
+    .section.testimonials .swiper-pagination-bullet-active {        
+        background-color: mat.get-color-from-palette($primary); 
+    }
+     
+
+    .custom-table.mat-table .mat-header-row, 
+    .custom-table.mat-table .mat-row {
+        border-color: mat.get-color-from-palette($foreground, divider);
+    }
+
+    
+    .input-file-container .mat-orphan-label{
+        color: mat.get-color-from-palette($foreground, text) !important;
+    }
+
+ 
+    .swiper-lazy-preloader {  
+        border: 4px solid mat.get-color-from-palette($primary);  
+        border-top-color: transparent; 
+    } 
+
+    .frame-box{ 
+        .frame-image{  
+            .top-mask:before,
+            .top-mask:after,
+            .bottom-mask:before,
+            .bottom-mask:after, 
+            .content-wrapper .content { 
+                background-color: mat.get-color-from-palette($background, card);  
+            } 
+        }
+        &:nth-child(even){
+            border-top: 1px solid  mat.get-color-from-palette($foreground, divider);  
+        }
+    } 
+
+    .services-wrapper > div:nth-child(even) .mat-card{
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
+        .mat-icon{
+            color: mat.get-color-from-palette($background, card); 
+        }
+    } 
+
+    .section.default.mobile-app{ 
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
+        background: transparent;
+        &:before{ 
+            background-color: mat.get-color-from-palette($primary);
+           
+        } 
+    }
+    
+    .reservation-form{
+        border: 1px solid mat.get-color-from-palette($foreground, divider); 
+    }
+    .reservation-form-footer{ 
+        background: mat.get-color-from-palette($background, hover);  
+    }
+   
+
+    .mat-list.cart-items.mat-list-base .mat-list-item .mat-list-item-content .mat-line a,
+    .menu-item .title a,
+    .frame-box .title a,
+    a.menu-item-name{ 
+        color: inherit;
+        &:hover{
+            color: mat.get-color-from-palette($primary);  
+        }
+    }
+     
+    .quantity-counter{ 
+        input[type=text]{ 
+            border: 1px solid mat.get-color-from-palette($foreground, divider);
+        } 
+        button{  
+            background: mat.get-color-from-palette($foreground, divider); //mat.get-color-from-palette($background, app-bar); 
+            border: 1px solid mat.get-color-from-palette($foreground, divider);
+        } 
+    }
+
+    
+    .categories-toogle-group.mat-button-toggle-group { 
+        background: mat.get-color-from-palette($background, card);  
+        .mat-button-toggle {
+            color: inherit;
+        }
+        .mat-button-toggle-checked { 
+            background: mat.get-color-from-palette($primary);
+            color: mat.get-color-from-palette($primary, default-contrast);
+        }
+    }
+    
+    .mat-snack-bar-container.success {
+        background: #388E3C;
+        color: #fff; 
+    }
+    .mat-snack-bar-container.error {
+        background: #E53935;
+        color: #fff; 
+    }
+
+    .bordered{
+        border: 1px solid mat.get-color-from-palette($foreground, divider);
+    }
+
+    .theme-table.mat-table .mat-header-row,
+    .theme-table.mat-table .mat-row {
+        border-bottom-color: mat.get-color-from-palette($foreground, divider);
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active  {
+        transition: background-color 5000s;
+        -webkit-text-fill-color: mat.get-color-from-palette($foreground, base) !important;
+    }
+
+    /* ngx-pagination */
+    .theme-pagination .ngx-pagination{
+        margin-bottom: 0;
+        padding: 14px 10px;
+        .current {
+            background: mat.get-color-from-palette($primary);
+            color: mat.get-color-from-palette($primary, default-contrast);
+        }
+        a:hover, button:hover{
+            background: rgba(mat.get-color-from-palette($primary), 0.2);
+            color: mat.get-color-from-palette($foreground, base);
+        }
+    }
+
+
+    // admin styles
+    .breadcrumb{
+        a{
+            color: mat.get-color-from-palette($primary);
+        }
+        .breadcrumb-item+.breadcrumb-item:before{
+            color: mat.get-color-from-palette($foreground, text);
+        }
+    } 
+    .user-block{
+        border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
+    }
+
+    .menu-item .mat-button:not(.active-link) .menu-icon{
+        color: mat.get-color-from-palette($primary);
+    }
+
+}

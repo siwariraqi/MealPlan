@@ -1,0 +1,76 @@
+{   
+  "LOGIN": "S'identifier", 
+  "LOGOUT": "Se déconnecter",
+  "REGISTER": "S'inscrire", 
+  "ACCOUNT": "Compte",
+  "RESERVATION": "Réservation",
+  "MENU": "Le Menu",
+  "NAV": {  
+    "HOME": "Accueil",  
+    "PAGES": "Des pages", 
+    "CHEFS": "Cuisinier",
+    "CHEF": "Chef", 
+    "SHOP": "Boutique",
+    "SINGLE_MENU": "Menu unique",
+    "CART": "Chariot",
+    "CHECKOUT": "La caisse",
+    "FAQS": "Faqs",
+    "PRICING": "Pricing",
+    "TERMS_CONDITIONS": "Terms & Conditions",
+    "LANDING": "Page de destination", 
+    "404_PAGE": "404 Page",
+    "OTHERS": "Others",
+    "EXTERNAL_LINK": "Lien Externe",
+    "MENU_ITEM": "Menu Item",
+    "CONTACT": "Contact",
+    "ABOUT_US": "Sur",
+    "ADMIN": "Admin"
+  },
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Tableau de bord",  
+    "MENU_ITEMS": "Éléments du menu", 
+    "CATEGORIES": "Catégories",
+    "MENU_ITEMS_LIST": "Liste de menu", 
+    "MENU_ITEM_DETAIL": "Détail de menu",
+    "ADD_MENU_ITEM": "Ajouter un menu",
+    "SALES": "Ventes",
+    "ORDERS": "Ordres",
+    "TRANSACTIONS": "Transactions",
+    "USERS": "Utilisateurs",
+    "RESERVATIONS": "Réservations",
+    "CUSTOMERS": "Les clients", 
+    "COUPONS": "Coupons",
+    "WITHDRAWAL": "Retrait",
+    "ANALYTICS": "Analytique",
+    "REFUND": "Rembourser",
+    "FOLLOWERS": "Suiveurs",
+    "SUPPORT": "Soutien",
+    "REVIEWS": "Commentaires", 
+    "EXTERNAL_LINK": "Lien Externe" 
+  },
+  "BTN": {
+    "ADD": "Ajouter",
+    "SAVE": "Sauvegarder",
+    "SUBMIT": "Soumettre",
+    "CANCEL": "Annuler",
+    "UPLOAD": "Télécharger",
+    "REMOVE": "Retirer",
+    "YES": "Oui",
+    "NO": "Non",
+    "OK": "D'accord"
+  },
+  "MESSAGE": {
+    "SURE_DELETE": "Etes-vous sûr que vous voulez supprimer?",
+    "FILE_SIZE": "La taille du fichier ne peut pas dépasser {{param}} ko."
+  },
+  "FIELD": { 
+    "NAME": "Nom" 
+  },
+  "PAGINATION":{
+    "ITEMS_PER_PAGE": "Objets par page:",
+    "NEXT_PAGE": "Page suivante",
+    "PREV_PAGE": "Page précédente",
+    "FIRST_PAGE": "Première page",
+    "LAST_PAGE": "Dernière page"
+  }
+}

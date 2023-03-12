@@ -1,0 +1,73 @@
+<mat-card class="p-0 o-hidden" *ngIf="menuItem">
+    <div fxLayout="row wrap"> 
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-0"> 
+            <img [src]="menuItem.image.big" alt="menu-image" class="mw-100 d-block">
+        </div> 
+        <div fxFlex="100" fxFlex.gt-sm="60" class="py-3" [ngClass.gt-sm]="(settings.rtl) ? 'pr-5' : 'pl-5'" ngClass.sm="px-3" ngClass.xs="px-3"> 
+            <div class="today-menu"> 
+                <h1 class="title secondary-font">
+                    <a [routerLink]="['/menu', menuItem.id]" class="menu-item-name">{{menuItem.name}}</a>
+                </h1> 
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <app-rating [ratingsCount]="menuItem.ratingsCount" [ratingsValue]="menuItem.ratingsValue"></app-rating> 
+                    <span class="mx-2 text-muted">({{menuItem.ratingsCount}} Customer Reviews)</span>
+                </div> 
+                <h1 *ngIf="!menuItem.discount" class="primary-color py-3"> 
+                    {{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}  
+                </h1> 
+                <h1 *ngIf="menuItem.discount" class="py-3">  
+                    <span class="text-muted old-price">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> 
+                    <span class="primary-color mx-2">{{ (menuItem.price - (menuItem.price * (menuItem.discount / 100))) | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+                </h1> 
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <app-quantity-counter [value]="menuItem.cartCount" [step]="1" [min]="1" [max]="1000" (onCounterChange)="counterChange($event)"></app-quantity-counter>
+                    <button mat-raised-button color="primary" class="uppercase mx-3" (click)="addToCart()">Add To Cart</button> 
+                    <button mat-icon-button (click)="addToFavorites()" class="text-muted" matTooltip="Add To Favorite">
+                        <mat-icon class="mat-icon-lg">favorite_border</mat-icon>
+                    </button>
+                </div> 
+                <div class="py-3"> 
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                        <mat-icon color="primary" class="mat-icon-sm">local_offer</mat-icon>
+                        <span class="px-1">Category:</span> 
+                        <span class="fw-500">{{ ( appService.Data.categories | filterById : menuItem.categoryId )?.name }}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                        <mat-icon color="primary" class="mat-icon-sm">{{ (menuItem.availibilityCount > 0) ? 'check_circle' : 'unpublished'}}</mat-icon>
+                        <span class="px-1">Availibility:</span> 
+                        <span class="fw-500">{{ (menuItem.availibilityCount > 0) ? 'Available':'Unavailable'}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                        <span fxLayout="row" fxLayoutAlign="start center">
+                            <span class="mat-icon mat-icon-sm primary-color">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
+                                </svg>
+                            </span> 
+                            <span class="px-1">Weight:</span>
+                        </span>    
+                        <span class="fw-500">{{ menuItem.weight }} g</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                        <span fxLayout="row" fxLayoutAlign="start center"> 
+                            <span class="mat-icon mat-icon-sm primary-color">
+                                <svg viewBox="0 0 24 24">
+                                    <path *ngIf="!menuItem.isVegetarian" d="M20.84 22.73L15.14 17.03C13.26 18.79 10.92 20 8 20C7.64 20 7.14 19.87 6.66 19.7L5.71 22L3.82 21.34C5.15 18.03 6.5 14.32 9.66 11.55L8.77 10.66C6.76 12.03 4.86 14.1 3.75 17.25C3.75 17.25 2 15.5 2 13.5C2 12 3.12 9.32 5.72 7.61L1.11 3L2.39 1.73C2.39 1.73 16.39 15.74 16.39 15.74L22.11 21.46L20.84 22.73M17 8C15.35 8.37 13.93 8.88 12.7 9.5L17.5 14.29C20.87 9.35 22 3 22 3C21.03 4.95 14.35 5.24 9.38 6.18L12.15 8.95C14.81 8 17 8 17 8Z" />
+                                    <path *ngIf="menuItem.isVegetarian"  d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+                                </svg>
+                            </span> 
+                        </span>  
+                        <span class="px-1">Vegetarian:</span> 
+                        <span class="fw-500">{{ (menuItem.isVegetarian) ? 'Yes':'No'}}</span>
+                    </p>   
+                </div>   
+                <h3>Ingredients</h3>
+                <p>{{menuItem.description}}</p> 
+                <div fxLayout="row" fxLayoutAlign="start center" class="text-muted pt-3">
+                    <span class="fw-500">Share: </span>
+                    <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> 
+                </div> 
+            </div>
+        </div> 
+    </div> 
+</mat-card> 

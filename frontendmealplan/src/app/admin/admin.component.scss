@@ -1,0 +1,64 @@
+@import "../theme/styles/variables";
+
+.admin-sidenav{
+    position: fixed; 
+    width: $admin-sidenav-width;
+    border: none !important;
+    padding-top: $admin-toolbar-height; 
+    bottom: 0;
+    top: 0;
+    .close{
+        margin-left: 178px;
+    }
+    .divider{
+        margin: 8px 0;
+    }
+    .vertical-menu-wrapper{
+        height: calc(100% - 122px);
+    }
+}
+
+.admin-toolbar{
+    height: $admin-toolbar-height; 
+    position: fixed;
+    z-index: 9;
+    .logo-section{
+        width: $admin-sidenav-width - 16px;
+    }
+}
+
+.admin-container{ 
+    .mat-drawer-content{
+        padding: 16px;
+        padding-top: $admin-toolbar-height + 16px; 
+        box-sizing: border-box;
+        min-height: 100vh;
+    }
+}
+
+.pin{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    fill: currentColor;
+}
+
+.search-bar{
+    form{
+        input{
+            height: 28px;
+            border: none;
+            padding: 0;
+            border-radius: 15px;
+            outline: none;
+            color: #444;
+            width: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            &.show{
+               padding: 0 8px;
+               width: 250px;
+            }
+        }       
+    }
+}

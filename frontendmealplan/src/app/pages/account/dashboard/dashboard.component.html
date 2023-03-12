@@ -1,0 +1,50 @@
+<p class="text-muted">Hello, <b>Emilio Verdines!</b> From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
+    
+<div fxLayout="row wrap" class="flex-wrapper">
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-3">
+        <div class="bordered px-3 py-2">
+            <div fxLayoutAlign="space-between center">
+                <h2 class="secondary-font">Account Information</h2> 
+                <a mat-icon-button routerLink="/account/profile"><mat-icon class="text-muted">edit</mat-icon></a>
+            </div>
+            <div class="divider"></div>
+            <div class="pt-3">
+                <p>Emilio Verdines</p>
+                <p>emilio.verdines@gmail.com</p>
+                <p><a routerLink="/account/password-change" class="primary-color fw-500">Change password</a></p>
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-3">
+        <div class="bordered px-3 py-2">
+            <div fxLayoutAlign="space-between center">
+                <h2 class="secondary-font">Addresses</h2> 
+                <a mat-icon-button routerLink="/account/addresses"><mat-icon class="text-muted">edit</mat-icon></a>
+            </div>
+            <div class="divider"></div>
+            <div class="pt-3">
+                <p>Billing address</p>
+                <p>Shipping address</p>
+            </div>
+        </div> 
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-3">
+        <div class="bordered px-3 py-2">
+            <div fxLayoutAlign="space-between center">
+                <h2 class="secondary-font">Orders</h2> 
+                <a mat-icon-button routerLink="/account/orders"><mat-icon class="text-muted">edit</mat-icon></a>
+            </div>
+            <div class="divider"></div>
+            <div class="pt-3">
+                <p class="">Completed</p>
+                <mat-progress-bar value="75" color="primary"></mat-progress-bar>
+                <p class="mt-1">Processing</p>
+                <mat-progress-bar value="25" color="accent"></mat-progress-bar>
+                <p class="mt-1">On hold</p>
+                <mat-progress-bar value="65" color="warn"></mat-progress-bar>
+                <p class="mt-1">Refunded</p>
+                <mat-progress-bar value="25" color="primary"></mat-progress-bar>
+            </div>
+        </div>  
+    </div>
+</div>

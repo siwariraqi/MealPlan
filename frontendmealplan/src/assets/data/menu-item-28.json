@@ -1,0 +1,19 @@
+{
+    "id": 28,
+    "name": "Jam", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 12.30,
+    "image": {
+        "small": "assets/images/foods/desserts/2/small.jpg",
+        "medium": "assets/images/foods/desserts/2/medium.jpg",
+        "big": "assets/images/foods/desserts/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 7
+}

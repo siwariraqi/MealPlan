@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+    <div class="text-center">
+        <mat-icon class="mat-icon-xlg" color="primary">notification_important</mat-icon>
+    </div>
+</h1>
+  
+<div mat-dialog-content>
+    <p>{{message}}</p>
+</div>
+  
+<div mat-dialog-actions> 
+    <button mat-raised-button color="primary" (click)="close()" class="m-auto">{{ 'BTN.OK' | translate }}</button>
+</div>

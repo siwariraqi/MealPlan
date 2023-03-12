@@ -1,0 +1,19 @@
+{
+    "id": 4,
+    "name": "Cheese Pancakes", 
+    "description": "Puff pastry, cheese filling, arugula, carrot, cucumber, radish.",
+    "price": 7.30,
+    "image": {
+        "small": "assets/images/foods/breakfast/4/small.jpg",
+        "medium": "assets/images/foods/breakfast/4/medium.jpg",
+        "big": "assets/images/foods/breakfast/4/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 380, 
+    "availibilityCount": 7,
+    "cartCount": 0,
+    "weight": 110,
+    "isVegetarian": false,
+    "categoryId": 1
+}

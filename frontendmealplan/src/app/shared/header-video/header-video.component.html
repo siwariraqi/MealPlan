@@ -1,0 +1,12 @@
+<div class="header-video-wrapper" [class.fullscreen]="fullscreen" [ngClass]="'toolbar-'+settings.toolbar"> 
+    <video id="bgVideo" autoplay muted loop [src]="backgroundVideo"></video> 
+    <div class="mask"></div> 
+    <div class="header-video-content" fxLayout="column" fxLayoutAlign="center center" [class.offset-bottom]="contentOffsetToTop" [class.home-page]="isHomePage" [style.min-height.px]="contentMinHeight">
+        <h1 *ngIf="title" class="title">{{title}}</h1>
+        <p *ngIf="desc" class="desc">{{desc}}</p> 
+        <div *ngIf="isHomePage" ngClass.gt-xs="mt-4" ngClass.xs="mt-3"> 
+            <a mat-raised-button routerLink="/menu">{{ 'MENU' | translate }}</a>
+            <a mat-raised-button color="primary" routerLink="/reservation">{{ 'RESERVATION' | translate }}</a> 
+          </div>
+    </div>
+</div>

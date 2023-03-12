@@ -1,0 +1,5 @@
+$grey-primary: mat.define-palette(mat.$blue-grey-palette, 700, 50, 900);
+$grey-accent: mat.define-palette(mat.$green-palette, 600, 100, 900);
+$grey-warn: mat.define-palette(mat.$red-palette, 500, A200, 800);
+
+$grey-theme: mat.define-light-theme($grey-primary, $grey-accent, $grey-warn);

@@ -1,0 +1,19 @@
+{
+    "id": 14,
+    "name": "Barbecue Salad", 
+    "description": "Eggplants, tomatoes, bell pepper, red pepper, corn oil, garlic, fresh greens.",
+    "price": 7.50,
+    "image": {
+        "small": "assets/images/foods/salads/1/small.jpg",
+        "medium": "assets/images/foods/salads/1/medium.jpg",
+        "big": "assets/images/foods/salads/1/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": true,
+    "categoryId": 3
+}

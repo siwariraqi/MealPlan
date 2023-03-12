@@ -1,0 +1,52 @@
+<app-tiles></app-tiles>
+<app-info-cards></app-info-cards>
+
+<div fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="45" class="p-2"> 
+        <app-montly-sales></app-montly-sales>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="55" class="p-2"> 
+        <app-latest-orders></app-latest-orders>
+    </div>
+</div>
+
+<div fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="70" class="p-2"> 
+        <app-analytics></app-analytics>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="30" fxLayout="column">
+        <div fxFlex="100" class="p-2">
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
+                    <mat-icon class="mat-icon-xlg">monetization_on</mat-icon>
+                    <div>
+                        <h1>$ 35700</h1>
+                        <h2 class="fw-400">Profit</h2>
+                    </div>                
+                </div>            
+            </mat-card>
+        </div>
+        <div fxFlex="100" class="p-2">
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
+                    <mat-icon class="mat-icon-xlg">cloud_download</mat-icon>
+                    <div>
+                        <h1>187230</h1>
+                        <h2 class="fw-400">Downloads</h2>
+                    </div>                
+                </div>            
+            </mat-card>
+        </div>       
+        <div fxFlex="100" class="p-2">
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
+                    <mat-icon class="mat-icon-xlg">shopping_cart</mat-icon>
+                    <div>
+                        <h1>78,25 %</h1>
+                        <h2 class="fw-400">Sales</h2>
+                    </div>                
+                </div>            
+            </mat-card>
+        </div>
+    </div>
+</div>

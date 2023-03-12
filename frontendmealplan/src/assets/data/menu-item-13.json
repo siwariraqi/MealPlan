@@ -1,0 +1,19 @@
+{
+    "id": 13,
+    "name": "Potato Snack", 
+    "description": "Potato, white cheese, motal cheese, sun-dried tomatoes, gouda cheese, olive oil, garlic.",
+    "price": 4.80,
+    "image": {
+        "small": "assets/images/foods/appetizers/6/small.jpg",
+        "medium": "assets/images/foods/appetizers/6/medium.jpg",
+        "big": "assets/images/foods/appetizers/6/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": true,
+    "categoryId": 2
+}

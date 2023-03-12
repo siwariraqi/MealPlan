@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="center center">                
+        <mat-card-subtitle><h2>Refunds by Stores</h2></mat-card-subtitle>
+    </mat-card-header>
+    <div class="w-100 h-300p" #resizedDiv>
+        <ngx-charts-pie-grid
+            [scheme]="colorScheme"
+            [results]="refunds"
+            (select)="onSelect($event)">
+        </ngx-charts-pie-grid>        
+    </div>
+</mat-card>

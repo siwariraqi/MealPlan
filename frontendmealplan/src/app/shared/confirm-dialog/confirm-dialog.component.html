@@ -1,0 +1,15 @@
+<div mat-dialog-title> 
+    <div class="text-center"> 
+        <h4 class="mb-1">{{title}}</h4>
+        <mat-icon class="mat-icon-xlg" color="primary">warning</mat-icon>
+    </div> 
+</div>
+  
+<div mat-dialog-content>
+    <p>{{message}}</p>
+</div>
+  
+<div mat-dialog-actions fxLayoutAlign="space-between center" class="pb-4">
+    <button mat-button (click)="onDismiss()">{{ 'BTN.NO' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">{{ 'BTN.YES' | translate }}</button>
+</div>

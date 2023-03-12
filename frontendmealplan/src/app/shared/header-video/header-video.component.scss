@@ -1,0 +1,120 @@
+@import "../../theme/styles/variables";
+
+.header-video-wrapper{
+    position: relative;
+    overflow: hidden;
+    margin-top: -$main-toolbar-height;
+    padding-top: calc($main-toolbar-height/2);
+    .header-video-content{
+        position: relative;
+        min-height: $header-video-min-height;
+        color: #fff;
+        z-index: 1;        
+        &.offset-bottom{
+            padding-bottom: $main-content-header-offset-to-top;
+            min-height: $header-video-min-height + $main-content-header-offset-to-top;
+        }
+        &.home-page{
+            min-height: $header-video-min-height + $main-content-header-offset-to-top + 80px;
+        }
+        .title{
+            font-family: $secondary-font-family;
+            font-size: 60px; 
+            padding: 0 16px;
+            text-align: center;
+        }
+        .desc{
+            margin: 0;
+            font-size: 18px; 
+            padding: 0 16px;
+            text-align: center;
+            text-transform: uppercase;
+            max-width: 70%;
+        }
+        .mat-raised-button{ 
+            text-transform: uppercase;
+            margin: 0 4px;
+        }        
+    }
+    .mask{ 
+        background: rgba(0, 0, 0, 0.6); 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    } 
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        object-position: center;
+        object-fit: cover;
+    }
+    &.fullscreen{
+        height: calc(100vh - #{$main-toolbar-height}) !important;
+        .header-video-content{
+            height: calc(100vh - #{$main-toolbar-height}) !important;
+        }
+        &.toolbar-2{
+            height: calc(100vh - 166px) !important;
+            .header-video-content{
+                height: calc(100vh - 166px) !important;
+            } 
+        }
+    }
+}
+
+ 
+ 
+
+// xs
+@media screen and (max-width: 599px) {
+    .header-video-wrapper{
+        .header-video-content{
+            min-height: $header-video-min-height - 80px;
+            &.offset-bottom{
+                min-height: $header-video-min-height + $main-content-header-offset-to-top - 80px;
+            }
+            &.home-page{
+                min-height: $header-video-min-height + $main-content-header-offset-to-top;
+            }
+            .title{
+                font-size: 36px; 
+            }
+            .desc{ 
+                font-size: 14px; 
+                max-width: 100%; 
+            }              
+        } 
+    }
+}
+
+// sm
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .header-video-wrapper{
+        .header-video-content{
+            min-height: $header-video-min-height - 40px;
+            &.offset-bottom{
+                min-height: $header-video-min-height + $main-content-header-offset-to-top - 40px;
+            }
+            &.home-page{
+                min-height: $header-video-min-height + $main-content-header-offset-to-top + 40px;
+            }
+            .title{
+                font-size: 48px; 
+            }
+            .desc{ 
+                font-size: 16px;
+                max-width: 90%; 
+            }              
+        } 
+    }
+}

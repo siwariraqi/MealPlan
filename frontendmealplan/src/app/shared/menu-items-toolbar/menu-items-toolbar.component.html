@@ -1,0 +1,45 @@
+<mat-card fxLayout="row" fxLayoutAlign="space-between center" class="w-100 p-2 filter-row mat-elevation-z1 text-muted">
+    <button *ngIf="showSidenavToggle" mat-icon-button (click)="sidenavToggle()">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <div>
+        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
+            {{sort}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
+            <span (mouseleave)="sortMenuTrigger.closeMenu()">
+                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                    <span>{{sort}}</span>
+                </button>
+            </span>
+        </mat-menu>
+    </div>
+    <div fxShow="false" fxShow.gt-xs>
+        <!-- <span *ngIf="isHomePage"> -->
+            <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+                Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+            </a>
+            <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
+                <span (mouseleave)="countsMenuTrigger.closeMenu()">
+                    <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
+                        <span>{{count}}</span>
+                    </button>
+                </span>
+            </mat-menu>
+        <!-- </span>        -->
+        <button mat-icon-button (click)="changeViewType('list', 100)">
+            <mat-icon>view_list</mat-icon>
+        </button>
+        <button mat-icon-button (click)="changeViewType('grid', 50)">
+            <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
+                <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
+            </svg>
+        </button> 
+        <button mat-icon-button fxShow="false" fxShow.gt-sm (click)="changeViewType('grid', 33.3)">
+            <mat-icon>view_module</mat-icon>
+        </button>
+        <button fxShow="false" fxShow.gt-md mat-icon-button (click)="changeViewType('grid', 25)">
+            <mat-icon>view_comfy</mat-icon>
+        </button> 
+    </div>
+</mat-card>

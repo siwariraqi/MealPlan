@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="center">                
+        <mat-card-subtitle><h2>Analytics</h2></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="w-100 h-300p" #resizedDiv>
+            <ngx-charts-line-chart
+                [scheme]="colorScheme"
+                [results]="analytics"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                [autoScale]="autoScale"
+                [roundDomains]="roundDomains"
+                (select)="onSelect($event)">
+            </ngx-charts-line-chart>             
+        </div>
+    </mat-card-content>
+</mat-card>

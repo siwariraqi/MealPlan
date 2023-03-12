@@ -1,0 +1,35 @@
+<div class="p-3">
+    <div class="theme-container"> 
+        <mat-sidenav-container class="account">
+            <mat-sidenav #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'">
+                <mat-card [perfectScrollbar]="psConfig"> 
+                    <button fxHide="false" fxHide.gt-sm mat-mini-fab color="warn" class="close" (click)="sidenav.toggle()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-card-header fxLayoutAlign="start center">                       
+                        <img mat-card-avatar src="assets/images/others/user.jpg" alt="">
+                        <mat-card-title class="text-muted mb-0 secondary-font">Emilio Verdines</mat-card-title> 
+                    </mat-card-header>
+                    <div class="divider my-3"></div>
+                    <div *ngFor="let link of links">
+                        <a matLine [routerLink]="link.href" routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}" fxLayout="row" fxLayoutAlign="start center" class="p-3">
+                            <mat-icon class="text-muted">{{link.icon}}</mat-icon>
+                            <span class="mx-2">{{ link.name }}</span>
+                        </a>
+                    </div>                      
+                  </mat-card>  
+            </mat-sidenav>
+            <mat-sidenav-content ngClass.gt-sm="distance">
+              <mat-card *ngIf="!sidenavOpen" fxLayout="row" fxLayoutAlign="space-between center" class="text-muted mb-3">
+                  <button mat-icon-button (click)="sidenav.toggle()">
+                      <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <h3> My Account</h3>
+              </mat-card>              
+              <mat-card class="p-4">
+                  <router-outlet></router-outlet>
+              </mat-card>  
+            </mat-sidenav-content>
+        </mat-sidenav-container> 
+    </div>
+</div>

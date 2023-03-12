@@ -1,0 +1,19 @@
+{
+    "id": 17,
+    "name": "Chick Soup With Rice", 
+    "description": "Chick, round rice, onion, carrot, cherry plums, turmeric.",
+    "price": 8.20,
+    "image": {
+        "small": "assets/images/foods/soups/1/small.jpg",
+        "medium": "assets/images/foods/soups/1/medium.jpg",
+        "big": "assets/images/foods/soups/1/big.jpg"
+    },
+    "discount": 10,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 130,
+    "isVegetarian": false,
+    "categoryId": 4
+}

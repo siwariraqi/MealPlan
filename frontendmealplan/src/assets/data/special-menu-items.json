@@ -1,0 +1,97 @@
+[    
+    {
+        "id": 11,
+        "name": "Special Eggplants Snack", 
+        "description": "Marinated eggplants, special sauce, greens.",
+        "price": 4.50,
+        "image": {
+            "small": "assets/images/foods/appetizers/4/small.jpg",
+            "medium": "assets/images/foods/appetizers/4/medium.jpg",
+            "big": "assets/images/foods/appetizers/4/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": true,
+        "categoryId": 2
+    },
+    {
+        "id": 17,
+        "name": "Chick Soup With Rice", 
+        "description": "Chick, round rice, onion, carrot, cherry plums, turmeric.",
+        "price": 8.20,
+        "image": {
+            "small": "assets/images/foods/soups/1/small.jpg",
+            "medium": "assets/images/foods/soups/1/medium.jpg",
+            "big": "assets/images/foods/soups/1/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 130,
+        "isVegetarian": false,
+        "categoryId": 4
+    },
+    {
+        "id": 20,
+        "name": "Beef Languet With Potato", 
+        "description": "Beef tenderloin, butter, black pepper, tomatoes, potato.",
+        "price": 18.50,
+        "image": {
+            "small": "assets/images/foods/meat-courses/1/small.jpg",
+            "medium": "assets/images/foods/meat-courses/1/medium.jpg",
+            "big": "assets/images/foods/meat-courses/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 220,
+        "isVegetarian": false,
+        "categoryId": 5
+    },
+    {
+        "id": 25,
+        "name": "Chicken Languet With Potato", 
+        "description": "Chicken fillet, potato, tomatoes",
+        "price": 12.50,
+        "image": {
+            "small": "assets/images/foods/chicken-courses/2/small.jpg",
+            "medium": "assets/images/foods/chicken-courses/2/medium.jpg",
+            "big": "assets/images/foods/chicken-courses/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 140,
+        "isVegetarian": false,
+        "categoryId": 6
+    },
+    {
+        "id": 27,
+        "name": "Seasonal Fruits", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 9.50,
+        "image": {
+            "small": "assets/images/foods/desserts/1/small.jpg",
+            "medium": "assets/images/foods/desserts/1/medium.jpg",
+            "big": "assets/images/foods/desserts/1/big.jpg"
+        },
+        "discount": 15,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 250,
+        "isVegetarian": false,
+        "categoryId": 7
+    }    
+]
