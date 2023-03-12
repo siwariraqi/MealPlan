@@ -1,0 +1,10 @@
+import { MealList } from './mealList';
+
+export class Ingredient {
+  constructor(
+    public ingredientId?: number,
+    public category?: string,
+    public productName?: string,
+    public mealList?: MealList[]
+  ) {}
+}
