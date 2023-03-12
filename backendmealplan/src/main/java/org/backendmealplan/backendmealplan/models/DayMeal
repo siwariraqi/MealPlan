@@ -1,4 +1,10 @@
-export class UserMeal {
-  constructor() {
+export class DayMeal {
+  constructor(
+      public DayMealId?: DayMealKey,
+      public DayMealType?: string,
+    ) {
   }
+
+
 }
+
