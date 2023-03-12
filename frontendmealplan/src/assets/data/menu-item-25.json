@@ -1,0 +1,19 @@
+{
+    "id": 25,
+    "name": "Chicken Languet With Potato", 
+    "description": "Chicken fillet, potato, tomatoes",
+    "price": 12.50,
+    "image": {
+        "small": "assets/images/foods/chicken-courses/2/small.jpg",
+        "medium": "assets/images/foods/chicken-courses/2/medium.jpg",
+        "big": "assets/images/foods/chicken-courses/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 140,
+    "isVegetarian": false,
+    "categoryId": 6
+}

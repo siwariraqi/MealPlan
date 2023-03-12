@@ -1,0 +1,54 @@
+<div class="comments">
+    <div fxLayoutAlign="center center"> 
+        <h2 class="secondary-font mb-3">Leave a Reply</h2> 
+    </div>                
+    <div class="divider"></div>
+    <mat-list class="reviews mt-3">
+        <mat-list-item *ngFor="let review of reviews" class="h-100">
+            <img matListAvatar [src]="review.avatar" alt="image" class="review-author">
+            <p matLine fxLayoutAlign="start center">
+                <span class="fw-500">{{review.author}}</span> 
+                <mat-icon class="text-muted px-1" [matTooltip]="review.tooltip" matTooltipPosition="after">{{review.icon}}</mat-icon>
+            </p>
+            <p matLine class="text-muted"><small>{{review.date}}</small></p>
+            <p matLine class="text">{{review.text}}</p>
+        </mat-list-item>
+    </mat-list>                    
+    <h3 class="mt-3">LEAVE YOUR REVIEW</h3>
+    <div class="divider"></div>
+    <p class="mt-3 text-muted">Your email address will not be published. Required fields are marked *</p>
+    <h3 fxLayoutAlign="start center" class="my-3 text-muted">
+        <span>Your Rating:</span>
+        <button *ngFor="let rating of ratings" mat-icon-button [matTooltip]="rating.title" matTooltipPosition="above" (click)="rate(rating)">
+          <mat-icon class="mat-icon-lg" [class.primary-color]="rating.selected">{{rating.icon}}</mat-icon>
+        </button>
+    </h3>
+    <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit(commentForm.value)" fxLayout="row wrap" fxLayoutAlign="space-between" class="comment-form">
+        <div fxFlex="100" class="p-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Your review</mat-label>
+                <textarea matInput placeholder="Your review" formControlName="review" required rows="5"></textarea>
+                <mat-error *ngIf="commentForm.controls.review.errors?.required">Review is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="49" class="p-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Your name</mat-label>
+                <input matInput placeholder="Your name" formControlName="name" required>
+                <mat-error *ngIf="commentForm.controls.name.errors?.required">Name is required</mat-error>
+                <mat-error *ngIf="commentForm.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error>
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="49" class="p-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Your email</mat-label>
+                <input matInput placeholder="Your email" formControlName="email" required>
+                <mat-error *ngIf="commentForm.controls.email.errors?.required">Email is required</mat-error>
+                <mat-error *ngIf="commentForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" class="text-center w-100">
+            <button mat-raised-button color="primary" type="submit" class="uppercase">Submit review</button>
+        </div>
+    </form>
+</div>

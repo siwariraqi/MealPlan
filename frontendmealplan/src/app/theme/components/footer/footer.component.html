@@ -1,0 +1,75 @@
+<footer>    
+    <div class="px-3">
+        <div class="theme-container"> 
+            <div fxLayout="column" fxLayout.gt-sm="row wrap" fxLayoutAlign="center center" class="content border-lighter py-5">
+                <div fxFlex="100" fxFlex.gt-sm="40" fxLayout="column" fxLayoutAlign="center center"> 
+                    <h1 class="secondary-font">Subscribe our Newsletter</h1>
+                    <p class="desc">Stay up to date with our latest news and properties</p>
+                </div>
+                <form [formGroup]="subscribeForm" (ngSubmit)="onSubscribeFormSubmit(subscribeForm.value)" class="custom-form" fxLayout="row" fxFlex="100" fxFlex.gt-sm="42.4" ngClass.sm="mt-2" ngClass.xs="mt-2">
+                    <mat-form-field appearance="outline" floatLabel="always" class="subscribe-input" fxFlex>
+                        <input matInput autocomplete="off" formControlName="email" placeholder="Your email address...">                      
+                    </mat-form-field>
+                    <button mat-flat-button type="submit" class="subscribe-btn" color="primary">Subscribe</button>
+                </form>
+            </div> 
+            <div class="py-5 content border-lighter"> 
+                <div fxLayout="row wrap" fxLayoutAlign="space-between"> 
+                    <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="45"> 
+                        <a class="logo" routerLink="/"><app-logo></app-logo></a>
+                        <p class="mt-4 mb-3 desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum perspiciatis cupiditate numquam odio explicabo accusantium deserunt incidunt.</p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mt-2">
+                            <mat-icon color="primary">location_on</mat-icon>
+                            <span class="mx-2">2903 Avenue Z, Brooklyn, NY</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <mat-icon color="primary">call</mat-icon>
+                            <span class="mx-2">(+100) 123 456 7890</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <mat-icon color="primary">mail_outline</mat-icon>
+                            <span class="mx-2">info@mox.com</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <mat-icon color="primary">schedule</mat-icon>
+                            <span class="mx-2">Mon - Sun / 9:00AM - 8:00PM</span>
+                        </p>
+                        <app-social-icons [iconSize]="'lg'" fxLayout="row" fxLayoutAlign="start center" class="desc"></app-social-icons>                    
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="45" ngClass.xs="pt-5"> 
+                        <h1 class="secondary-font">Feedback</h1>
+                        <p class="desc">We want your feedback about everything</p>
+                        <form [formGroup]="feedbackForm" (ngSubmit)="onFeedbackFormSubmit(feedbackForm.value)" class="custom-form pt-2">                            
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>E-mail</mat-label> 
+                                <input matInput autocomplete="off" formControlName="email">
+                                <mat-error *ngIf="feedbackForm.controls.email.errors?.required">Email is required</mat-error>
+                                <mat-error *ngIf="feedbackForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Message for us</mat-label> 
+                                <textarea matInput formControlName="message" rows="6"></textarea> 
+                                <mat-error *ngIf="feedbackForm.controls.message.errors?.required">Message is required</mat-error>
+                            </mat-form-field>
+                            <div class="w-100 text-center">
+                                <button mat-flat-button color="primary" class="uppercase" type="submit">Submit</button> 
+                            </div> 
+                        </form> 
+                    </div>
+ 
+                    <div fxFlex="100" fxFlex.gt-sm="30" ngClass.lt-md="pt-5"> 
+                        <h1 class="secondary-font mb-3">Our location</h1>   
+                        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="false" [styles]="mapStyles">
+                            <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="false"></agm-marker>
+                        </agm-map> 
+                    </div>
+                </div>  
+            </div> 
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="copyright py-2">
+                <p ngClass.xs="mt-1">Copyright © 2020 All Rights Reserved</p>  
+                <p>Designed & Developed by <a mat-button href="http://themeseason.com/" target="_blank">ThemeSeason</a></p>
+            </div> 
+        </div>
+    </div>      
+</footer>

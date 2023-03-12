@@ -1,0 +1,24 @@
+<div class="hoverable-image">
+    <h1 *ngIf="!onlyImage" class="title"><a [routerLink]="['/menu', menuItem.id]">{{menuItem.name}}</a></h1>   
+    <img *ngIf="!onlyImage" [src]="menuItem.image.medium" [alt]="menuItem.name"> 
+    <a *ngIf="onlyImage" [routerLink]="['/menu', menuItem.id]">
+        <img [src]="menuItem.image.medium" [alt]="menuItem.name"> 
+    </a>
+    <div *ngIf="!onlyImage" fxLayout="row" fxLayoutAlign="space-between center" class="bottom-section">  
+        <h2 *ngIf="!menuItem.discount"> 
+            {{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}  
+        </h2> 
+        <h2 *ngIf="menuItem.discount">  
+            <span class="old-price">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> 
+            <span class="mx-2">{{ (menuItem.price - (menuItem.price * (menuItem.discount / 100))) | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </h2>  
+        <div>  
+            <button mat-icon-button [disabled]="onFavorites()" (click)="addToFavorites()" matTooltip="Add To Favorite">
+                <mat-icon>favorite_border</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="onCart()" (click)="addToCart()" matTooltip="Add To Cart">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>  
+        </div> 
+    </div> 
+</div> 

@@ -1,0 +1,7 @@
+<div class="quantity-counter" [class.sm]="small">   
+    <!-- <button type="button" (click)="decrement()"><mat-icon class="text-muted">indeterminate_check_box</mat-icon></button>   -->
+    <button type="button" (click)="decrement()"><mat-icon class="text-muted">keyboard_arrow_down</mat-icon></button>
+    <input type="text" [value]="value" [(ngModel)]="value" (blur)="onBlur()" (keypress)="keyPress($event)">  
+    <button type="button" (click)="increment()"><mat-icon class="text-muted">keyboard_arrow_up</mat-icon></button>
+    <!-- <button type="button" (click)="increment()"><mat-icon class="text-muted">add_box</mat-icon></button>  -->
+</div>

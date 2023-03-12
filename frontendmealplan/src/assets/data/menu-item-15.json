@@ -1,0 +1,19 @@
+{
+    "id": 15,
+    "name": "Russian Salad", 
+    "description": "Beef, potato, carrot, eggs, fresh cucumbers, pickled cucumbers, mayonnaise, green peas, fresh greens.",
+    "price": 9.50,
+    "image": {
+        "small": "assets/images/foods/salads/2/small.jpg",
+        "medium": "assets/images/foods/salads/2/medium.jpg",
+        "big": "assets/images/foods/salads/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": false,
+    "categoryId": 3
+}

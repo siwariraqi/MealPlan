@@ -1,0 +1,162 @@
+<div class="header bg-primary">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h2 class="fw-500 secondary-font">{{(data?.customer) ? 'Edit' : 'Add'}} Customer</h2>
+        <app-dialog-header-controls [dialogRef]="dialogRef"></app-dialog-header-controls> 
+    </div>   
+</div>  
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content> 
+        <mat-tab-group class="tab-content-wrapped">
+            <mat-tab label="General Info"> 
+                <div fxLayout="row wrap" class="mt-2">
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>First name</mat-label>
+                            <input matInput placeholder="First name" formControlName="firstName" required>
+                            <mat-error *ngIf="form.controls.firstName.errors?.required">First name is required</mat-error>   
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Last name</mat-label>
+                            <input matInput placeholder="Last name" formControlName="lastName" required>
+                            <mat-error *ngIf="form.controls.lastName.errors?.required">Last name is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Middle Name/Initial</mat-label>
+                            <input matInput placeholder="Middle Name/Initial" formControlName="middleName">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Username</mat-label>
+                            <input matInput placeholder="Username" formControlName="username" required> 
+                            <mat-error *ngIf="form.controls.username.errors?.required">Username is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" formControlName="email"> 
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Store</mat-label>
+                            <mat-select formControlName="storeId">
+                                <mat-option [value]="">-</mat-option>
+                                <mat-option *ngFor="let store of data.stores" [value]="store.id">
+                                    <span>{{store.name}}</span>
+                                </mat-option>
+                            </mat-select> 
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Wallet Balance ($)</mat-label>
+                            <input matInput formControlName="walletBalance">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Revenue ($)</mat-label>
+                            <input matInput formControlName="revenue">
+                        </mat-form-field>
+                    </div>
+                </div>  
+            </mat-tab>
+            <mat-tab label="Billing" formGroupName="billing">
+                <div fxLayout="row wrap" class="mt-2">
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>First name</mat-label>
+                          <input matInput placeholder="First name" formControlName="firstName" required>
+                          <mat-error *ngIf="form.get('billing.firstName')!.errors?.required">First name is required</mat-error>   
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Last name</mat-label>
+                          <input matInput placeholder="Last name" formControlName="lastName" required>
+                          <mat-error *ngIf="form.get('billing.lastName')!.errors?.required">Last name is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Middle Name/Initial</mat-label>
+                          <input matInput placeholder="Middle Name/Initial" formControlName="middleName">
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Company</mat-label>
+                          <input matInput placeholder="Company" formControlName="company">
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Email</mat-label>
+                          <input matInput placeholder="Email" formControlName="email" required>
+                          <mat-error *ngIf="form.get('billing.email')!.errors?.required">Email is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Phone</mat-label>
+                          <input matInput placeholder="Phone" formControlName="phone" required>
+                          <mat-error *ngIf="form.get('billing.phone')!.errors?.required">Phone is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Country</mat-label>
+                            <mat-select placeholder="Country" formControlName="country" required [compareWith]="compareFunction">
+                                <mat-option [value]="">-</mat-option>
+                                <mat-option *ngFor="let country of data.countries" [value]="country">
+                                    {{country.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('billing.country')!.errors?.required">Country is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>City</mat-label>
+                          <input matInput placeholder="City" formControlName="city" required>
+                          <mat-error *ngIf="form.get('billing.city')!.errors?.required">City is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>State/Province</mat-label>
+                          <input matInput placeholder="State/Province" formControlName="state">
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Zip/Postal Code</mat-label>
+                          <input matInput placeholder="Zip/Postal Code" formControlName="zip" required>
+                          <mat-error *ngIf="form.get('billing.zip')!.errors?.required">Zip/Postal Code is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" class="px-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Address</mat-label>
+                          <input matInput placeholder="Address (street, apartment, suite, unit etc.)" formControlName="address" required>
+                          <mat-error *ngIf="form.get('billing.address')!.errors?.required">Address is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group> 
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100 px-1"> 
+            <button mat-raised-button color="warn" type="button" mat-dialog-close>Close</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div> 
+    </div>
+</form>
+ 

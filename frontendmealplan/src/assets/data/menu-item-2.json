@@ -1,0 +1,19 @@
+{
+    "id": 2,
+    "name": "Salmon And Avocado Bruschetta", 
+    "description": "Black bread, smoked salmon, Philadelphia cheese, avocado, tomatoes, eggs.",
+    "price": 12.50,
+    "image": {
+        "small": "assets/images/foods/breakfast/2/small.jpg",
+        "medium": "assets/images/foods/breakfast/2/medium.jpg",
+        "big": "assets/images/foods/breakfast/2/big.jpg"
+    },
+    "discount": 10,
+    "ratingsCount": 4,
+    "ratingsValue": 320, 
+    "availibilityCount": 7,
+    "cartCount": 0,
+    "weight": 180,
+    "isVegetarian": false,
+    "categoryId": 1
+}

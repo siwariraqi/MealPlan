@@ -1,0 +1,19 @@
+{
+    "id": 12,
+    "name": "Tomatoes Marinated in Vinegar", 
+    "description": "Tomatoes, grape vinegar, parsley, pumpkin seeds, olive oil, garlic.",
+    "price": 3.90,
+    "image": {
+        "small": "assets/images/foods/appetizers/5/small.jpg",
+        "medium": "assets/images/foods/appetizers/5/medium.jpg",
+        "big": "assets/images/foods/appetizers/5/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 3,
+    "ratingsValue": 280, 
+    "availibilityCount": 8,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": true,
+    "categoryId": 2
+}

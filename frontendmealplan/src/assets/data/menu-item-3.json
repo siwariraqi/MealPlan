@@ -1,0 +1,19 @@
+{
+    "id": 3,
+    "name": "Croque Madame", 
+    "description": "Toasted bread, veal salami, eggs, butter, Gouda cheese, arugula, carrot, cucumber, radish.",
+    "price": 9.50,
+    "image": {
+        "small": "assets/images/foods/breakfast/3/small.jpg",
+        "medium": "assets/images/foods/breakfast/3/medium.jpg",
+        "big": "assets/images/foods/breakfast/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 370, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 125,
+    "isVegetarian": false,
+    "categoryId": 1
+}

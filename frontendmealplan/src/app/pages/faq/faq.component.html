@@ -1,0 +1,27 @@
+<div class="p-3">
+    <div class="theme-container"> 
+        <div class="py-4">
+            <div fxLayout="column" fxLayoutAlign="center center" class="text-center">  
+                <h1 class="secondary-font">Frequently Asked Questions</h1>             
+                <p>Click on a question to expand and reveal the answer.</p>
+            </div>
+            <mat-accordion multi="true">              
+                <mat-expansion-panel *ngFor="let faq of faqs; let i = index;" [expanded]="i === 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title fxLayout="row" fxLayoutAlign="space-between">
+                            <div class="fw-500">{{faq.question}}</div>
+                            <div fxShow="false" fxShow.gt-sm="true" class="text-muted">
+                                {{faq.status}}  
+                            </div>
+                        </mat-panel-title>               
+                    </mat-expansion-panel-header>          
+                    <p>{{faq.answer}} </p>
+                    <div class="divider"></div>
+                    <p class="mt-2 mb-0"><small class="text-muted">Was this answer helpful? <button mat-button>Yes</button><button mat-button>No</button></small></p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>  
+    </div>
+</div>
+
+<app-get-in-touch></app-get-in-touch>

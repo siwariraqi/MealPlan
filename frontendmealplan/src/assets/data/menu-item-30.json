@@ -1,0 +1,19 @@
+{
+    "id": 30,
+    "name": "Ice Cream", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 14.50,
+    "image": {
+        "small": "assets/images/foods/desserts/4/small.jpg",
+        "medium": "assets/images/foods/desserts/4/medium.jpg",
+        "big": "assets/images/foods/desserts/4/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 7
+}

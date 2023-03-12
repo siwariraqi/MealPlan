@@ -1,0 +1,183 @@
+<div class="header bg-primary">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h2 class="fw-500 secondary-font">{{(data?.coupon) ? 'Edit' : 'Add'}} Coupon</h2>
+        <app-dialog-header-controls [dialogRef]="dialogRef"></app-dialog-header-controls> 
+    </div>   
+</div>  
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content> 
+        <mat-tab-group class="tab-content-wrapped">
+            <mat-tab label="General Info"> 
+                <div fxLayout="row wrap" class="mt-2">
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Title</mat-label>
+                            <input matInput formControlName="title" required>
+                            <mat-error *ngIf="form.controls.title.errors?.required">Title is required</mat-error>   
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Code</mat-label>
+                            <input matInput formControlName="code" required>
+                            <mat-error *ngIf="form.controls.code.errors?.required">Code is required</mat-error>
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Discount Type</mat-label>
+                            <mat-select formControlName="discountType">
+                                <mat-option [value]="">-</mat-option>
+                                <mat-option *ngFor="let type of data.discountTypes" [value]="type.id">
+                                    <span>{{type.name}}</span>
+                                </mat-option>
+                            </mat-select> 
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Amount</mat-label>
+                            <input matInput formControlName="amount"> 
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3"> 
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Coupon expiry date</mat-label>
+                            <input matInput [matDatepicker]="expiryDate" formControlName="expiryDate">
+                            <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+                            <mat-datepicker #expiryDate></mat-datepicker>
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Store</mat-label>
+                            <mat-select formControlName="storeId">
+                                <mat-option [value]="">-</mat-option>
+                                <mat-option *ngFor="let store of data.stores" [value]="store.id">
+                                    <span>{{store.name}}</span>
+                                </mat-option>
+                            </mat-select> 
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <div class="py-3">
+                            <mat-checkbox formControlName="allowFreeShipping" color="primary"> 
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <span class="mr-1">Allow free shipping</span>
+                                    <mat-icon class="mat-icon-sm" color="primary" matTooltip="Check this box if the coupon grants free shipping. The free shipping method must be enabled and be set to require.">live_help</mat-icon>
+                                </div>
+                            </mat-checkbox> 
+                        </div>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <div class="py-3">
+                            <mat-checkbox formControlName="showOnStore" color="primary"> 
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <span class="mr-1">Show on store</span>
+                                    <mat-icon class="mat-icon-sm" color="primary" matTooltip="Check this box if you want to show this coupon in store page.">live_help</mat-icon>
+                                </div>
+                            </mat-checkbox> 
+                        </div>
+                    </div> 
+                    <div fxFlex="100" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Description</mat-label>
+                            <input matInput formControlName="desc">
+                        </mat-form-field>
+                    </div> 
+                </div>  
+            </mat-tab>
+            <mat-tab label="Restriction" formGroupName="restriction">
+                <div fxLayout="row wrap" class="mt-2"> 
+                    <div fxFlex="100" fxFlex.gt-md="50" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Minimum Spend</mat-label>
+                            <input matInput formControlName="minimumSpend" required>
+                            <mat-error *ngIf="form.get('restriction.minimumSpend')!.errors?.required">Minimum Spend is required</mat-error>   
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="50" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Maximum Spend</mat-label>
+                            <input matInput formControlName="maximumSpend">
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-chip-list #menuItemsChipList>
+                                <mat-chip *ngFor="let menuItem of menuItems" [selectable]="true" [removable]="true" (removed)="removeMenuItem(menuItem)">
+                                    {{menuItem}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                                <input placeholder="Add menu items..."
+                                     [matChipInputFor]="menuItemsChipList"
+                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                     [matChipInputAddOnBlur]="true"
+                                     (matChipInputTokenEnd)="addMenuItem($event)">
+                            </mat-chip-list>
+                        </mat-form-field>
+                    </div>  
+                    <div fxFlex="100" fxFlex.gt-md="50" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Menu Item categories</mat-label>
+                            <mat-select formControlName="categories" multiple> 
+                                <mat-option *ngFor="let cat of data.categories" [value]="cat.id">
+                                    <span>{{cat.name}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>  
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3">
+                        <div class="py-3">
+                            <mat-checkbox formControlName="individualUseOnly" color="primary"> 
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <span class="mr-1">Individual use only</span>
+                                    <mat-icon class="mat-icon-sm" color="primary" matTooltip="Check this box if the coupon cannot be used in conjunction with other coupons.">live_help</mat-icon>
+                                </div>
+                            </mat-checkbox> 
+                        </div>
+                    </div>  
+                    <div fxFlex="100" fxFlex.gt-md="25" class="px-3"> 
+                        <div class="py-3">
+                            <mat-checkbox formControlName="excludeSaleItems" color="primary">
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <span class="mr-1">Exclude sale items</span>
+                                    <mat-icon class="mat-icon-sm" color="primary" matTooltip="Check this box if the coupon should not apply to items on sale. Per-item coupons will only work if the item is not on sale. Per-cart coupons will only work if there are no sale items in the cart.">live_help</mat-icon>
+                                </div> 
+                            </mat-checkbox>
+                        </div> 
+                    </div>   
+                </div>
+            </mat-tab> 
+            <mat-tab label="Limit" formGroupName="limit">
+                <div fxLayout="row wrap" class="mt-2"> 
+                    <div fxFlex="100" fxFlex.gt-md="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Usage limit per coupon</mat-label>
+                            <input matInput formControlName="perCoupon" type="number"> 
+                        </mat-form-field>
+                    </div>  
+                    <div fxFlex="100" fxFlex.gt-md="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Limit usage to X items</mat-label>
+                            <input matInput formControlName="perItems" type="number"> 
+                        </mat-form-field>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="33.3" class="px-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Usage limit per user</mat-label>
+                            <input matInput formControlName="perUser" type="number"> 
+                        </mat-form-field>
+                    </div> 
+                </div>
+            </mat-tab>
+        </mat-tab-group>  
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100 px-1"> 
+            <button mat-raised-button color="warn" type="button" mat-dialog-close>Close</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div> 
+    </div>
+</form>
+ 

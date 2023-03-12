@@ -1,0 +1,19 @@
+{
+    "id": 21,
+    "name": "\"Three Sisters\" Dolma", 
+    "description": "Veal, lamb, eggplants, tomatoes, bell pepper.",
+    "price": 17.50,
+    "image": {
+        "small": "assets/images/foods/meat-courses/2/small.jpg",
+        "medium": "assets/images/foods/meat-courses/2/medium.jpg",
+        "big": "assets/images/foods/meat-courses/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 230,
+    "isVegetarian": false,
+    "categoryId": 5
+}

@@ -1,0 +1,5 @@
+$purple-primary: mat.define-palette(mat.$purple-palette, 700, 50, 900);
+$purple-accent: mat.define-palette(mat.$green-palette, 600, 100, 900);
+$purple-warn: mat.define-palette(mat.$red-palette, A200);
+
+$purple-theme: mat.define-light-theme($purple-primary, $purple-accent, $purple-warn);

@@ -1,0 +1,106 @@
+<app-header-image *ngIf="settings.header == 'image'" 
+                [backgroundImage]="'assets/images/others/homepage.jpg'"
+                [bgImageAnimate]="true"
+                [contentOffsetToTop]="true"
+                [title]="'Welcome to Restaurant'"
+                [desc]="'Booking a table online is easy'"
+                [isHomePage]="true"
+                [fullscreen]="false">
+</app-header-image> 
+
+<app-header-carousel *ngIf="settings.header == 'carousel'" 
+                    [slides]="slides" 
+                    [contentOffsetToTop]="false"
+                    [fullscreen]="false">
+</app-header-carousel>
+
+<app-header-video *ngIf="settings.header == 'video'" 
+                [backgroundVideo]="'http://themeseason.com/data/videos/restaurant.mp4'" 
+                [contentOffsetToTop]="true"
+                [title]="'Welcome to Restaurant'"
+                [desc]="'Booking a table online is easy'"
+                [isHomePage]="true"
+                [fullscreen]="false">
+</app-header-video>
+  
+
+
+<div class="section mt-3">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">About Us</h1> 
+            <p class="section-desc text-muted">Restoring authenticity to food from the ground up is the missioin that drives us. Restauration is the realization of a dream.</p>
+            <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                    <img src="assets/images/others/about-us.jpg" alt="about" class="mw-100 d-block">
+                </div> 
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="py-3 px-4">
+                    <h1 class="secondary-font primary-color mb-2">Since 1987, at your service</h1>
+                    <p> Restourant are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin a ullamcorper purus. Sed malesuada a dolor et aliquet.</p>
+                    <p> After 16 years in the restaurant business, 9 in farming, and several years dedicated to the study of nutrition, we decided now was the right time to take all that experience and synthesize it into a local eatery where people can enjoy exquisite food, support local food producers, and eat the kind of food they can feel good about.</p>
+                    <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="pt-3">
+                        <img src="assets/images/others/signature.png" alt="signature"> 
+                        <a mat-raised-button routerLink="/about" color="primary" class="uppercase">Read more</a>
+                    </div> 
+                </div>  
+            </mat-card>
+        </div>
+    </div>   
+</div>
+
+<div class="section default mt-3">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">Special menu</h1>
+            <p class="section-desc text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> 
+            <app-menu-items-carousel [menuItems]="specialMenuItems"></app-menu-items-carousel>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <a mat-raised-button routerLink="/menu" color="primary" class="uppercase">View all menu</a>
+            </div>  
+        </div>
+    </div>   
+</div> 
+
+<div class="section">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title mb-3">Today Menu</h1>
+            <p class="section-desc text-muted">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+            <app-today-menu [menuItem]="todayMenu"></app-today-menu> 
+        </div>
+    </div>   
+</div> 
+
+<div class="section default mt-3">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">Our best dishes</h1>
+            <p class="section-desc text-muted">The best dishes of the city for our clients.</p> 
+            <app-menu-items-carousel [menuItems]="bestMenuItems"></app-menu-items-carousel>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <a mat-raised-button routerLink="/menu" color="primary" class="uppercase">View all menu</a>
+            </div>  
+        </div>
+    </div>   
+</div>  
+
+<app-our-services></app-our-services> 
+<app-our-chefs></app-our-chefs>  
+<app-timeline></app-timeline> 
+
+<div class="section">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title mb-3">Reservation</h1>
+            <p class="section-desc text-muted">We provide free, secure and instantly confirmed online reservation.</p>
+            <mat-card class="p-0" ngClass.lt-md="px-2 pb-2">
+                <app-reservation-form></app-reservation-form>  
+            </mat-card> 
+        </div>
+    </div>   
+</div>   
+
+<app-testimonials></app-testimonials>  
+<app-get-app></app-get-app>
+<app-our-awards></app-our-awards> 
+<app-get-in-touch></app-get-in-touch>

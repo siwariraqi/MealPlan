@@ -1,0 +1,14 @@
+<span fxLayoutAlign="center center" class="item">
+  <mat-icon [color]="iconColor" [ngClass]="'mat-icon-' + iconSize">call</mat-icon>
+  <span class="px-1">(+100) 123 456 7890</span>
+</span>
+<span *ngIf="dividers" class="v-divider" fxShow="false" fxShow.gt-xs></span>
+<span fxLayoutAlign="center center" class="item" fxShow="false" fxShow.gt-xs>
+  <mat-icon [color]="iconColor" [ngClass]="'mat-icon-' + iconSize">location_on</mat-icon>
+  <span class="px-1">2903 Avenue Z, Brooklyn, NY, USA</span>
+</span>
+<span *ngIf="dividers" class="v-divider" fxShow="false" fxShow.gt-sm></span>
+<span fxLayoutAlign="center center" class="item" fxShow="false" fxShow.gt-sm>
+  <mat-icon [color]="iconColor" [ngClass]="'mat-icon-' + iconSize">mail</mat-icon>
+  <span class="px-1">info@mox.com</span>
+</span>

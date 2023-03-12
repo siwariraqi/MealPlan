@@ -1,0 +1,76 @@
+{   
+  "LOGIN": "Войти", 
+  "LOGOUT": "Выйти", 
+  "REGISTER": "Регистрация",
+  "ACCOUNT": "Аккаунт",
+  "RESERVATION": "Бронирование",
+  "MENU": "Меню",
+  "NAV": {  
+    "HOME": "Главная страница", 
+    "PAGES": "Страницы", 
+    "CHEFS": "Поварa",
+    "CHEF": "Повар", 
+    "SHOP": "Магазин",
+    "SINGLE_MENU": "Единое меню",
+    "CART": "Корзина",
+    "CHECKOUT": "Oформления",
+    "FAQS": "Faqs",
+    "PRICING": "Pricing",
+    "TERMS_CONDITIONS": "Условия и положения",
+    "LANDING": "Целевая страница", 
+    "404_PAGE": "404 страница",
+    "OTHERS": "Другие",
+    "EXTERNAL_LINK": "Ссылка",
+    "MENU_ITEM": "Menu Item",
+    "CONTACT": "Kонтакт",
+    "ABOUT_US": "O нас",
+    "ADMIN": "Aдмин"
+  },
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Приборная панель",  
+    "MENU_ITEMS": "Меню", 
+    "CATEGORIES": "Категории",
+    "MENU_ITEMS_LIST": "Список меню", 
+    "MENU_ITEM_DETAIL": "Детали меню",
+    "ADD_MENU_ITEM": "Добавить меню",
+    "SALES": "Продажи",
+    "ORDERS": "Заказы",
+    "TRANSACTIONS": "Сделки",
+    "USERS": "Пользователи",
+    "RESERVATIONS": "Бронирование",
+    "CUSTOMERS": "Клиенты", 
+    "COUPONS": "Купоны",
+    "WITHDRAWAL": "Вывод средств",
+    "ANALYTICS": "Аналитика",
+    "REFUND": "Возврат",
+    "FOLLOWERS": "Подписчики",
+    "SUPPORT": "Поддержка",
+    "REVIEWS": "Отзывы", 
+    "EXTERNAL_LINK": "Ссылка" 
+  },
+  "BTN": {
+    "ADD": "Добавить",
+    "SAVE": "Сохранить",
+    "SUBMIT": "Отправить",
+    "CANCEL": "Отмена",
+    "UPLOAD": "Загрузить",
+    "REMOVE": "Удалить",
+    "YES": "Да",
+    "NO": "Нет",
+    "OK": "OK"
+  },
+  "MESSAGE": {
+    "SURE_DELETE": "Вы уверены, что хотите удалить?",
+    "FILE_SIZE": "Размер файла не может превышать {{param}} кб."
+  },
+  "FIELD": { 
+    "NAME": "Имя" 
+  }, 
+  "PAGINATION":{
+    "ITEMS_PER_PAGE": "Пункты на странице:",
+    "NEXT_PAGE": "Следующая страница",
+    "PREV_PAGE": "Предыдущая страница",
+    "FIRST_PAGE": "Первая страница",
+    "LAST_PAGE": "Последняя страница"
+  }
+}
