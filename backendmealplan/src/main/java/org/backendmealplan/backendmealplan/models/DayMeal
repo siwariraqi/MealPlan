@@ -1,8 +1,9 @@
+import { DayMealKey } from './id';
+
 export class DayMeal {
   constructor(
-      public DayMealId?: number,
-      public DayMealType?: string,
+      public id?: DayMealKey,
+      public type?: string,
     ) {
   }
 }
-
