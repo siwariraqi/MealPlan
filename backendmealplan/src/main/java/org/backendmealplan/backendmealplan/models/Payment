@@ -1,0 +1,15 @@
+import { User } from "./User";
+
+export class Payment{
+
+constructor(
+    public paymentId?:number,
+    public paymentOfDate?:Date,
+    public startDate?:Date,
+    public endDate?:Date,
+    public paymentTool?:string,
+    public plan?:Plan ,
+    public user?:User
+){}
+
+}

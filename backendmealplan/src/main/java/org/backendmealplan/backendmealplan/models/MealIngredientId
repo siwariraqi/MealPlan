@@ -1,0 +1,6 @@
+export class MealIngredientId{
+    constructor(
+        public meal?:Meal ,
+        public ingredient?: Ingredient
+    ){}
+}

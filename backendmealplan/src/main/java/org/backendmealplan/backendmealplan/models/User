@@ -1,0 +1,22 @@
+import { Payment } from "./Payment";
+import { UserInfo } from "./UserInfo";
+
+export class User {
+
+constructor(
+        public userId?:number ,
+        public firstName?:string,
+        public lastName?:string,
+        public password?:string,
+        public phoneNumber?:string,
+        public userName?:string,
+        public userInfo?:UserInfo,
+        public plan?:Plan ,
+        public payments?:Payment[],
+        public changes?:GroceryList,
+        public feedbacks?:UserFeedback[]
+
+){
+}
+
+}
