@@ -1,4 +1,8 @@
+import { DayPlanKey } from './dayPlanKey';
 export class DayPlan {
-  constructor() {
-  }
+  constructor(
+     public dayPlanKey: DayPlanKey,
+     public dayNumber: number,
+     public dailyCalories: string
+   ) {}
 }
