@@ -1,7 +1,7 @@
 import { Plan } from './Plan';
 import { DayPlanId } from './DayPlanId';
 
-export class DayMealKey {
+export class DayPlanKey {
    constructor(
      public plan: Plan,
      public dayPlanId: DayPlanId
