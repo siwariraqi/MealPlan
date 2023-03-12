@@ -1,0 +1,14 @@
+export class Plan {
+  constructor(    public planId?: number,
+                  public planName?: string,
+                  public length?: string,
+                  public price?: number,
+                  public includes?: string,
+                  public benefits?: string,
+                  public users?: User[],
+                  public dayPlanIdList?: DayPlanIdList[],
+                  public groceryLists?: GroceryList[],
+                  public groceryLists?: GroceryList[],
+                  public payments?: Payment2[] ) {
+  }
+}
