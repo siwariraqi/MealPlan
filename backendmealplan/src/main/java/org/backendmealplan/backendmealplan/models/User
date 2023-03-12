@@ -13,7 +13,7 @@ constructor(
         public userInfo?:UserInfo,
         public plan?:Plan ,
         public payments?:Payment[],
-        public changes?:GroceryList,
+        public changes?:GroceryList[],
         public feedbacks?:UserFeedback[]
 
 ){

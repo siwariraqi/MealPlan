@@ -6,9 +6,8 @@ export class Plan {
                   public includes?: string,
                   public benefits?: string,
                   public users?: User[],
-                  public dayPlanIdList?: DayPlanIdList[],
+                  public dayPlanIdList?: DayPlanId[],
                   public groceryLists?: GroceryList[],
-                  public groceryLists?: GroceryList[],
-                  public payments?: Payment2[] ) {
+                  public payments?: Payment[] ) {
   }
 }
