@@ -1,3 +1,5 @@
+import { Goal } from './goal';
+
 export class UserInfo {
   constructor(    public infoId: number,
                   public height: number,

@@ -1,10 +1,10 @@
-import { MealList } from './mealList';
+import { Meal } from './meal';
 
 export class Ingredient {
   constructor(
     public ingredientId?: number,
     public category?: string,
     public productName?: string,
-    public mealList?: MealList[]
+    public mealList?: Meal[]
   ) {}
 }

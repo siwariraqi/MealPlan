@@ -1,5 +1,7 @@
 import { Payment } from "./Payment";
 import { UserInfo } from "./UserInfo";
+import { GroceryList } from "./groceryList";
+import { UserFeedback } from "./userFeedback";
 
 export class User {
 

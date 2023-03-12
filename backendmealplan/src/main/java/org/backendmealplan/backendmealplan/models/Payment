@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Plan } from "./plan";
 
 export class Payment{
 
