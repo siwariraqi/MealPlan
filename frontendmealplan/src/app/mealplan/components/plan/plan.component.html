@@ -1,0 +1,13 @@
+<div class="planContainer">
+    <h2>{{name}}</h2>
+    <h2>{{price}}$/{{length}}</h2>
+    <h2>{{name}} Includes:</h2>
+    <ul>
+        <li *ngFor="let str of tmpIncludes">{{str}}</li>
+    </ul>
+    <h2>Benefits:</h2>
+    <ul>
+        <li *ngFor="let ben of tmpBenefits">{{ben}}</li>
+    </ul>
+    <button>Select Plan</button>
+</div>
