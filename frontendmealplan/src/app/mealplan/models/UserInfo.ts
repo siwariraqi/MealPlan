@@ -1,3 +1,4 @@
+import { Goal } from "./Goal";
 
 
 export class UserInfo {
@@ -10,6 +11,6 @@ export class UserInfo {
                   public medicalRisk?: string,
                   public isReceiveTreatment?: boolean,
                   public gender?: string,
-                  public goals?: string[]) {
+                  public goals?: Goal[]) {
   }
 }
