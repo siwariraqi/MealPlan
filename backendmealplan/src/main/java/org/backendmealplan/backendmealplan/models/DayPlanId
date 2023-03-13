@@ -1,9 +1,0 @@
-import { Meal } from './meals';
-import { Plan } from './planList';
-export class DayPlanId {
-  constructor(
-    public dayPlanId: number,
-    public planList: Plan[],
-    public meals: Meal[]
-  ) {}
-}

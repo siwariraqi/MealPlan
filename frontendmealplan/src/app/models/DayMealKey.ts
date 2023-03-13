@@ -1,5 +1,5 @@
-import { DayPlanId } from './planDayId';
-import { Meal } from './meal';
+import { DayPlanId } from "./DayPlanId";
+import { Meal } from "./Meal";
 
 export class DayMealKey {
    constructor(

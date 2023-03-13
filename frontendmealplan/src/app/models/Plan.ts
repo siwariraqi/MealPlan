@@ -1,7 +1,6 @@
-import { User } from './users';
-import { DayPlanId } from './dayPlanIdList';
-import { GroceryList } from './groceryLists';
-import { Payment } from './payments';
+import { User } from "./User";
+import { DayPlanId } from "./DayPlanId";
+
 export class Plan {
   constructor(    public planId?: number,
                   public planName?: string,
@@ -11,7 +10,7 @@ export class Plan {
                   public benefits?: string,
                   public users?: User[],
                   public dayPlanIdList?: DayPlanId[],
-                  public groceryLists?: GroceryList[],
-                  public payments?: Payment[] ) {
+                  public groceryListIds?: number[],
+              ) {
   }
 }

@@ -1,4 +1,4 @@
-import { DayMealKey } from './DayMealKey';
+import { DayMealKey } from "./DayMealKey";
 
 export class DayMeal {
   constructor(

@@ -1,4 +1,4 @@
-import { Goal } from './goal';
+
 
 export class UserInfo {
   constructor(    public infoId: number,
@@ -10,6 +10,6 @@ export class UserInfo {
                   public medicalRisk: string,
                   public isReceiveTreatment: boolean,
                   public gender: string,
-                  public goals: Goal[]) {
+                  public goals: string[]) {
   }
 }
