@@ -1,0 +1,10 @@
+import { UserInfo } from './userInfo';
+
+export class Goal {
+  constructor(
+    public goalId?: number,
+    public text?: string,
+    public userInfo?: UserInfo[]
+  ) {}
+}
+

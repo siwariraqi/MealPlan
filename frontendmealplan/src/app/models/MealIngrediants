@@ -1,0 +1,9 @@
+import { MealIngredientId } from "./MealIngredientId";
+
+export class MealIngrediants{
+    constructor(
+        public id?:MealIngredientId,
+        public amount?:number,
+        public unit?:string
+    ){}
+}
