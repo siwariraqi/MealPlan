@@ -1,0 +1,13 @@
+import { Meal } from './meal';
+import { User } from './user';
+
+export class UserFeedback {
+  constructor(  public feedbackId: number,
+                  public meal: Meal,
+                  public user: User,
+                  public isOnIt: boolean,
+                  public date: Date,
+                  public rating: number,
+                  public feedbackText: string) {
+  }
+}
