@@ -14,24 +14,27 @@ import java.util.List;
 @RequestMapping("users")
 @RestController
 @CrossOrigin
-public class UsersController {
+public class UsersController{
     @Autowired
     private UserBL userBL;
 
     @Autowired
     private GoalBL goalBL;
 
+    //TODO: not tested yet
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
     }
 
+    //TODO: not tested yet
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
         return ResponseEntity.ok(updatedUserInfo);
     }
 
+    //TODO: not tested yet
     @PostMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
