@@ -3,6 +3,11 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "app-onboarding9",
   template: `
+      <style>
+        .box:hover{
+            background: #E09167;
+        }
+    </style>
     <div class="container">
       <div class='top'> 
       <p class='question'> Have you been diagnosed with or received treatment for diabetes? </p>
