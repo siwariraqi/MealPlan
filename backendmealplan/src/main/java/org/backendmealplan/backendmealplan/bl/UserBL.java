@@ -1,22 +1,39 @@
 package org.backendmealplan.backendmealplan.bl;
-
+import org.backendmealplan.backendmealplan.Excptions.UNAUTHORIZEDException;
+import org.backendmealplan.backendmealplan.Excptions.userExistException;
+import org.backendmealplan.backendmealplan.beans.User;
+import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
 public class UserBL {
     @Autowired
+    UsersDAO usersDAO;
+    
+    @Autowired
     UsersInfoDAO usersInfoDAO;
 
     @Autowired
     GoalsDAO goalsDAO;
-
+    
+    public User authentication(String email, String password) throws Exception {
+        User u=usersDAO.findUserByEmailAndPassword(email,password);
+        if(u==null)throw new UNAUTHORIZEDException("wrong email or password");
+        return u;
+    }
+    public User adduser(User user)throws userExistException  {
+        User u=usersDAO.findByEmail(user.getEmail());
+        if(u!=null){
+            throw new userExistException("user alredy Exist");
+        }
+        return usersDAO.save(user);
+}
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.

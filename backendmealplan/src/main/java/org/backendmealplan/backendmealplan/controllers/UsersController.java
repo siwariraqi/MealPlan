@@ -1,5 +1,8 @@
 package org.backendmealplan.backendmealplan.controllers;
-
+import org.backendmealplan.backendmealplan.Excptions.userExistException;
+import org.backendmealplan.backendmealplan.beans.User;
+import org.backendmealplan.backendmealplan.dao.UsersDAO;
+import org.springframework.http.HttpStatus;
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
@@ -8,7 +11,6 @@ import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("users")
@@ -43,9 +45,26 @@ public class UsersController {
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
+        try{
+            User u =userBL.authentication(email,password);
+            u.setPassword(null);
+            return new ResponseEntity(u,HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.UNAUTHORIZED);
+        }
+    }
 
-
-
-
-
+    @PostMapping("/adduser")
+    public ResponseEntity adduser(@RequestBody User user){
+        try{
+            User u= userBL.adduser(user);
+            u.setPassword(null);
+            return new ResponseEntity(u,HttpStatus.OK);
+        }catch(userExistException e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
 }
