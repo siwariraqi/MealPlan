@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("users")
 @RestController
@@ -24,19 +27,30 @@ public class UsersController {
     private GoalBL goalBL;
 
     @GetMapping("allGoals")
-    public List<Goal> getAllGoals(){
-        return this.goalBL.getAllGoals();
+    public Set<String> getAllGoals(){
+        Set<String> goalsText = new HashSet<String>();
+        List<Goal> goals = this.goalBL.getAllGoals();
+        for (int i =0 ; i<goals.size();i++ )
+        {
+            goalsText.add(goals.get(i).getText());
+        }
+        return goalsText;
     }
 
     //TODO: not tested yet
     @PostMapping("addUserInfo")
-    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
+    public ResponseEntity addUserInfo(Collection<String> txt){
+        List<Goal> goals = goalBL.getalltexts(txt);
+        Set<Goal> set = new HashSet<>(goals);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setGoals(set);
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
         return ResponseEntity.ok(updatedUserInfo);
     }
 
     //TODO: not tested yet
-    @PostMapping("updateUserInfo")
+
+    @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
@@ -46,9 +60,6 @@ public class UsersController {
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
-
-
-
 
 
 }
