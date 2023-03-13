@@ -1,7 +1,7 @@
-import { Payment } from "./Payment";
+
 import { UserInfo } from "./UserInfo";
-import { GroceryList } from "./groceryList";
-import { UserFeedback } from "./userFeedback";
+import { UserFeedback } from "./UserFeedback";
+
 
 export class User {
 
@@ -13,12 +13,10 @@ constructor(
         public phoneNumber?:string,
         public userName?:string,
         public userInfo?:UserInfo,
-        public plan?:Plan ,
-        public payments?:Payment[],
-        public changes?:GroceryList[],
-        public feedbacks?:UserFeedback[]
-
-){
-}
+        public planId?:number,
+        public paymentsIds?:number[],
+        public ingredientsChangesId?:number[],
+        public feedBackIds?:UserFeedback[])
+        {}
 
 }

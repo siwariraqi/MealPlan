@@ -1,5 +1,3 @@
-import { User } from "./User";
-import { Plan } from "./plan";
 
 export class Payment{
 
@@ -9,8 +7,8 @@ constructor(
     public startDate?:Date,
     public endDate?:Date,
     public paymentTool?:string,
-    public plan?:Plan ,
-    public user?:User
+    public planId?:number ,
+    public userId?:number
 ){}
 
 }

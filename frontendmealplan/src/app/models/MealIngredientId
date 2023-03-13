@@ -1,9 +1,0 @@
-import { Meal } from "./meal";
-import { Ingredient } from "./ingredient";
-
-export class MealIngredientId{
-    constructor(
-        public meal?:Meal ,
-        public ingredient?: Ingredient
-    ){}
-}

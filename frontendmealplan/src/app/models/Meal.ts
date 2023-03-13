@@ -1,6 +1,5 @@
-import { UserFeedback } from './feedbacks';
-import { Ingredient } from './mealIngredients';
-import { DayPlanId } from './dayPlanId';
+import { UserFeedback } from "./UserFeedback";
+import { Ingredient } from "./Ingredient";
 
 export class Meal{
   constructor(     public mealId: number,
@@ -18,7 +17,6 @@ export class Meal{
                      public dietType: string,
                      public feedbacks: UserFeedback[],
                      public mealIngredients: Ingredient[],
-                     public dayPlanId: DayPlanId[]
                      ) {
   }
 }

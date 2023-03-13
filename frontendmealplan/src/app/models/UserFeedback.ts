@@ -1,10 +1,8 @@
-import { Meal } from './meal';
-import { User } from './user';
+import { Meal } from "./Meal";
 
 export class UserFeedback {
-  constructor(  public feedbackId: number,
+  constructor(    public feedbackId: number,
                   public meal: Meal,
-                  public user: User,
                   public isOnIt: boolean,
                   public date: Date,
                   public rating: number,

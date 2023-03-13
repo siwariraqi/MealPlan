@@ -1,5 +1,5 @@
-import { Plan } from './plan';
-import { User } from './user';
+import { Plan } from "./Plan";
+import { User } from "./User";
 
 export class GroceryList {
   constructor(

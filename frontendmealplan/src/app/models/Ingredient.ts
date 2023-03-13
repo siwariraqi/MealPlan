@@ -1,4 +1,4 @@
-import { Meal } from './meal';
+import { Meal } from "./Meal";
 
 export class Ingredient {
   constructor(
