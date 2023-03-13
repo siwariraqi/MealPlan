@@ -1,0 +1,17 @@
+.container {
+    margin-top: -2vh;
+    width: 90vw;
+    height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+
+  @media screen and (max-width: 600px) {
+    .container{
+      width: 95vw;
+    }
+  }

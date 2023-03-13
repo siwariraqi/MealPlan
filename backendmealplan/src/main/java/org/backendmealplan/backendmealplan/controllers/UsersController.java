@@ -15,12 +15,13 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class UsersController {
+    //The class not tested yet
     @Autowired
     private UserBL userBL;
 
     @Autowired
     private GoalBL goalBL;
-
+    
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
