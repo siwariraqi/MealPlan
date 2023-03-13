@@ -1,0 +1,10 @@
+[
+    { "id":1, "name":"Breakfast", "description": "Breakfast category description" },
+    { "id":2, "name":"Appetizers", "description": "Appetizers category description" },
+    { "id":3, "name":"Salads", "description": "Salads category description" },
+    { "id":4, "name":"Soups", "description": "Soups category description" },
+    { "id":5, "name":"Meat Courses", "description": "Meat Courses category description" },
+    { "id":6, "name":"Chicken Courses", "description": "Chicken Courses category description" }, 
+    { "id":7, "name":"Desserts", "description": "Desserts category description" },
+    { "id":8, "name":"Drinks", "description": "Drinks category description" } 
+]

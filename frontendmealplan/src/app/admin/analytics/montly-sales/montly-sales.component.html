@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="center">                
+        <mat-card-subtitle><h2>Montly Sales</h2></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content> 
+        <div class="w-100 h-300p" #resizedDiv>
+            <ngx-charts-pie-chart
+                [scheme]="colorScheme"
+                [results]="data"
+                [legend]="showLegend"
+                [explodeSlices]="explodeSlices"
+                [labels]="showLabels"
+                [doughnut]="doughnut"
+                [gradient]="gradient"
+                (select)="onSelect($event)">
+            </ngx-charts-pie-chart>   
+        </div>
+    </mat-card-content>
+</mat-card>

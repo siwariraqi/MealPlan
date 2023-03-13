@@ -1,0 +1,91 @@
+<mat-card class="m-2 p-0">
+    <div class="table-wrapper"> 
+        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.id}} </td>
+            </ng-container>  
+      
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.date}}</td>
+            </ng-container> 
+        
+            <!-- Time Column -->
+            <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.time}}</td>
+            </ng-container>  
+    
+            <!-- Guests Column -->
+            <ng-container matColumnDef="guests">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Guests </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.guests}}</td>
+            </ng-container> 
+    
+            <!-- Table Number Column -->
+            <ng-container matColumnDef="tableNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Table Number </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.tableNumber}}</td>
+            </ng-container> 
+    
+            <!-- Status Column -->
+            <ng-container matColumnDef="status.name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="status.name"> Status </th>
+                <td mat-cell *matCellDef="let reservation"> {{reservation.status.name}}</td>
+            </ng-container> 
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let reservation"> 
+                    <mat-form-field appearance="outline" class="p-0 m-0">
+                        <mat-label>Status</mat-label>
+                        <mat-select (selectionChange)="onStatusSelectionChange($event, reservation)">
+                            <mat-option>---</mat-option> 
+                            <mat-option *ngFor="let status of statuses" [value]="status">
+                                {{status.name}}
+                            </mat-option>
+                        </mat-select>  
+                    </mat-form-field>  
+                </td>
+            </ng-container> 
+
+            <!-- Assign Table Column -->
+            <ng-container matColumnDef="assignTable">
+                <th mat-header-cell *matHeaderCellDef> Assign Table </th>
+                <td mat-cell *matCellDef="let reservation">  
+                    <mat-form-field appearance="outline" class="p-0 m-0">
+                        <mat-label>Table</mat-label>
+                        <mat-select (selectionChange)="onTableSelectionChange($event, reservation)" [disabled]="reservation.status.id != 1">
+                            <mat-option>---</mat-option> 
+                            <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="number">
+                                {{number}}
+                            </mat-option>
+                        </mat-select>  
+                    </mat-form-field>  
+                </td>
+            </ng-container>  
+      
+            <!-- View Column -->
+            <ng-container matColumnDef="view">
+                <th mat-header-cell *matHeaderCellDef> View </th>
+                <td mat-cell *matCellDef="let reservation"> 
+                    <button mat-icon-button color="warn" (click)="view(reservation)" matTooltip="View">
+                        <mat-icon>visibility</mat-icon>
+                    </button> 
+                </td>
+            </ng-container> 
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let reservation; columns: displayedColumns;"></tr>
+        </table> 
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+</mat-card>
+
+

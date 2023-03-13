@@ -1,0 +1,19 @@
+{
+    "id": 18,
+    "name": "Noodle Soup With Meatballs", 
+    "description": "Homemade noodles, veal, meat broth, onion, carrot, turmeric, mung beans.",
+    "price": 11.50,
+    "image": {
+        "small": "assets/images/foods/soups/2/small.jpg",
+        "medium": "assets/images/foods/soups/2/medium.jpg",
+        "big": "assets/images/foods/soups/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 180,
+    "isVegetarian": false,
+    "categoryId": 4
+}

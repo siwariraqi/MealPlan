@@ -1,0 +1,19 @@
+{
+    "id": 34,
+    "name": "Coctails", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 15.00,
+    "image": {
+        "small": "assets/images/foods/drinks/5/small.jpg",
+        "medium": "assets/images/foods/drinks/5/medium.jpg",
+        "big": "assets/images/foods/drinks/5/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 8
+}

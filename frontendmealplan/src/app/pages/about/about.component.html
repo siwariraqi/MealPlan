@@ -1,0 +1,100 @@
+<app-header-image [backgroundImage]="'assets/images/others/about.jpg'" 
+                  [bgImageAnimate]="true" 
+                  [contentOffsetToTop]="true"  
+                  [title]="'About Us'"
+                  [desc]="'Further information About our team and our Restaurant'">
+</app-header-image>  
+
+<div class="px-3">
+    <div class="theme-container">
+        <mat-card class="main-content-header"> 
+            <div class="section pt-1 px-3"> 
+                <h1 class="section-title">The History</h1> 
+                <p>Quisque pretium fringilla dolor, ac feugiat dui blandit quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris orci neque, rhoncus id augue at, blandit pretium est. Phasellus eget enim quis neque luctus porta. Aenean lacinia, nibh nec sagittis dictum, nisl mauris maximus eros, at elementum ipsum orci sit amet nunc. Nam enim diam, euismod in tincidunt in, euismod nec ligula. Aliquam erat volutpat. Integer vulputate lacus a volutpat aliquet. Mauris suscipit sollicitudin purus, et congue lectus dignissim vel. Vestibulum purus arcu, eleifend a odio non, bibendum dictum lectus. Nam vulputate accumsan quam facilisis aliquet. Cras accumsan et elit a consequat.</p>
+                  
+                <div fxLayout="row wrap"> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3"> 
+                        <img src="assets/images/others/about-1.jpg" alt="about-1" class="mw-100">
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" [ngClass.gt-sm]="(settings.rtl) ? 'pr-5' : 'pl-5'"> 
+                        <h1 class="secondary-font primary-color text-center">Our Story</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus ante ut arcu iaculis fringilla. Vivamus bibendum leo massa, non pellentesque odio tincidunt id. Mauris id ornare mi. Fusce eu est in nisl tincidunt aliquet quis fringilla nulla. Maecenas viverra dictum eros sit amet feugiat. Ut ex tortor, ultrices vel tempus vitae, gravida quis velit. Donec mattis vehicula nulla, sed maximus ante pulvinar ullamcorper. Cras maximus facilisis suscipit. Quisque fermentum metus et nunc fermentum laoreet.</p>
+                        <p>Suspendisse ultricies dapibus viverra. Duis id erat a nunc placerat bibendum nec quis elit. Suspendisse non suscipit nibh. Maecenas laoreet leo ac erat bibendum pulvinar. Ut sagittis pellentesque sapien non hendrerit. Aenean lacinia felis sit amet sem malesuada, sed pellentesque tortor consequat. Vivamus non congue nulla, feugiat volutpat ante. Donec ultricies nisl sed leo tincidunt, a consequat nibh ornare. Vivamus ante quam, rhoncus vitae lacinia convallis, rhoncus nec neque. Aliquam ut lectus at justo tristique tristique. Vestibulum ex sapien, imperdiet sit amet tempus eget, egestas sit amet leo. Suspendisse potenti.</p>
+                    </div> 
+                </div> 
+
+                <div fxLayout="row wrap" class="mt-3">  
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" [ngClass.gt-sm]="(settings.rtl) ? 'pl-5' : 'pr-5'"> 
+                        <h1 class="secondary-font primary-color text-center">Since 1987</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus ante ut arcu iaculis fringilla. Vivamus bibendum leo massa, non pellentesque odio tincidunt id. Mauris id ornare mi. Fusce eu est in nisl tincidunt aliquet quis fringilla nulla. Maecenas viverra dictum eros sit amet feugiat. Ut ex tortor, ultrices vel tempus vitae, gravida quis velit. Donec mattis vehicula nulla, sed maximus ante pulvinar ullamcorper. Cras maximus facilisis suscipit. Quisque fermentum metus et nunc fermentum laoreet.</p>
+                        <p>Suspendisse ultricies dapibus viverra. Duis id erat a nunc placerat bibendum nec quis elit. Suspendisse non suscipit nibh. Maecenas laoreet leo ac erat bibendum pulvinar. Ut sagittis pellentesque sapien non hendrerit. Aenean lacinia felis sit amet sem malesuada, sed pellentesque tortor consequat. Vivamus non congue nulla, feugiat volutpat ante. Donec ultricies nisl sed leo tincidunt, a consequat nibh ornare. Vivamus ante quam, rhoncus vitae lacinia convallis, rhoncus nec neque. Aliquam ut lectus at justo tristique tristique. Vestibulum ex sapien, imperdiet sit amet tempus eget, egestas sit amet leo. Suspendisse potenti.</p>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3"> 
+                        <img src="assets/images/others/about-2.jpg" alt="about-2" class="mw-100">
+                    </div> 
+                </div> 
+    
+                <div fxLayout="row wrap" class="flex-wrapper mt-3"> 
+                    <div fxFlex="100" class="px-3">
+                        <h2 class="secondary-font primary-color">Our Working Hours</h2> 
+                        <p>Praesent sit amet ex vel lectus cursus vehicula vitae nec purus. Pellentesque eu augue tempor, mattis ante id, ullamcorper neque. Suspendisse scelerisque vestibulum dapibus. Proin condimentum, enim non luctus feugiat, est libero volutpat mauris, ut tristique nunc magna tincidunt erat. Suspendisse pretium posuere odio non mollis. Suspendisse vel sem sed mi aliquet iaculis. Mauris mi justo, aliquam at justo et, finibus consectetur enim. Ut laoreet aliquet consectetur. Proin suscipit massa ultrices lacinia mattis. Vestibulum at scelerisque arcu, et dignissim diam. Proin congue lobortis orci, ac viverra purus tempus ut.</p>
+                    </div> 
+                    <div *ngFor="let item of workingHours" fxFlex="100" fxFlex.gt-md="25" fxFlex.gt-sm="50" class="p-3"> 
+                        <mat-chip-list> 
+                            <mat-chip color="primary" selected>{{item.day}}</mat-chip>
+                            <mat-chip><mat-icon class="mr-1 text-muted">schedule</mat-icon>{{item.hours}}</mat-chip>
+                        </mat-chip-list> 
+                    </div> 
+                </div> 
+                <div fxLayout="row wrap" class="flex-wrapper mt-5"> 
+                    <div fxFlex="100" class="px-3">
+                        <h2 class="secondary-font primary-color">Accommodation Details</h2> 
+                        <p>Aenean eu ex vitae orci posuere luctus. Phasellus dui tortor, sagittis molestie mi at, malesuada porttitor dui. Praesent scelerisque, turpis ac venenatis faucibus, turpis urna hendrerit tortor, non lobortis orci velit id justo. Phasellus nec enim purus. Sed ultricies dapibus nisi, ac iaculis diam viverra ut.</p>
+                    </div>  
+                    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-3"> 
+                        <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                            <div fxFlex="50" fxLayoutAlign="center center"><h3 class="secondary-font p-2 text-center">2 Person Seating</h3></div>
+                            <div fxFlex="50" fxLayoutAlign="center center" class="bg-primary py-4"><h1>48</h1></div>
+                        </mat-card> 
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-3"> 
+                        <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                            <div fxFlex="50" fxLayoutAlign="center center"><h3 class="secondary-font p-2 text-center">4 Person Seating</h3></div>
+                            <div fxFlex="50" fxLayoutAlign="center center" class="bg-primary py-4"><h1>36</h1></div>
+                        </mat-card> 
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-3"> 
+                        <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                            <div fxFlex="50" fxLayoutAlign="center center"><h3 class="secondary-font p-2 text-center">6 Person Seating</h3></div>
+                            <div fxFlex="50" fxLayoutAlign="center center" class="bg-primary py-4"><h1>24</h1></div>
+                        </mat-card> 
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-3"> 
+                        <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                            <div fxFlex="50" fxLayoutAlign="center center"><h3 class="secondary-font p-2 text-center">Family Seating <small>(max 20)</small></h3></div>
+                            <div fxFlex="50" fxLayoutAlign="center center" class="bg-primary py-4"><h1>15</h1></div>
+                        </mat-card> 
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-3"> 
+                        <mat-card class="p-0 o-hidden" fxLayout="row wrap"> 
+                            <div fxFlex="50" fxLayoutAlign="center center"><h3 class="secondary-font p-2 text-center">Business Meet</h3></div>
+                            <div fxFlex="50" fxLayoutAlign="center center" class="bg-primary py-4"><h1>7</h1></div>
+                        </mat-card> 
+                    </div> 
+                </div>
+                <div fxLayout="row wrap" class="flex-wrapper mt-3"> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">                             
+                        <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse semper lobortis quam, id imperdiet mi feugiat quis. Cras a odio posuere, rhoncus quam vitae, commodo neque. Nunc mollis velit vulputate, volutpat diam vitae, egestas turpis. In posuere tempor lorem, sit amet pulvinar nunc accumsan a. Quisque sem tellus, congue at eleifend sit amet, consectetur sit amet est. Integer sodales quam quis elit commodo consequat. Aenean posuere augue a justo gravida elementum laoreet tincidunt enim. Nullam sagittis mauris id dui scelerisque, eget dignissim est hendrerit. Praesent fringilla commodo egestas. Suspendisse bibendum purus vitae mi mattis laoreet.</p>
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">  
+                        <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse semper lobortis quam, id imperdiet mi feugiat quis. Cras a odio posuere, rhoncus quam vitae, commodo neque. Nunc mollis velit vulputate, volutpat diam vitae, egestas turpis. In posuere tempor lorem, sit amet pulvinar nunc accumsan a. Quisque sem tellus, congue at eleifend sit amet, consectetur sit amet est. Integer sodales quam quis elit commodo consequat. Aenean posuere augue a justo gravida elementum laoreet tincidunt enim. Nullam sagittis mauris id dui scelerisque, eget dignissim est hendrerit. Praesent fringilla commodo egestas. Suspendisse bibendum purus vitae mi mattis laoreet.</p>
+                    </div> 
+                </div> 
+            </div>  
+        </mat-card>  
+    </div> 
+</div>    
+
+<app-our-services></app-our-services> 
+<app-our-awards></app-our-awards>  
+<app-get-app></app-get-app>

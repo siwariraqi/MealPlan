@@ -1,0 +1,58 @@
+<form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()" autocomplete="off" fxLayout="row wrap">
+    <div fxFlex="100">
+        <h2 class="secondary-font text-center mb-3">Account Details</h2> 
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="40" class="px-3 mb-3">  
+        <app-image-upload [base64]="infoForm.controls.image.value"
+                        [fileSize]="400"    
+                        [acceptTypes]="'image/png, image/jpeg, image/jpg'"
+                        (onFileChange)="fileChange($event)">
+        </app-image-upload>  
+    </div> 
+    <div fxFlex="100" fxFlex.gt-sm="60" class="px-3" ngClass.sm="mt-2" ngClass.xs="mt-2">  
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" required>
+            <mat-error *ngIf="infoForm.controls.name.errors?.required">Name is required</mat-error>
+            <mat-error *ngIf="infoForm.controls.name.hasError('minlength')">Name isn't long enough, minimum of 3 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-error *ngIf="infoForm.controls.email.errors?.required">Email is required</mat-error>
+            <mat-error *ngIf="infoForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" formControlName="phone" required onlyNumber>
+            <mat-error *ngIf="infoForm.controls.phone.errors?.required">Phone is required</mat-error>
+        </mat-form-field>  
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Organization</mat-label>
+            <input matInput placeholder="organization" formControlName="organization"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Facebook</mat-label>
+            <input matInput placeholder="facebook" formControlName="facebook"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Twitter</mat-label>
+            <input matInput placeholder="twitter" formControlName="twitter"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Linkedin</mat-label>
+            <input matInput placeholder="linkedin" formControlName="linkedin"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Instagram</mat-label>
+            <input matInput placeholder="instagram" formControlName="instagram"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Website</mat-label>
+            <input matInput placeholder="website" formControlName="website"> 
+        </mat-form-field>  
+    </div> 
+    <div fxFlex="100" class="text-center mt-2">
+        <button mat-raised-button color="primary" type="submit" class="uppercase">Update profile</button>
+    </div>  
+</form> 

@@ -1,0 +1,109 @@
+<div fxLayout="row wrap" fxLayoutAlign="end center" ngClass.xs="mb-3">
+	<button mat-raised-button type="button" color="warn" (click)="deleteAddress()" class="mx-1"> 
+        <mat-icon fxHide="false" fxHide.gt-xs="true">delete</mat-icon>
+        <span fxShow="false" fxShow.gt-xs="true">Delete Address</span>
+    </button>
+	<button mat-raised-button type="button" color="primary" (click)="addAddress()">
+        <mat-icon fxHide="false" fxHide.gt-xs="true">add</mat-icon>
+        <span fxShow="false" fxShow.gt-xs="true">Add New Address</span>
+    </button>
+</div>
+<mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="onTabIndexChanged($event)" animationDuration="0">
+  	<mat-tab *ngFor="let address of addresses.controls; let i = index;">
+		<ng-template mat-tab-label>
+			<span *ngIf="i == 0">Billing address</span>
+			<span *ngIf="i > 0">Shipping address <br><span *ngIf="i > 0 && addresses.controls.length > 2" class="mx-2">({{i}})</span> </span>
+		</ng-template>
+		<div class="o-hidden mt-4">
+			<div [formGroup]="$any(address)" fxLayout="row wrap" class="flex-wrapper">
+				<div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" formControlName="firstName" required>
+                        <mat-error *ngIf="address.get('firstName')!.errors?.required">First Name is required</mat-error>
+                        <mat-error *ngIf="address.get('firstName')!.hasError('maxNumberOfWordsExceeded')">Max number of words exceeded</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name" formControlName="lastName" required>
+                        <mat-error *ngIf="address.get('lastName')!.errors?.required">Last Name is required</mat-error>
+                        <mat-error *ngIf="address.get('lastName')!.hasError('maxNumberOfWordsExceeded')">Max number of words exceeded</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput placeholder="Middle Name" formControlName="middleName"> 
+                        <mat-error *ngIf="address.get('middleName')!.hasError('maxNumberOfWordsExceeded')">Max number of words exceeded</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Company</mat-label>
+                        <input matInput placeholder="Company" formControlName="company"> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Enter your email" formControlName="email" required>
+                        <mat-error *ngIf="address.get('email')!.errors?.required">Email is required</mat-error>
+                        <mat-error *ngIf="address.get('email')!.hasError('invalidEmail')">Invalid email address</mat-error> 
+                    </mat-form-field> 
+                </div> 
+                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Phone</mat-label>
+                        <input matInput placeholder="Enter your phone" formControlName="phone" required>
+                        <mat-error *ngIf="address.get('phone')!.errors?.required">Phone is required</mat-error> 
+                    </mat-form-field> 
+                </div> 
+                <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">  
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Country</mat-label>
+                        <mat-select placeholder="Select country" formControlName="country" required>
+                            <mat-option *ngFor="let country of countries" [value]="country.code">
+                                {{country.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="address.get('country')!.errors?.required">Country is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="25" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="City" formControlName="city" required>
+                        <mat-error *ngIf="address.get('city')!.errors?.required">City is required</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="25" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Place</mat-label>
+                        <input matInput placeholder="Place" formControlName="place" required>
+                        <mat-error *ngIf="address.get('place')!.errors?.required">Place is required</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="25" class="px-3"> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Postal Code</mat-label>
+                        <input matInput placeholder="Postal Code" formControlName="postalCode" required>
+                        <mat-error *ngIf="address.get('postalCode')!.errors?.required">Postal Code is required</mat-error> 
+                    </mat-form-field> 
+                </div>
+                <div fxFlex="100" class="px-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Address</mat-label> 
+                        <textarea matInput placeholder="Address (street, apartment, suite, unit etc.)" formControlName="address" required rows="5"></textarea> 
+                        <mat-error *ngIf="address.get('address')!.errors?.required">Address is required</mat-error>
+                    </mat-form-field>
+                </div>   
+			</div>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+
+<div class="text-center">
+  <button type="button" mat-raised-button color="primary" (click)="save()"><span class="px-3 uppercase">Save</span></button>
+</div>

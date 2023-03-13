@@ -1,0 +1,57 @@
+<mat-card class="m-2 p-0">
+    <div class="table-wrapper"> 
+        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        
+            <!-- OrderId Column -->
+            <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrderId </th>
+                <td mat-cell *matCellDef="let transaction">#{{transaction.orderId}} </td>
+            </ng-container>  
+
+            <!-- TransactionId Column -->
+            <ng-container matColumnDef="transactionId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TransactionId </th>
+                <td mat-cell *matCellDef="let transaction">#{{transaction.transactionId}} </td>
+            </ng-container> 
+    
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let transaction">{{transaction.date}}</td>
+            </ng-container>  
+            
+            <!-- Payment Method Column -->
+            <ng-container matColumnDef="paymentMethod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Method </th>
+                <td mat-cell *matCellDef="let transaction">{{transaction.paymentMethod}}</td>
+            </ng-container>   
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let transaction">{{transaction.status}}</td>
+            </ng-container> 
+
+            <!-- Amount -->
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                <td mat-cell *matCellDef="let transaction">{{transaction.amount}}</td>
+            </ng-container>  
+    
+            <!-- View Column -->
+            <ng-container matColumnDef="view">
+                <th mat-header-cell *matHeaderCellDef> View </th>
+                <td mat-cell *matCellDef="let transaction"> 
+                    <button mat-icon-button color="primary" (click)="view(transaction)" matTooltip="View">
+                        <mat-icon>visibility</mat-icon>
+                    </button>  
+                </td>
+            </ng-container> 
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let transaction; columns: displayedColumns;"></tr>
+        </table> 
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+</mat-card>

@@ -1,0 +1,20 @@
+<div *ngFor="let menuItem of menuItems" class="menu-item">
+  <a *ngIf="menuItem.routerLink && !menuItem.hasSubMenu" mat-button fxLayout="row" fxLayoutAlign="start center"
+      [routerLink]="[menuItem.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"        
+      (click)="onClick(menuItem.id)" [id]="'menu-item-'+menuItem.id">
+      <span class="menu-title">{{ menuItem.title | translate }}</span>
+  </a>
+  <a *ngIf="menuItem.href && !menuItem.hasSubMenu" mat-button fxLayout="row" fxLayoutAlign="start center"
+      [attr.href]="menuItem.href || ''" [attr.target]="menuItem.target || ''"       
+      (click)="onClick(menuItem.id)" [id]="'menu-item-'+menuItem.id">
+      <span class="menu-title">{{ menuItem.title | translate }}</span>
+  </a>
+  <a *ngIf="menuItem.hasSubMenu" mat-button fxLayout="row" fxLayoutAlign="start center"       
+      (click)="onClick(menuItem.id)" [id]="'menu-item-'+menuItem.id">
+      <span class="menu-title">{{ menuItem.title | translate }}</span>
+      <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
+  </a>
+  <div *ngIf="menuItem.hasSubMenu" class="sub-menu" [id]="'sub-menu-'+menuItem.id">
+      <app-vertical-menu [menuParentId]="menuItem.id"></app-vertical-menu>
+  </div>
+</div>

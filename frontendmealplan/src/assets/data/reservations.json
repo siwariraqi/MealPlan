@@ -1,0 +1,164 @@
+[
+    { 
+        "id": 1,
+        "date": "2020-10-13",
+        "time": "11:00am",
+        "customer": {
+            "id": 100,
+            "fullName": "Ashley Ahlberg",
+            "email": "ashley@gmail.com",
+            "phoneNumber": "(202) 756-9756",
+            "address": "1618 Fulton St, Brooklyn, NY 11213, USA"
+        }, 
+        "guests": 4,
+        "tableNumber": 5,
+        "status": {
+            "id": 1,
+            "name": "Approved"
+        }
+    }, 
+    { 
+        "id": 2,
+        "date": "2020-10-15",
+        "time": "12:00am",
+        "customer": {
+            "id": 110,
+            "fullName": "Bruno Vespa",
+            "email": "bruno.v@gmail.com",
+            "phoneNumber": "(415) 231-0332",
+            "address": "2027 Pacific St, Brooklyn, NY 11233, USA"
+        }, 
+        "guests": 6,
+        "tableNumber": 9,
+        "status": {
+            "id": 2,
+            "name": "Cancelled"
+        }
+    }, 
+    { 
+        "id": 3,
+        "date": "2020-10-16",
+        "time": "10:00am",
+        "customer": {
+            "id": 120,
+            "fullName": "Andy Warhol",
+            "email": "andy.v@gmail.com",
+            "phoneNumber": "(212) 457-2308",
+            "address": "336 6th Ave, Brooklyn, NY 11215, USA"
+        }, 
+        "guests": 3,
+        "tableNumber": 8,
+        "status": {
+            "id": 1,
+            "name": "Approved"
+        }
+    }, 
+    { 
+        "id": 4,
+        "date": "2020-10-18",
+        "time": "11:00am",
+        "customer": {
+            "id": 130,
+            "fullName": "Julia Aniston",
+            "email": "julia.a@gmail.com",
+            "phoneNumber": "(224) 267-1346",
+            "address": "489 9th St, Brooklyn, NY 11215, USA"
+        }, 
+        "guests": 5,
+        "tableNumber": 2,
+        "status": {
+            "id": 1,
+            "name": "Approved"
+        }
+    }, 
+    { 
+        "id": 5,
+        "date": "2020-10-20",
+        "time": "10:00am",
+        "customer": {
+            "id": 140,
+            "fullName": "Lusia Manuel",
+            "email": "lusia.m@gmail.com",
+            "phoneNumber": "(224) 267-1346",
+            "address": "555 Rutland Rd, Brooklyn, NY 11203, USA"
+        }, 
+        "guests": 8,
+        "tableNumber": 7,
+        "status": {
+            "id": 2,
+            "name": "Cancelled"
+        }
+    },  
+    { 
+        "id": 6,
+        "date": "2020-11-09",
+        "time": "10:00pm",
+        "customer": {
+            "id": 150,
+            "fullName": "Adam Sandler",
+            "email": "adam.s@gmail.com",
+            "phoneNumber": "(224) 267-1346",
+            "address": "632 Thomas S Boyland St, Brooklyn, NY 11212, USA"
+        }, 
+        "guests": 6,
+        "tableNumber": 3,
+        "status": {
+            "id": 3,
+            "name": "Pending"
+        }
+    }, 
+    { 
+        "id": 7,
+        "date": "2020-11-10",
+        "time": "1:00pm",
+        "customer": {
+            "id": 160,
+            "fullName": "Tereza Stiles",
+            "email": "tereza.s@gmail.com",
+            "phoneNumber": "(214) 617-2614",
+            "address": "123-4 111th Ave, South Ozone Park, NY 11420, USA"
+        }, 
+        "guests": 12,
+        "tableNumber": 10,
+        "status": {
+            "id": 1,
+            "name": "Approved"
+        }
+    }, 
+    { 
+        "id": 8,
+        "date": "2020-11-15",
+        "time": "5:00pm",
+        "customer": {
+            "id": 160,
+            "fullName": "Michael Blair",
+            "email": "michael.b@gmail.com",
+            "phoneNumber": "(267) 388-1637",
+            "address": "131-43 221st St, Queens, NY 11413, USA"
+        }, 
+        "guests": 8,
+        "tableNumber": 6,
+        "status": {
+            "id": 2,
+            "name": "Cancelled"
+        }
+    },
+    { 
+        "id": 9,
+        "date": "2020-11-22",
+        "time": "5:00pm",
+        "customer": {
+            "id": 170,
+            "fullName": "Michelle Ormond",
+            "email": "michelle.o@gmail.com",
+            "phoneNumber": "(267) 388-1637",
+            "address": "31 Lakeside Dr, Rockville Centre, NY 11570, USA"
+        }, 
+        "guests": 5,
+        "tableNumber": 12,
+        "status": {
+            "id": 1,
+            "name": "Approved"
+        }
+    }
+]

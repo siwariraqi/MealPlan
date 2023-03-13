@@ -1,0 +1,14 @@
+<div fxLayout="row wrap" *ngIf="router.url != '/admin'">
+    <div fxFlex="100" class="p-2">
+        <mat-card fxLayout="row" class="breadcrumb">
+            <a *ngIf="router.url != '/admin'" routerLink="/admin" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
+                <mat-icon>dashboard</mat-icon>
+                <span class="breadcrumb-title">Dashboard</span>
+            </a>
+            <div *ngFor="let breadcrumb of breadcrumbs; let i = index;" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center">                 
+                <a [hidden]="i == (breadcrumbs.length - 1)" [routerLink]="[breadcrumb.url]">{{breadcrumb.name}}</a>   
+                <span [hidden]="i != (breadcrumbs.length - 1)" class="breadcrumb-title active">{{breadcrumb.name}}</span>
+            </div> 
+        </mat-card>
+    </div> 
+</div>

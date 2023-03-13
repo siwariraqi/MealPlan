@@ -1,0 +1,19 @@
+{
+    "id": 23,
+    "name": "Veal With Mushrooms In Hot Sauce", 
+    "description": "Veal, mushrooms, butter, sweet chili sauce, onion, cilantro.",
+    "price": 16.50,
+    "image": {
+        "small": "assets/images/foods/meat-courses/4/small.jpg",
+        "medium": "assets/images/foods/meat-courses/4/medium.jpg",
+        "big": "assets/images/foods/meat-courses/4/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 180,
+    "isVegetarian": false,
+    "categoryId": 5
+}

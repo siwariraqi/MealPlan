@@ -1,0 +1,19 @@
+{
+    "id": 10,
+    "name": "Oriental Style Eggplants", 
+    "description": "Eggplants, walnuts, curry, sour cream, garlic.",
+    "price": 6.80,
+    "image": {
+        "small": "assets/images/foods/appetizers/3/small.jpg",
+        "medium": "assets/images/foods/appetizers/3/medium.jpg",
+        "big": "assets/images/foods/appetizers/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 380, 
+    "availibilityCount": 6,
+    "cartCount": 0,
+    "weight": 145,
+    "isVegetarian": false,
+    "categoryId": 2
+}
