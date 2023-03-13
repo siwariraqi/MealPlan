@@ -24,42 +24,35 @@ private MealBL mealBL;
   @Autowired
   private PlanBL planBL;
 
-  @GetMapping(name = "dayplanmeals/{daynumber}/{userid}")
-  public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid ){
-
+  @GetMapping("/day-plan-meals/{day-number}/{user-id}")
+  public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer dayNumber, @PathVariable Long userId) {
     try {
-      List<Meal> meals = this.mealBL.getDayPlanMeals(daynumber,userid);
+      List<Meal> meals = mealBL.getDayPlanMeals(dayNumber, userId);
       return ResponseEntity.ok(meals);
-    } catch (UserNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    } catch (PaymentNotFoundException e) {
+    } catch (UserNotFoundException | PaymentNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
 
-//  @GetMapping(name = "plan/{userid}")
-//  public ResponseEntity<Plan> getPlan(@PathVariable Long userid ){
-//
-//    try {
-//      Plan plans = this.planBL.getPlan(userid);
-//      return ResponseEntity.ok(plans);
-//    } catch (UserNotFoundException e) {
-//      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//    }
-//  }
-//  @GetMapping(name="daynutrition/{daynumber}/{userid}")
-//  public ResponseEntity getTotalDayNutrition(@PathVariable Integer daynumber,@PathVariable Long userid){
-//    try {
-//      List<Double> nutritions = this.mealBL.getTotalDayNutrition(daynumber, userid);
-//    return ResponseEntity.ok(nutritions);
-//    }catch (UserNotFoundException e) {
-//      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//    }catch (PaymentNotFoundException e) {
-//      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//    }
-//
-//  }
 
+  @GetMapping("/day-nutrition/{day-number}/{user-id}")
+  public ResponseEntity<List<Double>> getTotalDayNutrition(@PathVariable Integer dayNumber, @PathVariable Long userId) {
+    try {
+      List<Double> nutritions = mealBL.getTotalDayNutrition(dayNumber, userId);
+      return ResponseEntity.ok(nutritions);
+    } catch (UserNotFoundException | PaymentNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 
+  @GetMapping("/plan/{user-id}")
+  public ResponseEntity<Plan> getPlan(@PathVariable("user-id") Long userId) {
+    try {
+      Plan plan = planBL.getPlan(userId);
+      return ResponseEntity.ok(plan);
+    } catch (UserNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 
 }
