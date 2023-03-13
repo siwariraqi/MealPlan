@@ -1,0 +1,11 @@
+<div *ngIf="menuItems.length" class="menu-items-carousel">   
+    <div class="swiper-container h-100 carousel-outer" [swiper]="config"> 
+        <div class="swiper-wrapper h-100">      
+            <div *ngFor="let menuItem of menuItems" class="swiper-slide">
+                <app-menu-item [menuItem]="menuItem" [lazyLoad]="true"></app-menu-item>                 
+            </div>
+        </div>                      
+        <button mat-mini-fab color="primary" class="prop-prev swiper-button-prev swipe-arrow"><mat-icon>keyboard_arrow_left</mat-icon></button>
+        <button mat-mini-fab color="primary" class="prop-next swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button> 
+    </div>
+</div>

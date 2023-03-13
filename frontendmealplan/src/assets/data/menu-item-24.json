@@ -1,0 +1,19 @@
+{
+    "id": 24,
+    "name": "Chick Tabaka", 
+    "description": "Chick for two persons",
+    "price": 13.50,
+    "image": {
+        "small": "assets/images/foods/chicken-courses/1/small.jpg",
+        "medium": "assets/images/foods/chicken-courses/1/medium.jpg",
+        "big": "assets/images/foods/chicken-courses/1/big.jpg"
+    },
+    "discount": 20,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 6
+}

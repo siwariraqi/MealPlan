@@ -1,0 +1,11 @@
+<div fxLayout="row wrap" [style.minHeight.px]="132">
+    <div *ngFor="let file of files" class="w-100"> 
+        <img [src]="file.content" alt="image" class="d-block w-100 mat-elevation-z2">
+    </div> 
+    <img *ngIf="!files.length" src="assets/images/others/noimage.png" class="d-block mw-100 mat-elevation-z2">
+</div>
+<div class="file-upload mb-2">  
+    <input *ngIf="!files.length" id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange(input)" #input/> 
+    <button *ngIf="!files.length" mat-raised-button color="primary" class="uppercase w-100" type="button" (click)="fileUploadClick()">{{ 'BTN.UPLOAD' | translate }}</button>
+    <button *ngIf="files.length" mat-raised-button color="warn" class="uppercase w-100" type="button" (click)="deleteFile()">{{ 'BTN.REMOVE' | translate }}</button>
+</div> 

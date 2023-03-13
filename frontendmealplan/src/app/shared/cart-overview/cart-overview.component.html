@@ -1,0 +1,50 @@
+<mat-list *ngIf="appService.Data.cartList.length" class="cart-items">
+    <mat-list-item>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 -3">
+            <a routerLink="/cart" (click)="hideSheet(true)" mat-raised-button color="primary" class="transform-none">View Cart</a>  
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <button mat-icon-button (click)="hideSheet(false)" matTooltip="Hide">
+                    <mat-icon color="primary" class="mat-icon-lg">arrow_drop_down_circle</mat-icon> 
+                  </button>
+                <button mat-icon-button (click)="clearCart()" matTooltip="Clear Cart List">
+                  <mat-icon color="warn" class="mat-icon-lg">remove_shopping_cart</mat-icon> 
+                </button> 
+            </div>
+        </div> 
+    </mat-list-item>
+    <mat-list-item>
+        <div class="w-100 divider"></div> 
+    </mat-list-item>
+    <mat-list-item *ngFor="let menuItem of appService.Data.cartList">
+        <img matListAvatar [src]="menuItem.image.medium" alt="image" fxShow="false" fxShow.gt-xs="true">
+        <h3 mat-line class="secondary-font fw-500 title"><a [routerLink]="['/menu', menuItem.id]" (click)="hideSheet(true)">{{menuItem.name}}</a></h3>  
+        <span *ngIf="!menuItem.discount" class="primary-color fw-500 mx-3"> 
+            {{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}  
+        </span> 
+        <span *ngIf="menuItem.discount" class="fw-500 mx-3">  
+            <span class="text-muted old-price">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> 
+            <span class="primary-color mx-2">{{ (menuItem.price - (menuItem.price * (menuItem.discount / 100))) | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </span> 
+        <div class="px-2" fxShow="false" fxShow.gt-xs="true">
+            <app-quantity-counter [value]="menuItem.cartCount" [step]="1" [min]="1" [max]="1000" [small]="true" (onCounterChange)="counterChange(menuItem, $event)"></app-quantity-counter>
+        </div>  
+        <button mat-icon-button color="warn" class="remove" (click)="remove(menuItem, $event)" matTooltip="Remove" matTooltipPosition="after">
+            <mat-icon class="mat-icon-sm">close</mat-icon>
+        </button>
+    </mat-list-item>
+    <mat-list-item>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 pt-3 divider">
+            <a routerLink="/checkout" (click)="hideSheet(true)" mat-raised-button color="primary" class="transform-none">Checkout</a>  
+            <div fxLayout="row wrap" fxLayoutAlign="end center">
+                <h2 class="fw-500 px-3">Total:</h2>
+                <h2 class="primary-color price"> 
+                    {{appService.Data.totalPrice | currency : 'USD' : 'symbol' : '1.2'}}
+                </h2>
+            </div> 
+        </div> 
+    </mat-list-item>
+</mat-list>
+<div *ngIf="!menuItems.length" class="py-3 text-center">
+    <p>You have no items in your shopping cart.</p> 
+    <a routerLink="/cart" (click)="hideSheet(true)" mat-raised-button color="primary" class="transform-none">View Cart</a> 
+</div>

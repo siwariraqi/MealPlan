@@ -1,0 +1,19 @@
+{
+    "id": 9,
+    "name": "Cold Cuts", 
+    "description": "Beef tounge, chicken roll, veal basturma.",
+    "price": 7.90,
+    "image": {
+        "small": "assets/images/foods/appetizers/2/small.jpg",
+        "medium": "assets/images/foods/appetizers/2/medium.jpg",
+        "big": "assets/images/foods/appetizers/2/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 380, 
+    "availibilityCount": 6,
+    "cartCount": 0,
+    "weight": 120,
+    "isVegetarian": false,
+    "categoryId": 2
+}

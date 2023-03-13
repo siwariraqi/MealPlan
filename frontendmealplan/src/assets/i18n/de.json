@@ -1,0 +1,76 @@
+{   
+  "LOGIN": "Einloggen", 
+  "LOGOUT": "Ausloggen", 
+  "REGISTER": "Registrieren",
+  "ACCOUNT": "Konto",
+  "RESERVATION": "Reservierung",
+  "MENU": "Speisekarte",
+  "NAV": {  
+    "HOME": "Zuhause", 
+    "PAGES": "Seiten", 
+    "CHEFS": "Köche",
+    "CHEF": "Köchinnen", 
+    "SHOP": "Geschäft",
+    "SINGLE_MENU": "Einzelmenü",
+    "CART": "Wagen",
+    "CHECKOUT": "Auschecken",
+    "FAQS": "Faqs",
+    "PRICING": "Pricing",
+    "TERMS_CONDITIONS": "Terms & Conditions",
+    "LANDING": "Landing", 
+    "404_PAGE": "404 Seite",
+    "OTHERS": "Others",
+    "EXTERNAL_LINK": "Externer Link",
+    "MENU_ITEM": "Menu Item",
+    "CONTACT": "Kontakt",
+    "ABOUT_US": "Über",
+    "ADMIN": "Admin"
+  },
+  "ADMIN_NAV": {  
+    "DASHBOARD": "Instrumententafel",  
+    "MENU_ITEMS": "Menüpunkte", 
+    "CATEGORIES": "Kategorien",
+    "MENU_ITEMS_LIST": "Liste der Menü", 
+    "MENU_ITEM_DETAIL": "Menüpunkt Detail",
+    "ADD_MENU_ITEM": "Menüpunkt hinzufügen",
+    "SALES": "Der Umsatz",
+    "ORDERS": "Aufträge",
+    "TRANSACTIONS": "Transaktionen",
+    "USERS": "Benutzer",
+    "RESERVATIONS": "Reservierungen",
+    "CUSTOMERS": "Kunden", 
+    "COUPONS": "Gutscheine",
+    "WITHDRAWAL": "Rückzug",
+    "ANALYTICS": "Analytik",
+    "REFUND": "Rückerstattung",
+    "FOLLOWERS": "Anhänger",
+    "SUPPORT": "Unterstützung",
+    "REVIEWS": "Bewertungen", 
+    "EXTERNAL_LINK": "Externer Link" 
+  }, 
+  "BTN": {
+    "ADD": "Hinzufügen",
+    "SAVE": "Speichern",
+    "SUBMIT": "Einreichen",
+    "CANCEL": "Stornieren",
+    "UPLOAD": "Hochladen",
+    "REMOVE": "Entfernen",
+    "YES": "Ja",
+    "NO": "Nein",
+    "OK": "in Ordnung"
+  },
+  "MESSAGE": {
+    "SURE_DELETE": "Sind Sie sicher, dass Sie löschen möchten?",
+    "FILE_SIZE": "Die Dateigröße darf {{param}} kb nicht überschreiten."
+  },
+  "FIELD": { 
+    "NAME": "Name" 
+  }, 
+  "PAGINATION":{
+    "ITEMS_PER_PAGE": "Objekte pro seite:",
+    "NEXT_PAGE": "Nächste seite",
+    "PREV_PAGE": "Vorherige seite",
+    "FIRST_PAGE": "Erste seite",
+    "LAST_PAGE": "Letzte seite"
+  } 
+}

@@ -1,0 +1,15 @@
+.file-upload{
+    position: relative;
+    height: 30px; 
+    width: 100%;
+    input[type='file']{
+        position: absolute;  
+        z-index: 2;
+        height: 30px;
+        cursor: pointer;
+        opacity: 0;  
+        font-size: 0;
+        outline: none;
+        width: 100%;
+    }
+} 

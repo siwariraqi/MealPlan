@@ -1,0 +1,19 @@
+{
+    "id": 5,
+    "name": "Cheese Sandwich", 
+    "description": "Toasted bread, Cheddar cheese, Gouda cheese, butter, arugula, carrot, cucumber, radish.",
+    "price": 7.30,
+    "image": {
+        "small": "assets/images/foods/breakfast/5/small.jpg",
+        "medium": "assets/images/foods/breakfast/5/medium.jpg",
+        "big": "assets/images/foods/breakfast/5/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 5,
+    "ratingsValue": 480, 
+    "availibilityCount": 7,
+    "cartCount": 0,
+    "weight": 110,
+    "isVegetarian": false,
+    "categoryId": 1
+}

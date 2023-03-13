@@ -1,0 +1,92 @@
+<app-header-image [backgroundImage]="'assets/images/others/contact.jpg'" 
+                  [bgImageAnimate]="false" 
+                  [contentOffsetToTop]="true"                
+                  [title]="'Contact Us'"
+                  [desc]="'Got a question? We\'ll give you straight answer'">
+</app-header-image>  
+
+<div class="px-3"> 
+    <div class="theme-container">
+        <mat-card class="main-content-header mb-5"> 
+            <div class="p-3"> 
+                <div fxLayout="row wrap" fxLayoutAlign="space-around" >
+                    <div fxFlex="100" fxFlex.gt-xs="33.3">
+                        <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
+                            <mat-icon color="primary" class="mat-icon-lg">home</mat-icon>
+                            <h3 class="primary-color py-1">ADDRESS :</h3>
+                            <span>2903 Avenue Z, Brooklyn, New York City</span>
+                        </div>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                        <div fxLayout="column" fxLayoutAlign="center center">
+                            <mat-icon color="primary" class="mat-icon-lg">call</mat-icon>
+                            <h3 class="primary-color py-1">PHONES :</h3>
+                            <span>(212) 457-2308</span>
+                            <span>(212) 457-2309</span>
+                        </div>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                        <div fxLayout="column" fxLayoutAlign="center center">
+                            <mat-icon color="primary" class="mat-icon-lg">mail_outline</mat-icon>
+                            <h3 class="primary-color py-1">E-MAIL :</h3>
+                            <span>contact@mox.com</span>
+                            <span>info@mox.com</span>
+                        </div>
+                    </div>   
+                </div>  
+
+                <div fxLayout="row wrap" class="mt-5">  
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" [ngClass.gt-sm]="(settings.rtl) ? 'pl-5' : 'pr-5'"> 
+                        <h1 class="secondary-font primary-color text-center mb-3">Get In Touch</h1>
+                        <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit()" fxLayout="row wrap">
+                            <div fxFlex="100">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput placeholder="Name" formControlName="name" required>
+                                    <mat-error *ngIf="contactForm.controls.name.errors?.required">Name is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Email" formControlName="email" required>
+                                    <mat-error *ngIf="contactForm.controls.email.errors?.required">Email is required</mat-error>
+                                    <mat-error *ngIf="contactForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput placeholder="Phone" formControlName="phone" required>
+                                    <mat-error *ngIf="contactForm.controls.phone.errors?.required">Phone is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Message</mat-label> 
+                                    <textarea matInput placeholder="Message" formControlName="message" required rows="5"></textarea> 
+                                    <mat-error *ngIf="contactForm.controls.message.errors?.required">Message is required</mat-error>
+                                </mat-form-field>
+                            </div> 
+                            <div class="w-100 py-2 text-center">
+                                <button mat-raised-button color="primary" type="submit" class="uppercase">Submit</button>
+                            </div> 
+                        </form>  
+                    </div> 
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="py-3"> 
+                        <img src="assets/images/others/about-1.jpg" alt="about-2" class="mw-100 mb-4">
+                        <app-social-icons [iconSize]="'lg'" [iconColor]="'primary'" fxLayout="row" fxLayoutAlign="end center"></app-social-icons> 
+                    </div> 
+                </div> 
+            </div>
+        </mat-card>  
+    </div> 
+</div>
+ 
+<div class="contact-map">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true" [styles]="(settings.theme == 'orange-dark') ? mapStyles : null">
+        <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="false"></agm-marker>
+    </agm-map>
+</div>  
+
+<app-get-app></app-get-app> 

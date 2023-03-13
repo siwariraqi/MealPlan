@@ -1,0 +1,25 @@
+<div class="section testimonials">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">What people are saying</h1> 
+            <div class="testimonials-carousel mt-5"> 
+                <div class="swiper-container h-100" [swiper]="config"> 
+                    <div class="swiper-wrapper h-100">      
+                        <div *ngFor="let testimonial of testimonials" class="swiper-slide">
+                            <div class="content text-center">
+                                <img [attr.data-src]="testimonial.image" class="swiper-lazy">
+                                <div class="quote open text-left primary-color">“</div>
+                                <p class="text">{{testimonial.text}}</p>
+                                <div class="quote close text-right primary-color">”</div> 
+                                <h2 class="secondary-font primary-color">{{testimonial.author}}</h2>
+                                <p>{{testimonial.position}}</p> 
+                                <div class="swiper-lazy-preloader"></div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="swiper-pagination"></div> 
+                </div>
+            </div> 
+        </div>
+    </div>   
+</div> 

@@ -1,0 +1,74 @@
+<mat-card class="m-2 p-0">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 p-2">
+        <div></div>
+        <button mat-raised-button color="primary" (click)="openCouponDialog(null)">
+            <mat-icon>add</mat-icon>
+            Add New Coupon
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="table-wrapper"> 
+        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.title}}</td>
+            </ng-container>  
+
+            <!-- Code Column -->
+            <ng-container matColumnDef="code">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                <td mat-cell *matCellDef="let coupon">#{{coupon.code}}</td>
+            </ng-container> 
+    
+            <!-- DiscountType Column -->
+            <ng-container matColumnDef="discountType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount Type </th>
+                <td mat-cell *matCellDef="let coupon">{{ ( discountTypes | filterById : coupon.discountType )?.name }}</td>
+            </ng-container>  
+
+            <!-- Amount Column -->
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.amount | currency : 'USD' : 'symbol' : '1.2-2'}}</td>
+            </ng-container>
+            
+            <!-- Store Column -->
+            <ng-container matColumnDef="storeId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Store </th>
+                <td mat-cell *matCellDef="let coupon">{{( stores | filterById : coupon.storeId )?.name}}</td>
+            </ng-container>   
+
+            <!-- Usage Limit Column -->
+            <ng-container matColumnDef="limit.perCoupon">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="limit.perCoupon"> Usage Limit </th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.limit.perCoupon}}</td>
+            </ng-container> 
+
+            <!-- ExpiryDate Column -->
+            <ng-container matColumnDef="expiryDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.expiryDate | date:"dd MMMM, yyyy" }}</td>
+            </ng-container>  
+    
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let coupon"> 
+                    <button mat-icon-button color="primary" (click)="openCouponDialog(coupon)" matTooltip="Edit">
+                        <mat-icon>edit</mat-icon>
+                    </button> 
+                    <button mat-icon-button color="warn" (click)="remove(coupon)" matTooltip="Remove">
+                        <mat-icon>delete</mat-icon>
+                    </button>  
+                </td>
+            </ng-container> 
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let coupon; columns: displayedColumns;"></tr>
+        </table> 
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+</mat-card>

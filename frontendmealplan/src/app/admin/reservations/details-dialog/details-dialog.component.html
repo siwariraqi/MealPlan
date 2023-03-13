@@ -1,0 +1,47 @@
+<div class="header bg-primary">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h2 class="fw-500 secondary-font">Details</h2>
+        <app-dialog-header-controls [dialogRef]="dialogRef"></app-dialog-header-controls> 
+    </div>   
+</div> 
+<mat-dialog-content>  
+    <div class="pt-3 reservation-details">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">today</mat-icon><span>Reservation Date :</span></div>
+            <div>{{reservation.date}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">schedule</mat-icon><span>Time Slot :</span></div>
+            <div>{{reservation.time}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">group</mat-icon><span>Guests :</span></div>
+            <div>{{reservation.guests}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">format_list_numbered</mat-icon><span>Table No. :</span></div>
+            <div>{{reservation.tableNumber}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">flaky</mat-icon><span>Status :</span></div>
+            <div>{{reservation.status.name}}</div> 
+        </div>  
+        <h3 class="py-3 divider">Customer Information:</h3>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">person</mat-icon><span>Full Name :</span></div>
+            <div>{{reservation.customer.fullName}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">email</mat-icon><span>Email :</span></div>
+            <div>{{reservation.customer.email}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">call</mat-icon><span>Phone Number :</span></div>
+            <div>{{reservation.customer.phoneNumber}}</div> 
+        </div>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="start start" fxLayoutAlign.gt-xs="start center" class="mb-3"> 
+            <div fxLayout="row" fxLayoutAlign="start center"><mat-icon color="primary">location_on</mat-icon><span>Address :</span></div>
+            <div>{{reservation.customer.address}}</div> 
+        </div> 
+    </div>  
+</mat-dialog-content> 

@@ -1,0 +1,667 @@
+[
+    {
+        "id": 1,
+        "name": "Snack Set", 
+        "description": "Butter, cream, honey, salty cottage cheese, white cheese.",
+        "price": 8.20,
+        "image": {
+            "small": "assets/images/foods/breakfast/1/small.jpg",
+            "medium": "assets/images/foods/breakfast/1/medium.jpg",
+            "big": "assets/images/foods/breakfast/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 350, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 160,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 2,
+        "name": "Salmon And Avocado Bruschetta", 
+        "description": "Black bread, smoked salmon, Philadelphia cheese, avocado, tomatoes, eggs.",
+        "price": 12.50,
+        "image": {
+            "small": "assets/images/foods/breakfast/2/small.jpg",
+            "medium": "assets/images/foods/breakfast/2/medium.jpg",
+            "big": "assets/images/foods/breakfast/2/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 320, 
+        "availibilityCount": 7,
+        "cartCount": 0,
+        "weight": 180,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 3,
+        "name": "Croque Madame", 
+        "description": "Toasted bread, veal salami, eggs, butter, Gouda cheese, arugula, carrot, cucumber, radish.",
+        "price": 9.50,
+        "image": {
+            "small": "assets/images/foods/breakfast/3/small.jpg",
+            "medium": "assets/images/foods/breakfast/3/medium.jpg",
+            "big": "assets/images/foods/breakfast/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 370, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 125,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 4,
+        "name": "Cheese Pancakes", 
+        "description": "Puff pastry, cheese filling, arugula, carrot, cucumber, radish.",
+        "price": 7.30,
+        "image": {
+            "small": "assets/images/foods/breakfast/4/small.jpg",
+            "medium": "assets/images/foods/breakfast/4/medium.jpg",
+            "big": "assets/images/foods/breakfast/4/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 7,
+        "cartCount": 0,
+        "weight": 110,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 5,
+        "name": "Cheese Sandwich", 
+        "description": "Toasted bread, Cheddar cheese, Gouda cheese, butter, arugula, carrot, cucumber, radish.",
+        "price": 7.30,
+        "image": {
+            "small": "assets/images/foods/breakfast/5/small.jpg",
+            "medium": "assets/images/foods/breakfast/5/medium.jpg",
+            "big": "assets/images/foods/breakfast/5/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 5,
+        "ratingsValue": 480, 
+        "availibilityCount": 7,
+        "cartCount": 0,
+        "weight": 110,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 6,
+        "name": "Black Toasted Sandwich", 
+        "description": "Black bread, ham, eggs, Gouda cheese, arugula, carrot, cucumber, radish.",
+        "price": 8.30,
+        "image": {
+            "small": "assets/images/foods/breakfast/6/small.jpg",
+            "medium": "assets/images/foods/breakfast/6/medium.jpg",
+            "big": "assets/images/foods/breakfast/6/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 6,
+        "cartCount": 0,
+        "weight": 170,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 7,
+        "name": "Mixed Omelet", 
+        "description": "Eggs, chicken fillet, Gouda cheese, arugula and tomatoes salad.",
+        "price": 9.50,
+        "image": {
+            "small": "assets/images/foods/breakfast/7/small.jpg",
+            "medium": "assets/images/foods/breakfast/7/medium.jpg",
+            "big": "assets/images/foods/breakfast/7/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 6,
+        "cartCount": 0,
+        "weight": 170,
+        "isVegetarian": false,
+        "categoryId": 1
+    },
+    {
+        "id": 8,
+        "name": "Cheese Plate", 
+        "description": "Sheep's milk cheese, motal, cottage cheese, white cheese.",
+        "price": 3.50,
+        "image": {
+            "small": "assets/images/foods/appetizers/1/small.jpg",
+            "medium": "assets/images/foods/appetizers/1/medium.jpg",
+            "big": "assets/images/foods/appetizers/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 6,
+        "cartCount": 0,
+        "weight": 170,
+        "isVegetarian": false,
+        "categoryId": 2
+    },
+    {
+        "id": 9,
+        "name": "Cold Cuts", 
+        "description": "Beef tounge, chicken roll, veal basturma.",
+        "price": 7.90,
+        "image": {
+            "small": "assets/images/foods/appetizers/2/small.jpg",
+            "medium": "assets/images/foods/appetizers/2/medium.jpg",
+            "big": "assets/images/foods/appetizers/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 6,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": false,
+        "categoryId": 2
+    },
+    {
+        "id": 10,
+        "name": "Oriental Style Eggplants", 
+        "description": "Eggplants, walnuts, curry, sour cream, garlic.",
+        "price": 6.80,
+        "image": {
+            "small": "assets/images/foods/appetizers/3/small.jpg",
+            "medium": "assets/images/foods/appetizers/3/medium.jpg",
+            "big": "assets/images/foods/appetizers/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 380, 
+        "availibilityCount": 6,
+        "cartCount": 0,
+        "weight": 145,
+        "isVegetarian": false,
+        "categoryId": 2
+    },
+    {
+        "id": 11,
+        "name": "Special Eggplants Snack", 
+        "description": "Marinated eggplants, special sauce, greens.",
+        "price": 5.50,
+        "image": {
+            "small": "assets/images/foods/appetizers/4/small.jpg",
+            "medium": "assets/images/foods/appetizers/4/medium.jpg",
+            "big": "assets/images/foods/appetizers/4/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": true,
+        "categoryId": 2
+    },
+    {
+        "id": 12,
+        "name": "Tomatoes Marinated in Vinegar", 
+        "description": "Tomatoes, grape vinegar, parsley, pumpkin seeds, olive oil, garlic.",
+        "price": 3.90,
+        "image": {
+            "small": "assets/images/foods/appetizers/5/small.jpg",
+            "medium": "assets/images/foods/appetizers/5/medium.jpg",
+            "big": "assets/images/foods/appetizers/5/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": true,
+        "categoryId": 2
+    },
+    {
+        "id": 13,
+        "name": "Potato Snack", 
+        "description": "Potato, white cheese, motal cheese, sun-dried tomatoes, gouda cheese, olive oil, garlic.",
+        "price": 4.80,
+        "image": {
+            "small": "assets/images/foods/appetizers/6/small.jpg",
+            "medium": "assets/images/foods/appetizers/6/medium.jpg",
+            "big": "assets/images/foods/appetizers/6/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": true,
+        "categoryId": 2
+    },
+    {
+        "id": 14,
+        "name": "Barbecue Salad", 
+        "description": "Eggplants, tomatoes, bell pepper, red pepper, corn oil, garlic, fresh greens.",
+        "price": 7.50,
+        "image": {
+            "small": "assets/images/foods/salads/1/small.jpg",
+            "medium": "assets/images/foods/salads/1/medium.jpg",
+            "big": "assets/images/foods/salads/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": true,
+        "categoryId": 3
+    },
+    {
+        "id": 15,
+        "name": "Russian Salad", 
+        "description": "Beef, potato, carrot, eggs, fresh cucumbers, pickled cucumbers, mayonnaise, green peas, fresh greens.",
+        "price": 9.50,
+        "image": {
+            "small": "assets/images/foods/salads/2/small.jpg",
+            "medium": "assets/images/foods/salads/2/medium.jpg",
+            "big": "assets/images/foods/salads/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 120,
+        "isVegetarian": false,
+        "categoryId": 3
+    },
+    {
+        "id": 16,
+        "name": "Crispy Eggplant Salad", 
+        "description": "Eggplants, tomatoes, oyster sauce, white sesame seeds.",
+        "price": 8.20,
+        "image": {
+            "small": "assets/images/foods/salads/3/small.jpg",
+            "medium": "assets/images/foods/salads/3/medium.jpg",
+            "big": "assets/images/foods/salads/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 3,
+        "ratingsValue": 280, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 130,
+        "isVegetarian": true,
+        "categoryId": 3
+    },
+    {
+        "id": 17,
+        "name": "Chick Soup With Rice", 
+        "description": "Chick, round rice, onion, carrot, cherry plums, turmeric.",
+        "price": 8.20,
+        "image": {
+            "small": "assets/images/foods/soups/1/small.jpg",
+            "medium": "assets/images/foods/soups/1/medium.jpg",
+            "big": "assets/images/foods/soups/1/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 8,
+        "cartCount": 0,
+        "weight": 130,
+        "isVegetarian": false,
+        "categoryId": 4
+    },
+    {
+        "id": 18,
+        "name": "Noodle Soup With Meatballs", 
+        "description": "Homemade noodles, veal, meat broth, onion, carrot, turmeric, mung beans.",
+        "price": 11.50,
+        "image": {
+            "small": "assets/images/foods/soups/2/small.jpg",
+            "medium": "assets/images/foods/soups/2/medium.jpg",
+            "big": "assets/images/foods/soups/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 180,
+        "isVegetarian": false,
+        "categoryId": 4
+    },
+    {
+        "id": 19,
+        "name": "Onion Soup", 
+        "description": "Onion, wheat flour, potato, eggs, cilantro, butter.",
+        "price": 7.50,
+        "image": {
+            "small": "assets/images/foods/soups/3/small.jpg",
+            "medium": "assets/images/foods/soups/3/medium.jpg",
+            "big": "assets/images/foods/soups/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 4
+    },
+    {
+        "id": 20,
+        "name": "Beef Languet With Potato", 
+        "description": "Beef tenderloin, butter, black pepper, tomatoes, potato.",
+        "price": 18.50,
+        "image": {
+            "small": "assets/images/foods/meat-courses/1/small.jpg",
+            "medium": "assets/images/foods/meat-courses/1/medium.jpg",
+            "big": "assets/images/foods/meat-courses/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 220,
+        "isVegetarian": false,
+        "categoryId": 5
+    },
+    {
+        "id": 21,
+        "name": "\"Three Sisters\" Dolma", 
+        "description": "Veal, lamb, eggplants, tomatoes, bell pepper.",
+        "price": 17.50,
+        "image": {
+            "small": "assets/images/foods/meat-courses/2/small.jpg",
+            "medium": "assets/images/foods/meat-courses/2/medium.jpg",
+            "big": "assets/images/foods/meat-courses/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 230,
+        "isVegetarian": false,
+        "categoryId": 5
+    },
+    {
+        "id": 22,
+        "name": "Fried With Meat", 
+        "description": "Dough, veal, fat tail, fresh greens.",
+        "price": 15.50,
+        "image": {
+            "small": "assets/images/foods/meat-courses/3/small.jpg",
+            "medium": "assets/images/foods/meat-courses/3/medium.jpg",
+            "big": "assets/images/foods/meat-courses/3/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 170,
+        "isVegetarian": false,
+        "categoryId": 5
+    },
+    {
+        "id": 23,
+        "name": "Veal With Mushrooms In Hot Sauce", 
+        "description": "Veal, mushrooms, butter, sweet chili sauce, onion, cilantro.",
+        "price": 16.50,
+        "image": {
+            "small": "assets/images/foods/meat-courses/4/small.jpg",
+            "medium": "assets/images/foods/meat-courses/4/medium.jpg",
+            "big": "assets/images/foods/meat-courses/4/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 180,
+        "isVegetarian": false,
+        "categoryId": 5
+    },
+    {
+        "id": 24,
+        "name": "Chick Tabaka", 
+        "description": "Chick for two persons",
+        "price": 13.50,
+        "image": {
+            "small": "assets/images/foods/chicken-courses/1/small.jpg",
+            "medium": "assets/images/foods/chicken-courses/1/medium.jpg",
+            "big": "assets/images/foods/chicken-courses/1/big.jpg"
+        },
+        "discount": 20,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 6
+    },
+    {
+        "id": 25,
+        "name": "Chicken Languet With Potato", 
+        "description": "Chicken fillet, potato, tomatoes",
+        "price": 12.50,
+        "image": {
+            "small": "assets/images/foods/chicken-courses/2/small.jpg",
+            "medium": "assets/images/foods/chicken-courses/2/medium.jpg",
+            "big": "assets/images/foods/chicken-courses/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 140,
+        "isVegetarian": false,
+        "categoryId": 6
+    },
+    {
+        "id": 26,
+        "name": "Chick Saj", 
+        "description": "Chick, onion, tomatoes, bell pepper, eggplants, potato, lavash.",
+        "price": 18.50,
+        "image": {
+            "small": "assets/images/foods/chicken-courses/3/small.jpg",
+            "medium": "assets/images/foods/chicken-courses/3/medium.jpg",
+            "big": "assets/images/foods/chicken-courses/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 230,
+        "isVegetarian": false,
+        "categoryId": 6
+    },
+    {
+        "id": 27,
+        "name": "Seasonal Fruits", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 9.50,
+        "image": {
+            "small": "assets/images/foods/desserts/1/small.jpg",
+            "medium": "assets/images/foods/desserts/1/medium.jpg",
+            "big": "assets/images/foods/desserts/1/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 250,
+        "isVegetarian": false,
+        "categoryId": 7
+    }, 
+    {
+        "id": 28,
+        "name": "Jam", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 12.30,
+        "image": {
+            "small": "assets/images/foods/desserts/2/small.jpg",
+            "medium": "assets/images/foods/desserts/2/medium.jpg",
+            "big": "assets/images/foods/desserts/2/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 7
+    },
+    {
+        "id": 29,
+        "name": "AssortmentOf Dry Fruit And Nuts", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 8.50,
+        "image": {
+            "small": "assets/images/foods/desserts/3/small.jpg",
+            "medium": "assets/images/foods/desserts/3/medium.jpg",
+            "big": "assets/images/foods/desserts/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 7
+    },
+    {
+        "id": 30,
+        "name": "Ice Cream", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 14.50,
+        "image": {
+            "small": "assets/images/foods/desserts/4/small.jpg",
+            "medium": "assets/images/foods/desserts/4/medium.jpg",
+            "big": "assets/images/foods/desserts/4/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 7
+    },
+    {
+        "id": 31,
+        "name": "Red Wine", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 25.50,
+        "image": {
+            "small": "assets/images/foods/drinks/1/small.jpg",
+            "medium": "assets/images/foods/drinks/1/medium.jpg",
+            "big": "assets/images/foods/drinks/1/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 250,
+        "isVegetarian": false,
+        "categoryId": 8
+    },
+    {
+        "id": 32,
+        "name": "Light Beer", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 5.50,
+        "image": {
+            "small": "assets/images/foods/drinks/2/small.jpg",
+            "medium": "assets/images/foods/drinks/2/medium.jpg",
+            "big": "assets/images/foods/drinks/2/big.jpg"
+        },
+        "discount": 10,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 170,
+        "isVegetarian": false,
+        "categoryId": 8
+    },
+    {
+        "id": 32,
+        "name": "Cap of Tea", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 2.30,
+        "image": {
+            "small": "assets/images/foods/drinks/3/small.jpg",
+            "medium": "assets/images/foods/drinks/3/medium.jpg",
+            "big": "assets/images/foods/drinks/3/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 8
+    },
+    {
+        "id": 33,
+        "name": "Cap of Coffee", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 3.30,
+        "image": {
+            "small": "assets/images/foods/drinks/4/small.jpg",
+            "medium": "assets/images/foods/drinks/4/medium.jpg",
+            "big": "assets/images/foods/drinks/4/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 8
+    },
+    {
+        "id": 34,
+        "name": "Coctails", 
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": 15.00,
+        "image": {
+            "small": "assets/images/foods/drinks/5/small.jpg",
+            "medium": "assets/images/foods/drinks/5/medium.jpg",
+            "big": "assets/images/foods/drinks/5/big.jpg"
+        },
+        "discount": 0,
+        "ratingsCount": 4,
+        "ratingsValue": 480, 
+        "availibilityCount": 5,
+        "cartCount": 0,
+        "weight": 150,
+        "isVegetarian": false,
+        "categoryId": 8
+    }
+]

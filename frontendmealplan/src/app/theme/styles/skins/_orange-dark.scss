@@ -1,0 +1,5 @@
+$orange-dark-primary: mat.define-palette(mat.$deep-orange-palette, 700, 50, 900);
+$orange-dark-accent: mat.define-palette(mat.$green-palette, 600, 100, 900);
+$orange-dark-warn: mat.define-palette(mat.$red-palette, A200);
+
+$orange-dark-theme: mat.define-dark-theme($orange-dark-primary, $orange-dark-accent, $orange-dark-warn);

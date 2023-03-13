@@ -1,0 +1,19 @@
+{
+    "id": 29,
+    "name": "AssortmentOf Dry Fruit And Nuts", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 8.50,
+    "image": {
+        "small": "assets/images/foods/desserts/3/small.jpg",
+        "medium": "assets/images/foods/desserts/3/medium.jpg",
+        "big": "assets/images/foods/desserts/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 7
+}
