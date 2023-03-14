@@ -22,7 +22,7 @@ import { DomSanitizer } from "@angular/platform-browser";
                 ngClass.xs="px-3"
               >
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
-                  <h1 class="secondary-font">Register</h1>
+                  <h1 class="">Register</h1>
                   <a mat-button routerLink="/mealplan/login" color="warn" class="w-100"
                     >Already have an account? Sign in!</a
                   >
