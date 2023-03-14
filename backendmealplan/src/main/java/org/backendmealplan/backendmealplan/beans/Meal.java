@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.backendmealplan.backendmealplan.enums.DietType;
 
@@ -30,6 +31,8 @@ public class Meal {
     private String tips;
 //    private List<DietType> dietTypeList;
 
+  @ToString.Exclude
+  @JsonIgnore
     @OneToMany (mappedBy = "meal")
     private List<UserFeedback> feedbacks;
 
@@ -40,7 +43,8 @@ public class Meal {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     Set<Ingredient> mealIngredients;
 
-
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToMany(mappedBy = "meals")
     List<DayPlanId> dayPlanId;
 }

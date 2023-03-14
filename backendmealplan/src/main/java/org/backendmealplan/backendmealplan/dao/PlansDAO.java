@@ -6,4 +6,6 @@ import java.util.List;
 public interface PlansDAO extends JpaRepository<Plan, Long> {
 
     List<Plan> findByPlanName(String planName);
+    List<Plan> findAll();
+
 }
