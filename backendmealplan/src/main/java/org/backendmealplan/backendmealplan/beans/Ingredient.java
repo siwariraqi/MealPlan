@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.Data;
+import org.backendmealplan.backendmealplan.enums.FoodCategories;
 
 import javax.persistence.*;
 import java.util.List;

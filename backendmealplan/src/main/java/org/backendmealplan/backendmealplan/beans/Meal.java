@@ -1,5 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.*;
+import org.backendmealplan.backendmealplan.enums.DietType;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -17,16 +19,16 @@ public class Meal {
     private String mealName;
     private String imageUrl;
     private int calories;
+    @Column(name = "instructions", length = 1000)
     private String instructions;
-    private int prepareTime;
-    private int cookTime;
+    private String prepareTime;
+    private String cookTime;
     private double fat;
     private double protein;
     private double carbs;
     private double fiber;
     private String tips;
-
-    private String dietType; //change to enum
+//    private List<DietType> dietTypeList;
 
     @OneToMany (mappedBy = "meal")
     private List<UserFeedback> feedbacks;
