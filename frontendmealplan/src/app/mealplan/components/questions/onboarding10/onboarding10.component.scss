@@ -8,8 +8,103 @@
     flex-direction: column;
     overflow: hidden;
   }
+  .top {
+    justify-content: center;
+    align-items: center;
+    height: 13vh;
+    position: absolute;
+    top: 9%;
+    font-family: 'Montserrat';
+  
+    // border: 1vh solid black;
+  }
+  .question
+  {
+    line-height: 24px;
+    font-weight: 400;
+    font-size: 20px;
+  }
+  .text
+  {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .line
+  { 
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    border: 3px solid #4B643D;
+  }
+  .content
+  {
+      position: absolute;
+      top: 18%;
+      width: 40vw;
+      margin-left: auto;
+      margin-right: auto;  
+  }
+  .text {
+    position: absolute;
+    top: 87%;
+    display: inline-block;
+    width: 70%;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    left: 12vh;
 
+  }
+  .Sedentary
+  {
+    position: absolute;
+    left: 0%;
+  }
+  .Extra{
+    position: absolute;
+    right: 0%;
+  }
 
+  //  range slider 
+  .slider {
+    -webkit-appearance: none;
+    width: 70%;
+    height: 15px;
+    border-radius: 5px;
+    background: #ffffff;
+    border: 1px solid  black;
+    outline: black;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin: 6vh;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #E09167;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #E09167;
+    cursor: pointer;
+  }
   @media screen and (max-width: 600px) {
     .container{
       width: 95vw;

@@ -10,31 +10,38 @@ import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("users")
 @RestController
 @CrossOrigin
 public class UsersController {
     //The class not tested yet
+
     @Autowired
     private UserBL userBL;
 
     @Autowired
     private GoalBL goalBL;
-    
-    @GetMapping("allGoals")
-    public List<Goal> getAllGoals(){
-        return this.goalBL.getAllGoals();
-    }
 
+    //TODO: not tested yet
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
         return ResponseEntity.ok(updatedUserInfo);
     }
+    @GetMapping("allGoals")
+    public List<Goal> getAllGoals(){
+        return this.goalBL.getAllGoals();
+    }
 
-    @PostMapping("updateUserInfo")
+
+    //TODO: not tested yet
+    @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
@@ -66,4 +73,5 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
+
 }
