@@ -1,5 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 import org.backendmealplan.backendmealplan.enums.FoodCategories;
 
 import javax.persistence.*;
@@ -16,6 +18,8 @@ public class Ingredient {
     private String category;
     private String productName;
 
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToMany(mappedBy = "mealIngredients")
     List<Meal> mealList;
 

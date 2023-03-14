@@ -1,19 +1,30 @@
 package org.backendmealplan.backendmealplan.bl;
 
-<<<<<<< HEAD
 import org.backendmealplan.backendmealplan.Exceptions.UserNotFoundException;
+import org.backendmealplan.backendmealplan.beans.DayPlan;
+import org.backendmealplan.backendmealplan.beans.DayPlanId;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
-import org.backendmealplan.backendmealplan.dao.UsersDAO;
+import org.backendmealplan.backendmealplan.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PlanBL {
     @Autowired
     private UsersDAO usersDAO;
+  @Autowired
+  PlansDAO planDAO;
+  @Autowired
+  DayPlanIdDAO dayPlanIdDAO;
+
+  @Autowired
+  DayPlanDAO dayPlanDAO;
+  @Autowired
+  DayMealsDAO dayMealsDAO;
 
 
     public Plan getPlan(Long userid) throws UserNotFoundException {
@@ -28,30 +39,10 @@ public class PlanBL {
         }
     }
 
-=======
-import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.dao.DayMealsDAO;
-import org.backendmealplan.backendmealplan.dao.DayPlanDAO;
-import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
-import org.backendmealplan.backendmealplan.dao.PlansDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+  public List<Plan> getPlans(){
+    return planDAO.findAll();
+  }
 
-import java.util.List;
-
-@Service
-public class PlanBL {
-
-    @Autowired
-    PlansDAO planDAO;
-    @Autowired
-    DayPlanIdDAO dayPlanIdDAO;
-
-    @Autowired
-    DayPlanDAO dayPlanDAO;
-
-    @Autowired
-    DayMealsDAO dayMealsDAO;
     public Plan addPlan(Plan plan) {
         //check if plan exists
         List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
@@ -68,5 +59,5 @@ public class PlanBL {
     public DayPlan addDayPlan(DayPlan dayPlan){
         return this.dayPlanDAO.save(dayPlan);
     }
->>>>>>> dev-branch
+
 }

@@ -1,5 +1,8 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +15,8 @@ public class DayPlanId {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dayPlanId;
 
+  @ToString.Exclude
+  @JsonIgnore
     @ManyToMany(mappedBy = "dayPlanIdList")
     List<Plan> planList;
 

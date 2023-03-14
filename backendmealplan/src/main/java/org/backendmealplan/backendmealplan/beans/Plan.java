@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -22,21 +23,25 @@ public class Plan {
     private String includes;
     @Column(name = "benefits", length = 1000)
     private String benefits;
-
+  @ToString.Exclude
+    @JsonIgnore
     @OneToMany (mappedBy = "plan")
     private List<User> users;
 
+//    @ToString.Exclude
+    @JsonIgnore    /////// must
     @ManyToMany
     @JoinTable(
             name = "dayPlan",
             joinColumns = @JoinColumn(name = "plan_id"),
             inverseJoinColumns = @JoinColumn(name = "day_plan_id"))
     List<DayPlanId> dayPlanIdList;
-
-
+   @ToString.Exclude
+   @JsonIgnore
     @OneToMany (mappedBy = "plan")
     private List<GroceryList> groceryLists;
-
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany (mappedBy = "plan")
     private List<Payment> payments;
 

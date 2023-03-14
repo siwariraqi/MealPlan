@@ -13,7 +13,7 @@ public class FeedbackController {
   @Autowired
   private FeedbackBL feedbackBL;
   @PutMapping(name = "save")
-  public void saveFeedback (@RequestHeader UserFeedback userFeedback){
+  public void saveFeedback (@RequestBody UserFeedback userFeedback){
     feedbackBL.saveFeedback(userFeedback);
   }
 }
