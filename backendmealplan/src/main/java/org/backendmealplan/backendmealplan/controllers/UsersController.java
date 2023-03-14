@@ -1,7 +1,6 @@
 package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.Excptions.userExistException;
 import org.backendmealplan.backendmealplan.beans.User;
-import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.springframework.http.HttpStatus;
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
@@ -29,27 +28,17 @@ public class UsersController {
     @Autowired
     private GoalBL goalBL;
 
-    @GetMapping("allGoals")
-    public Set<String> getAllGoals(){
-        Set<String> goalsText = new HashSet<String>();
-        List<Goal> goals = this.goalBL.getAllGoals();
-        for (int i =0 ; i<goals.size();i++ )
-        {
-            goalsText.add(goals.get(i).getText());
-        }
-        return goalsText;
-    }
-
     //TODO: not tested yet
     @PostMapping("addUserInfo")
-    public ResponseEntity addUserInfo(Collection<String> txt){
-        List<Goal> goals = goalBL.getalltexts(txt);
-        Set<Goal> set = new HashSet<>(goals);
-        UserInfo userInfo = new UserInfo();
-        userInfo.setGoals(set);
+    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
         return ResponseEntity.ok(updatedUserInfo);
     }
+    @GetMapping("allGoals")
+    public List<Goal> getAllGoals(){
+        return this.goalBL.getAllGoals();
+    }
+
 
     //TODO: not tested yet
 
