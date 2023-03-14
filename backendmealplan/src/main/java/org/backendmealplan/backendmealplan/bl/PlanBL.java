@@ -1,6 +1,5 @@
 package org.backendmealplan.backendmealplan.bl;
-
-import org.backendmealplan.backendmealplan.Exceptions.UserNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.DayPlan;
 import org.backendmealplan.backendmealplan.beans.DayPlanId;
 import org.backendmealplan.backendmealplan.beans.Plan;
@@ -27,7 +26,7 @@ public class PlanBL {
   DayMealsDAO dayMealsDAO;
 
 
-    public Plan getPlan(Long userid) throws UserNotFoundException {
+    public Plan getPlan(Long userid) throws userNotFoundException {
 
         Optional<User> users = this.usersDAO.findById(userid);
         if (users.isPresent()) {
@@ -35,13 +34,10 @@ public class PlanBL {
             Plan plan = user.getPlan();
             return plan;
         } else {
-            throw new UserNotFoundException("User not found");
+            throw new userNotFoundException("User not found");
         }
     }
 
-  public List<Plan> getPlans(){
-    return planDAO.findAll();
-  }
 
     public Plan addPlan(Plan plan) {
         //check if plan exists

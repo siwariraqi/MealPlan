@@ -1,6 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
-import org.backendmealplan.backendmealplan.Exceptions.PaymentNotFoundException;
-import org.backendmealplan.backendmealplan.Exceptions.UserNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class MealBL {
   @Autowired
   DayMealsDAO dayMealsDAO;
 
-  public List<Meal> getDayPlanMeals(Integer dayNumber, Long userID) throws UserNotFoundException, PaymentNotFoundException {
+  public List<Meal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
     Optional<User> users = this.usersDAO.findById(userID);
     if (users.isPresent()) {
       User user = users.get();
@@ -58,17 +58,17 @@ public class MealBL {
           System.out.println("dayNumber: " + dayNumber);
           return dayPlanId.getMeals();
         } else {
-          throw new PaymentNotFoundException("Payment not found");
+          throw new paymentNotFoundException("Payment not found");
         }
       }
     } else {
-      throw new UserNotFoundException("User not found");
+      throw new userNotFoundException("User not found");
     }
   }
 
 
 
-  public List<String> getTotalDayNutrition (Integer dayNumber,Long userID) throws UserNotFoundException,PaymentNotFoundException{
+  public List<String> getTotalDayNutrition (Integer dayNumber,Long userID) throws userNotFoundException,paymentNotFoundException{
     List <Meal> dayMeals=getDayPlanMeals(dayNumber,userID);
     List<String> TotalNutrition =new ArrayList<>();
     Double totalCalories=0.0;

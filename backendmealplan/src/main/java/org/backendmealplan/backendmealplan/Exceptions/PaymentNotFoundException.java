@@ -1,4 +1,4 @@
-package org.backendmealplan.backendmealplan.Exceptions;
+package org.backendmealplan.backendmealplan.exceptions;
 
 public class paymentNotFoundException extends Exception {
 

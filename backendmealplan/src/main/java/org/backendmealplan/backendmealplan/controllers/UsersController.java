@@ -1,21 +1,14 @@
 package org.backendmealplan.backendmealplan.controllers;
 
-<<<<<<< Updated upstream
-import org.backendmealplan.backendmealplan.Exceptions.PaymentNotFoundException;
-import org.backendmealplan.backendmealplan.Exceptions.UserNotFoundException;
-import org.backendmealplan.backendmealplan.beans.Goal;
-=======
-import org.backendmealplan.backendmealplan.Exceptions.paymentNotFoundException;
-import org.backendmealplan.backendmealplan.Exceptions.userNotFoundException;
->>>>>>> Stashed changes
-import org.backendmealplan.backendmealplan.beans.Meal;
-import org.backendmealplan.backendmealplan.beans.Plan;
-import org.backendmealplan.backendmealplan.beans.UserInfo;
+import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
+import org.backendmealplan.backendmealplan.bl.UserBL;
+import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
+import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
-import org.backendmealplan.backendmealplan.bl.UserBL;
-import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +26,18 @@ public class UsersController {
   private MealBL mealBL;
   @Autowired
   private PlanBL planBL;
+  @Autowired
+  private UserBL userBL;
+
+  @Autowired
+  private GoalBL goalBL;
 
   @GetMapping("day-plan-meals/{daynumber}/{userid}")
   public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
     try {
       List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
       return ResponseEntity.ok(meals);
-    } catch (UserNotFoundException | PaymentNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    } catch (paymentNotFoundException e) {
+    } catch (userNotFoundException | paymentNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
@@ -54,7 +50,7 @@ public class UsersController {
 
       List<String> nutritions = mealBL.getTotalDayNutrition(daynumber, userid);
       return ResponseEntity.ok(nutritions);
-    } catch (UserNotFoundException | PaymentNotFoundException e) {
+    } catch (userNotFoundException | paymentNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
@@ -63,8 +59,56 @@ public class UsersController {
     try {
       Plan plan = planBL.getPlan(userid);
       return ResponseEntity.ok(plan);
-    } catch (UserNotFoundException e) {
+    } catch (userNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
+
+
+
+  //TODO: not tested yet
+  @PostMapping("addUserInfo")
+  public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
+    UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
+    return ResponseEntity.ok(updatedUserInfo);
+  }
+  @GetMapping("allGoals")
+  public List<Goal> getAllGoals(){
+    return this.goalBL.getAllGoals();
+  }
+
+
+  //TODO: not tested yet
+  @PutMapping("updateUserInfo")
+  public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
+    UserInfo updatedUserInfo = null;
+    try {
+      updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+    } catch (userInfoNotFound e) {
+      return (ResponseEntity) ResponseEntity.notFound();
+    }
+    return ResponseEntity.ok(updatedUserInfo);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
+    try{
+      User u =userBL.authentication(email,password);
+      u.setPassword(null);
+      return new ResponseEntity(u,HttpStatus.OK);
+    }catch(Exception e){
+      return new ResponseEntity(e.getMessage(),HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  @PostMapping("/adduser")
+  public ResponseEntity adduser(@RequestBody User user){
+    try{
+      User u= userBL.adduser(user);
+      u.setPassword(null);
+      return new ResponseEntity(u,HttpStatus.OK);
+    }catch(userExistException e){
+      return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
     }
   }
 
