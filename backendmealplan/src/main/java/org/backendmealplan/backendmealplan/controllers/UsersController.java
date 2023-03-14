@@ -28,7 +28,7 @@ public class UsersController {
     @Autowired
     private GoalBL goalBL;
 
-    //TODO: not tested yet
+
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
@@ -40,7 +40,7 @@ public class UsersController {
     }
 
 
-    //TODO: not tested yet
+
     @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
