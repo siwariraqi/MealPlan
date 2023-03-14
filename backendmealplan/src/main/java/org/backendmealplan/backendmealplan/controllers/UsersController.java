@@ -41,7 +41,6 @@ public class UsersController {
 
 
     //TODO: not tested yet
-
     @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
