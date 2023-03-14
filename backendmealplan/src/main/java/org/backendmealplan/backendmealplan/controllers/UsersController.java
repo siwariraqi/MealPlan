@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
+import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,11 @@ public class UsersController {
     //The class not tested yet
     @Autowired
     private UserBL userBL;
-
     @Autowired
     private GoalBL goalBL;
-    
+    @Autowired
+    private PlanBL planBL;
+
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
@@ -44,7 +46,13 @@ public class UsersController {
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
-    
+
+    @PostMapping("/choosePlan")
+    public ResponseEntity<String> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
+        User user = this.userBL.userSetPlan(userId,planId);// update the user's plan and save
+        return ResponseEntity.ok("Plan updated successfully.");
+    }
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
         try{

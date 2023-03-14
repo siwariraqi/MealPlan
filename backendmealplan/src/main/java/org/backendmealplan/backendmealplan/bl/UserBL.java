@@ -1,11 +1,13 @@
 package org.backendmealplan.backendmealplan.bl;
-import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
-import org.backendmealplan.backendmealplan.exceptions.userExistException;
+
+import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
-import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
+import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
+import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +17,16 @@ import java.util.Optional;
 public class UserBL {
     @Autowired
     UsersDAO usersDAO;
-    
+
     @Autowired
     UsersInfoDAO usersInfoDAO;
 
     @Autowired
+    PlanBL planBL;
+
+    @Autowired
     GoalsDAO goalsDAO;
-    
+
     public User authentication(String email, String password) throws Exception {
         User u=usersDAO.findUserByEmailAndPassword(email,password);
         if(u==null)throw new UNAUTHORIZEDException("wrong email or password");
@@ -33,12 +38,14 @@ public class UserBL {
             throw new userExistException("user alredy Exist");
         }
         return usersDAO.save(user);
-}
+    }
+
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.
     output: UserInfo object with Id (according to the database) plus some info (that was given in the input).
     */
+
     public UserInfo addUserInfoGoals(UserInfo userInfo){
         UserInfo added = this.usersInfoDAO.save(userInfo);
         //update the goals table;
@@ -63,4 +70,20 @@ public class UserBL {
             throw new userInfoNotFound();
         }
     }
+
+
+    public User userSetPlan( Long userId,  Long planId){
+        User user = this.usersDAO.findUserByuserId(userId);
+        Plan plan = this.planBL.getPlanById(planId);
+        user.setPlan(plan);
+        this.usersDAO.save(user);
+        return user;
+    }
+
+    public User addUser(User user){
+        this.usersDAO.save(user);
+        System.out.println("User added successfully!");
+        return user;
+    }
+
 }

@@ -4,6 +4,7 @@ import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.DayMealsDAO;
 import org.backendmealplan.backendmealplan.dao.DayPlanDAO;
 import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
+import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class PlanBL {
         List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
         if (plans.isEmpty()) {
             this.planDAO.save(plan);
+            System.out.println("Plan added successfully!");
         }
         return plan;
     }
@@ -36,7 +38,12 @@ public class PlanBL {
         return this.dayPlanIdDAO.save(dayPlanId);
     }
 
-    public DayPlan addDayPlan(DayPlan dayPlan){
+    public DayPlan addDayPlan(DayPlan dayPlan) {
         return this.dayPlanDAO.save(dayPlan);
+    }
+
+    public Plan getPlanById(Long id){
+        return this.planDAO.findPlanByplanId(id);
+
     }
 }
