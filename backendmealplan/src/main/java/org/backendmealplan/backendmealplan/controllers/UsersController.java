@@ -2,6 +2,7 @@ package org.backendmealplan.backendmealplan.controllers;
 
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
+import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
@@ -27,20 +28,19 @@ public class UsersController {
     private PlanBL planBL;
     @Autowired
     private UserBL userBL;
-
     @Autowired
     private GoalBL goalBL;
-    @PostMapping("addUserInfo")
-    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
-        UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
-        return ResponseEntity.ok(updatedUserInfo);
-    }
+    
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
     }
 
-
+    @PostMapping("addUserInfo")
+    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
+        UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
+        return ResponseEntity.ok(updatedUserInfo);
+    }
 
     @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
@@ -52,6 +52,19 @@ public class UsersController {
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
+
+
+
+    @PostMapping("/choosePlan")
+    public ResponseEntity<String> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
+        try {
+            User user = this.userBL.userSetPlan(userId,planId);// update the user's plan and save
+        } catch (userExistException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok("Plan updated successfully.");
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
