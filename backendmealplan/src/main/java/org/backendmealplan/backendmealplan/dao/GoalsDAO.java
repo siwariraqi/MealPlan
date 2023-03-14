@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface GoalsDAO extends JpaRepository<Goal, Long> {
 
-    //@Query(value ="select * from goals where :text in elements(goals.text)", nativeQuery = true)
-    List<Goal> findByTextIn(Collection<String> texts);
+  //@Query(value ="select * from goals where :text in elements(goals.text)", nativeQuery = true)
+  List<Goal> findByTextIn(Collection<String> texts);
+  List<Goal> findByText(String text);
+  }
 
-    List<Goal> findByText(String text);
-}
