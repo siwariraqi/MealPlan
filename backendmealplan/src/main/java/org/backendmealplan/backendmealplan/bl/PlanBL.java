@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanBL {
@@ -33,10 +34,28 @@ public class PlanBL {
     }
 
     public DayPlanId addDayPlanId(DayPlanId dayPlanId){
-        return this.dayPlanIdDAO.save(dayPlanId);
+        //check if dayPlanId exists
+        List<DayPlanId> dayPlanIds = this.dayPlanIdDAO.findByDayPlanId(dayPlanId.getDayPlanId());
+        if(dayPlanIds.isEmpty()) {
+            return this.dayPlanIdDAO.save(dayPlanId);
+        }
+        return null;
     }
 
     public DayPlan addDayPlan(DayPlan dayPlan){
-        return this.dayPlanDAO.save(dayPlan);
+        //check if dayPlan exists
+        List<DayPlan> dayPlanList = this.dayPlanDAO.findByDayPlanKey(dayPlan.getDayPlanKey());
+        if(dayPlanList.isEmpty()) {
+            return this.dayPlanDAO.save(dayPlan);
+        }
+        return null;
+    }
+
+    public List<DayMeal> getAllDayMeals(){
+        return this.dayMealsDAO.findAll();
+    }
+
+    public List<Plan> getAllPlans(){
+        return this.planDAO.findAll();
     }
 }
