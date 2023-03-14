@@ -16,5 +16,11 @@ public class GoalBL {
         return this.goalsDAO.findAll();
     }
 
-
+    public void addGoal(Goal goal) {
+        //check if goal exists
+        List<Goal> goals = this.goalsDAO.findByText(goal.getText());
+        if (goals.isEmpty()) {
+            this.goalsDAO.save(goal);
+        }
+    }
 }

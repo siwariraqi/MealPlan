@@ -1,4 +1,4 @@
-package org.backendmealplan.backendmealplan.Excptions;
+package org.backendmealplan.backendmealplan.exceptions;
 
 public class UNAUTHORIZEDException extends Exception{
 

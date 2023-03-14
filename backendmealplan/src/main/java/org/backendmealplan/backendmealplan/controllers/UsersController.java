@@ -1,7 +1,6 @@
 package org.backendmealplan.backendmealplan.controllers;
-import org.backendmealplan.backendmealplan.Excptions.userExistException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.beans.User;
-import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.springframework.http.HttpStatus;
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.backendmealplan.backendmealplan.beans.UserInfo;

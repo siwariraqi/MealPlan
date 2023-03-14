@@ -16,7 +16,7 @@ public class Goal {
     private Long goalId;
 
     @Column(nullable = false)
-    private String text; //change to enum
+    private String text;
 
     @ManyToMany(mappedBy = "goals")
     List<UserInfo> usersInfo;

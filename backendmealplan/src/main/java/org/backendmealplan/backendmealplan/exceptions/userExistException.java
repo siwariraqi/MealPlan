@@ -1,4 +1,4 @@
-package org.backendmealplan.backendmealplan.Excptions;
+package org.backendmealplan.backendmealplan.exceptions;
 
 public class userExistException extends Exception{
 
