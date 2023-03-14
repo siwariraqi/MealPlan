@@ -1,4 +1,6 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
@@ -11,9 +13,12 @@ import java.util.Date;
 @Table(name = "feedbacks")
 public class UserFeedback {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackId;
+
 
     @ManyToOne
     @JoinColumn(name = "meal_id")

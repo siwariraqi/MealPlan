@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Service
 public class InitDataBL {
-    @Autowired
-    UserBL userBL;
+//    @Autowired
+////    UserBL userBL;
 
     @Autowired
     PlanBL planBL;

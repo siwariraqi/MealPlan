@@ -1,30 +1,36 @@
 package org.backendmealplan.backendmealplan.controllers;
-import org.backendmealplan.backendmealplan.exceptions.userExistException;
-import org.backendmealplan.backendmealplan.beans.User;
-import org.springframework.http.HttpStatus;
-import org.backendmealplan.backendmealplan.beans.Goal;
-import org.backendmealplan.backendmealplan.beans.UserInfo;
+
+import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
+import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+import org.backendmealplan.backendmealplan.bl.MealBL;
+import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-@RequestMapping("users")
 @RestController
+@RequestMapping("users")
 @CrossOrigin
 public class UsersController {
-    //The class not tested yet
+
+    @Autowired
+    private MealBL mealBL;
+    @Autowired
+    private PlanBL planBL;
     @Autowired
     private UserBL userBL;
     @Autowired
     private GoalBL goalBL;
-    @Autowired
-    private PlanBL planBL;
-
+    
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
@@ -36,7 +42,7 @@ public class UsersController {
         return ResponseEntity.ok(updatedUserInfo);
     }
 
-    @PostMapping("updateUserInfo")
+    @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
@@ -47,6 +53,8 @@ public class UsersController {
         return ResponseEntity.ok(updatedUserInfo);
     }
 
+
+
     @PostMapping("/choosePlan")
     public ResponseEntity<String> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
         try {
@@ -56,6 +64,7 @@ public class UsersController {
         }
         return ResponseEntity.ok("Plan updated successfully.");
     }
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
@@ -78,4 +87,37 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
+    
+    @GetMapping("day-plan-meals/{daynumber}/{userid}")
+    public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
+        try {
+            List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
+            return ResponseEntity.ok(meals);
+        } catch (userNotFoundException | paymentNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+
+    @GetMapping("/day-nutrition/{daynumber}/{userid}")
+    public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer daynumber, @PathVariable Long userid) {
+        try {
+
+            List<String> nutritions = mealBL.getTotalDayNutrition(daynumber, userid);
+            return ResponseEntity.ok(nutritions);
+        } catch (userNotFoundException | paymentNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("plan/{userid}")
+    public ResponseEntity<Plan> getPlan(@PathVariable Long userid) {
+        try {
+            Plan plan = planBL.getPlan(userid);
+            return ResponseEntity.ok(plan);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

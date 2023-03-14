@@ -1,20 +1,24 @@
 package org.backendmealplan.backendmealplan.bl;
-
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
+
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
+import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
 public class UserBL {
+
     @Autowired
     UsersDAO usersDAO;
 
@@ -22,19 +26,20 @@ public class UserBL {
     UsersInfoDAO usersInfoDAO;
 
     @Autowired
-    PlanBL planBL;
-
-    @Autowired
     GoalsDAO goalsDAO;
 
+    @Autowired
+    PlanBL planBL;
+
     public User authentication(String email, String password) throws Exception {
-        User u=usersDAO.findUserByEmailAndPassword(email,password);
-        if(u==null)throw new UNAUTHORIZEDException("wrong email or password");
+        User u = usersDAO.findUserByEmailAndPassword(email, password);
+        if (u == null) throw new UNAUTHORIZEDException("wrong email or password");
         return u;
     }
-    public User adduser(User user)throws userExistException  {
-        User u=usersDAO.findByEmail(user.getEmail());
-        if(u!=null){
+
+    public User adduser(User user) throws userExistException {
+        User u = usersDAO.findByEmail(user.getEmail());
+        if (u != null) {
             throw new userExistException("user alredy Exist");
         }
         return usersDAO.save(user);
@@ -46,7 +51,7 @@ public class UserBL {
     output: UserInfo object with Id (according to the database) plus some info (that was given in the input).
     */
 
-    public UserInfo addUserInfoGoals(UserInfo userInfo){
+    public UserInfo addUserInfoGoals(UserInfo userInfo) {
         UserInfo added = this.usersInfoDAO.save(userInfo);
         //update the goals table;
         //TODO: should we update the goals table manually?
@@ -63,32 +68,25 @@ public class UserBL {
      */
     public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws userInfoNotFound {
         Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
-        if(existingUsersInfo.isPresent()){
+        if (existingUsersInfo.isPresent()) {
             return this.usersInfoDAO.save(userInfo);
-        }
-        else{
+        } else {
             throw new userInfoNotFound();
         }
     }
 
 
-    public User userSetPlan( Long userId,  Long planId) throws userExistException {
+    public User userSetPlan(Long userId, Long planId) throws userExistException {
         User user = this.usersDAO.findUserByuserId(userId);
-        if(user == null){
+        if (user == null) {
             throw new userExistException("user does not Exist");
         }
         Plan plan = this.planBL.getPlanById(planId);
-        if(plan == null){
+        if (plan == null) {
             throw new userExistException("plan id doesn't Exist");
         }
         user.setPlan(plan);
         this.usersDAO.save(user);
-        return user;
-    }
-
-    public User addUser(User user){
-        this.usersDAO.save(user);
-        System.out.println("User added successfully!");
         return user;
     }
 
