@@ -18,7 +18,9 @@ public class Plan {
     private String planName;
     private String length;
     private double price;
+    @Column(name = "includes", length = 1000)
     private String includes;
+    @Column(name = "benefits", length = 1000)
     private String benefits;
 
     @OneToMany (mappedBy = "plan")
