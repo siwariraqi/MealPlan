@@ -17,10 +17,9 @@ public class GoalBL {
         return this.goalsDAO.findAll();
     }
 
-    public List<Goal> getalltexts(Collection<String> text){
+    public List<Goal> getAllTexts(Collection<String> text){
         return this.goalsDAO.findByTextIn(text);
     }
-
 
     public void addGoal(Goal goal) {
         //check if goal exists
@@ -29,5 +28,4 @@ public class GoalBL {
             this.goalsDAO.save(goal);
         }
     }
-
 }

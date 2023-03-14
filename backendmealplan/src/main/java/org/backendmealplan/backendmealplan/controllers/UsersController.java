@@ -21,95 +21,90 @@ import java.util.List;
 @CrossOrigin
 public class UsersController {
 
+    @Autowired
+    private MealBL mealBL;
+    @Autowired
+    private PlanBL planBL;
+    @Autowired
+    private UserBL userBL;
 
-  @Autowired
-  private MealBL mealBL;
-  @Autowired
-  private PlanBL planBL;
-  @Autowired
-  private UserBL userBL;
-
-  @Autowired
-  private GoalBL goalBL;
-
-  @GetMapping("day-plan-meals/{daynumber}/{userid}")
-  public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
-    try {
-      List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
-      return ResponseEntity.ok(meals);
-    } catch (userNotFoundException | paymentNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @Autowired
+    private GoalBL goalBL;
+    @PostMapping("addUserInfo")
+    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
+        UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
+        return ResponseEntity.ok(updatedUserInfo);
     }
-  }
-
-
-
-  @GetMapping("/day-nutrition/{daynumber}/{userid}")
-  public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer daynumber, @PathVariable Long userid) {
-    try {
-
-      List<String> nutritions = mealBL.getTotalDayNutrition(daynumber, userid);
-      return ResponseEntity.ok(nutritions);
-    } catch (userNotFoundException | paymentNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @GetMapping("allGoals")
+    public List<Goal> getAllGoals(){
+        return this.goalBL.getAllGoals();
     }
-  }
-  @GetMapping("plan/{userid}")
-  public ResponseEntity<Plan> getPlan(@PathVariable Long userid) {
-    try {
-      Plan plan = planBL.getPlan(userid);
-      return ResponseEntity.ok(plan);
-    } catch (userNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+
+
+    @PutMapping("updateUserInfo")
+    public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
+        UserInfo updatedUserInfo = null;
+        try {
+            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+        } catch (userInfoNotFound e) {
+            return (ResponseEntity) ResponseEntity.notFound();
+        }
+        return ResponseEntity.ok(updatedUserInfo);
     }
-  }
 
-
-
-  //TODO: not tested yet
-  @PostMapping("addUserInfo")
-  public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
-    UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
-    return ResponseEntity.ok(updatedUserInfo);
-  }
-  @GetMapping("allGoals")
-  public List<Goal> getAllGoals(){
-    return this.goalBL.getAllGoals();
-  }
-
-
-  //TODO: not tested yet
-  @PutMapping("updateUserInfo")
-  public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
-    UserInfo updatedUserInfo = null;
-    try {
-      updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
-    } catch (userInfoNotFound e) {
-      return (ResponseEntity) ResponseEntity.notFound();
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
+        try{
+            User u =userBL.authentication(email,password);
+            u.setPassword(null);
+            return new ResponseEntity(u,HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.UNAUTHORIZED);
+        }
     }
-    return ResponseEntity.ok(updatedUserInfo);
-  }
 
-  @PostMapping("/login")
-  public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
-    try{
-      User u =userBL.authentication(email,password);
-      u.setPassword(null);
-      return new ResponseEntity(u,HttpStatus.OK);
-    }catch(Exception e){
-      return new ResponseEntity(e.getMessage(),HttpStatus.UNAUTHORIZED);
+    @PostMapping("/adduser")
+    public ResponseEntity adduser(@RequestBody User user){
+        try{
+            User u= userBL.adduser(user);
+            u.setPassword(null);
+            return new ResponseEntity(u,HttpStatus.OK);
+        }catch(userExistException e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
-  }
+    
+    @GetMapping("day-plan-meals/{daynumber}/{userid}")
+    public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
+        try {
+            List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
+            return ResponseEntity.ok(meals);
+        } catch (userNotFoundException | paymentNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
-  @PostMapping("/adduser")
-  public ResponseEntity adduser(@RequestBody User user){
-    try{
-      User u= userBL.adduser(user);
-      u.setPassword(null);
-      return new ResponseEntity(u,HttpStatus.OK);
-    }catch(userExistException e){
-      return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+
+    @GetMapping("/day-nutrition/{daynumber}/{userid}")
+    public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer daynumber, @PathVariable Long userid) {
+        try {
+
+            List<String> nutritions = mealBL.getTotalDayNutrition(daynumber, userid);
+            return ResponseEntity.ok(nutritions);
+        } catch (userNotFoundException | paymentNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
-  }
+
+    @GetMapping("plan/{userid}")
+    public ResponseEntity<Plan> getPlan(@PathVariable Long userid) {
+        try {
+            Plan plan = planBL.getPlan(userid);
+            return ResponseEntity.ok(plan);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
