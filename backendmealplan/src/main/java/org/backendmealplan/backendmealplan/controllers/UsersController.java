@@ -49,7 +49,11 @@ public class UsersController {
 
     @PostMapping("/choosePlan")
     public ResponseEntity<String> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
-        User user = this.userBL.userSetPlan(userId,planId);// update the user's plan and save
+        try {
+            User user = this.userBL.userSetPlan(userId,planId);// update the user's plan and save
+        } catch (userExistException e) {
+            throw new RuntimeException(e);
+        }
         return ResponseEntity.ok("Plan updated successfully.");
     }
 

@@ -72,9 +72,15 @@ public class UserBL {
     }
 
 
-    public User userSetPlan( Long userId,  Long planId){
+    public User userSetPlan( Long userId,  Long planId) throws userExistException {
         User user = this.usersDAO.findUserByuserId(userId);
+        if(user == null){
+            throw new userExistException("user does not Exist");
+        }
         Plan plan = this.planBL.getPlanById(planId);
+        if(plan == null){
+            throw new userExistException("plan id doesn't Exist");
+        }
         user.setPlan(plan);
         this.usersDAO.save(user);
         return user;
