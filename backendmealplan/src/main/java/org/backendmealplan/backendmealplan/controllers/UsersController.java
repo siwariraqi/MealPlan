@@ -1,8 +1,13 @@
 package org.backendmealplan.backendmealplan.controllers;
 
+<<<<<<< Updated upstream
 import org.backendmealplan.backendmealplan.Exceptions.PaymentNotFoundException;
 import org.backendmealplan.backendmealplan.Exceptions.UserNotFoundException;
 import org.backendmealplan.backendmealplan.beans.Goal;
+=======
+import org.backendmealplan.backendmealplan.Exceptions.paymentNotFoundException;
+import org.backendmealplan.backendmealplan.Exceptions.userNotFoundException;
+>>>>>>> Stashed changes
 import org.backendmealplan.backendmealplan.beans.Meal;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
@@ -35,6 +40,8 @@ public class UsersController {
       List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
       return ResponseEntity.ok(meals);
     } catch (UserNotFoundException | PaymentNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    } catch (paymentNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
