@@ -1,6 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
-import org.backendmealplan.backendmealplan.Excptions.UNAUTHORIZEDException;
-import org.backendmealplan.backendmealplan.Excptions.userExistException;
+import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
