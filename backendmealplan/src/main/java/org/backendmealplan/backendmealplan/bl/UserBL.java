@@ -1,7 +1,11 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.beans.Plan;
+import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
+import org.backendmealplan.backendmealplan.dao.PlansDAO;
+import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,12 @@ public class UserBL {
 
     @Autowired
     GoalsDAO goalsDAO;
+
+    @Autowired
+    PlanBL planBL;
+
+    @Autowired
+    UsersDAO usersDAO;
 
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
@@ -46,4 +56,20 @@ public class UserBL {
             throw new userInfoNotFound();
         }
     }
+
+
+    public User userSetPlan( Long userId,  Long planId){
+        User user = this.usersDAO.findUserByuserId(userId);
+        Plan plan = this.planBL.getPlanById(planId);
+        user.setPlan(plan);
+        this.usersDAO.save(user);
+        return user;
+    }
+
+    public User addUser(User user){
+        this.usersDAO.save(user);
+        System.out.println("User added successfully!");
+        return user;
+    }
+
 }
