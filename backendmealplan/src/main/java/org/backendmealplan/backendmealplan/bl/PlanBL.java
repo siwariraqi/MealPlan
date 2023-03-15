@@ -1,10 +1,20 @@
 package org.backendmealplan.backendmealplan.bl;
+
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.DayPlan;
 import org.backendmealplan.backendmealplan.beans.DayPlanId;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.dao.*;
+
+
+import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.DayMealsDAO;
+import org.backendmealplan.backendmealplan.dao.DayPlanDAO;
+import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
+import org.backendmealplan.backendmealplan.beans.Plan;
+import org.backendmealplan.backendmealplan.dao.PlansDAO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +54,7 @@ public class PlanBL {
         List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
         if (plans.isEmpty()) {
             this.planDAO.save(plan);
+            System.out.println("Plan added successfully!");
         }
         return plan;
     }
@@ -72,6 +83,11 @@ public class PlanBL {
 
     public List<Plan> getAllPlans(){
         return this.planDAO.findAll();
+    }
+
+    public Plan getPlanById(Long id){
+        return this.planDAO.findPlanByplanId(id);
+
     }
 
 }
