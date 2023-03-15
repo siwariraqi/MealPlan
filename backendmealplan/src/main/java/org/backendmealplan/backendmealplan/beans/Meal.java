@@ -4,6 +4,7 @@ import lombok.*;
 import org.backendmealplan.backendmealplan.enums.DietType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class Meal {
   @ToString.Exclude
   @JsonIgnore
     @OneToMany (mappedBy = "meal")
-    private List<UserFeedback> feedbacks;
+    private List<UserFeedback> feedbacks = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

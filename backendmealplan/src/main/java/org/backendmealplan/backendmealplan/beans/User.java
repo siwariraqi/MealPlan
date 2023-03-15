@@ -1,6 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -46,6 +47,6 @@ public class User {
     Set<GroceryList> changes;
 
     @OneToMany (mappedBy = "user")
-    private List<UserFeedback> feedbacks;
+    private List<UserFeedback> feedbacks=new ArrayList<>();
 
 }

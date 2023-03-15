@@ -78,12 +78,13 @@ public class MealBL {
     Double totalFibre=0.0;
 
     for( Meal meal:dayMeals){
+
       totalFat +=meal.getFat();
       totalProtien += meal.getProtein();
       totalCarbs +=meal.getCarbs();
       totalFibre +=meal.getFiber();
+      totalCalories+= meal.getCalories();
     }
-    totalCalories= totalCarbs+totalFat+totalProtien+totalCarbs+totalFibre;
     TotalNutrition.add("totalCalories:"+totalCalories);
     TotalNutrition.add("totalFat:"+totalFat);
     TotalNutrition.add("totalProtien:"+totalProtien);

@@ -18,8 +18,6 @@ public class UserFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackId;
-
-
     @ManyToOne
     @JoinColumn(name = "meal_id")
     private Meal meal;
@@ -30,7 +28,7 @@ public class UserFeedback {
 
     private boolean isOnIt;
     private Date date;
-    private int rating;
+    private int rating=-1;
     private String feedbackText;
 
 }
