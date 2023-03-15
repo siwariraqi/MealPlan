@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Color, colorSets } from "@swimlane/ngx-charts";
-
 import { Goal } from "src/app/mealplan/models/Goal";
 
 @Component({
