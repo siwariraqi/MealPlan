@@ -25,8 +25,8 @@ import { Onboarding15Component } from "./components/questions/onboarding15/onboa
 import { RegisterFormComponent } from "./components/register-form/register-form.component";
 import { SharedModule } from "../shared/shared.module";
 import { RouterModule, Routes } from "@angular/router";
-import { PlanComponent } from './components/plan/plan.component';
-import { ChooseplanComponent } from './pages/chooseplan/chooseplan.component';
+import { PlanComponent } from "./components/plan/plan.component";
+import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 
 @NgModule({
   declarations: [
@@ -50,15 +50,15 @@ import { ChooseplanComponent } from './pages/chooseplan/chooseplan.component';
     ChooseplanComponent,
     MealComponent
   ],
+
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,
     MatIconModule,
     FlexLayoutModule,
     SharedModule,
     MatChipsModule,FormsModule]
-
-
   })
 
 
   export class MealplanModule {}
+
