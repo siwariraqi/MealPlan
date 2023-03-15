@@ -4,10 +4,7 @@ import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
-import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
-import org.backendmealplan.backendmealplan.exceptions.userExistException;
-import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
-import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.*;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +53,13 @@ public class UsersController {
 
 
     @PostMapping("/choosePlan")
-    public ResponseEntity<String> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
+    public ResponseEntity<Void> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
         try {
             User user = this.userBL.userSetPlan(userId,planId);// update the user's plan and save
-        } catch (userExistException e) {
-            throw new RuntimeException(e);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok("Plan updated successfully.");
+        return ResponseEntity.ok(null);
     }
 
 
