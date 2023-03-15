@@ -16,10 +16,10 @@ import { Component, OnInit } from "@angular/core";
           <input
             type="input"
             class="form__field"
-            placeholder="Name"
             name="name"
             required
-          />
+          /> 
+         <p class='val'> {{ val }} <p>
         </div>
         <div class="box">
           <div
@@ -45,6 +45,7 @@ import { Component, OnInit } from "@angular/core";
 export class Onboarding13Component implements OnInit {
   toggle1 = false;
   toggle2 = true;
+  val : String = "KG";
 
   constructor() {}
 
@@ -53,9 +54,12 @@ export class Onboarding13Component implements OnInit {
   enableDisableRule1() {
     this.toggle1 = !this.toggle1;
     this.toggle2 = true;
+    this.val = "KG";
   }
   enableDisableRule2() {
     this.toggle2 = !this.toggle2;
     this.toggle1 = true;
+    this.val = "LB";
+
   }
 }
