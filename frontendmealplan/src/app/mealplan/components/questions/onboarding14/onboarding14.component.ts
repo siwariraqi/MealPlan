@@ -20,6 +20,7 @@ import { Component, OnInit } from "@angular/core";
             name="name"
             required
           />
+          <p class='val'> {{ val }} <p>
         </div>
         <div class="box">
           <div
@@ -43,8 +44,9 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./onboarding14.component.scss"],
 })
 export class Onboarding14Component implements OnInit {
-  toggle1 = false;
-  toggle2 = true;
+  toggle1 = true;
+  toggle2 = false;
+  val : String = "CM";
 
   constructor() {}
 
@@ -53,9 +55,13 @@ export class Onboarding14Component implements OnInit {
   enableDisableRule1() {
     this.toggle1 = !this.toggle1;
     this.toggle2 = true;
+    this.val = "FT/IN";
+
   }
   enableDisableRule2() {
     this.toggle2 = !this.toggle2;
     this.toggle1 = true;
+    this.val = "CM";
+
   }
 }

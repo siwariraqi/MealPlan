@@ -4,8 +4,14 @@ import { Component, OnInit } from "@angular/core";
   selector: "app-onboarding15",
   template: `
     <div class="container">
-      <p>onboarding15 works!</p>
+      <div class="top">
+        <p class="question">Are you ready to begin?</p>
+        <p class="line"></p>
+      </div>
+      <div class="content">
+        <div class='text'> Your plan is baking </div>
     </div>
+</div>
   `,
   styleUrls: ["./onboarding15.component.scss"],
 })
