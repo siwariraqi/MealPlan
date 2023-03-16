@@ -40,7 +40,7 @@ public class UserBL {
     public User adduser(User user) throws userExistException {
         User u = usersDAO.findByEmail(user.getEmail());
         if (u != null) {
-            throw new userExistException("user alredy Exist");
+            throw new userExistException("Email already in use!");
         }
         return usersDAO.save(user);
     }

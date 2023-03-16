@@ -7,6 +7,7 @@ import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.*;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

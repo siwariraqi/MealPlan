@@ -23,8 +23,6 @@ public class User {
 
     private String phoneNumber;
 
-    private String userName;
-
     private String email;
 
     @OneToOne()

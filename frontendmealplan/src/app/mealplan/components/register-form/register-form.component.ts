@@ -5,6 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { matchingPasswords, emailValidator } from "src/app/theme/utils/app-validators";
 import { DomSanitizer } from "@angular/platform-browser";
 import { RegisterService } from "../../services/register.service";
+import { User } from "../../models/User";
 
 @Component({
   selector: "app-register-form",
@@ -176,13 +177,32 @@ export class RegisterFormComponent implements OnInit {
     );
   }
 
+  public capitalizeFirstLetter(str: string): string {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
   public onRegisterFormSubmit(): void {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
-      this.snackBar.open("You registered successfully!", "×", {
-        panelClass: "success",
-        verticalPosition: "top",
-        duration: 3000,
+      const formObj = this.registerForm.value;
+      const user = new User(
+        this.capitalizeFirstLetter(formObj.fname),
+        this.capitalizeFirstLetter(formObj.lname),
+        formObj.password,
+        null,
+        formObj.email
+      );
+      this.registerSrv.registerUser(user).subscribe((user) => {
+        if (user) {
+          this.snackBar.open("You registered successfully!", "×", {
+            panelClass: "success",
+            verticalPosition: "bottom",
+            duration: 3000,
+          });
+          this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+            this.router.navigateByUrl("/mealplan/login");
+          });
+        }
       });
     }
   }
