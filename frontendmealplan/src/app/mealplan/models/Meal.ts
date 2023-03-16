@@ -14,7 +14,8 @@ export class Meal{
                      public carbs?: number,
                      public fiber?: number,
                      public tips?: string,
-                     public dietType?: string,
+                     public kcal?:string,
+                    //  public dietType?: string,
                      public feedbacks?: UserFeedback[],
                      public mealIngredients?: Ingredient[],
                      ) {
