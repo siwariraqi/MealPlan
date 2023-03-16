@@ -4,10 +4,13 @@ import { MealplanRoutingModule } from "./mealplan-routing.module";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MenuItemsComponent } from './pages/dayMeal/menu-items/menu-items.component';
+import { MenuItemsCarouselComponent } from './pages/dayMeal/menu-items-carousel/menu-items-carousel.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
+import { MealComponent } from './pages/dayMeal/meal/meal.component';
 import { FormsModule } from "@angular/forms";
 import { WelcomeScreenComponent } from "./components/welcome-screen/welcome-screen.component";
 import { Onboarding7Component } from "./components/questions/onboarding7/onboarding7.component";
@@ -24,15 +27,14 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule, Routes } from "@angular/router";
 import { PlanComponent } from './components/plan/plan.component';
 import { ChooseplanComponent } from './pages/chooseplan/chooseplan.component';
-import { MealComponent } from './pages/dayMeal/meal/meal.component';
-import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
-import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
+    MenuItemsComponent, 
+    MenuItemsCarouselComponent,
     WelcomeScreenComponent,
     Onboarding7Component,
     Onboarding8Component,
@@ -46,9 +48,7 @@ import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/me
     RegisterFormComponent,
     PlanComponent,
     ChooseplanComponent,
-    MealComponent,
-    MealItemsComponent,
-    MealItemsDetailsComponent,
+    MealComponent
   ],
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,

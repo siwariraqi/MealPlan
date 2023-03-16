@@ -1,25 +1,19 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange} from '@angular/core';
 import { MenuItem } from 'src/app/app.models';
 import { AppService } from 'src/app/app.service';
-import { Meal } from 'src/app/mealplan/models/Meal';
 import { CartOverviewComponent } from 'src/app/shared/cart-overview/cart-overview.component';
 
 @Component({
-  selector: 'app-meal-items',
-  templateUrl: './meal-items.component.html',
-  styleUrls: ['./meal-items.component.scss']
+  selector: 'app-menu-items',
+  templateUrl: './menu-items.component.html',
+  styleUrls: ['./menu-items.component.scss']
 })
-export class MealItemsComponent implements OnInit {
-  @Input () mealItem!:Meal;
-
-
+export class MenuItemsComponent implements OnInit {
   @Input() menuItem!: MenuItem;
   @Input() lazyLoad: boolean = false;
   @Input() viewType: string = "grid";
   @Input() viewColChanged: any; 
   public column:number = 4;
-  
-
   constructor(public appService:AppService) { }
 
   ngOnInit(): void {
@@ -46,26 +40,26 @@ export class MealItemsComponent implements OnInit {
     }
   }
 
-  // public addToCart(){ 
-  //   this.appService.addToCart(this.menuItem, CartOverviewComponent); 
-  // }
+  public addToCart(){ 
+    this.appService.addToCart(this.menuItem, CartOverviewComponent); 
+  }
 
-  // public onCart(){
-  //   if(this.appService.Data.cartList.find(item=>item.id == this.menuItem.id)){
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  public onCart(){
+    if(this.appService.Data.cartList.find(item=>item.id == this.menuItem.id)){
+      return true;
+    }
+    return false;
+  }
 
-  // public addToFavorites(){
-  //   this.appService.addToFavorites(this.menuItem);
-  // }
+  public addToFavorites(){
+    this.appService.addToFavorites(this.menuItem);
+  }
 
-  // public onFavorites(){
-  //   if(this.appService.Data.favorites.find(item=>item.id == this.menuItem.id)){
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  public onFavorites(){
+    if(this.appService.Data.favorites.find(item=>item.id == this.menuItem.id)){
+      return true;
+    }
+    return false;
+  }
 
 }
