@@ -167,7 +167,7 @@ public class InitDataBL {
     private void createMeals() {
         meals[0] = insertMeal("Peanut butter and banana chia pudding",
                 300, 15, 10, 9, 25,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Add the milk, peanut butter, to a jar and shake well until the peanut butter has been incorporated" +
                         "with the milk. Add the chia seeds and shake again to combine. The next morning, stir the muesli" +
                         "well. If it’s too thick, add a little more water until it reaches your preferred consistency." + "$" +
@@ -177,7 +177,7 @@ public class InitDataBL {
 
         meals[1] = insertMeal("Carrot cake overnight oats",
                 319, 9, 9, 6, 29,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Mix the grated carrot, mixed spice, cinnamon, and oats" + "$" +
                         "Add 2⁄3 cup (X4) water and a pinch of salt" + "$" +
                         "Place in 4 serving jars and cover" + "$" +
@@ -187,7 +187,7 @@ public class InitDataBL {
 
         meals[2] = insertMeal("Oat and Chia porridge",
                 370, 19, 11, 8, 34,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Soak the oats and chia seeds in 800ml water overnight" + "$" +
                         "Add the oats and seeds to a pan the next morning with milk" + "$" +
                         "Place in 4 bowls and serve with yogurt and fruit" + "$",
@@ -195,7 +195,7 @@ public class InitDataBL {
 
         meals[3] = insertMeal("Smoked salmon sandwich",
                 667, 6.6, 5.6, 2, 10.5,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Cut the slices of salmon into small pieces." + "$" +
                         "In a small mixing bowl combine salmon with cream cheese, chopped capers, finely diced spring\n" +
                         "onion and diced cucumber, mix well." + "$" +
@@ -204,14 +204,14 @@ public class InitDataBL {
 
         meals[4] = insertMeal("Chicken and cream cheese wrap",
                 151, 3.5, 3.4, 7, 23,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "In a small bowl, mix together the chicken and half the cream cheese." + "$" +
                         "Lay the tortilla flat and spread the remaining cream cheese, then add the arugula, chicken, and celery. Roll the tortilla tightly and enjoy!",
                 "5 minutes", "Overnight", "");
 
         meals[5] = insertMeal("Carrot and parsnip soup",
                 400, 12, 12, 4, 33,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Heat the oil in a saucepan and fry the onion until softened" + "$" +
                         "Add the garlic and cook for 2mins" + "$" +
                         "Add the carrots, parsnip, and stock to the saucepan" + "$" +
@@ -221,7 +221,7 @@ public class InitDataBL {
 
         meals[6] = insertMeal("Lemon garlic salmon, broccoli and sweet potatoes",
                 450, 20, 40, 6, 30,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Preheat the oven to 375oF and line a baking sheet with parchment paper." + "$" +
                         "Add the sweet potato and broccoli to the pan and drizzle with 2⁄3 of the oil and season with half of\n" +
                         "the salt. Stir to evenly coat the vegetables and bake for 10 minutes." + "$" +
@@ -235,7 +235,7 @@ public class InitDataBL {
 
         meals[7] = insertMeal("Chicken fried rice",
                 450, 15, 30, 5, 40,
-                "",
+                "assets/images/foods/meat-courses/1/medium.jpg",
                 "Cook the rice according to the package instructions and set aside." + "$" +
                         "Heat a large non-stick pan over medium-high heat. Add the cubed chicken and season with salt and\n" +
                         "pepper. Cook to your desired doneness, then transfer to a bowl." + "$" +
