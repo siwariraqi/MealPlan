@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { matchingPasswords, emailValidator } from "src/app/theme/utils/app-validators";
 import { DomSanitizer } from "@angular/platform-browser";
-import { RegisterService } from "../../services/register.service";
 
 @Component({
   selector: "app-register-form",
@@ -29,32 +28,6 @@ import { RegisterService } from "../../services/register.service";
                   >
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
-                  <div class="first-last-name-wrapper gap-2">
-                    <mat-form-field appearance="outline">
-                      <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
-                      <mat-label>First Name</mat-label>
-                      <input matInput placeholder="First Name" formControlName="fname" required />
-                      <mat-error *ngIf="registerForm.controls.fname.errors?.required"
-                        >First Name is required</mat-error
-                      >
-                      <mat-error *ngIf="registerForm.controls.fname.hasError('invalidFirstName')"
-                        >Invalid Input</mat-error
-                      >
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                      <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
-                      <mat-label>Last Name</mat-label>
-                      <input matInput placeholder="Last Name" formControlName="lname" required />
-                      <mat-error *ngIf="registerForm.controls.lname.errors?.required"
-                        >Last Name is required</mat-error
-                      >
-                      <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')"
-                        >Invalid Input</mat-error
-                      >
-                    </mat-form-field>
-                  </div>
-
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>Email</mat-label>
@@ -158,8 +131,7 @@ export class RegisterFormComponent implements OnInit {
     public fb: UntypedFormBuilder,
     public router: Router,
     public snackBar: MatSnackBar,
-    private sanitizer: DomSanitizer,
-    private registerSrv: RegisterService
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -168,8 +140,7 @@ export class RegisterFormComponent implements OnInit {
     );
     this.registerForm = this.fb.group(
       {
-        fname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
-        lname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
+        username: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
         email: ["", Validators.compose([Validators.required, emailValidator])],
         password: ["", Validators.required],
         confirmPassword: ["", Validators.required],

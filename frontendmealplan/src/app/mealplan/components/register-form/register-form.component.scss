@@ -1,14 +1,13 @@
 .container {
   margin-top: -2vh;
-  width: 85vw;
-  max-width: 800px;
+  width: 40vw;
   height: 68vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 3vh;
+  margin-bottom: 2vh;
 }
 
 .formContainer {
@@ -17,25 +16,6 @@
   background-image: linear-gradient(to right, #ffffff, #ffffffd2) !important;
   box-shadow: 1px 1px 15px rgba(4, 4, 26, 0.15) !important;
   opacity: 0.96 !important;
-  padding: 4px;
-  width: 85vw;
-  max-width: 700px;
-}
-
-.first-last-name-wrapper {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  mat-form-field:first-child {
-    flex: auto;
-    margin-right: 5px;
-    width: 40%;
-  }
-  mat-form-field:last-child {
-    flex: auto;
-    margin-left: 5px;
-    width: 40%;
-  }
 }
 
 .signupBtn {
@@ -57,7 +37,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  // .container {
-  //   width: 85vw;
-  // }
+  .container {
+    width: 95vw;
+  }
 }
