@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Goal } from "../../models/Goal";
+import { UserInfo } from "../../models/UserInfo";
+import { RegisterService } from "../../services/register.service";
 
 @Component({
   selector: "app-register",
@@ -12,7 +14,7 @@ import { Goal } from "../../models/Goal";
         *ngIf="screenState === 'welcome'"
         [currentPage]="currentPage"
       ></app-welcome-screen>
-      <app-onboarding7 *ngIf="onBoardingStep === 7" [userGoals]="userGoals"></app-onboarding7>
+      <app-onboarding7 *ngIf="onBoardingStep === 7"></app-onboarding7>
       <app-onboarding8 *ngIf="onBoardingStep === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="onBoardingStep === 9"></app-onboarding9>
       <app-onboarding10 *ngIf="onBoardingStep === 10"></app-onboarding10>
@@ -49,20 +51,24 @@ export class RegisterComponent implements OnInit {
   onBoardingStep: number;
   userGoals: Goal[];
 
-  constructor() {
+  constructor(private registerSrv: RegisterService) {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
 
     this.screenState = "welcome";
     this.onBoardingStep = 2;
-    this.userGoals = [];
+    // this.userGoals = [];
   }
   ngOnInit(): void {
     this.backgroundColor = "#4b643d";
   }
 
   nextScreen() {
+    if (this.onBoardingStep > 5) {
+      this.registerSrv.updateUserInfo(); //save userinfo (answers) to local storage and server database
+    }
+
     if (this.currentPage !== 9) this.currentPage++;
     this.onBoardingStep++;
     if (this.screenState === "welcome") {

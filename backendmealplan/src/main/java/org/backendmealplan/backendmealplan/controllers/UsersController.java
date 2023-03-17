@@ -42,7 +42,7 @@ public class UsersController {
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+            updatedUserInfo = userBL.updateUserInfo(userInfo);
         } catch (userInfoNotFound e) {
             return (ResponseEntity) ResponseEntity.notFound();
         }
