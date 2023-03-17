@@ -55,17 +55,6 @@ public class InitDataBL {
         } catch (userExistException e) {
             throw new RuntimeException(e);
         }
-        List<User> users = basicPlan.getUsers();
-        System.out.println(users.size());
-//        try {
-//            List<DayMeal> days = mealBL.getDayPlanMeals(1,u.getUserId());
-//        } catch (userNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (paymentNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        System.out.printf("h");
-
     }
 
     private void createDays() {
