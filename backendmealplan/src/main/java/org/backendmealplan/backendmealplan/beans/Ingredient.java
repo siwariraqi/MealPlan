@@ -23,4 +23,9 @@ public class Ingredient {
     @ManyToMany(mappedBy = "mealIngredients")
     List<Meal> mealList;
 
+    @ToString.Exclude
+    @JsonIgnore
+    @OneToMany (mappedBy = "ingredient")
+    private List<GroceryList> groceryLists;
+
 }

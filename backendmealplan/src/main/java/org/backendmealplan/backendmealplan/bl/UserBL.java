@@ -10,13 +10,19 @@ import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
+import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.*;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import java.util.Set;
 
 @Service
@@ -156,4 +162,8 @@ public class UserBL {
 
 
 
+
+
+
 }
+
