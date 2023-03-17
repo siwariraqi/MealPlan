@@ -6,6 +6,11 @@ import { Goal } from "src/app/mealplan/models/Goal";
 @Component({
   selector: "app-onboarding7",
   template: `
+    <style>
+      .box:hover {
+        background: #e09167;
+      }
+    </style>
     <div class="container">
       <div class="top">
         <p class="question">What are your goals?</p>
@@ -99,7 +104,7 @@ export class Onboarding7Component implements OnInit {
   toggle6: boolean;
   allGoals: Goal[];
 
-  // @Input() userGoals: Goal[];
+  @Input() userGoals: Goal[];
 
   constructor() {
     this.toggle1 = false;

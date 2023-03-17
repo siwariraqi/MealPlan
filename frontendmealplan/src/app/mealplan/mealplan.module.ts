@@ -1,10 +1,14 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { MealplanRoutingModule } from "./mealplan-routing.module";
 import { LoginComponent } from "./pages/login/login.component";
-import { RegisterComponent } from "./pages/register/register.component";
-import { HomeComponent } from "./pages/home/home.component";
+import { RegisterComponent } from './pages/register/register.component';
+import { HomeComponent } from './pages/home/home.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatChipsModule } from '@angular/material/chips';
+import { MealComponent } from './pages/dayMeal/meal/meal.component';
 import { FormsModule } from "@angular/forms";
 import { WelcomeScreenComponent } from "./components/welcome-screen/welcome-screen.component";
 import { Onboarding7Component } from "./components/questions/onboarding7/onboarding7.component";
@@ -19,8 +23,10 @@ import { Onboarding15Component } from "./components/questions/onboarding15/onboa
 import { RegisterFormComponent } from "./components/register-form/register-form.component";
 import { SharedModule } from "../shared/shared.module";
 import { RouterModule, Routes } from "@angular/router";
-// import { PlanComponent } from "./components/plan/plan.component";
-// import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
+import { PlanComponent } from "./components/plan/plan.component";
+import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
+import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
+import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
 
 @NgModule({
   declarations: [
@@ -38,19 +44,21 @@ import { RouterModule, Routes } from "@angular/router";
     Onboarding14Component,
     Onboarding15Component,
     RegisterFormComponent,
+    PlanComponent,
+    ChooseplanComponent,
+    MealComponent,
+    MealItemsDetailsComponent,
+    MealItemsComponent
   ],
-  imports: [CommonModule, MealplanRoutingModule, FormsModule, SharedModule],
-})
-export class MealplanModule {}
 
-  // imports: [CommonModule, MealplanRoutingModule,
-  //   MatCardModule,
-  //   MatIconModule,
-  //   FlexLayoutModule,
-  //   SharedModule,
-  //   MatChipsModule,FormsModule]
-  // })
+  imports: [CommonModule, MealplanRoutingModule,
+    MatCardModule,
+    MatIconModule,
+    FlexLayoutModule,
+    SharedModule,
+    MatChipsModule,FormsModule]
+  })
 
 
-  // export class MealplanModule {}
+  export class MealplanModule {}
 

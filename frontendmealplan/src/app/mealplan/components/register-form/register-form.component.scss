@@ -1,45 +1,43 @@
 .container {
-    margin-top: -2vh;
-    width: 40vw;
-    height: 65vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    overflow: hidden;
+  margin-top: -2vh;
+  width: 40vw;
+  height: 68vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 2vh;
+}
+
+.formContainer {
+  background-color: rgba(116, 116, 116, 0.918) !important;
+  background-color: #bdc3c7 !important;
+  background-image: linear-gradient(to right, #ffffff, #ffffffd2) !important;
+  box-shadow: 1px 1px 15px rgba(4, 4, 26, 0.15) !important;
+  opacity: 0.96 !important;
+}
+
+.signupBtn {
+  background-color: #dd9670c4 !important;
+  box-shadow: 1px 1px 5px rgba(5, 5, 34, 0.15);
+  border: none;
+  border-radius: 18.5px;
+  width: 250px;
+  height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 2vh;
+}
+
+.signupBtn:hover {
+  background-color: #85ac53c4 !important;
+  color: white;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 95vw;
   }
-
-  .formContainer{
-    background-color: rgba(116, 116, 116, 0.918)!important;
-    background-color : #bdc3c7 !important;
-    background-image:linear-gradient(to right, #ffffff, #ffffffd2) !important;
-    box-shadow: 1px 1px 15px rgba(4, 4, 26, 0.15) !important;
-    opacity: 0.96 !important;
-  }
-
-
-
-  .signupBtn {
-    background-color: #dd9670c4 !important;
-    box-shadow: 1px 1px 5px rgba(5, 5, 34, 0.15);
-    border: none;
-    border-radius: 18.5px;
-    width: 250px;
-    height: 40px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top:2vh;
-  }
-  
-  .signupBtn:hover {
-    background-color: #85ac53c4 !important;
-    color: white;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-
-
-  @media screen and (max-width: 600px) {
-    .container{
-      width: 95vw;
-    }
-  }
+}

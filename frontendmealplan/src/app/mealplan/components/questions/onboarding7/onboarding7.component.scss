@@ -104,9 +104,7 @@
   .container {
     width: 95vw;
   }
-}
-  @media screen and (max-width: 600px) {
-    .container{
-      width: 95vw;
-    }
+  .box {
+    height: 80px;
   }
+}
