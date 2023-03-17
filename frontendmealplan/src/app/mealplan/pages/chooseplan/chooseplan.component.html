@@ -1,4 +1,12 @@
 <div class="Container">
-    <app-plan class="app-plan" [planId]="2" [name]="'The Basic Plan'" [price]="29" [length]="'2 weeks'"></app-plan>
-    <app-plan class="app-plan" [planId]="3" [name]="'The Premium Plan'" [price]="34" [length]="'4 weeks'"></app-plan>
+    <div class="Container">
+        <app-plan class="app-plan" *ngFor="let plan of plans.slice(1)"
+                  [planId]="plan.planId"
+                  [name]="plan.planName"
+                  [price]="plan.price"
+                  [length]="(plan.length/7).toString()+' weeks'"
+                  [includes]="plan.includes"
+                  [benefits]="plan.benefits">
+        </app-plan>
+    </div>
 </div>

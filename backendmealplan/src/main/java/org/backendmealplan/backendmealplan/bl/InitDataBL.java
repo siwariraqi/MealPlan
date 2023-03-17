@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.backendmealplan.backendmealplan.enums.*;
@@ -54,6 +55,7 @@ public class InitDataBL {
         User u = new User();
         u.setFirstName("Sewar");
         u.setLastName("Iraqi");
+        u.setPassword("sewar");
         u.setPlan(basicPlan);
         try {
             userBL.adduser(u);
@@ -107,8 +109,8 @@ public class InitDataBL {
         plan.setPlanName(planName);
         plan.setPrice(price);
         plan.setLength(length);
-        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + include + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
-        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + benefit + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(include) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(benefit) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
         return planBL.addPlan(plan);
     }
 
