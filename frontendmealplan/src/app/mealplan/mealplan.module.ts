@@ -27,6 +27,7 @@ import { PlanComponent } from "./components/plan/plan.component";
 import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
 import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
+import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.compon
     ChooseplanComponent,
     MealComponent,
     MealItemsDetailsComponent,
-    MealItemsComponent
+    MealItemsComponent,
+    MealSingleComponent
   ],
 
   imports: [CommonModule, MealplanRoutingModule,
