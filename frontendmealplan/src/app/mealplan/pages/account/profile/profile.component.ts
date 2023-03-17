@@ -51,12 +51,12 @@ export class ProfileComponent implements OnInit {
   public onInfoFormSubmit():void {
     this.userId = Number(localStorage.getItem('userId'));
     this.user.userId=this.userId;
-    this.user.firstName=this.infoForm.controls['FirstName'].value;
-    this.user.lastName=this.infoForm.controls['LastName'].value;
-    this.user.email=this.infoForm.controls['email'].value;
-    this.user.phoneNumber=this.infoForm.controls['phone'].value;
-    this.user.userInfo.birthday=this.infoForm.controls['birthday'].value;
-    this.user.userInfo.gender=this.infoForm.controls['genderControl'].value;
+    this.user.firstName=this.infoForm.controls['FirstName'].value || this.user.firstName; // use previous value if empty
+    this.user.lastName=this.infoForm.controls['LastName'].value || this.user.lastName; // use previous value if empty
+    this.user.email=this.infoForm.controls['email'].value || this.user.email; // use previous value if empty
+    this.user.phoneNumber=this.infoForm.controls['phone'].value || this.user.phoneNumber; // use previous value if empty
+    this.user.userInfo.birthday=this.infoForm.controls['birthday'].value || this.user.userInfo.birthday; // use previous value if empty
+    this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
 
     if (this.infoForm.valid) { 
       this.userService.updateProfile(this.user).subscribe(

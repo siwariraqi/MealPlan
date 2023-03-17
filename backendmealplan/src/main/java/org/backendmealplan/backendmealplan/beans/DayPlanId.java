@@ -20,6 +20,8 @@ public class DayPlanId {
     @ManyToMany(mappedBy = "dayPlanIdList")
     List<Plan> planList;
 
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "day_meals",

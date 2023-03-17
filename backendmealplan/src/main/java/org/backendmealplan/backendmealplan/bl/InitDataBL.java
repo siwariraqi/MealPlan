@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.backendmealplan.backendmealplan.enums.*;
@@ -54,6 +55,7 @@ public class InitDataBL {
         User u = new User();
         u.setFirstName("Sewar");
         u.setLastName("Iraqi");
+        u.setPassword("sewar");
         u.setPlan(basicPlan);
         try {
             userBL.adduser(u);
@@ -107,8 +109,8 @@ public class InitDataBL {
         plan.setPlanName(planName);
         plan.setPrice(price);
         plan.setLength(length);
-        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + include + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
-        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + benefit + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(include) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(benefit) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
         return planBL.addPlan(plan);
     }
 
@@ -212,7 +214,7 @@ public class InitDataBL {
         meals[0] = insertMeal(
                 "Peanut butter and banana chia pudding",
                 300, 15, 10, 9, 25,
-                "", instructions,
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
                 "10 minutes",
                 "3 hours", tips);
 
@@ -226,7 +228,7 @@ public class InitDataBL {
 
         meals[1] = insertMeal("Carrot cake overnight oats",
                 319, 9, 9, 6, 29,
-                "", instructions,
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
                 "5 minutes", "Overnight", tips);
 
         instructions = new ArrayList<>();
@@ -236,7 +238,7 @@ public class InitDataBL {
         instructions.add("Place in 4 bowls and serve with yogurt and fruit");
         meals[2] = insertMeal("Oat and Chia porridge",
                 370, 19, 11, 8, 34,
-                "", instructions, "5 minutes", "Overnight", tips);
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "5 minutes", "Overnight", tips);
 
         instructions = new ArrayList<>();
         tips = new ArrayList<>();
@@ -245,7 +247,7 @@ public class InitDataBL {
         instructions.add("Place mixture onto half the slices of bread, top with lettuce and remaining bread slices.");
         meals[3] = insertMeal("Smoked salmon sandwich",
                 667, 6.6, 5.6, 2, 10.5,
-                "", instructions, "10 minutes", "", tips);
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "10 minutes", "", tips);
 
         instructions = new ArrayList<>();
         tips = new ArrayList<>();
@@ -254,7 +256,7 @@ public class InitDataBL {
 
         meals[4] = insertMeal("Chicken and cream cheese wrap",
                 151, 3.5, 3.4, 7, 23,
-                "", instructions, "5 minutes", "Overnight", tips);
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "5 minutes", "Overnight", tips);
 
         instructions = new ArrayList<>();
         tips = new ArrayList<>();
@@ -266,7 +268,7 @@ public class InitDataBL {
         instructions.add("Blend until smooth");
         meals[5] = insertMeal("Carrot and parsnip soup",
                 400, 12, 12, 4, 33,
-                "", instructions,
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
                 "10 minutes", "20 minutes", tips);
 
         instructions = new ArrayList<>();
@@ -281,7 +283,7 @@ public class InitDataBL {
         tips.add("Optional : Add cauliflower, Brussels sprouts, cabbage, zucchini, or bell pepper");
         meals[6] = insertMeal("Lemon garlic salmon, broccoli and sweet potatoes",
                 450, 20, 40, 6, 30,
-                "", instructions,
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
                 "10 minutes", "15 minutes", tips);
 
         instructions = new ArrayList<>();
@@ -293,7 +295,7 @@ public class InitDataBL {
         instructions.add("Add the rice and cooked chicken. Stir until well combined and season with additional salt and pepper if needed. Divide into bowls and enjoy!");
         meals[7] = insertMeal("Chicken fried rice",
                 450, 15, 30, 5, 40,
-                "", instructions, "10 minutes", "15 minutes", tips);
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "10 minutes", "15 minutes", tips);
     }
 
     private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, List<String> instructions, String prepareTime, String cookTime, List<String> tips) {
