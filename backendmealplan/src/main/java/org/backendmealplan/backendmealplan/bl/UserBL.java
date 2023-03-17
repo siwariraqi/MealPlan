@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.beans.GroceryList;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
@@ -13,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserBL {
@@ -102,5 +106,25 @@ public class UserBL {
         this.usersDAO.save(user);
         return user;
     }
+
+    public User addGroceryChangeToUser(Long userId, List<GroceryList> groceryList) throws UNAUTHORIZEDException {
+        User user = this.usersDAO.findUserByuserId(userId);
+        if(user == null){
+            throw new UNAUTHORIZEDException("user does not Exist");
+        }
+        Set<GroceryList> user_groceries = user.getChanges();
+        user_groceries.addAll(groceryList);
+        user.setChanges(user_groceries);
+        this.usersDAO.save(user);
+        return user;
+    }
+
+    public List<Long> getDeletedGroceries(Long useId){
+        List<Long> deleted = new ArrayList<>();
+        return deleted;
+    }
+
+
+
 
 }
