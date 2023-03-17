@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroceryListBL {
@@ -27,9 +28,13 @@ public class GroceryListBL {
         this.userBL.addGroceryChangeToUser(userId,groceryListItems);
     }
 
-    public List<GroceryList> getIngredientsByWeekAndPlanForUser(Integer week, Plan plan, Long user_id) {
+    public List<GroceryList> getIngredientsByWeekAndPlanForUser(Integer week, Plan plan, Long user_id) throws UNAUTHORIZEDException {
         List<GroceryList> allWeekGroceries = this.groceryListDAO.findByWeekAndPlan(week,plan);
-        List<Long> deletedGroceries = this.userBL.getDeletedGroceries(user_id);
-        return allWeekGroceries;
+        List<GroceryList> deletedGroceries = this.userBL.getDeletedGroceries(user_id);
+        List<GroceryList> filteredList = allWeekGroceries.stream()
+                .filter(groceryList -> deletedGroceries.contains(groceryList))
+                .collect(Collectors.toList());
+
+        return filteredList;
     }
 }
