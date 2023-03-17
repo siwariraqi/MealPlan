@@ -1,23 +1,24 @@
 package org.backendmealplan.backendmealplan.bl;
+
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
-
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
-import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserBL {
+    private BCryptPasswordEncoder passwordEncoder;
+
 
     @Autowired
     UsersDAO usersDAO;
@@ -31,18 +32,30 @@ public class UserBL {
     @Autowired
     PlanBL planBL;
 
+    @Autowired
+    public UserBL(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
     public User authentication(String email, String password) throws Exception {
-        User u = usersDAO.findUserByEmailAndPassword(email, password);
-        if (u == null) throw new UNAUTHORIZEDException("wrong email or password");
-        return u;
+        User user = usersDAO.findByEmail(email);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return user; // Passwords match
+        } else {
+            throw new UNAUTHORIZEDException("wrong email or password");
+        }
+
     }
 
     public User adduser(User user) throws userExistException {
-        User u = usersDAO.findByEmail(user.getEmail());
+        User u = this.usersDAO.findByEmail(user.getEmail());
         if (u != null) {
-            throw new userExistException("user alredy Exist");
+            throw new userExistException("Email already in use!");
         }
-        return usersDAO.save(user);
+        String normalPassword = user.getPassword();
+        String hashedPassword = passwordEncoder.encode(normalPassword);
+        user.setPassword(hashedPassword);
+        this.usersDAO.save(user);
+        return user;
     }
 
     /*

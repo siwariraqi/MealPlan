@@ -18,7 +18,7 @@ import { Component, OnInit } from "@angular/core";
         <div
           class="box"
           (click)="enableDisableRule1()"
-          [ngClass]="{ orange: !toggle1, white: toggle1 }"
+          [ngClass]="{ green: !toggle1, white: toggle1 }"
         >
           <div class="text">female</div>
         </div>
@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
         <div
           class="box"
           (click)="enableDisableRule2()"
-          [ngClass]="{ orange: !toggle2, white: toggle2 }"
+          [ngClass]="{ green: !toggle2, white: toggle2 }"
         >
           <div class="text">male</div>
         </div>
@@ -34,7 +34,7 @@ import { Component, OnInit } from "@angular/core";
         <div
           class="box"
           (click)="enableDisableRule3()"
-          [ngClass]="{ orange: !toggle3, white: toggle3 }"
+          [ngClass]="{ green : !toggle3, white: toggle3 }"
         >
           <div class="text">other</div>
         </div>
