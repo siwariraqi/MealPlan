@@ -42,7 +42,7 @@ public class UsersController {
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+            updatedUserInfo = userBL.updateUserInfo(userInfo);
         } catch (userInfoNotFound e) {
             return (ResponseEntity) ResponseEntity.notFound();
         }
@@ -60,6 +60,32 @@ public class UsersController {
         }
         return ResponseEntity.ok(null);
     }
+
+
+    @PostMapping("/updateProfile")
+    public ResponseEntity updateProfile(@RequestBody User user){
+        try {
+            this.userBL.updateProfile(user);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return new ResponseEntity(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/getUser")
+    public ResponseEntity<User> getUser(@RequestParam long userId) {
+        try {
+            User user = userBL.getUser(userId);
+            return ResponseEntity.ok(user);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+//    @PostMapping("/change-password")
+//    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+//        return ResponseEntity.ok(null);
+//    }
 
 
     @PostMapping("/login")
