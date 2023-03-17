@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'src/app/app.models';
-import { AppService } from 'src/app/app.service';
-import { AppSettings, Settings } from 'src/app/app.settings';
+import { Settings } from 'src/app/app.settings';
 import { Meal } from 'src/app/mealplan/models/Meal';
 import { Plan } from 'src/app/mealplan/models/Plan';
 import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
@@ -15,6 +13,8 @@ export class MealComponent implements OnInit {
   public meals:Array<Meal> =[];
   plan:Plan =new Plan();;
   nutritions:string[];
+  dayNumber=1;
+  planLength;
  
   public settings: Settings;
   constructor(private dayMealService:DayMealService) { 
@@ -28,6 +28,7 @@ export class MealComponent implements OnInit {
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
       this.plan=plan;
+      this.planLength=plan.length
     })
   }
   public getDayPlanMeals(){
@@ -35,12 +36,60 @@ export class MealComponent implements OnInit {
       this.meals=meals;
     })
   }
+
+  data = []
+  totalCalories='';
  
   public getTotalDayNutrition(){
     this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
-      this.nutritions=nutritions;
-    })
-  } 
-   
+      this.nutritions = nutritions;
+      console.log(this.nutritions);
+      this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
+      // Create a new array to store the transformed data
+      const newData = [];
+  
+      // Extract the numbers from the nutritions array and put them into the newData array
+      newData.push({
+        name: 'Fat',
+        value: this.nutritions.find(item => item.includes('totalFat')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Protien',
+        value: this.nutritions.find(item => item.includes('totalProtien')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Carbs',
+        value: this.nutritions.find(item => item.includes('totalCarbs')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Fibre',
+        value: this.nutritions.find(item => item.includes('totalFibre')).split(':')[1]
+      });
+  
+      // Assign the newData array to the data property
+      this.data = newData;
+    });
+  }
 
+  
+
+
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+  nn='Calories';
+
+ 
+
+  showLegend = true;
+  explodeSlices = false;
+  showLabels = true;
+  doughnut = false;
+  gradient = true;
 }
+
+

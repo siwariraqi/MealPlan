@@ -1,10 +1,20 @@
-<p>meal works!</p>
 <div class="section default mt-3">
     <div class="px-3">
         <div class="theme-container">
             <h1 class="section-title">Meal Plan</h1>
-            <p class="section-desc text-muted">The best dishes of the city for our clients.</p> 
+            <p class="section-desc text-muted">Day {{planLength}} </p>
+            <div style="display: flex; align-items: center;">
+                <ngx-charts-advanced-pie-chart [view]="[600, 300]" [results]="data"
+                    [label]="'Nutritions '"></ngx-charts-advanced-pie-chart>
+                <div class="cal">
+                    <div class="section-title">
+                        <h6>Calories</h6>
+                    </div>
+                    <p class="section-desc"> {{totalCalories}}g</p>
+                </div>
+
+            </div>
             <app-meal-items-details [mealItems]="meals"></app-meal-items-details>
         </div>
-    </div>   
-</div>  
+    </div>
+</div>

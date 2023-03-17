@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UntypedFormBuilder } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { MenuItem } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
 import { AppSettings, Settings } from "src/app/app.settings";
@@ -14,6 +14,7 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
   styleUrls: ["./meal-single.component.scss"],
 })
 export class MealSingleComponent implements OnInit {
+  meal:Meal;
   // public mealItem!: Meal;
 
   // private sub: any;
@@ -21,6 +22,8 @@ export class MealSingleComponent implements OnInit {
   // public settings: Settings;
   // public quantityCount: number = 1;
   // public relatedMenuItems: Array<MenuItem> = [];
+  
+constructor(private dayMealService:DayMealService) {}
 
   // constructor(
   //   public dayMealService:DayMealService,
@@ -30,15 +33,22 @@ export class MealSingleComponent implements OnInit {
   //   private activatedRoute: ActivatedRoute,
   //   public fb: UntypedFormBuilder,
   //   public snackBar: MatSnackBar
-  // ) {
+  // )
+  //  {
   //   this.settings = this.appSettings.settings;
   // }
 
   ngOnInit() {
+    this.getSelectedMeal();
+    console.log("sssssssssssssssssss")
+    console.log(this.meal)
     // this.sub = this.activatedRoute.params.subscribe((params) => {
     //   this.getMenuItemById(params["id"]);
     // });
     // this.getRelatedMenuItems();
+  }
+  getSelectedMeal() {
+    this.meal=this.dayMealService.getSelectedMeal() 
   }
 /////////////////////////////////////////////////
 //   public getDayPlanMealByID(){

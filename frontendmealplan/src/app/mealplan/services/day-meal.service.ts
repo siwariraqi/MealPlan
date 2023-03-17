@@ -13,6 +13,7 @@ export class DayMealService {
   PLAN_URL="users/plan/";
   DAYNUTRITION_URL="users/day-nutrition/";
   meal: Array<Meal> = [];
+  private selectedMeal: any;
   constructor(private httpClient: HttpClient,private apiService:ApiService) {}
    
   public getDayPlanMeals(dayNumber:number,userid:number) {
@@ -23,6 +24,15 @@ export class DayMealService {
   }
   public getTotalDayNutrition(dayNumber:number,userid:number) {
     return this.apiService.get<string[]>(this.DAYNUTRITION_URL+`${dayNumber}`+'/'+`${userid}`);
-  }  
+  } 
+  
+  
+  setSelectedMeal(meal: any) {
+    this.selectedMeal = meal; 
+  }
+
+  getSelectedMeal() {
+    return this.selectedMeal; 
+  }
 
 }

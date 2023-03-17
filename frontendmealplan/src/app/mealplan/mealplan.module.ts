@@ -28,6 +28,8 @@ import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
 import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
 import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.com
     MealComponent,
     MealItemsDetailsComponent,
     MealItemsComponent,
-    MealSingleComponent
+    MealSingleComponent,
+    
   ],
 
   imports: [CommonModule, MealplanRoutingModule,
@@ -58,7 +61,9 @@ import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.com
     MatIconModule,
     FlexLayoutModule,
     SharedModule,
-    MatChipsModule,FormsModule]
+    MatChipsModule,FormsModule,
+    NgxChartsModule
+  ]
   })
 
 
