@@ -1,22 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { MenuItem } from 'src/app/app.models';
+import { DayMeal } from 'src/app/mealplan/models/DayMeal';
 
 @Component({
-  selector: 'app-menu-items-carousel',
-  templateUrl: './menu-items-carousel.component.html',
-  styleUrls: ['./menu-items-carousel.component.scss']
+  selector: 'app-meal-items-details',
+  templateUrl: './meal-items-details.component.html',
+  styleUrls: ['./meal-items-details.component.scss']
 })
-export class MenuItemsCarouselComponent implements OnInit {
-  @Input('menuItems') menuItems: Array<MenuItem> = [];
-  
+export class MealItemsDetailsComponent implements OnInit {
+  @Input ('mealItems') mealItems:Array<DayMeal>=[];
   public config: SwiperConfigInterface = {}; 
-
   constructor() { }
-
   ngOnInit() {
   }
-
   ngAfterViewInit(){
     this.config = {
       observer: true,

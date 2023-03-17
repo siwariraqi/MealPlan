@@ -1,11 +1,9 @@
 package org.backendmealplan.backendmealplan.controllers;
 
 import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.bl.GoalBL;
-import org.backendmealplan.backendmealplan.bl.MealBL;
-import org.backendmealplan.backendmealplan.bl.PlanBL;
-import org.backendmealplan.backendmealplan.bl.UserBL;
+import org.backendmealplan.backendmealplan.bl.*;
 import org.backendmealplan.backendmealplan.exceptions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,14 +109,16 @@ public class UsersController {
     }
 
     @GetMapping("day-plan-meals/{daynumber}/{userid}")
-    public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
+    public ResponseEntity<List<DayMeal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
         try {
-            List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
+            List<DayMeal> meals = mealBL.getDayPlanMeals(daynumber, userid);
             return ResponseEntity.ok(meals);
         } catch (userNotFoundException | paymentNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+
 
 
     @GetMapping("/day-nutrition/{daynumber}/{userid}")

@@ -32,7 +32,7 @@ public class MealBL {
   @Autowired
   DayMealsDAO dayMealsDAO;
 
-  public List<Meal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
+  public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
     Optional<User> users = this.usersDAO.findById(userID);
     if (users.isPresent()) {
       User user = users.get();
@@ -40,7 +40,8 @@ public class MealBL {
       List<DayPlanId> dayPlanIds = plan.getDayPlanIdList();
       if (dayNumber != 0) {
         DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-        return dayPlanId.getMeals();
+        List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
+        return dayMeals;
       } else {
         Optional<Payment> payment = paymentDAO.findByUserUserId(userID);
         if (payment.isPresent()) {
@@ -52,11 +53,8 @@ public class MealBL {
           long daysBetween = ChronoUnit.DAYS.between(paymentOfLocalDate, currentDate);
           dayNumber = (int) daysBetween;
           DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-          System.out.println("currentDate: " + currentDate);
-          System.out.println("paymentOfDate: " + paymentOfDate);
-          System.out.println("daysBetween: " + daysBetween);
-          System.out.println("dayNumber: " + dayNumber);
-          return dayPlanId.getMeals();
+          List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
+          return dayMeals;
         } else {
           throw new paymentNotFoundException("Payment not found");
         }
@@ -69,7 +67,7 @@ public class MealBL {
 
 
   public List<String> getTotalDayNutrition (Integer dayNumber,Long userID) throws userNotFoundException,paymentNotFoundException{
-    List <Meal> dayMeals=getDayPlanMeals(dayNumber,userID);
+    List <DayMeal> dayMeals=getDayPlanMeals(dayNumber,userID);
     List<String> TotalNutrition =new ArrayList<>();
     Double totalCalories=0.0;
     Double totalFat=0.0;
@@ -77,13 +75,13 @@ public class MealBL {
     Double totalCarbs=0.0;
     Double totalFibre=0.0;
 
-    for( Meal meal:dayMeals){
+    for( DayMeal meal:dayMeals){
 
-      totalFat +=meal.getFat();
-      totalProtien += meal.getProtein();
-      totalCarbs +=meal.getCarbs();
-      totalFibre +=meal.getFiber();
-      totalCalories+= meal.getCalories();
+      totalFat +=meal.getId().getMeal().getFat();
+      totalProtien += meal.getId().getMeal().getProtein();
+      totalCarbs +=meal.getId().getMeal().getCarbs();
+      totalFibre +=meal.getId().getMeal().getFiber();
+      totalCalories+= meal.getId().getMeal().getCalories();
     }
     TotalNutrition.add("totalCalories:"+totalCalories);
     TotalNutrition.add("totalFat:"+totalFat);
