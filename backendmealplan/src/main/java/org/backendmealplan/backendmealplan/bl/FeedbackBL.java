@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,7 @@ public class FeedbackBL {
           if(userFeedbacks.isEmpty()) {
             userFeedback.setUser(user);
             userFeedback.setMeal(meal);
+            userFeedback.setDate(new Date());
             userFeedbacksDAO.save(userFeedback);
             user.getFeedbacks().add(userFeedback);
             meal.getFeedbacks().add(userFeedback);
@@ -60,7 +63,7 @@ public class FeedbackBL {
             if(userFeedback.getIsOnIt() != null) {
               userFeedbackDB.setIsOnIt(userFeedback.getIsOnIt());
             }
-            userFeedbackDB.setDate(userFeedback.getDate());
+            userFeedbackDB.setDate(new Date());
             userFeedbacksDAO.save(userFeedbackDB);
           }
           return 1;
