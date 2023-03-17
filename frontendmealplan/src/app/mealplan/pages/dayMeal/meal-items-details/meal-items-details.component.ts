@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { MenuItem } from 'src/app/app.models';
-import { Meal } from 'src/app/mealplan/models/Meal';
+import { DayMeal } from 'src/app/mealplan/models/DayMeal';
 
 @Component({
   selector: 'app-meal-items-details',
@@ -9,13 +8,10 @@ import { Meal } from 'src/app/mealplan/models/Meal';
   styleUrls: ['./meal-items-details.component.scss']
 })
 export class MealItemsDetailsComponent implements OnInit {
-
-  @Input ('mealItems') mealItems:Array<Meal>=[];
+  @Input ('mealItems') mealItems:Array<DayMeal>=[];
   public config: SwiperConfigInterface = {}; 
   constructor() { }
   ngOnInit() {
-    console.log('aaaaaaaaaaaaaaaa')
-    console.log(this.mealItems)
   }
   ngAfterViewInit(){
     this.config = {

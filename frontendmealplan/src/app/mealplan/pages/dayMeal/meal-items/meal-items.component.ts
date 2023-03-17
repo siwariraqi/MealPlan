@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppService } from 'src/app/app.service';
 import { Meal } from 'src/app/mealplan/models/Meal';
-import { Router } from '@angular/router';
 import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
+import { DayMeal } from 'src/app/mealplan/models/DayMeal';
 
 
 @Component({
@@ -11,8 +10,10 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
   styleUrls: ['./meal-items.component.scss']
 })
 export class MealItemsComponent implements OnInit {
-  meal:Meal;
-  @Input () mealItem!:Meal;
+  meal:Meal
+  type: string;
+  mealItem:Meal;
+  @Input () dayItem!:DayMeal;
   @Input() lazyLoad: boolean = false;
   @Input() viewType: string = "grid";
   @Input() viewColChanged: any; 
@@ -20,15 +21,18 @@ export class MealItemsComponent implements OnInit {
   
   constructor(private dayMealService:DayMealService) { }
   ngOnInit(): void {
+    this.mealType();
     }
-
+     
+    public mealType (){
+      this.type=this.dayItem.type;
+      this.dayMealService.setType(this.type);
+      this.mealItem=this.dayItem.id.meal;
+    }
     onMealClick(mealId: number) {
       if(this.mealItem.mealId === mealId){
         this.meal = this.mealItem;
-        console.log('iiiiiiiiiiiiiiiiiiiii')
-        console.log(this.meal)
         this.dayMealService.setSelectedMeal(this.meal);
-        // this.router.navigate(['/mealplan/meals', this.meal.mealId], { state: { meal: this.meal } });
       }
     }
     

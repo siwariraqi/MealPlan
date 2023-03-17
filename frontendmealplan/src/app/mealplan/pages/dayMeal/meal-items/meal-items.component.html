@@ -1,9 +1,8 @@
-
 <mat-card class="menu-item p-0" [fxLayout]="(viewType == 'grid') ? 'column' : 'row'"
     [ngClass]="[viewType + '-item', 'column-'+column]">
     <div fxFlex="100" [fxShrink]="(viewType == 'grid') ? '3' : '2'" class="thumbnail-section">
         <mat-chip-list>
-            <mat-chip color="warn" selected="true">BREAKFAST</mat-chip>
+            <mat-chip color="warn" selected="true">{{type}}</mat-chip>
         </mat-chip-list>
         <div *ngIf="lazyLoad">
             <img [attr.data-src]="mealItem.imageUrl" class="w-100 d-block swiper-lazy">

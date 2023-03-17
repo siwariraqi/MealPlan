@@ -1,38 +1,56 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { DayMeal } from '../models/DayMeal';
 import { Meal } from '../models/Meal';
 import { Plan } from '../models/Plan';
+import { UserFeedback } from '../models/UserFeedback';
 import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DayMealService {
-  GETDAYPLANMEAL_URL="users/day-plan-meals/";
-  PLAN_URL="users/plan/";
-  DAYNUTRITION_URL="users/day-nutrition/";
+  GETDAYPLANMEAL_URL = "users/day-plan-meals/";
+  PLAN_URL = "users/plan/";
+  DAYNUTRITION_URL = "users/day-nutrition/";
+  SAVEFEEDBACK_URL = "feedback/save/";
   meal: Array<Meal> = [];
   private selectedMeal: any;
-  constructor(private httpClient: HttpClient,private apiService:ApiService) {}
-   
-  public getDayPlanMeals(dayNumber:number,userid:number) {
-    return this.apiService.get<Meal[]>(this.GETDAYPLANMEAL_URL+`${dayNumber}`+'/'+`${userid}`);
+  selectedType:string;
+  constructor(private httpClient: HttpClient, private apiService: ApiService) { }
+
+  public getDayPlanMeals(dayNumber: number, userid: number) {
+    return this.apiService.get<DayMeal[]>(this.GETDAYPLANMEAL_URL + `${dayNumber}` + '/' + `${userid}`);
   }
-  public getPlan(userid:number) {
-    return this.apiService.get<Plan>(this.PLAN_URL+`${userid}`);
+  public getPlan(userid: number) {
+    return this.apiService.get<Plan>(this.PLAN_URL + `${userid}`);
   }
-  public getTotalDayNutrition(dayNumber:number,userid:number) {
-    return this.apiService.get<string[]>(this.DAYNUTRITION_URL+`${dayNumber}`+'/'+`${userid}`);
-  } 
-  
-  
-  setSelectedMeal(meal: any) {
-    this.selectedMeal = meal; 
+  public getTotalDayNutrition(dayNumber: number, userid: number) {
+    return this.apiService.get<string[]>(this.DAYNUTRITION_URL + `${dayNumber}` + '/' + `${userid}`);
   }
 
-  getSelectedMeal() {
-    return this.selectedMeal; 
+  public saveFeedback(userFeedback: UserFeedback, userId: number, mealId: number) {
+    return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${userId}` + '/' + `${mealId}`, userFeedback);
   }
+
+  setSelectedMeal(meal: any) {
+    this.selectedMeal = meal;
+  }
+  getSelectedMeal() {
+    return this.selectedMeal;
+  }
+
+  setType(type: string) {
+    console.log('tttttttttttttt')
+    console.log(type)
+    this.selectedType = type;
+  }
+  getType() {
+    return this.selectedMeal;
+  }
+
+
+
 
 }

@@ -29,6 +29,7 @@ import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/me
 import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
 import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FeedbacksComponent } from './pages/dayMeal/feedbacks/feedbacks.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MealItemsDetailsComponent,
     MealItemsComponent,
     MealSingleComponent,
+    FeedbacksComponent,
     
   ],
 

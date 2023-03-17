@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Settings } from 'src/app/app.settings';
-import { Meal } from 'src/app/mealplan/models/Meal';
+import { DayMeal } from 'src/app/mealplan/models/DayMeal';
 import { Plan } from 'src/app/mealplan/models/Plan';
 import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
 
@@ -10,7 +10,8 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
   styleUrls: ['./meal.component.scss']
 })
 export class MealComponent implements OnInit {
-  public meals:Array<Meal> =[];
+  public dayMeals:Array<DayMeal> =[];
+  type:string;
   plan:Plan =new Plan();;
   nutritions:string[];
   dayNumber=1;
@@ -23,7 +24,6 @@ export class MealComponent implements OnInit {
     this.getPlan();
     this.getDayPlanMeals();
     this.getTotalDayNutrition();
-
   }
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
@@ -32,8 +32,11 @@ export class MealComponent implements OnInit {
     })
   }
   public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,1).subscribe((meals)=>{
-      this.meals=meals;
+    this.dayMealService.getDayPlanMeals(1,2).subscribe((dayMeals)=>{
+      this.dayMeals=dayMeals;
+      console.log('-------------------------')
+      console.log(this.dayMeals[0].id.meal.mealName)
+     
     })
   }
 
@@ -45,10 +48,7 @@ export class MealComponent implements OnInit {
       this.nutritions = nutritions;
       console.log(this.nutritions);
       this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
-      // Create a new array to store the transformed data
       const newData = [];
-  
-      // Extract the numbers from the nutritions array and put them into the newData array
       newData.push({
         name: 'Fat',
         value: this.nutritions.find(item => item.includes('totalFat')).split(':')[1]
@@ -68,8 +68,6 @@ export class MealComponent implements OnInit {
         name: 'Fibre',
         value: this.nutritions.find(item => item.includes('totalFibre')).split(':')[1]
       });
-  
-      // Assign the newData array to the data property
       this.data = newData;
     });
   }

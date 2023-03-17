@@ -4,8 +4,12 @@
             <h1 class="section-title">Meal Plan</h1>
             <p class="section-desc text-muted">Day {{planLength}} </p>
             <div style="display: flex; align-items: center;">
-                <ngx-charts-advanced-pie-chart [view]="[600, 300]" [results]="data"
-                    [label]="'Nutritions '"></ngx-charts-advanced-pie-chart>
+                <ngx-charts-advanced-pie-chart 
+                [view]="[600, 300]" 
+                [results]="data"
+                [label]="'Nutritions '"
+                
+                ></ngx-charts-advanced-pie-chart>
                 <div class="cal">
                     <div class="section-title">
                         <h6>Calories</h6>
@@ -14,7 +18,7 @@
                 </div>
 
             </div>
-            <app-meal-items-details [mealItems]="meals"></app-meal-items-details>
+            <app-meal-items-details [mealItems]="dayMeals"></app-meal-items-details>
         </div>
     </div>
 </div>

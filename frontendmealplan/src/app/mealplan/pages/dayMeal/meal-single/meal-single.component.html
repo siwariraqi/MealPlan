@@ -1,12 +1,10 @@
-
-
 <div class="px-3">
   <div class="theme-container">
     <mat-card class="menu-single my-5">
       <div fxLayout="row wrap" class="flex-wrapper">
         <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
           <mat-chip-list>
-            <mat-chip color="warn" selected="true"> BREAKFAST</mat-chip>
+            <mat-chip color="warn" selected="true">{{type}}</mat-chip>
           </mat-chip-list>
 
           <img [src]="meal.imageUrl" class="w-100" />
@@ -93,116 +91,34 @@
           </div>
         </div>
 
-        
+
 
         <div fxFlex="100" class="px-3 mt-5">
           <mat-tab-group [@.disabled]="true" [selectedIndex]="0">
-            <mat-tab label="Description">
+            <mat-tab label="Ingredients">
               <div class="full-desc">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Mauris id nulla metus. Maecenas commodo turpis dui, porttitor
-                  tincidunt enim mollis a. Curabitur eu velit mi. Nullam congue
-                  turpis id metus sollicitudin, id cursus nulla laoreet. Proin
-                  commodo eu felis at malesuada. Nulla ac facilisis justo, eget
-                  vulputate ex. Nulla nec laoreet nulla. Cras auctor leo at diam
-                  congue, quis convallis urna pulvinar. Nunc ut mi nulla. Nunc
-                  ligula massa, vulputate sed scelerisque sit amet, dapibus
-                  semper est. Sed sed blandit turpis. Vestibulum id porttitor
-                  ligula, at iaculis ligula. Pellentesque vel tellus sit amet
-                  mauris aliquet bibendum id et lorem.
-                </p>
-                <ul class="px-2 mt-1">
-                  <li>
-                    Phasellus eu justo dictum, varius eros ut, posuere sapien.
-                  </li>
-                  <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
-                  <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
-                  <li>Nam sagittis augue at pretium pharetra.</li>
-                  <li>Sed a sem id massa egestas porta a sit amet felis.</li>
-                  <li>Duis aliquam urna in sapien cursus consequat.</li>
-                </ul>
-                <p class="mt-1">
-                  Duis eu felis ultricies urna pharetra efficitur nec non elit.
-                  Class aptent taciti sociosqu ad litora torquent per conubia
-                  nostra, per inceptos himenaeos. Curabitur posuere eu justo
-                  eget mollis. Sed semper accumsan urna vel rutrum. Nulla
-                  condimentum quis lacus ut semper. Quisque at massa pretium,
-                  porta ligula ut, rutrum elit. Pellentesque et orci sit amet
-                  dolor laoreet tempor sed eu sem. Morbi lacinia pellentesque
-                  tellus euismod eleifend.
-                </p>
-                <p class="mt-1">
-                  Quisque fringilla eros id ligula luctus, a gravida augue
-                  sodales. Sed eget augue ut lectus condimentum volutpat. Morbi
-                  quis nunc viverra, gravida arcu quis, varius metus. Praesent
-                  tincidunt ipsum est, quis molestie ligula efficitur ut. Nunc
-                  interdum erat eu tortor maximus suscipit. Vivamus nec laoreet
-                  dui. Nullam dignissim laoreet metus quis pretium.
-                </p>
-              </div>
-            </mat-tab>
-            <mat-tab label="Additional information">
-              <div class="full-desc">
-                <p>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia
-                  deserunt mollit anim id est laborum.
-                </p>
-                <ul class="px-2 mt-1">
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>
-                    Aenean vehicula, tortor gravida elementum tincidunt, justo
-                    lorem vestibulum ex, eget egestas arcu tellus in magna.
-                    Vivamus gravida, ipsum vel luctus luctus, nisi felis
-                    vestibulum est, nec interdum tellus leo quis tellus. Sed sit
-                    amet convallis enim, in laoreet orci.
-                  </li>
-                  <li>
-                    Donec et elit at nulla congue interdum sit amet varius erat.
-                  </li>
-                  <li>
-                    Nulla sit amet risus pellentesque, dignissim massa ut,
-                    dignissim arcu.
-                  </li>
-                  <li>
-                    Morbi dapibus ligula at faucibus tempus. Aenean vehicula,
-                    tortor gravida elementum tincidunt, justo lorem vestibulum
-                    ex, eget egestas arcu tellus in magna. Vivamus gravida,
-                    ipsum vel luctus luctus, nisi felis vestibulum est, nec
-                    interdum tellus leo quis tellus. Sed sit amet convallis
-                    enim, in laoreet orci.
-                  </li>
-                  <li>
-                    Nunc sodales justo ut nisi euismod, quis condimentum leo
-                    varius.
-                  </li>
-                </ul>
-                <ul class="px-2 mt-1">
-                  <li>
-                    Phasellus eu justo dictum, varius eros ut, posuere sapien.
-                  </li>
-                  <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
-                  <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
-                  <li>Nam sagittis augue at pretium pharetra.</li>
-                  <li>Sed a sem id massa egestas porta a sit amet felis.</li>
-                  <li>
-                    Duis aliquam urna in sapien cursus consequat. Aenean
-                    vehicula, tortor gravida elementum tincidunt, justo lorem
-                    vestibulum ex, eget egestas arcu tellus in magna. Vivamus
-                    gravida, ipsum vel luctus luctus, nisi felis vestibulum est,
-                    nec interdum tellus leo quis tellus. Sed sit amet convallis
-                    enim, in laoreet orci.
-                  </li>
+                <!-- <p *ngFor="let calorie of calories">
+                  Carbs: {{ calorie }}g | Fibre: {{ calorie }}g | Protien:
+                  {{ calorie }}g | Fat: {{ calorie }}g
+                </p> -->
+                <!-- <p>Carbs: 10g | Fibre: 10g | Protien: 10g | Fat: 10g</p> -->
+                <ul class="px-2 mt-1" *ngFor="let ingredient of ingredients">
+                  <li>{{ ingredient }}</li>
+                  <div class="divider"></div>
                 </ul>
               </div>
             </mat-tab>
-            <mat-tab label="Reviews">
+            <mat-tab label="Instructions">
               <div class="full-desc">
-                <!-- <app-comments [menuItemId]="menuItem.id"></app-comments> -->
+                <ul class="px-2 mt-1" *ngFor="let instruction of instructions">
+                  <li>{{ instruction }}</li>
+                  <div class="divider"></div>
+                </ul>
+              </div>
+            </mat-tab>
+            <mat-tab label="Feedbacks">
+              <div class="full-desc">
+                <app-feedbacks></app-feedbacks>
               </div>
             </mat-tab>
           </mat-tab-group>
@@ -219,7 +135,6 @@
       <p class="section-desc text-muted">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
-      <!-- <app-menu-items-carousel [menuItems]="relatedMenuItems"></app-menu-items-carousel> -->
     </div>
   </div>
 </div>
