@@ -4,6 +4,7 @@ import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { MealComponent } from "./pages/dayMeal/meal/meal.component";
+import { MealSingleComponent } from "./pages/dayMeal/meal-single/meal-single.component";
 
 const routes: Routes = [
   {
@@ -19,8 +20,12 @@ const routes: Routes = [
     component: ChooseplanComponent,
   },
   {
-    path:"meal",
+    path:"meals",
     component:MealComponent,
+  },
+  {
+    path:"meals/:id",
+    component:MealSingleComponent,
   }
 ];
 

@@ -11,8 +11,6 @@ import { Meal } from 'src/app/mealplan/models/Meal';
 export class MealItemsDetailsComponent implements OnInit {
 
   @Input ('mealItems') mealItems:Array<Meal>=[];
-  
-  @Input('menuItems') menuItems: Array<MenuItem> = [];
   public config: SwiperConfigInterface = {}; 
   constructor() { }
   ngOnInit() {
