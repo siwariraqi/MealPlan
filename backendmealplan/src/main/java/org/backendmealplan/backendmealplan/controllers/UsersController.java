@@ -61,9 +61,14 @@ public class UsersController {
         return ResponseEntity.ok(null);
     }
 
+
     @PostMapping("/updateProfile")
     public ResponseEntity updateProfile(@RequestBody User user){
-        this.userBL.updateProfile(user);
+        try {
+            this.userBL.updateProfile(user);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         return new ResponseEntity(user,HttpStatus.OK);
     }
 
@@ -76,6 +81,11 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+//    @PostMapping("/change-password")
+//    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+//        return ResponseEntity.ok(null);
+//    }
 
 
     @PostMapping("/login")
