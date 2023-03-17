@@ -21,7 +21,7 @@ public class Meal {
     private String mealName;
     private String imageUrl;
     private int calories;
-    @Column(name = "instructions", length = 1000)
+    @Column(name = "instructions", length = 2500)
     private String instructions;
     private String prepareTime;
     private String cookTime;
