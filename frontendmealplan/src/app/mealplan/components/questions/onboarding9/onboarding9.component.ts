@@ -18,14 +18,14 @@ import { Component, OnInit } from "@angular/core";
       <!-- box1 -->
         <div class='box'
         (click)="enableDisableRule1()"
-        [ngClass]="{'orange' : !toggle1, 'white': toggle1}"> 
+        [ngClass]="{'green' : !toggle1, 'white': toggle1}"> 
           <div class='text'> Yes </div> 
         </div>
         
        <!-- box2 -->
         <div class='box'
         (click)="enableDisableRule2()"
-        [ngClass]="{'orange' : !toggle2, 'white': toggle2}"> 
+        [ngClass]="{'green' : !toggle2, 'white': toggle2}"> 
           <div class='text'> No </div> 
         </div>
 

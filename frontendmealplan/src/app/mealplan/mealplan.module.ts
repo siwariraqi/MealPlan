@@ -39,7 +39,6 @@ import { AppSettings } from "../app.settings";
 import { AccountComponent } from "./pages/account/account.component";
 import { AccountModule } from "./pages/account/account.module";
 
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -62,6 +61,7 @@ import { AccountModule } from "./pages/account/account.module";
     ChooseplanComponent,
     MealComponent
   ],
+
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,
     MatIconModule,
@@ -78,9 +78,9 @@ import { AccountModule } from "./pages/account/account.module";
     MatDatepickerModule,
     MatNativeDateModule,
     AccountModule,
-    FormsModule]
-
+    MatChipsModule,FormsModule]
   })
 
 
   export class MealplanModule {}
+

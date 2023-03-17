@@ -2,11 +2,10 @@ package org.backendmealplan.backendmealplan.controllers;
 
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
+import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.*;
-import org.backendmealplan.backendmealplan.bl.MealBL;
-import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class UsersController {
     private UserBL userBL;
     @Autowired
     private GoalBL goalBL;
-    
+
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
@@ -80,9 +79,9 @@ public class UsersController {
 
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
+    public ResponseEntity login(@RequestBody User user){
         try{
-            User u =userBL.authentication(email,password);
+            User u =userBL.authentication(user.getEmail(),user.getPassword());
             u.setPassword(null);
             return new ResponseEntity(u,HttpStatus.OK);
         }catch(Exception e){
@@ -94,13 +93,13 @@ public class UsersController {
     public ResponseEntity adduser(@RequestBody User user){
         try{
             User u= userBL.adduser(user);
-            u.setPassword(null);
+//            u.setPassword(null);
             return new ResponseEntity(u,HttpStatus.OK);
         }catch(userExistException e){
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
-    
+
     @GetMapping("day-plan-meals/{daynumber}/{userid}")
     public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
         try {

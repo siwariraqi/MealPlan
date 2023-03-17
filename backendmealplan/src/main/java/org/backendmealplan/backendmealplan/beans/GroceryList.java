@@ -20,7 +20,9 @@ public class GroceryList {
     private Integer week;
     private Integer amount;
     private String unit; //change to eum
-    private String ingredientId; //change to ingredient type not string
+    @ManyToOne
+    @JoinColumn(name = "ingredient_id")
+    private Ingredient ingredient;
 
     @ManyToOne
     @JoinColumn(name = "plan_id")

@@ -60,6 +60,7 @@
 }
 .content {
   // position: absolute;
+  margin-top: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,14 +78,10 @@
 }
 
 .box {
-  width: 8vw;
-  height: 100px;
-  // margin: 15px;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 15px;
+  width: 10vw;
+  height: 120px;
+  margin: 20px;
+  padding: 30px;
   background: #ffffff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
@@ -95,8 +92,8 @@
   cursor: pointer;
 }
 
-.orange {
-  background-color: #e09167;
+.green {
+  background-color: #85ac53c4;
 }
 
 .white {

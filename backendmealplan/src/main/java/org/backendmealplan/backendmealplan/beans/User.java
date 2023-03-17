@@ -1,6 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,17 +16,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    private String email;
+
+    private String password;
+
     private String firstName;
 
     private String lastName;
 
-    private String password;
 
     private String phoneNumber;
 
-    private String userName;
 
-    private String email;
 
     @OneToOne()
     @JoinColumn(name="info_id")
@@ -46,6 +48,6 @@ public class User {
     Set<GroceryList> changes;
 
     @OneToMany (mappedBy = "user")
-    private List<UserFeedback> feedbacks;
+    private List<UserFeedback> feedbacks=new ArrayList<>();
 
 }
