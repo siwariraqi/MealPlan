@@ -15,16 +15,17 @@ export class PlanComponent implements OnInit {
   benefits: string;
   tmpIncludes: string[] = ["inc1", "inc2", "inc3", "inc4"];
   tmpBenefits: string[] = ["ben1", "ben2", "ben3", "ben4"];
-  userId:number = 1;
+  userId:number;
   @Input()planId:number;
 
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {
+    localStorage.setItem('userId','1');
   }
 
   choosePlan(){
-    
+    this.userId = Number(localStorage.getItem('userId'));
     this.userService.choosePlan(this.userId, this.planId).subscribe(
       data => console.log('Plan updated successfully.'),
       error => console.error('Error updating plan:', error)

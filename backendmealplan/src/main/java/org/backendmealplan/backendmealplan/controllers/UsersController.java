@@ -61,6 +61,22 @@ public class UsersController {
         return ResponseEntity.ok(null);
     }
 
+    @PostMapping("/updateProfile")
+    public ResponseEntity updateProfile(@RequestBody User user){
+        this.userBL.updateProfile(user);
+        return new ResponseEntity(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/getUser")
+    public ResponseEntity<User> getUser(@RequestParam long userId) {
+        try {
+            User user = userBL.getUser(userId);
+            return ResponseEntity.ok(user);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){

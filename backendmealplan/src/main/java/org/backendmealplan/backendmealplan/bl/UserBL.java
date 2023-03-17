@@ -10,6 +10,10 @@ import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
 import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
+import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.*;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -92,6 +96,32 @@ public class UserBL {
         }
     }
 
+    public User updateProfile(User newProfile){
+        User user = this.usersDAO.findUserByuserId(newProfile.getUserId());
+        if(!newProfile.getEmail().equals("")){
+            user.setEmail(newProfile.getEmail());
+        }
+        if(!newProfile.getPhoneNumber().equals("")){
+            user.setPhoneNumber(newProfile.getPhoneNumber());
+        }
+        if(!newProfile.getFirstName().equals("")){
+            user.setFirstName(newProfile.getFirstName());
+        }
+        if(!newProfile.getLastName().equals("")){
+            user.setLastName(newProfile.getLastName());
+        }
+        if(!newProfile.getUserInfo().equals("")){
+            if(!newProfile.getUserInfo().getGender().equals("")){
+                user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
+            }
+            if(!newProfile.getUserInfo().getBirthday().equals("")){
+                user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
+            }
+        }
+        this.usersDAO.save(user);
+        return newProfile;
+    }
+
 
     public User userSetPlan( Long userId,  Long planId) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findUserByuserId(userId);
@@ -106,6 +136,18 @@ public class UserBL {
         this.usersDAO.save(user);
         return user;
     }
+
+
+    public User getUser(Long userid) throws userNotFoundException {
+
+        User user = this.usersDAO.findUserByuserId(userid);
+        if (user!=null) {
+            return user;
+        } else {
+            throw new userNotFoundException("User not found");
+        }
+    }
+
 
     public User addGroceryChangeToUser(Long userId, List<GroceryList> groceryList) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findUserByuserId(userId);
@@ -123,6 +165,7 @@ public class UserBL {
         List<Long> deleted = new ArrayList<>();
         return deleted;
     }
+
 
 
 

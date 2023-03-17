@@ -3,14 +3,17 @@
         <h2>{{name}}</h2>
     </div>
     <div>
-        <h2>${{price}} / {{length}}</h2>
+        <h2>${{price}} / <span class="lenSpan">{{length}}</span></h2>
     </div>
     <div>
         <h2 class="title">{{name}} Includes:</h2>
     </div>
     <div>
         <ul>
-            <li *ngFor="let str of tmpIncludes">{{str}}</li>
+            <li class="secondary-font" *ngFor="let str of tmpIncludes">
+                <span class="primary-color bullet">&#8226;</span>
+                <span>{{str}}</span>
+              </li>
         </ul>
     </div>
     <div>
@@ -18,10 +21,16 @@
     </div>
     <div>
         <ul>
-            <li *ngFor="let ben of tmpBenefits">{{ben}}</li>
+            <li class="secondary-font" *ngFor="let ben of tmpBenefits">
+                <span class="primary-color bullet">&#8226;</span>
+                <span>{{ben}}</span>
+            </li>
         </ul>
     </div>
     <div>
-        <button (click)="choosePlan()">Select Plan</button>
+        <button (click)="choosePlan()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary right-bottom" ng-reflect-color="primary" fdprocessedid="rpxeid">
+            <span class="mat-button-wrapper">Select Plan</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+            <span class="mat-button-focus-overlay"></span>
+        </button>
     </div>
 </div>
