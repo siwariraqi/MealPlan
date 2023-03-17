@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Goal } from "../../models/Goal";
+
 @Component({
   selector: "app-register",
   template: `
@@ -10,7 +12,7 @@ import { Component, OnInit } from "@angular/core";
         *ngIf="screenState === 'welcome'"
         [currentPage]="currentPage"
       ></app-welcome-screen>
-      <app-onboarding7 *ngIf="onBoardingStep === 7"></app-onboarding7>
+      <app-onboarding7 *ngIf="onBoardingStep === 7" [userGoals]="userGoals"></app-onboarding7>
       <app-onboarding8 *ngIf="onBoardingStep === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="onBoardingStep === 9"></app-onboarding9>
       <app-onboarding10 *ngIf="onBoardingStep === 10"></app-onboarding10>
@@ -45,6 +47,8 @@ export class RegisterComponent implements OnInit {
   backgroundImage: string;
   screenState: string;
   onBoardingStep: number;
+  userGoals: Goal[];
+
   constructor() {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
@@ -52,6 +56,7 @@ export class RegisterComponent implements OnInit {
 
     this.screenState = "welcome";
     this.onBoardingStep = 2;
+    this.userGoals = [];
   }
   ngOnInit(): void {
     this.backgroundColor = "#4b643d";

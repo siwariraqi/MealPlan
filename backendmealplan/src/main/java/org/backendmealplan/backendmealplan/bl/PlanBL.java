@@ -25,15 +25,15 @@ import java.util.Optional;
 public class PlanBL {
     @Autowired
     private UsersDAO usersDAO;
-  @Autowired
-  PlansDAO planDAO;
-  @Autowired
-  DayPlanIdDAO dayPlanIdDAO;
+    @Autowired
+    PlansDAO planDAO;
+    @Autowired
+    DayPlanIdDAO dayPlanIdDAO;
 
-  @Autowired
-  DayPlanDAO dayPlanDAO;
-  @Autowired
-  DayMealsDAO dayMealsDAO;
+    @Autowired
+    DayPlanDAO dayPlanDAO;
+    @Autowired
+    DayMealsDAO dayMealsDAO;
 
 
     public Plan getPlan(Long userid) throws userNotFoundException {
