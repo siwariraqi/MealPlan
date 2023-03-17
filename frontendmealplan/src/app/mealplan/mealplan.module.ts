@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
+import { MealComponent } from './pages/dayMeal/meal/meal.component';
 import { FormsModule } from "@angular/forms";
 import { WelcomeScreenComponent } from "./components/welcome-screen/welcome-screen.component";
 import { Onboarding7Component } from "./components/questions/onboarding7/onboarding7.component";
@@ -22,11 +23,13 @@ import { Onboarding15Component } from "./components/questions/onboarding15/onboa
 import { RegisterFormComponent } from "./components/register-form/register-form.component";
 import { SharedModule } from "../shared/shared.module";
 import { RouterModule, Routes } from "@angular/router";
-import { PlanComponent } from './components/plan/plan.component';
-import { ChooseplanComponent } from './pages/chooseplan/chooseplan.component';
-import { MealComponent } from './pages/dayMeal/meal/meal.component';
-import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
+import { PlanComponent } from "./components/plan/plan.component";
+import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
+import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
+import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @NgModule({
   declarations: [
@@ -47,18 +50,22 @@ import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/me
     PlanComponent,
     ChooseplanComponent,
     MealComponent,
-    MealItemsComponent,
     MealItemsDetailsComponent,
+    MealItemsComponent,
+    MealSingleComponent,
+    
   ],
+
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,
     MatIconModule,
     FlexLayoutModule,
     SharedModule,
-    MatChipsModule,FormsModule]
-
-
+    MatChipsModule,FormsModule,
+    NgxChartsModule
+  ]
   })
 
 
   export class MealplanModule {}
+

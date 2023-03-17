@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'src/app/app.models';
-import { AppService } from 'src/app/app.service';
-import { AppSettings, Settings } from 'src/app/app.settings';
-import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
+import { Settings } from 'src/app/app.settings';
 import { Meal } from 'src/app/mealplan/models/Meal';
 import { Plan } from 'src/app/mealplan/models/Plan';
+import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
 
 @Component({
   selector: 'app-meal',
@@ -12,82 +10,86 @@ import { Plan } from 'src/app/mealplan/models/Plan';
   styleUrls: ['./meal.component.scss']
 })
 export class MealComponent implements OnInit {
-  
   public meals:Array<Meal> =[];
-  
   plan:Plan =new Plan();;
   nutritions:string[];
-
-
-  // public slides = []; 
-  // public specialMenuItems:Array<MenuItem> = [];
-  public bestMenuItems:Array<MenuItem> = [];
-  // public todayMenu!:MenuItem;
-
+  dayNumber=1;
+  planLength;
+ 
   public settings: Settings;
-  constructor(private dayMealService:DayMealService, public appSettings:AppSettings, public appService:AppService ) {
-    this.settings = this.appSettings.settings;  
+  constructor(private dayMealService:DayMealService) { 
   }
-
   ngOnInit(): void {
     this.getPlan();
     this.getDayPlanMeals();
     this.getTotalDayNutrition();
 
-    // this.getSlides();
-    // this.getSpecialMenuItems();
-    this.getBestMenuItems();
-    // this.getTodayMenu();
   }
-
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
       this.plan=plan;
-      // console.log('----------------------------------------------')
-      // console.log(this.plan);
+      this.planLength=plan.length
     })
   }
-
   public getDayPlanMeals(){
     this.dayMealService.getDayPlanMeals(1,1).subscribe((meals)=>{
       this.meals=meals;
-      console.log('----------------------------------------------')
-      console.log(this.meals);
     })
   }
 
+  data = []
+  totalCalories='';
+ 
   public getTotalDayNutrition(){
     this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
-      this.nutritions=nutritions;
-      // console.log('----------------------------------------------')
-      // console.log(this.nutritions);
-    })
-  }
-
-  // public getSlides(){
-  //   this.appService.getHomeCarouselSlides().subscribe((res:any)=>{
-  //     this.slides = res;
-  //   });
-  // }
- 
-  // public getSpecialMenuItems(){
-  //   this.appService.getSpecialMenuItems().subscribe(menuItems=>{
-  //     this.specialMenuItems = menuItems;
-  //   });
-  // } 
-
-  public getBestMenuItems(){
-    this.appService.getBestMenuItems().subscribe(menuItems=>{
-      this.bestMenuItems = menuItems;
-      console.log('----------------------------------------------')
-      console.log(this.bestMenuItems);
+      this.nutritions = nutritions;
+      console.log(this.nutritions);
+      this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
+      // Create a new array to store the transformed data
+      const newData = [];
+  
+      // Extract the numbers from the nutritions array and put them into the newData array
+      newData.push({
+        name: 'Fat',
+        value: this.nutritions.find(item => item.includes('totalFat')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Protien',
+        value: this.nutritions.find(item => item.includes('totalProtien')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Carbs',
+        value: this.nutritions.find(item => item.includes('totalCarbs')).split(':')[1]
+      });
+  
+      newData.push({
+        name: 'Fibre',
+        value: this.nutritions.find(item => item.includes('totalFibre')).split(':')[1]
+      });
+  
+      // Assign the newData array to the data property
+      this.data = newData;
     });
   }
 
-  // public getTodayMenu(){
-  //   this.appService.getMenuItemById(23).subscribe(data=>{ 
-  //     this.todayMenu = data;  
-  //   });
-  // }  
+  
 
+
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+  nn='Calories';
+
+ 
+
+  showLegend = true;
+  explodeSlices = false;
+  showLabels = true;
+  doughnut = false;
+  gradient = true;
 }
+
+
