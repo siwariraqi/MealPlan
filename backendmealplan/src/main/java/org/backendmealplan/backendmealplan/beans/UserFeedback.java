@@ -26,7 +26,7 @@ public class UserFeedback {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private boolean isOnIt;
+    private Boolean isOnIt;
     private Date date;
     private int rating=-1;
     private String feedbackText;

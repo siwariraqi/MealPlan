@@ -23,7 +23,7 @@ public class Plan {
     private String includes;
     @Column(name = "benefits", length = 1000)
     private String benefits;
-  @ToString.Exclude
+//  @ToString.Exclude
     @JsonIgnore
     @OneToMany (mappedBy = "plan")
     private List<User> users;

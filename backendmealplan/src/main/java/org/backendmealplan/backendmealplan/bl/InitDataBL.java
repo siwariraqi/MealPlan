@@ -2,15 +2,19 @@ package org.backendmealplan.backendmealplan.bl;
 
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.enums.*;
+import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.userExistException;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class InitDataBL {
-//    @Autowired
-////    UserBL userBL;
+    @Autowired
+    UserBL userBL;
 
     @Autowired
     PlanBL planBL;
@@ -43,6 +47,25 @@ public class InitDataBL {
         createDays();
         createDayMeals();
         createDayPlan();
+        User u  =new User();
+        u.setFirstName("sewar");
+        u.setPlan(basicPlan);
+        try {
+            userBL.adduser(u);
+        } catch (userExistException e) {
+            throw new RuntimeException(e);
+        }
+        List<User> users = basicPlan.getUsers();
+        System.out.println(users.size());
+//        try {
+//            List<DayMeal> days = mealBL.getDayPlanMeals(1,u.getUserId());
+//        } catch (userNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (paymentNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.printf("h");
+
     }
 
     private void createDays() {
