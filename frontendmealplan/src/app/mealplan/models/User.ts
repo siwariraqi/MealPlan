@@ -3,11 +3,11 @@ import { UserFeedback } from "./UserFeedback";
 
 export class User {
   constructor(
+    public email?: string,
+    public password?: string,
     public firstName?: string,
     public lastName?: string,
-    public password?: string,
     public phoneNumber?: string,
-    public email?: string,
     public userInfo?: UserInfo,
     public planId?: number,
     public paymentsIds?: number[],

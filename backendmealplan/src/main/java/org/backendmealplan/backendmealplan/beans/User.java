@@ -15,15 +15,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    private String email;
+
+    private String password;
+
     private String firstName;
 
     private String lastName;
 
-    private String password;
 
     private String phoneNumber;
 
-    private String email;
+
 
     @OneToOne()
     @JoinColumn(name="info_id")

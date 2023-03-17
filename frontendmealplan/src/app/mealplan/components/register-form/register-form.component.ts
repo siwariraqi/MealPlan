@@ -183,14 +183,12 @@ export class RegisterFormComponent implements OnInit {
 
   public onRegisterFormSubmit(): void {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
       const formObj = this.registerForm.value;
       const user = new User(
-        this.capitalizeFirstLetter(formObj.fname),
-        this.capitalizeFirstLetter(formObj.lname),
+        formObj.email,
         formObj.password,
-        null,
-        formObj.email
+        this.capitalizeFirstLetter(formObj.fname),
+        this.capitalizeFirstLetter(formObj.lname)
       );
       this.registerSrv.registerUser(user).subscribe((user) => {
         if (user) {
