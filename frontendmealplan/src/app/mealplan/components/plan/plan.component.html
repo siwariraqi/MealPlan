@@ -1,27 +1,27 @@
 <div class="planContainer">
     <div>
-        <h2>{{name}}</h2>
+        <h2>The {{name}} Plan</h2>
     </div>
     <div>
-        <h2>${{price}} / {{length}}</h2>
+        <h2>${{price}} / <span class="lenSpan">{{length}}</span></h2>
     </div>
     <div>
-        <h2 class="title">{{name}} Includes:</h2>
+        <h2 class="title">The {{name}} Plan Includes:</h2>
     </div>
-    <div>
-        <ul>
-            <li *ngFor="let str of tmpIncludes">{{str}}</li>
-        </ul>
+    <div [innerHTML]="includes">
+        
+        
+        
     </div>
     <div>
         <h2>Benefits:</h2>
     </div>
-    <div>
-        <ul>
-            <li *ngFor="let ben of tmpBenefits">{{ben}}</li>
-        </ul>
+    <div [innerHTML]="benefits">
     </div>
     <div>
-        <button (click)="choosePlan()">Select Plan</button>
+        <button (click)="choosePlan()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary right-bottom" ng-reflect-color="primary" fdprocessedid="rpxeid">
+            <span class="mat-button-wrapper">Select Plan</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+            <span class="mat-button-focus-overlay"></span>
+        </button>
     </div>
 </div>

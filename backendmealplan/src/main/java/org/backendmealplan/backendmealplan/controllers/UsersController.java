@@ -3,7 +3,7 @@ package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.*;
 import org.backendmealplan.backendmealplan.exceptions.*;
-import org.backendmealplan.backendmealplan.bl.PlanBL;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class UsersController {
     private UserBL userBL;
     @Autowired
     private GoalBL goalBL;
-    
+
     @GetMapping("allGoals")
     public List<Goal> getAllGoals(){
         return this.goalBL.getAllGoals();
@@ -40,7 +40,7 @@ public class UsersController {
     public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+            updatedUserInfo = userBL.updateUserInfo(userInfo);
         } catch (userInfoNotFound e) {
             return (ResponseEntity) ResponseEntity.notFound();
         }
@@ -60,10 +60,36 @@ public class UsersController {
     }
 
 
+    @PostMapping("/updateProfile")
+    public ResponseEntity updateProfile(@RequestBody User user){
+        try {
+            this.userBL.updateProfile(user);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return new ResponseEntity(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/getUser")
+    public ResponseEntity<User> getUser(@RequestParam long userId) {
+        try {
+            User user = userBL.getUser(userId);
+            return ResponseEntity.ok(user);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+//    @PostMapping("/change-password")
+//    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+//        return ResponseEntity.ok(null);
+//    }
+
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestHeader String email,@RequestHeader String password){
+    public ResponseEntity login(@RequestBody User user){
         try{
-            User u =userBL.authentication(email,password);
+            User u =userBL.authentication(user.getEmail(),user.getPassword());
             u.setPassword(null);
             return new ResponseEntity(u,HttpStatus.OK);
         }catch(Exception e){
@@ -75,13 +101,13 @@ public class UsersController {
     public ResponseEntity adduser(@RequestBody User user){
         try{
             User u= userBL.adduser(user);
-            u.setPassword(null);
+//            u.setPassword(null);
             return new ResponseEntity(u,HttpStatus.OK);
         }catch(userExistException e){
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
-    
+
     @GetMapping("day-plan-meals/{daynumber}/{userid}")
     public ResponseEntity<List<DayMeal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
         try {

@@ -8,25 +8,30 @@
     background-size: cover;
     position: relative;
     border: 2px solid #ccc;
-    border-radius: 10px;
+    border-radius: 11px;
     padding: 10px;
     margin: 10px;
     width: 350px;
   }
-
+  
+  .bullet {
+    font-weight: bold;
+    display: none;
+    width: 1em;
+    margin-left: -0.5em;
+    font-size: 1.5em;
+  }
 
   .planContainer ul {
     text-align: left;
-    margin-left: 20px;
+    margin-left: 30px;
   }
 
   ul {
     list-style: none;
   }
   
-  ul li::before {
-    content: "\2022";
-    color: #E09167;
+  .bullet {
     font-weight: bold;
     display: inline-block; 
     width: 1em;
@@ -34,25 +39,16 @@
     font-size: 1.5em;
   }
 
-  .planContainer button {
-    background-color: #E09167;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-top: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: fit-content;
-    border-radius: 30px;
+.lenSpan{
+  color: grey;
+  font-size: medium;
+  font-weight: bold;
+}
+
+  .right-bottom {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    z-index: 1;
   }
   
-  .planContainer button:hover {
-    background-color: #b17250;
-  }
 

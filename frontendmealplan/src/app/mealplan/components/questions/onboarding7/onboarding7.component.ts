@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Color, colorSets } from "@swimlane/ngx-charts";
-
 import { Goal } from "src/app/mealplan/models/Goal";
+import { UserInfo } from "src/app/mealplan/models/UserInfo";
+import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
   selector: "app-onboarding7",
@@ -103,10 +103,9 @@ export class Onboarding7Component implements OnInit {
   toggle5: boolean;
   toggle6: boolean;
   allGoals: Goal[];
+  // @Input() userGoals: Goal[];
 
-  @Input() userGoals: Goal[];
-
-  constructor() {
+  constructor(private registerSrv: RegisterService) {
     this.toggle1 = false;
     this.toggle2 = false;
     this.toggle3 = false;
@@ -123,7 +122,15 @@ export class Onboarding7Component implements OnInit {
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userInfo = this.registerSrv.getUserInfo();
+    console.log("current userinfo id " + userInfo.infoId);
+    if (!userInfo.infoId) {
+      this.registerSrv.updateUserInfo().subscribe((userInfo) => {
+        console.log("added new userinfo " + userInfo.infoId);
+      });
+    }
+  }
 
   enableDisableRule1(goal: Goal) {
     this.toggle1 = !this.toggle1;
@@ -151,12 +158,18 @@ export class Onboarding7Component implements OnInit {
   }
 
   addOrRemoveGoalSelection(goal: Goal, isSelected: boolean) {
+    if (!this.registerSrv.getUserInfo().goals) {
+      this.registerSrv.getUserInfo().goals = [];
+    }
     if (isSelected) {
-      this.userGoals.push(goal);
+      this.registerSrv.getUserInfo().goals.push(goal);
     } else {
       const idx = goal.goalId;
-      this.userGoals = this.userGoals.filter((obj) => obj.goalId !== idx); //remove goal from array
+      this.registerSrv.getUserInfo().goals = this.registerSrv
+        .getUserInfo()
+        .goals?.filter((obj) => obj.goalId !== idx); //remove goal from array
     }
-    console.log(this.userGoals);
+    // console.log(this.registerSrv.getUserInfo());
+    // console.log(this.registerSrv.getUserInfo().goals);
   }
 }

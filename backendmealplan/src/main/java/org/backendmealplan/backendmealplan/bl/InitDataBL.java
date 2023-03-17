@@ -1,15 +1,18 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.backendmealplan.backendmealplan.enums.*;
-import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userExistException;
-import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InitDataBL {
@@ -33,10 +36,12 @@ public class InitDataBL {
 
     Ingredient[] ingredients = new Ingredient[49];
     Meal[] meals = new Meal[8];
-    Plan freemuimPlan,basicPlan,premiumPlan;
+    Plan freemuimPlan, basicPlan, premiumPlan;
 
     DayPlanId[] dayPlanIds = new DayPlanId[28];
 
+    @Autowired
+    PlansDAO plansDAO;
 
     public void run() {
         createGoals();
@@ -47,11 +52,16 @@ public class InitDataBL {
         createDays();
         createDayMeals();
         createDayPlan();
-        User u  =new User();
-        u.setFirstName("sewar");
+        User u = new User();
+        u.setFirstName("Sewar");
+        u.setLastName("Iraqi");
+        u.setPassword("sewar");
         u.setPlan(basicPlan);
         try {
             userBL.adduser(u);
+            basicPlan.getUsers().add(u);
+            List<User> users = basicPlan.getUsers();
+            System.out.println(users.size());
         } catch (userExistException e) {
             throw new RuntimeException(e);
         }
@@ -59,33 +69,48 @@ public class InitDataBL {
 
     private void createDays() {
         for (int i = 0; i < dayPlanIds.length; i++) {
-            DayPlanId dayPlanId = insertDays();
-            dayPlanIds[i] = dayPlanId;
+            dayPlanIds[i] = insertDays();
         }
     }
-    private DayPlanId insertDays(){
+
+    private DayPlanId insertDays() {
         DayPlanId dayPlanId1 = new DayPlanId();
-        return  planBL.addDayPlanId(dayPlanId1);
+        return planBL.addDayPlanId(dayPlanId1);
     }
 
     private void createPlans() {
-        freemuimPlan = insertPlan(PlanType.Freemium.name(), "0",0,"","");
-        basicPlan = insertPlan(PlanType.Basic.name(), "14",29,
-                "14 Breakfasts&14 Lunches&14 Dinners&14 Snacks",
-                "Build healthier habits$Introduce new recipes into you rotation&" +
-                        "Eat AND enjoy the foods you're preparing&Work towards a lifestyle shift");
-        premiumPlan = insertPlan(PlanType.Premium.name(), "28",34,
-                "28 Breakfasts&28 Lunches&28 Dinners&28 Snacks",
-                "Become a pro at managing your health&Build habits that actually stick&" +
-                        "Prepare foods you'll never get sick of&Bulk up your recipe rotation with over 30 delicious and healthy recipes");
+        freemuimPlan = insertPlan(PlanType.Freemium.name(), "0", 0, new ArrayList<>(), new ArrayList<>());
+        List<String> includes = new ArrayList<>();
+        List<String> benefits = new ArrayList<>();
+        includes.add("14 Breakfasts");
+        includes.add("14 Lunches");
+        includes.add("14 Dinners");
+        includes.add("14 Snacks");
+        benefits.add("Build healthier habits");
+        benefits.add("Introduce new recipes into you rotation");
+        benefits.add("Eat AND enjoy the foods you're preparing&Work towards a lifestyle shift");
+        basicPlan = insertPlan(PlanType.Basic.name(), "14", 29, includes, benefits);
+
+        includes = new ArrayList<>();
+        benefits = new ArrayList<>();
+        includes.add("28 Breakfasts");
+        includes.add("28 Lunches");
+        includes.add("28 Dinners");
+        includes.add("28 Snacks");
+        benefits.add("Become a pro at managing your health");
+        benefits.add("Build habits that actually stick");
+        benefits.add("Prepare foods you'll never get sick of");
+        benefits.add("Bulk up your recipe rotation with over 30 delicious and healthy recipes");
+        premiumPlan = insertPlan(PlanType.Premium.name(), "28", 34, includes, benefits);
     }
-    private Plan insertPlan(String planName, String length,double price,String includes,String benefits) {
+
+    private Plan insertPlan(String planName, String length, double price, List<String> includes, List<String> benefits) {
         Plan plan = new Plan();
         plan.setPlanName(planName);
         plan.setPrice(price);
         plan.setLength(length);
-        plan.setIncludes(includes);
-        plan.setBenefits(benefits);
+        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(include) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(benefit) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
         return planBL.addPlan(plan);
     }
 
@@ -177,89 +202,103 @@ public class InitDataBL {
 
 
     private void createMeals() {
-        meals[0] = insertMeal("Peanut butter and banana chia pudding",
+        List<String> instructions = new ArrayList<>();
+        List<String> tips = new ArrayList<>();
+        instructions.add("Add the milk, peanut butter, to a jar and shake well until the peanut butter has been incorporated with the milk. " +
+                "Add the chia seeds and shake again to combine. Add the chia seeds and shake again to combine." +
+                " The next morning, stir the muesli well. If it’s too thick, add a little more water until it reaches your preferred consistency.");
+        instructions.add("Refrigerate for at least three hours or until chilled.");
+        instructions.add("To serve, divide the chia pudding between bowls and top with the sliced banana.");
+        tips.add("Want more flavour : Add cinnamon, sea salt, and/or vanilla extract.");
+        tips.add("Want additional toppings : Berries, honey, or extra peanut butter");
+        meals[0] = insertMeal(
+                "Peanut butter and banana chia pudding",
                 300, 15, 10, 9, 25,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Add the milk, peanut butter, to a jar and shake well until the peanut butter has been incorporated" +
-                        "with the milk. Add the chia seeds and shake again to combine. The next morning, stir the muesli" +
-                        "well. If it’s too thick, add a little more water until it reaches your preferred consistency." + "$" +
-                        "Refrigerate for at least three hours or until chilled." + "$" +
-                        "To serve, divide the chia pudding between bowls and top with the sliced banana.",
-                "10 minutes", "3 hours", "Want more flavour : Add cinnamon, sea salt, and/or vanilla extract." + "$" + "Want additional toppings : Berries, honey, or extra peanut butter");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
+                "10 minutes",
+                "3 hours", tips);
+
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Mix the grated carrot, mixed spice, cinnamon, and oats");
+        instructions.add("Add 2⁄3 cup (X4) water and a pinch of salt");
+        instructions.add("Place in 4 serving jars and cover");
+        instructions.add("Place in fridge overnight");
+        instructions.add("Add honey and sultanas and Greek yogurt in the morning");
 
         meals[1] = insertMeal("Carrot cake overnight oats",
                 319, 9, 9, 6, 29,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Mix the grated carrot, mixed spice, cinnamon, and oats" + "$" +
-                        "Add 2⁄3 cup (X4) water and a pinch of salt" + "$" +
-                        "Place in 4 serving jars and cover" + "$" +
-                        "Place in fridge overnight" + "$" +
-                        "Add honey and sultanas and Greek yogurt in the morning",
-                "5 minutes", "Overnight", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
+                "5 minutes", "Overnight", tips);
 
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Soak the oats and chia seeds in 800ml water overnight");
+        instructions.add("Add the oats and seeds to a pan the next morning with milk");
+        instructions.add("Place in 4 bowls and serve with yogurt and fruit");
         meals[2] = insertMeal("Oat and Chia porridge",
                 370, 19, 11, 8, 34,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Soak the oats and chia seeds in 800ml water overnight" + "$" +
-                        "Add the oats and seeds to a pan the next morning with milk" + "$" +
-                        "Place in 4 bowls and serve with yogurt and fruit" + "$",
-                "5 minutes", "Overnight", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "5 minutes", "Overnight", tips);
 
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Cut the slices of salmon into small pieces.");
+        instructions.add("In a small mixing bowl combine salmon with cream cheese, chopped capers, finely diced spring onion and diced cucumber, mix well.");
+        instructions.add("Place mixture onto half the slices of bread, top with lettuce and remaining bread slices.");
         meals[3] = insertMeal("Smoked salmon sandwich",
                 667, 6.6, 5.6, 2, 10.5,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Cut the slices of salmon into small pieces." + "$" +
-                        "In a small mixing bowl combine salmon with cream cheese, chopped capers, finely diced spring\n" +
-                        "onion and diced cucumber, mix well." + "$" +
-                        "Place mixture onto half the slices of bread, top with lettuce and remaining bread slices." + "$",
-                "10 minutes", "", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "10 minutes", "", tips);
+
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("In a small bowl, mix together the chicken and half the cream cheese.");
+        instructions.add("Lay the tortilla flat and spread the remaining cream cheese, then add the arugula, chicken, and celery. Roll the tortilla tightly and enjoy!");
 
         meals[4] = insertMeal("Chicken and cream cheese wrap",
                 151, 3.5, 3.4, 7, 23,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "In a small bowl, mix together the chicken and half the cream cheese." + "$" +
-                        "Lay the tortilla flat and spread the remaining cream cheese, then add the arugula, chicken, and celery. Roll the tortilla tightly and enjoy!",
-                "5 minutes", "Overnight", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "5 minutes", "Overnight", tips);
 
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Heat the oil in a saucepan and fry the onion until softened");
+        instructions.add("Add the garlic and cook for 2mins");
+        instructions.add("Add the carrots, parsnip, and stock to the saucepan");
+        instructions.add("Bring to boil and then reduce and simmer for 20mins");
+        instructions.add("Add the milk");
+        instructions.add("Blend until smooth");
         meals[5] = insertMeal("Carrot and parsnip soup",
                 400, 12, 12, 4, 33,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Heat the oil in a saucepan and fry the onion until softened" + "$" +
-                        "Add the garlic and cook for 2mins" + "$" +
-                        "Add the carrots, parsnip, and stock to the saucepan" + "$" +
-                        "Bring to boil and then reduce and simmer for 20mins" + "$" +
-                        "Add the milk" + "$" + "Blend until smooth",
-                "10 minutes", "20 minutes", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
+                "10 minutes", "20 minutes", tips);
 
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Preheat the oven to 375oF and line a baking sheet with parchment paper.");
+        instructions.add("Add the sweet potato and broccoli to the pan and drizzle with 2⁄3 of the oil and season with half of the salt. Stir to evenly coat the vegetables and bake for 10 minutes.");
+        instructions.add("the salt. Stir to evenly coat the vegetables and bake for 10 minutes.");
+        instructions.add("Meanwhile, in a small bowl combine the remaining oil, lemon juice, garlic, and parsley.");
+        instructions.add("Remove the pan from the oven. Stir the vegetables and make room for the salmon in the centre of the pan.");
+        instructions.add("Place the salmon on the pan and season with the remaining salt. Spoon the lemon garlic sauce over top of the fillets. " +
+                "Continue to bake for 15 minutes or until the salmon is cooked through and the vegetables are tender. Divide between plates and enjoy!");
+        tips.add("Optional : Add cauliflower, Brussels sprouts, cabbage, zucchini, or bell pepper");
         meals[6] = insertMeal("Lemon garlic salmon, broccoli and sweet potatoes",
                 450, 20, 40, 6, 30,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Preheat the oven to 375oF and line a baking sheet with parchment paper." + "$" +
-                        "Add the sweet potato and broccoli to the pan and drizzle with 2⁄3 of the oil and season with half of\n" +
-                        "the salt. Stir to evenly coat the vegetables and bake for 10 minutes." + "$" +
-                        "Meanwhile, in a small bowl combine the remaining oil, lemon juice, garlic, and parsley." + "$" +
-                        "Remove the pan from the oven. Stir the vegetables and make room for the salmon in the centre of\n" +
-                        "the pan." + "$" +
-                        "Place the salmon on the pan and season with the remaining salt. Spoon the lemon garlic sauce over\n" +
-                        "top of the fillets. Continue to bake for 15 minutes or until the salmon is cooked through and the\n" +
-                        "vegetables are tender. Divide between plates and enjoy!",
-                "10 minutes", "15 minutes", "Optional : Add cauliflower, Brussels sprouts, cabbage, zucchini, or bell pepper");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
+                "10 minutes", "15 minutes", tips);
 
+        instructions = new ArrayList<>();
+        tips = new ArrayList<>();
+        instructions.add("Cook the rice according to the package instructions and set aside.");
+        instructions.add("Heat a large non-stick pan over medium-high heat. Add the cubed chicken and season with salt and pepper. Cook to your desired doneness, then transfer to a bowl.");
+        instructions.add("Add the eggs to the same pan and stir to scramble as it cooks, about two to three minutes.");
+        instructions.add("Push the eggs to the side of the pan, and add the frozen vegetables. Season with salt and pepper and cook until warmed through, about three minutes.");
+        instructions.add("Add the rice and cooked chicken. Stir until well combined and season with additional salt and pepper if needed. Divide into bowls and enjoy!");
         meals[7] = insertMeal("Chicken fried rice",
                 450, 15, 30, 5, 40,
-                "assets/images/foods/meat-courses/1/medium.jpg",
-                "Cook the rice according to the package instructions and set aside." + "$" +
-                        "Heat a large non-stick pan over medium-high heat. Add the cubed chicken and season with salt and\n" +
-                        "pepper. Cook to your desired doneness, then transfer to a bowl." + "$" +
-                        "Add the eggs to the same pan and stir to scramble as it cooks, about two to three minutes." + "$" +
-                        "Push the eggs to the side of the pan, and add the frozen vegetables. Season with salt and pepper and\n" +
-                        "cook until warmed through, about three minutes." + "$" +
-                        "Add the rice and cooked chicken. Stir until well combined and season with additional salt and pepper\n" +
-                        "if needed. Divide into bowls and enjoy!",
-                "10 minutes", "15 minutes", "");
+                "assets/images/foods/meat-courses/1/medium.jpg", instructions, "10 minutes", "15 minutes", tips);
     }
 
-    private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, String instructions, String prepareTime, String cookTime, String tips) {
+    private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, List<String> instructions, String prepareTime, String cookTime, List<String> tips) {
         Meal meal = new Meal();
         meal.setMealName(MealName);
         meal.setCalories(calories);
@@ -268,19 +307,20 @@ public class InitDataBL {
         meal.setProtein(protein);
         meal.setFat(fat);
         meal.setImageUrl(imageUrl);
-        meal.setInstructions(instructions);
+        meal.setInstructions(
+                "<ul>" + instructions.stream().map(instruction -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + instruction + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
         meal.setPrepareTime(prepareTime);
         meal.setCookTime(cookTime);
-        meal.setTips(tips);
+        meal.setTips("<ul>" + tips.stream().map(tip -> "<li>" + tip + "</li>").collect(Collectors.joining()) + "</ul>");
         return mealBL.addMeal(meal);
     }
 
     private void createMealIngredients() {
         //breakfast1
-        insertMealIngredients( meals[0], ingredients[0], Optional.of(4.0), Optional.of(Unit.cup.name()));
-        insertMealIngredients( meals[0], ingredients[1], Optional.of(4.5), Optional.of(Unit.oz.name()));
-        insertMealIngredients( meals[0], ingredients[2], Optional.of(4.25), Optional.of(Unit.cup.name()));
-        insertMealIngredients( meals[0], ingredients[3], Optional.of(4.0), Optional.empty());
+        insertMealIngredients(meals[0], ingredients[0], Optional.of(4.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[0], ingredients[1], Optional.of(4.5), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[0], ingredients[2], Optional.of(4.25), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[0], ingredients[3], Optional.of(4.0), Optional.empty());
         //breakfast2
         insertMealIngredients(meals[1], ingredients[19], Optional.of(5.6), Optional.of(Unit.oz.name()));
         insertMealIngredients(meals[1], ingredients[20], Optional.empty(), Optional.empty());
@@ -332,11 +372,11 @@ public class InitDataBL {
         insertMealIngredients(meals[6], ingredients[18], Optional.of(24.0), Optional.of(Unit.oz.name()));
 
         //dinner2
-        insertMealIngredients(meals[7],  ingredients[31], Optional.of(0.667), Optional.of(Unit.cup.name()));
-        insertMealIngredients(meals[7],  ingredients[32], Optional.of(16.0), Optional.of(Unit.oz.name()));
-        insertMealIngredients(meals[7],  ingredients[33], Optional.empty(), Optional.empty());
-        insertMealIngredients(meals[7],  ingredients[34], Optional.of(3.0), Optional.empty());
-        insertMealIngredients(meals[7],  ingredients[35], Optional.of(2.5), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[7], ingredients[31], Optional.of(0.667), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[7], ingredients[32], Optional.of(16.0), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[7], ingredients[33], Optional.empty(), Optional.empty());
+        insertMealIngredients(meals[7], ingredients[34], Optional.of(3.0), Optional.empty());
+        insertMealIngredients(meals[7], ingredients[35], Optional.of(2.5), Optional.of(Unit.cup.name()));
     }
 
     private void insertMealIngredients(Meal meal, Ingredient ingredient, Optional<Double> amount, Optional<String> unit) {
@@ -349,34 +389,36 @@ public class InitDataBL {
         mealBL.addMealIngredients(mealIngredients);
     }
 
-    private void insertDayMeals(Meal meal , DayPlanId dayPlanId, String type) {
+    private void insertDayMeals(Meal meal, DayPlanId dayPlanId, String type) {
         DayMeal dayMeals = new DayMeal();
-        dayMeals.setId(new DayMealKey(meal,dayPlanId));
+        dayMeals.setId(new DayMealKey(meal, dayPlanId));
         dayMeals.setType(type);
         mealBL.addDayMeals(dayMeals);
     }
+
     private void createDayMeals() {
-        insertDayMeals(meals[0],dayPlanIds[0], MealTime.Breakfast.name());
-        insertDayMeals(meals[3],dayPlanIds[0], MealTime.Lunch.name());
-        insertDayMeals(meals[6],dayPlanIds[0], MealTime.Dinner.name());
+        insertDayMeals(meals[0], dayPlanIds[0], MealTime.Breakfast.name());
+        insertDayMeals(meals[3], dayPlanIds[0], MealTime.Lunch.name());
+        insertDayMeals(meals[6], dayPlanIds[0], MealTime.Dinner.name());
 
-        insertDayMeals(meals[1],dayPlanIds[1], MealTime.Breakfast.name());
-        insertDayMeals(meals[4],dayPlanIds[1], MealTime.Lunch.name());
-        insertDayMeals(meals[7],dayPlanIds[1], MealTime.Dinner.name());
+        insertDayMeals(meals[1], dayPlanIds[1], MealTime.Breakfast.name());
+        insertDayMeals(meals[4], dayPlanIds[1], MealTime.Lunch.name());
+        insertDayMeals(meals[7], dayPlanIds[1], MealTime.Dinner.name());
 
-        insertDayMeals(meals[2],dayPlanIds[2], MealTime.Breakfast.name());
-        insertDayMeals(meals[5],dayPlanIds[2], MealTime.Lunch.name());
+        insertDayMeals(meals[2], dayPlanIds[2], MealTime.Breakfast.name());
+        insertDayMeals(meals[5], dayPlanIds[2], MealTime.Lunch.name());
     }
-    private void createDayPlan(){
+
+    private void createDayPlan() {
         //change the function that sum calories by the calories of the meals
-        insertDayPlan(basicPlan,dayPlanIds[0],1,"1417");
-        insertDayPlan(basicPlan,dayPlanIds[1],2,"920");
-        insertDayPlan(basicPlan,dayPlanIds[2],3,"770");
+        insertDayPlan(basicPlan, dayPlanIds[0], 1, "1417");
+        insertDayPlan(basicPlan, dayPlanIds[1], 2, "920");
+        insertDayPlan(basicPlan, dayPlanIds[2], 3, "770");
     }
 
-    private void insertDayPlan(Plan plan, DayPlanId dayPlanId,  Integer dayNumber, String dailyCalories) {
+    private void insertDayPlan(Plan plan, DayPlanId dayPlanId, Integer dayNumber, String dailyCalories) {
         DayPlan dayPlan = new DayPlan();
-        dayPlan.setDayPlanKey(new DayPlanKey(plan,dayPlanId));
+        dayPlan.setDayPlanKey(new DayPlanKey(plan, dayPlanId));
         dayPlan.setDayNumber(dayNumber);
         dayPlan.setDailyCalories(dailyCalories);
         planBL.addDayPlan(dayPlan);

@@ -1,11 +1,10 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { MealplanRoutingModule } from "./mealplan-routing.module";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
 import { MealComponent } from './pages/dayMeal/meal/meal.component';
@@ -30,6 +29,19 @@ import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.compon
 import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FeedbacksComponent } from './pages/dayMeal/feedbacks/feedbacks.component';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AppSettings } from "../app.settings";
+import { AccountComponent } from "./pages/account/account.component";
+import { AccountModule } from "./pages/account/account.module";
 
 
 @NgModule({
@@ -60,13 +72,20 @@ import { FeedbacksComponent } from './pages/dayMeal/feedbacks/feedbacks.componen
 
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,
-    MatIconModule,
     FlexLayoutModule,
     SharedModule,
     MatChipsModule,FormsModule,
-    NgxChartsModule
-  ]
-  })
+    NgxChartsModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    AccountModule ] })
 
 
   export class MealplanModule {}
