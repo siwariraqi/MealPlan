@@ -1,13 +1,10 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { MealplanRoutingModule } from "./mealplan-routing.module";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
-import { MenuItemsComponent } from './pages/dayMeal/menu-items/menu-items.component';
-import { MenuItemsCarouselComponent } from './pages/dayMeal/menu-items-carousel/menu-items-carousel.component';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatChipsModule } from '@angular/material/chips';
 import { MealComponent } from './pages/dayMeal/meal/meal.component';
@@ -27,14 +24,31 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule, Routes } from "@angular/router";
 import { PlanComponent } from "./components/plan/plan.component";
 import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
+import { MealItemsDetailsComponent } from './pages/dayMeal/meal-items-details/meal-items-details.component';
+import { MealItemsComponent } from './pages/dayMeal/meal-items/meal-items.component';
+import { MealSingleComponent } from './pages/dayMeal/meal-single/meal-single.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FeedbacksComponent } from './pages/dayMeal/feedbacks/feedbacks.component';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AppSettings } from "../app.settings";
+import { AccountComponent } from "./pages/account/account.component";
+import { AccountModule } from "./pages/account/account.module";
+
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    MenuItemsComponent, 
-    MenuItemsCarouselComponent,
     WelcomeScreenComponent,
     Onboarding7Component,
     Onboarding8Component,
@@ -48,16 +62,30 @@ import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
     RegisterFormComponent,
     PlanComponent,
     ChooseplanComponent,
-    MealComponent
+    MealComponent,
+    MealItemsDetailsComponent,
+    MealItemsComponent,
+    MealSingleComponent,
+    FeedbacksComponent,
+    
   ],
 
   imports: [CommonModule, MealplanRoutingModule,
     MatCardModule,
-    MatIconModule,
     FlexLayoutModule,
     SharedModule,
-    MatChipsModule,FormsModule]
-  })
+    MatChipsModule,FormsModule,
+    NgxChartsModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    AccountModule ] })
 
 
   export class MealplanModule {}
