@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Goal } from "src/app/mealplan/models/Goal";
-import { UserInfo } from "src/app/mealplan/models/UserInfo";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({

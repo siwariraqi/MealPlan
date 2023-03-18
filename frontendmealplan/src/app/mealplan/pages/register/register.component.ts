@@ -58,7 +58,6 @@ export class RegisterComponent implements OnInit {
 
     this.screenState = "welcome";
     this.onBoardingStep = 2;
-    // this.userGoals = [];
   }
   ngOnInit(): void {
     this.backgroundColor = "#4b643d";
@@ -101,7 +100,6 @@ export class RegisterComponent implements OnInit {
 
       case 16:
         this.backgroundColor = "#bdc3c7";
-        // this.backgroundImage = " url(/assets/images/carousel/2.jpg) ";
         this.backgroundImage = " linear-gradient(to right, #ffffff, #ffffffd2) ";
         break;
 
