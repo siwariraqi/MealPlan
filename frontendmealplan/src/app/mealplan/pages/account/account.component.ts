@@ -32,7 +32,7 @@ export class AccountComponent implements OnInit {
   firstName:string;
   email:string;
   ngOnInit() {
-    localStorage.setItem('userId','1');
+    localStorage.setItem('userId','2');//to be removed after integration
     this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
       data => {
          this.user = data;
