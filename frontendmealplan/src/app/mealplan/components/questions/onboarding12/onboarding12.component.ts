@@ -49,6 +49,8 @@ export class Onboarding12Component implements OnInit {
       this.birthDate = this.selected.toDateString();
       // console.log(this.birthDate);
       this.registerSrv.getUserInfo().birthday = this.birthDate;
+      console.log(this.registerSrv.getUserInfo().birthday);
+
     }
   }
 }

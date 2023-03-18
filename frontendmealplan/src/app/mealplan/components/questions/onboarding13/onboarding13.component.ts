@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
   selector: "app-onboarding13",
@@ -18,20 +19,20 @@ import { Component, OnInit } from "@angular/core";
             class="form__field"
             name="name"
             required
-          /> 
+          #inputValue/> 
          <p class='val'> {{ val }} <p>
         </div>
         <div class="box">
           <div
             class="innerbox"
-            (click)="enableDisableRule1()"
+            (click)="enableDisableRule1(inputValue.value)"
             [ngClass]="{ orange: !toggle1, white: toggle1 }"
           >
             KG
           </div>
           <div
             class="innerbox"
-            (click)="enableDisableRule2()"
+            (click)="enableDisableRule2(inputValue.value)"
             [ngClass]="{ orange: !toggle2, white: toggle2 }"
           >
             LB
@@ -47,19 +48,29 @@ export class Onboarding13Component implements OnInit {
   toggle2 = true;
   val : String = "KG";
 
-  constructor() {}
+  weight: string;
 
+  constructor(private registerSrv: RegisterService) {
+    this.weight = null;
+  }
   ngOnInit(): void {}
 
-  enableDisableRule1() {
+  enableDisableRule1(weight: string) {
     this.toggle1 = !this.toggle1;
     this.toggle2 = true;
     this.val = "KG";
+    this.save(weight);
+
   }
-  enableDisableRule2() {
+  enableDisableRule2(weight: string) {
     this.toggle2 = !this.toggle2;
     this.toggle1 = true;
     this.val = "LB";
+    this.save(weight);
+  }
 
+  save(weight: string) {
+    this.registerSrv.getUserInfo().weight = weight;
+    console.log(this.registerSrv.getUserInfo().weight);
   }
 }
