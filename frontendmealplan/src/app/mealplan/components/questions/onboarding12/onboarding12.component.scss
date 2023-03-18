@@ -1,10 +1,10 @@
 .container {
-  margin-top: -2vh;
+  margin-top: 10vh;
   width: 90vw;
-  height: 65vh;
+  height: 55vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
   flex-direction: column;
   overflow: hidden;
 }
@@ -12,70 +12,66 @@
   justify-content: center;
   align-items: center;
   height: 13vh;
-  position: absolute;
-  top: 11%;
-  font-family: 'Montserrat';
+  // position: absolute;
+  // top: 9%;
+  font-family: "Montserrat";
 
   // border: 1vh solid black;
 }
-.question
-{
+.question {
   line-height: 24px;
   font-weight: 400;
   font-size: 20px;
 }
-.text
-{
-  font-family: 'Montserrat';
+.text {
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 20px;
 }
-.line
-{ 
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  border: 3px solid #4B643D;
-  margin-bottom: 5vh;
-}
-.content
-{
-    position: absolute;
-    top: 15%;
-    width: 40vw;
-    margin-left: auto;
-    margin-right: auto;
-    // border: 1px solid black;
-
-}
-.box
-{ 
-  background: #FFFFFF;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
-  padding: 1.2vh;
-  margin: 4vh;
-  display: block;
-}
-.date
-{
-  margin: 4vh;
-  padding: 5vh;
+.line {
+  // position: absolute;
+  // left: 0%;
+  // right: 0%;
+  border: 3px solid #4b643d;
+  width: 80vw;
+  max-width: 400px;
+  text-align: center;
+  margin: auto;
 }
 
-.orange {
-  background-color: #E09167;
-  ;
+.dateContainer {
+  margin-top: 4vh;
+  mat-form-field {
+    margin: 20px;
+    width: 90vw;
+    max-width: 300px;
+  }
 }
 
-.white {
-  background-color: white;
+.calendar-card {
+  text-align: center;
+  margin: auto;
+  margin-top: 6vh;
+  width: 300px;
+  font-size: large;
+  font-weight: 500;
 }
 
-  @media screen and (max-width: 600px) {
-    .container{
-      width: 95vw;
+.displayError {
+  margin-top: 2vh;
+  color: rgba(211, 56, 56, 0.87);
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 95vw;
+  }
+
+  .dateContainer {
+    mat-form-field {
+      max-width: 94vw;
     }
   }
+}
