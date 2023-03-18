@@ -1,55 +1,53 @@
 import { Component, OnInit } from "@angular/core";
+import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
   selector: "app-onboarding9",
   template: `
-      <style>
-        .box:hover{
-            background: #E09167;
-        }
+    <style>
+      .box:hover {
+        background: #e09167;
+      }
     </style>
     <div class="container">
-      <div class='top'> 
-      <p class='question'> Have you been diagnosed with or received treatment for diabetes? </p>
-        <p class='line'></p>
-        
+      <div class="top">
+        <p class="question">Have you been diagnosed with or received treatment for diabetes?</p>
+        <p class="line"></p>
       </div>
-      <div class="content"> 
-      <!-- box1 -->
-        <div class='box'
-        (click)="enableDisableRule1()"
-        [ngClass]="{'green' : !toggle1, 'white': toggle1}"> 
-          <div class='text'> Yes </div> 
-        </div>
-        
-       <!-- box2 -->
-        <div class='box'
-        (click)="enableDisableRule2()"
-        [ngClass]="{'green' : !toggle2, 'white': toggle2}"> 
-          <div class='text'> No </div> 
+      <div class="content">
+        <!-- box1 -->
+        <div
+          class="box-answers"
+          (click)="booleanAnswer('yes')"
+          [ngClass]="{ green: isReceiveTreatment === true }"
+        >
+          <div class="text">Yes</div>
         </div>
 
+        <!-- box2 -->
+        <div
+          class="box-answers"
+          (click)="booleanAnswer('no')"
+          [ngClass]="{ green: isReceiveTreatment === false }"
+        >
+          <div class="text">No</div>
+        </div>
+      </div>
     </div>
-</div>
   `,
   styleUrls: ["./onboarding9.component.scss"],
 })
 export class Onboarding9Component implements OnInit {
+  isReceiveTreatment: boolean;
 
-  toggle1 = true;
-  toggle2 = true;
-
-  constructor() {}
+  constructor(private registerSrv: RegisterService) {
+    this.isReceiveTreatment = undefined;
+  }
 
   ngOnInit(): void {}
 
-  enableDisableRule1() {
-    this.toggle1 = !this.toggle1;
-    this.toggle2 = true;
+  booleanAnswer(ans: string) {
+    ans === "yes" ? (this.isReceiveTreatment = true) : (this.isReceiveTreatment = false);
+    this.registerSrv.getUserInfo().isReceiveTreatment = this.isReceiveTreatment;
   }
-  enableDisableRule2() {
-    this.toggle1 = true;
-    this.toggle2 = !this.toggle2;
-  }
-
 }
