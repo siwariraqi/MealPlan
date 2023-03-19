@@ -49,7 +49,7 @@
                 </span>
                 <span class="px-1">Fibre:</span>
               </span>
-              <span class="fw-500">{{ meal.fiber }} g</span>
+              <span class="fw-500">{{ meal.fibre }} g</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <span fxLayout="row" fxLayoutAlign="start center">
@@ -102,9 +102,13 @@
                   {{ calorie }}g | Fat: {{ calorie }}g
                 </p> -->
                 <!-- <p>Carbs: 10g | Fibre: 10g | Protien: 10g | Fat: 10g</p> -->
-                <ul class="px-2 mt-1" *ngFor="let ingredient of ingredients">
-                  <li>{{ ingredient }}</li>
-                  <div class="divider"></div>
+                <ul class="px-2 mt-1">
+                  <li>{{ meal.mealIngredients[0].productName}}</li>
+                  <li>{{ meal.mealIngredients[1].productName}}</li>
+                  <li>{{ meal.mealIngredients[2].productName}}</li>
+                  <li>{{ meal.mealIngredients[3].productName}}</li>
+                     <div class="divider">
+                  </div>
                 </ul>
               </div>
             </mat-tab>

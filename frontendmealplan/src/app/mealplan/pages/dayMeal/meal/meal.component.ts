@@ -32,7 +32,7 @@ export class MealComponent implements OnInit {
     })
   }
   public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,2).subscribe((dayMeals)=>{
+    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
       console.log('-------------------------')
       console.log(this.dayMeals[0].id.meal.mealName)

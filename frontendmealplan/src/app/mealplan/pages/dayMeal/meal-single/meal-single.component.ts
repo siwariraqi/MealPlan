@@ -22,6 +22,7 @@ constructor(private dayMealService:DayMealService) {}
     this.userFeedback.rating=3;
     this.userFeedback.feedbackText='very bad';
     this.saveFeedback();
+    console.log(this.meal);
   }
   saveFeedback(){
     this.dayMealService.saveFeedback(this.userFeedback,1,1).subscribe(response => {
