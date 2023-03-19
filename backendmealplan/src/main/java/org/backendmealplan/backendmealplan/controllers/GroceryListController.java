@@ -1,10 +1,7 @@
 package org.backendmealplan.backendmealplan.controllers;
 
 import org.backendmealplan.backendmealplan.beans.GroceryList;
-import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.bl.GroceryListBL;
-import org.backendmealplan.backendmealplan.bl.UserBL;
-import org.backendmealplan.backendmealplan.dao.IngredientsDAO;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,31 +16,50 @@ import java.util.List;
 @CrossOrigin
 public class GroceryListController {
     @Autowired
-    GroceryListBL groceryListBL;
-
-
-
-    @PostMapping("deleteIngredient")
-    public ResponseEntity hideIngredientForUser(@RequestBody List<Long> grocerLisIds, @RequestBody Long userId){
+    private GroceryListBL groceryListBL;
+    @PostMapping("deleteIngredients")
+        public ResponseEntity hideIngredientForUser(@RequestParam Long groceryListId, @RequestParam Long userId){
+        List<Long> groceryListIds = new ArrayList<>();
+        groceryListIds.add(Long.valueOf(groceryListId));
         try{
-            this.groceryListBL.hideIngredientsForUser(grocerLisIds, userId);
-            return (ResponseEntity) ResponseEntity.ok();
+            this.groceryListBL.hideIngredientsForUser(groceryListIds, userId);
+            return (ResponseEntity) ResponseEntity.ok("okay");
         } catch (UNAUTHORIZEDException e) {
-            return (ResponseEntity) ResponseEntity.notFound();
+            return (ResponseEntity) ResponseEntity.ok("okay");//(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-    }
-
-    @GetMapping("getIngredients/{week}")
-    public ResponseEntity<List<GroceryList>> getIngredientsByWeek(@PathVariable Integer week, @RequestBody Long user_id, @RequestBody Plan plan){
-        List<GroceryList> userGroceries = new ArrayList<>();
-        if(week>Integer.parseInt(plan.getLength())/7) return (ResponseEntity<List<GroceryList>>) ResponseEntity.badRequest();
-        try {
-            userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, plan, user_id);
-            return ResponseEntity.ok(userGroceries);
-        } catch (UNAUTHORIZEDException e) {
+        catch(Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("getIngredients/{week}")
+    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long user_id){
+        //ResponseEntity<List<GroceryList>>
+        List<GroceryList> userGroceries = new ArrayList<>();
+        try {
+            userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, user_id);
+            return userGroceries;
+        } catch (UNAUTHORIZEDException e) {
+            return userGroceries;
+            //return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+/*
+    @GetMapping("getIngredients/{week}")
+    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long user_id){
+        //ResponseEntity<List<GroceryList>>
+        List<GroceryList> userGroceries = new ArrayList<>();
+        try {
+            userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, user_id);
+            return  userGroceries;
+            //return ResponseEntity.ok(userGroceries);
+        } catch (UNAUTHORIZEDException e) {
+            return userGroceries;
+            //return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+ */
 
 
 }

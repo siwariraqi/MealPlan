@@ -149,8 +149,7 @@ public class UserBL {
         Set<GroceryList> user_groceries = user.getChanges();
         user_groceries.addAll(groceryList);
         user.setChanges(user_groceries);
-        this.usersDAO.save(user);
-        return user;
+        return this.usersDAO.save(user);
     }
 
     public List<GroceryList> getDeletedGroceries(Long userId) throws UNAUTHORIZEDException {
@@ -162,12 +161,12 @@ public class UserBL {
         return user.getChanges().stream().toList();
     }
 
-
-
-
-
-
-
-
+    public Plan getUserPlan(Long userId) throws UNAUTHORIZEDException {
+        User user = this.usersDAO.getReferenceById(userId);
+        if(user == null){
+            throw new UNAUTHORIZEDException("user does not Exist");
+        }
+        return user.getPlan();
+    }
 }
 
