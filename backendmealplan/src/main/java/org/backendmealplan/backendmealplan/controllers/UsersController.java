@@ -1,7 +1,5 @@
 package org.backendmealplan.backendmealplan.controllers;
-
 import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.bl.GoalBL;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
@@ -11,35 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("users")
 @CrossOrigin
 public class UsersController {
-
-    @Autowired
-    private MealBL mealBL;
-    @Autowired
-    private PlanBL planBL;
     @Autowired
     private UserBL userBL;
-    @Autowired
-    private GoalBL goalBL;
-
-    @GetMapping("allGoals")
-    public List<Goal> getAllGoals(){
-        return this.goalBL.getAllGoals();
-    }
-
     @PostMapping("addUserInfo")
-    public ResponseEntity addUserInfo(@RequestBody UserInfo userInfo){
+    public ResponseEntity addUserInfo(@Valid @RequestBody UserInfo userInfo){
+        userInfo.setInfoId(null); // set infoId to null to ensure client cannot set it
         UserInfo updatedUserInfo =  userBL.addUserInfoGoals(userInfo);
         return ResponseEntity.ok(updatedUserInfo);
     }
 
     @PutMapping("updateUserInfo")
-    public ResponseEntity updateUserInfo(@RequestBody UserInfo userInfo){
+    public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
             updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
@@ -63,6 +50,7 @@ public class UsersController {
 
     @PostMapping("/updateProfile")
     public ResponseEntity updateProfile(@RequestBody User user){
+
         this.userBL.updateProfile(user);
         return new ResponseEntity(user,HttpStatus.OK);
     }
@@ -89,47 +77,17 @@ public class UsersController {
         }
     }
 
+    @Transactional
     @PostMapping("/adduser")
-    public ResponseEntity adduser(@RequestBody User user){
+    public ResponseEntity adduser(@Valid @RequestBody User user){
+        user.setUserId(null); // set userId to null to ensure client cannot set it
         try{
             User u= userBL.adduser(user);
-//            u.setPassword(null);
             return new ResponseEntity(u,HttpStatus.OK);
         }catch(userExistException e){
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        } catch (InvalidUserException e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-
-    @GetMapping("day-plan-meals/{daynumber}/{userid}")
-    public ResponseEntity<List<Meal>> getDayPlanMeals(@PathVariable Integer daynumber, @PathVariable Long userid) {
-        try {
-            List<Meal> meals = mealBL.getDayPlanMeals(daynumber, userid);
-            return ResponseEntity.ok(meals);
-        } catch (userNotFoundException | paymentNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-
-    @GetMapping("/day-nutrition/{daynumber}/{userid}")
-    public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer daynumber, @PathVariable Long userid) {
-        try {
-
-            List<String> nutritions = mealBL.getTotalDayNutrition(daynumber, userid);
-            return ResponseEntity.ok(nutritions);
-        } catch (userNotFoundException | paymentNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @GetMapping("plan/{userid}")
-    public ResponseEntity<Plan> getPlan(@PathVariable Long userid) {
-        try {
-            Plan plan = planBL.getPlan(userid);
-            return ResponseEntity.ok(plan);
-        } catch (userNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
 }

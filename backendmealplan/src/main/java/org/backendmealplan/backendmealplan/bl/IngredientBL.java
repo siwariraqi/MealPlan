@@ -15,9 +15,9 @@ public class IngredientBL {
         //check if ingredient exists
         List<Ingredient> ingredients = this.ingredientsDAO.findByProductName(ingredient.getProductName());
         if (ingredients.isEmpty()) {
-            this.ingredientsDAO.save(ingredient);
+            return this.ingredientsDAO.save(ingredient);
         }
-        return ingredient;
+        return null;
     }
 
     public List<Ingredient> getIngredients(){
