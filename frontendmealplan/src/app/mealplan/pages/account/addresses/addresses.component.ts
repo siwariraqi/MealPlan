@@ -13,8 +13,8 @@ export class AddressesComponent implements OnInit {
   public selected:number = 0;
   public countries:any[] = [];
   public billingAddress = {
-    'firstName': 'Emilio',
-    'lastName': 'Verdines',
+    'username': 'Emilio',
+    'password': 'Verdines',
     'middleName': '', 
     'company': '',
     'email': 'emilio.verdines@gmail.com',
@@ -58,8 +58,8 @@ export class AddressesComponent implements OnInit {
     // }); 
 
     let form: UntypedFormGroup = new UntypedFormGroup({});
-    form.addControl('firstName', new UntypedFormControl('', Validators.compose([Validators.required, maxWordsValidator(1)])));
-    form.addControl('lastName', new UntypedFormControl('', Validators.compose([Validators.required, maxWordsValidator(1)])));
+    form.addControl('username', new UntypedFormControl('', Validators.compose([Validators.required, maxWordsValidator(1)])));
+    form.addControl('password', new UntypedFormControl('', Validators.compose([Validators.required, maxWordsValidator(1)])));
     form.addControl('middleName', new UntypedFormControl('')); 
     form.addControl('company', new UntypedFormControl('')); 
     form.addControl('email', new UntypedFormControl('', Validators.compose([Validators.required, emailValidator]))); 
