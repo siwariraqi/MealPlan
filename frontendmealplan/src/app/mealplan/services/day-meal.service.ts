@@ -11,9 +11,9 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class DayMealService {
-  GETDAYPLANMEAL_URL = "users/day-plan-meals/";
+  GETDAYPLANMEAL_URL = "plans/day-plan-meals/";
   PLAN_URL = "users/plan/";
-  DAYNUTRITION_URL = "users/day-nutrition/";
+  DAYNUTRITION_URL = "plans/day-nutrition/";
   SAVEFEEDBACK_URL = "feedback/save/";
   meal: Array<Meal> = [];
   private selectedMeal: any;
