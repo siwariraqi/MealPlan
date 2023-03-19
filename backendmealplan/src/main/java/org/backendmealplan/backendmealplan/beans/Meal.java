@@ -1,9 +1,10 @@
 package org.backendmealplan.backendmealplan.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.backendmealplan.backendmealplan.enums.DietType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,23 +19,47 @@ public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mealId;
+
+    @NotBlank
     private String mealName;
+
+    @NotBlank
     private String imageUrl;
+
+    @NotNull
     private int calories;
+
+    @NotBlank
     @Column(name = "instructions", length = 2500)
     private String instructions;
-    private String prepareTime;
-    private String cookTime;
-    private double fat;
-    private double protein;
-    private double carbs;
-    private double fiber;
-    private String tips;
-//    private List<DietType> dietTypeList;
 
-  @ToString.Exclude
-  @JsonIgnore
-    @OneToMany (mappedBy = "meal")
+    @NotNull
+    private String prepareTime;
+
+    @NotNull
+    private String cookTime;
+
+    @NotNull
+    private double fat;
+    @NotNull
+    private double protein;
+    @NotNull
+    private double carbs;
+    @NotNull
+    private double fibre;
+    @NotBlank
+    private String tips;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "meal_diet_types",
+//            joinColumns = @JoinColumn(name = "meal_id"),
+//            inverseJoinColumns = @JoinColumn(name = "diet_type_id"))
+//    Set<DietTypes> dietTypes;
+
+    @ToString.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "meal")
     private List<UserFeedback> feedbacks = new ArrayList<>();
 
     @ManyToMany

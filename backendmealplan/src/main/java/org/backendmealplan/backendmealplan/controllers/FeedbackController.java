@@ -15,19 +15,18 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class FeedbackController {
 
-  @Autowired
-  private FeedbackBL feedbackBL;
-  @PostMapping("save/{userId}/{mealId}")
-  public ResponseEntity<Integer> saveFeedback (@RequestBody UserFeedback userFeedback, @PathVariable Long userId , @PathVariable Long mealId){
-    try {
-      Integer number =  feedbackBL.saveFeedback(userFeedback,userId,mealId);
-      return ResponseEntity.ok(number);
-    }  catch (userNotFoundException | MealNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    } catch (RatingNotInRangeException e) {
-      return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+    @Autowired
+    private FeedbackBL feedbackBL;
+
+    @PostMapping("save/{userId}/{mealId}")
+    public ResponseEntity<Integer> saveFeedback(@RequestBody UserFeedback userFeedback, @PathVariable Long userId, @PathVariable Long mealId) {
+        try {
+            Integer number = feedbackBL.saveFeedback(userFeedback, userId, mealId);
+            return ResponseEntity.ok(number);
+        } catch (userNotFoundException | MealNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (RatingNotInRangeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
     }
-  }
-
 }
-
