@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
+import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 
 @Component({
   selector: 'app-feedbacks',
@@ -6,17 +9,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feedbacks.component.scss']
 })
 export class FeedbacksComponent implements OnInit {
-
-  constructor() { }
+   
+  constructor(private fb: FormBuilder,private dayMealService:DayMealService) {
+    this.feedbackForm = this.fb.group({
+      review: ['', Validators.required]
+    });
+  }
+  userFeedback: UserFeedback = new UserFeedback(); 
 
   ngOnInit(): void {
+    this.userFeedback.isOnIt=true;
+    this.feedbackForm = new FormGroup({
+      review: new FormControl('', [Validators.required])
+    });
+    this.feedbackForm.get('review').valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
-  public feedbacks: Array<string> = [
+  feedbacks: string[] = [
     "Eazy to make",
     "Yummy",
     "Effect onBGL",
     "Effect on energy levels",
   ];
+  feedbackStates: boolean[] = new Array(this.feedbacks.length).fill(false);
+  feedbackForm: FormGroup;
+
+
 
   public ratings = [
     {
@@ -54,5 +73,42 @@ export class FeedbacksComponent implements OnInit {
       selected: false,
     },
   ];
+
+  rate(rating: any) {
+    for (let i = 0; i < this.ratings.length; i++) {
+      if (this.ratings[i].title === rating.title) {
+        this.ratings[i].selected = true;
+        this.userFeedback.rating=3; 
+      } else {
+        this.ratings[i].selected = false;
+      }
+    }
+  }
+
+  selectedFeedbacksString: string = '';
+
+  onSelectFeedback(index: number) {
+    this.feedbackStates[index] = !this.feedbackStates[index];
+    let selectedFeedbacks = [];
+    for (let i = 0; i < this.feedbacks.length; i++) {
+      if (this.feedbackStates[i]) {
+        selectedFeedbacks.push(this.feedbacks[i]);
+      }
+    }
+    this.selectedFeedbacksString = selectedFeedbacks.join(', ');
+    this.feedbackForm.get('review').setValue(this.selectedFeedbacksString);
+    console.log(this.selectedFeedbacksString)
+  }
+  
+  saveFeedback() {
+    const feedbackText = this.feedbackForm.get('review').value;
+    console.log(feedbackText)
+    if (feedbackText) {
+      this.userFeedback.feedbackText = feedbackText;
+      this.dayMealService.saveFeedback(this.userFeedback, 1, 1).subscribe(response => {
+        console.log('Feedback saved successfully:', response);
+      });
+    }
+  }
 
 }

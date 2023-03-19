@@ -1,8 +1,10 @@
 package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.DayMeal;
+import org.backendmealplan.backendmealplan.beans.MealIngredients;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
+import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +62,17 @@ public class PlanController {
     @GetMapping("/getPlans")
     public List<Plan> getPlans(){
         return  this.planBL.getAllPlans();
+    }
+
+    @GetMapping("/ingredinets")
+  public ResponseEntity <List<List<MealIngredients>>> getDayPlanMealIngredinets(@PathVariable Integer dayNumber, @PathVariable Long userId ){
+      try{
+        List<List<MealIngredients>>  Ingredients=this.mealBL.getDayPlanMealIngredinets(dayNumber,userId);
+        return ResponseEntity.ok(Ingredients);
+      }
+      catch (MealNotFoundException | userNotFoundException | paymentNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
+
     }
 }

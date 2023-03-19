@@ -10,10 +10,11 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get<T>(serviceName: string, httpHeaders?: HttpHeaders) {
+  get<T>(serviceName: string, httpHeaders?: HttpHeaders,body?:any) {
     const options = {
       headers: httpHeaders,
-      withCredentials: false
+      withCredentials: false,
+      body:body
     };
     return this.httpClient.get<T>(this.SERVER_BASE_URL + serviceName, options);
   }
