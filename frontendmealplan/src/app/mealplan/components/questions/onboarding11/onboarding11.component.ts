@@ -19,7 +19,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div
           class="box-answers"
           (click)="enableDisableRule1('female')"
-          [ngClass]="{ green: !toggle1, white: toggle1 }"
+          [ngClass]="{ green: toggle1, white: !toggle1 }"
         >
           <div class="text">female</div>
         </div>
@@ -27,7 +27,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div
           class="box-answers"
           (click)="enableDisableRule2('male')"
-          [ngClass]="{ green: !toggle2, white: toggle2 }"
+          [ngClass]="{ green: toggle2, white: !toggle2 }"
         >
           <div class="text">male</div>
         </div>
@@ -35,7 +35,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div
           class="box-answers"
           (click)="enableDisableRule3('other')"
-          [ngClass]="{ green: !toggle3, white: toggle3 }"
+          [ngClass]="{ green: toggle3, white: !toggle3 }"
         >
           <div class="text">other</div>
         </div>
@@ -45,37 +45,60 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   styleUrls: ["./onboarding11.component.scss"],
 })
 export class Onboarding11Component implements OnInit {
-  toggle1 = true;
-  toggle2 = true;
-  toggle3 = true;
+  toggle1 = false;
+  toggle2 = false;
+  toggle3 = false;
   gender: string;
+  valid : boolean ;
+
 
   constructor(private registerSrv: RegisterService) {
     this.gender = null;
+    this.valid = false;
+
   }
 
   ngOnInit(): void {}
   enableDisableRule1(gender: string) {
     this.toggle1 = !this.toggle1;
-    this.toggle2 = true;
-    this.toggle3 = true;
+    this.toggle2 = false;
+    this.toggle3 = false;
     this.save(gender);
+    this.validation();
   }
   enableDisableRule2(gender: string) {
     this.toggle2 = !this.toggle2;
-    this.toggle1 = true;
-    this.toggle3 = true;
+    this.toggle1 = false;
+    this.toggle3 = false;
     this.save(gender);
+    this.validation();
   }
   enableDisableRule3(gender: string) {
     this.toggle3 = !this.toggle3;
-    this.toggle2 = true;
-    this.toggle1 = true;
+    this.toggle2 = false;
+    this.toggle1 = false;
     this.save(gender);
+    this.validation();
   }
 
   save(gender: string) {
     this.registerSrv.getUserInfo().gender = gender;
     console.log(this.registerSrv.getUserInfo().gender);
+  }
+
+  validation(): any {
+    // if ( this.toggle1 || this.toggle2 || this.toggle3 ){
+    //   this.valid = true;
+    //   console.log("Valid")
+    // }
+    if ( this.toggle1 == false && this.toggle2 == false && this.toggle3 == false ){
+      this.valid = false;
+      console.log("not valid")
+    }
+    else {
+      this.valid = true;
+      console.log("Valid")
+    }
+    // this.sendData.emit(this.valid);
   }
 }

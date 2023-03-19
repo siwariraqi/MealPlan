@@ -164,16 +164,13 @@ public class UserBL {
         Set<GroceryList> user_groceries = user.getChanges();
         user_groceries.addAll(groceryList);
         user.setChanges(user_groceries);
-        this.usersDAO.save(user);
-        return user;
+        return this.usersDAO.save(user);
     }
 
     public List<Long> getDeletedGroceries(Long useId){
         List<Long> deleted = new ArrayList<>();
         return deleted;
     }
-
-
 
 
 
