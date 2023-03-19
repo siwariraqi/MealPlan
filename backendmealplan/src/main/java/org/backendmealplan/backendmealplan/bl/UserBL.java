@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 @Service
@@ -119,16 +121,92 @@ public class UserBL {
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
-        user.setEmail(newProfile.getEmail());
-        user.setPhoneNumber(newProfile.getPhoneNumber());
-        user.setFirstName(newProfile.getFirstName());
-        user.setLastName(newProfile.getLastName());
-        user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
-        user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
-        this.usersDAO.save(user);
-        return newProfile;
+        if(!validateUser(newProfile)) {
+            throw new IllegalArgumentException("Invalid User Input ");
+        }
+            user.setEmail(newProfile.getEmail());
+            user.setPhoneNumber(newProfile.getPhoneNumber());
+            user.setFirstName(newProfile.getFirstName());
+            user.setLastName(newProfile.getLastName());
+            user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
+            user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
+            this.usersDAO.save(user);
+            return newProfile;
+
     }
 
+    public boolean validateUser(User user) throws IllegalArgumentException {
+        boolean flag = true ;
+        if (user.getFirstName() == null || user.getFirstName().isEmpty() ) {
+            throw new IllegalArgumentException("First name cannot be empty");
+        }
+        if ( user.getFirstName().length() > 30 ) {
+            throw new IllegalArgumentException("FirstName is too long");
+        }
+        if (user.getLastName() == null || user.getLastName().isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be empty");
+        }
+        if ( user.getLastName().length() > 30 ) {
+            throw new IllegalArgumentException("LastName is too long");
+        }
+        if (user.getEmail() == null || !isValidEmail(user.getEmail())) {
+            throw new IllegalArgumentException("Invalid email address");
+        }
+        if (user.getPhoneNumber() == null || !isValidPhoneNumber(user.getPhoneNumber())) {
+            throw new IllegalArgumentException("Invalid phone number");
+        }
+        if (user.getUserInfo() != null) {
+            if (user.getUserInfo().getGender() == null || !isValidGender(user.getUserInfo().getGender())) {
+                throw new IllegalArgumentException("Invalid gender");
+            }
+            if (user.getUserInfo().getBirthday() == null || !isValidBDate(user.getUserInfo().getBirthday())) {
+                throw new IllegalArgumentException("Invalid birthday");
+            }
+        }
+        return flag ;
+    }
+
+    private boolean isValidEmail(String email) {
+        // Implement your own email validation logic here
+
+        String regexp = "/^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$/";
+        if(!email.matches(regexp)){
+            throw new IllegalArgumentException("Invalid Input Exception -  Email");
+        }
+        return true ;
+
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) throws IllegalArgumentException {
+        // Implement your own phone number validation logic here
+        String regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$" ;
+        if(!phoneNumber.matches(regexp)){
+            throw new IllegalArgumentException("Invalid Input Exception - phone number format");
+        }
+                return true ;
+    }
+
+    private boolean isValidGender(String gender) throws IllegalArgumentException {
+        // Implement your own gender validation logic here
+        if( !gender.equals("Male") && !gender.equals("Female")){
+            throw new IllegalArgumentException("Invalid Input Exception - Gender"); // throw an exception
+        }
+        return true ;
+    }
+
+    // min age - 18
+    // max age - 120
+    private boolean isValidBDate(LocalDate date) {
+
+            LocalDate today = LocalDate.now();
+            LocalDate eighteenYearsAgo = today.minusYears(18);
+            LocalDate oneHundredYearsAgo = today.minusYears(120);
+
+            // Check if the date is at least 18 years ago and not more than 100 years ago
+            return (date.isBefore(eighteenYearsAgo) || date.isEqual(eighteenYearsAgo))
+                    && (date.isAfter(oneHundredYearsAgo) || date.isEqual(oneHundredYearsAgo));
+
+    }
 
     public User userSetPlan( Long userId,  Long planId) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(userId);
