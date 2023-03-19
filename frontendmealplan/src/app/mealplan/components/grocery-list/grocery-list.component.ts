@@ -1,25 +1,74 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { element } from "protractor";
 import { MenuItem } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
+import { GroceryList } from "../../models/GroceryList";
+import { Plan } from "../../models/Plan";
+import { GroceryListService } from "../../services/grocery-list.service";
 
 @Component({
-  selector: "app-cart",
-  templateUrl: "./cart.component.html",
-  styleUrls: ["./cart.component.scss"],
+  selector: "app-grocery-list",
+  templateUrl: "./grocery-list.component.html",
+  styleUrls: ["./grocery-list.component.scss"],
 })
-export class CartComponent implements OnInit {
-  public template_data_source = this.appService.Data.cartList;
+export class GroceryListComponent implements OnInit {
   public total: any[] = [];
   public cartItemCount: any[] = [];
   public cartItemCountTotal: number = 0;
   public currentTotalCartCount: number = 0;
 
-  constructor(public appService: AppService, public snackBar: MatSnackBar) {}
+  //Code We added START
+  public allWeeks = [1, 2, 3, 4];
+  public weeksToDisplay = [];
+  public groceries: GroceryList[] = [];
+  public userId = 1; //should be changed to getting current user
+  public weekGroceries = [[], [], [], []];
+
+  constructor(
+    public appService: AppService,
+    public snackBar: MatSnackBar,
+    private grocerListService: GroceryListService
+  ) {}
 
   ngOnInit(): void {
+    this.initGroceries();
+    this.weeksToDisplay.push(1);
+    //their code
     this.updateCartTotal();
   }
+
+  initGroceries() {
+    this.getGroceriesForWeek(1);
+  }
+
+  getGroceriesForWeek(week: number) {
+    //should not add directly to this.groceries
+    this.grocerListService
+      .getIngredients(week, this.userId)
+      .subscribe((groceriess) => {
+        this.groceries = groceriess;
+      });
+  }
+
+  hideIngredient(toRemove: GroceryList) {
+    const index: number = this.groceries.indexOf(toRemove);
+    if (index !== -1) {
+      this.grocerListService
+        .DeleteIngredient(toRemove.groceryId, this.userId)
+        .subscribe((error) => {
+          alert("error in deleting");
+        });
+      this.groceries.splice(index, 1);
+    }
+  }
+  selectAll() {
+    this.getGroceriesForWeek(1);
+  }
+
+  //Code We added END
+
+  //their functions
 
   ngDoCheck() {
     if (this.currentTotalCartCount !== this.appService.Data.totalCartCount) {

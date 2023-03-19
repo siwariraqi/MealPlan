@@ -17,8 +17,9 @@ import java.util.List;
 public class GroceryListController {
     @Autowired
     private GroceryListBL groceryListBL;
-    @PostMapping("deleteIngredients")
-        public ResponseEntity hideIngredientForUser(@RequestParam Long groceryListId, @RequestParam Long userId){
+    //TODO:change parameters to body or header
+    @PostMapping("deleteIngredients/{groceryListId}/{userId}")
+        public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @PathVariable Long userId){
         List<Long> groceryListIds = new ArrayList<>();
         groceryListIds.add(Long.valueOf(groceryListId));
         try{
@@ -31,8 +32,9 @@ public class GroceryListController {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("getIngredients/{week}")
-    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long user_id){
+    //TODO:change user_id to body or header
+    @GetMapping("getIngredients/{week}/{user_id}")
+    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @PathVariable Long user_id){
         //ResponseEntity<List<GroceryList>>
         List<GroceryList> userGroceries = new ArrayList<>();
         try {
