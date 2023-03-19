@@ -24,7 +24,6 @@ export class GroceryListComponent implements OnInit {
   public groceries: GroceryList[] = [];
   public userId = 1; //should be changed to getting current user
   public weekGroceries = [[], [], [], []];
-  public groceriesWeek = [];
 
   constructor(
     public appService: AppService,
@@ -50,7 +49,6 @@ export class GroceryListComponent implements OnInit {
       .subscribe((groceriess) => {
         this.groceries = groceriess;
       });
-    //this.groceries = this.groceriesWeek;
   }
 
   hideIngredient(toRemove: GroceryList) {
