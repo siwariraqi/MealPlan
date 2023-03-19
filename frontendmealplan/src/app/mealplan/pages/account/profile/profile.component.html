@@ -31,13 +31,13 @@
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" formControlName="phone" onlyNumber>
-            <mat-error *ngIf="infoForm.controls.phone.hasError('minlength')">Phone isn't long enough, minimum of 9 characters</mat-error>
+            <input matInput placeholder="Phone" formControlName="phone">
+            <mat-error *ngIf="infoForm.controls.phone.hasError('pattern')">Invalid phone number format</mat-error>
         </mat-form-field>  
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Birthday</mat-label>
-            <input matInput placeholder="Birthday" formControlName="birthday" type="date"> 
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'yyyy-MM-dd'}}"> 
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
