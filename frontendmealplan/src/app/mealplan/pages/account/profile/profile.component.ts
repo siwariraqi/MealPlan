@@ -17,19 +17,20 @@ export class ProfileComponent implements OnInit {
   genderFormControl: FormControl;
   userId:number;
   user:User ={};
+  today: Date = new Date();
   userInfo:UserInfo={};
   constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
 
   ngOnInit() {
-    this.user.userInfo=this.userInfo;
+    const maxDate = new Date();
     this.genderFormControl = new FormControl();
     this.infoForm = this.formBuilder.group({
       FirstName: ['', Validators.compose([ Validators.minLength(3)])],
       LastName: ['', Validators.compose([ Validators.minLength(3)])],
       email: ['', Validators.compose([ emailValidator])],
-      phone: ['', Validators.minLength(9)],
+      phone: ['', Validators.pattern(/^\+(?:[0-9] ?){6,14}[0-9]$/)],
       genderControl: this.genderFormControl,
-      birthday:null,
+      birthday: ['', Validators.compose([ Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$')])],
       image: null
     });
     this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
@@ -60,12 +61,21 @@ export class ProfileComponent implements OnInit {
 
     if (this.infoForm.valid) { 
       this.userService.updateProfile(this.user).subscribe(
-        data => {console.log('Profile updated successfully.');
-        this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-      },
-        error => console.error('Error updating profile:', error)
+        data => {
+          console.log('Profile updated successfully.');
+          this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        },
+        error => {
+          console.error('Error updating profile:', error);
+          this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+        }
       );
-      
+    }
+    else{
+      this.snackBar.open('Wrong information. Please fix it and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
     }
     
   } 
