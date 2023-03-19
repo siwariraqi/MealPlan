@@ -37,7 +37,6 @@ public class PlanBL {
 
 
     public Plan getPlan(Long userid) throws userNotFoundException {
-
         Optional<User> users = this.usersDAO.findById(userid);
         if (users.isPresent()) {
             User user = users.get();
@@ -53,41 +52,61 @@ public class PlanBL {
         //check if plan exists
         List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
         if (plans.isEmpty()) {
-            this.planDAO.save(plan);
-            System.out.println("Plan added successfully!");
+            return this.planDAO.save(plan);
         }
-        return plan;
+        return null;
     }
 
-    public DayPlanId addDayPlanId(DayPlanId dayPlanId){
+    public DayPlanId addDayPlanId(DayPlanId dayPlanId) {
         //check if dayPlanId exists
         List<DayPlanId> dayPlanIds = this.dayPlanIdDAO.findByDayPlanId(dayPlanId.getDayPlanId());
-        if(dayPlanIds.isEmpty()) {
+        if (dayPlanIds.isEmpty()) {
             return this.dayPlanIdDAO.save(dayPlanId);
         }
         return null;
     }
 
-    public DayPlan addDayPlan(DayPlan dayPlan){
+    public DayPlan addDayPlan(DayPlan dayPlan) {
         //check if dayPlan exists
         List<DayPlan> dayPlanList = this.dayPlanDAO.findByDayPlanKey(dayPlan.getDayPlanKey());
-        if(dayPlanList.isEmpty()) {
+        if (dayPlanList.isEmpty()) {
             return this.dayPlanDAO.save(dayPlan);
         }
         return null;
     }
 
-    public List<DayMeal> getAllDayMeals(){
+    public List<DayMeal> getAllDayMeals() {
         return this.dayMealsDAO.findAll();
     }
 
-    public List<Plan> getAllPlans(){
+    public List<Plan> getAllPlans() {
         return this.planDAO.findAll();
     }
 
-    public Plan getPlanById(Long id){
-        return this.planDAO.findPlanByplanId(id);
+    public Plan getPlanById(Long id) {
+        return this.planDAO.findPlanByPlanId(id);
 
+    }
+
+    public void printUsers(Long planId) {
+        Plan plan = planDAO.findById(planId).orElse(null);
+
+        if (plan == null) {
+            System.out.println("University not found.");
+            return;
+        }
+
+        List<User> users = plan.getUsers();
+
+        if (users.isEmpty()) {
+            System.out.println("No students found for this university.");
+            return;
+        }
+
+        System.out.println("Students for " + plan.getPlanName() + ":");
+        for (User user : users) {
+            System.out.println("- " + user.getFirstName());
+        }
     }
 
 }

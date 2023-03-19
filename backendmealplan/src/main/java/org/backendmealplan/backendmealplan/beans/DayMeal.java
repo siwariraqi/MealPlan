@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -12,5 +13,6 @@ public class DayMeal {
 
     @EmbeddedId
     private DayMealKey id;
-    private String Type;
+    @NotBlank
+    private String type;
 }

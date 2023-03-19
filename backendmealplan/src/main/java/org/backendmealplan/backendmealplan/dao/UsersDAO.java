@@ -9,5 +9,5 @@ public interface UsersDAO extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
 
-    User findUserByuserId(Long id);
+    User findByUserId(Long id);
 }
