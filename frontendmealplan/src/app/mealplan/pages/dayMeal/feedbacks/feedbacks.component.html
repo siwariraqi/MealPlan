@@ -1,0 +1,38 @@
+<div class="comments">
+    <div fxLayoutAlign="center center">
+      <h2 class="secondary-font mb-3">Leave Your Feedback</h2>
+    </div>
+    <div class="divider"></div>
+    <mat-list class="reviews mt-3"></mat-list>
+    <h3 fxLayoutAlign="start center" class="my-3 text-muted">
+      <span>Your Rating:</span>
+      <button
+        *ngFor="let rating of ratings"
+        mat-icon-button
+        [matTooltip]="rating.title"
+        matTooltipPosition="above"
+      >
+        <!-- (click)="rate(rating)" -->
+  
+        <mat-icon class="mat-icon-lg" [class.primary-color]="rating.selected">{{
+          rating.icon
+        }}</mat-icon>
+      </button>
+    </h3>
+    <mat-list-item *ngFor="let feedback of feedbacks" class="h-100">
+      <p matLine class="text">{{ feedback }}</p>
+    </mat-list-item>
+  
+    <p class="mt-3 text-muted">Tell Us More:</p>
+  
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Your Feedback</mat-label>
+      <textarea
+        matInput
+        placeholder="Your Feedback<"
+        formControlName="review"
+        required
+        rows="5"
+      ></textarea>
+    </mat-form-field>
+  </div>

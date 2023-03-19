@@ -27,6 +27,7 @@ public class PlanController {
         return ResponseEntity.ok(newPlan);
     }
 
+
     @GetMapping("day-plan-meals/{dayNumber}/{userId}")
     public ResponseEntity<List<DayMeal>> getDayPlanMeals(@PathVariable Integer dayNumber, @PathVariable Long userId) {
         try {
@@ -55,5 +56,9 @@ public class PlanController {
         } catch (userNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+    @GetMapping("/getPlans")
+    public List<Plan> getPlans(){
+        return  this.planBL.getAllPlans();
     }
 }

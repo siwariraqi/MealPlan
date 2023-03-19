@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface DayMealsDAO extends JpaRepository<DayMeal, DayMealKey> {
 
+    //    List<DayMeal> findDayMealsByDayMealKey(Long dayPlanId);
     @Query(value = "SELECT * FROM mealplan.day_meals join mealplan.day_plan using (day_plan_id)" +
             "where day_number=:dayNumber", nativeQuery = true)
     List<DayMeal> getMealsOfDay(Long dayNumber);

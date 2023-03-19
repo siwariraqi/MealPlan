@@ -1,8 +1,6 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.*;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -29,7 +27,6 @@ public class UserFeedback {
     @NotNull
     private Boolean isOnIt;
 
-    @NotNull
     private Date date;
 
     private int rating = -1;

@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.bl;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.backendmealplan.backendmealplan.enums.*;
@@ -18,9 +19,6 @@ public class InitDataBL {
 
     @Autowired
     GoalBL goalBL;
-
-    @Autowired
-    RecipeBL recipeBL;
 
     @Autowired
     MealBL mealBL;
@@ -90,8 +88,8 @@ public class InitDataBL {
         plan.setPlanName(planName);
         plan.setPrice(price);
         plan.setLength(length);
-        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + include + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
-        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + benefit + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setIncludes("<ul>" + includes.stream().map(include -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(include) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
+        plan.setBenefits("<ul>" + benefits.stream().map(benefit -> "<li class=\"secondary-font\">" + "<span class=\"primary-color bullet\">&#8226;</span>" + "<span>" + StringEscapeUtils.escapeHtml4(benefit) + "</span>" + "</li>").collect(Collectors.joining()) + "</ul>");
         return planBL.addPlan(plan);
     }
 
@@ -238,6 +236,7 @@ public class InitDataBL {
                 151, 3.5, 3.4, 7, 23,
                 "assets/images/foods/meat-courses/1/medium.jpg", instructions, "5 minutes", "Overnight", new ArrayList<>());
 
+
         instructions = new ArrayList<>();
         instructions.add("Heat the oil in a saucepan and fry the onion until softened");
         instructions.add("Add the garlic and cook for 2mins");
@@ -284,6 +283,7 @@ public class InitDataBL {
         meals[9] = insertMeal("Roasted chickpeas",
                 157, 16.1, 4.1, 7.2, 7.1,
                 "assets/images/foods/meat-courses/1/medium.jpg",new ArrayList<>(),"30 minutes","30 minutes",new ArrayList<>());
+
     }
 
     private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, List<String> instructions, String prepareTime, String cookTime, List<String> tips) {
