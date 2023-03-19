@@ -12,7 +12,7 @@ export class Meal{
                      public fat?: number,
                      public protein?: number,
                      public carbs?: number,
-                     public fiber?: number,
+                     public fibre?: number,
                      public tips?: string,
                      public dietType?: string,
                      public feedbacks?: UserFeedback[],

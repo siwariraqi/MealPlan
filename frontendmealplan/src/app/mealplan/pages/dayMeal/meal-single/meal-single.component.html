@@ -49,7 +49,7 @@
                 </span>
                 <span class="px-1">Fibre:</span>
               </span>
-              <span class="fw-500">{{ meal.fiber }} g</span>
+              <span class="fw-500">{{ meal.fibre }} g</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <span fxLayout="row" fxLayoutAlign="start center">
@@ -114,6 +114,13 @@
                   <li>{{ instruction }}</li>
                   <div class="divider"></div>
                 </ul>
+              </div>
+              <div class="button">
+                <!-- (click)="saveFeedback()" -->
+                <button  _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary" ng-reflect-color="primary" fdprocessedid="rpxeid">
+                  <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+                  <span class="mat-button-focus-overlay"></span>
+                </button>
               </div>
             </mat-tab>
             <mat-tab label="Feedbacks">

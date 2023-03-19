@@ -23,7 +23,6 @@ export class RegisterService {
   }
 
   updateUserInfo(): Observable<UserInfo> {
-    console.log("opa!!");
     console.log(this.currUserInfo);
 
     return this.httpClient

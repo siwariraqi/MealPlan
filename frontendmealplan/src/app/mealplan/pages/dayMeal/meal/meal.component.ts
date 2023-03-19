@@ -24,6 +24,8 @@ export class MealComponent implements OnInit {
     this.getPlan();
     this.getDayPlanMeals();
     this.getTotalDayNutrition();
+    this.getIngredients();
+    this.dayMealService.testGetIngredients();
   }
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
@@ -32,12 +34,18 @@ export class MealComponent implements OnInit {
     })
   }
   public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,2).subscribe((dayMeals)=>{
+    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
-      console.log('-------------------------')
-      console.log(this.dayMeals[0].id.meal.mealName)
+
      
     })
+  }
+  mealids=[1,2,3]
+  public getIngredients(){
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+    console.log(
+    this.dayMealService.getIngredients(this.mealids)
+    );
   }
 
   data = []

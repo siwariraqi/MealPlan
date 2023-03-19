@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Goal } from "../../models/Goal";
 import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
+import { Onboarding7Component } from "../../components/questions/onboarding7/onboarding7.component";
 
 @Component({
   selector: "app-register",
@@ -14,7 +15,7 @@ import { RegisterService } from "../../services/register.service";
         *ngIf="screenState === 'welcome'"
         [currentPage]="currentPage"
       ></app-welcome-screen>
-      <app-onboarding7 *ngIf="onBoardingStep === 7"></app-onboarding7>
+      <app-onboarding7 *ngIf="onBoardingStep === 7" (sendData)='validition($event)'></app-onboarding7>
       <app-onboarding8 *ngIf="onBoardingStep === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="onBoardingStep === 9"></app-onboarding9>
       <app-onboarding10 *ngIf="onBoardingStep === 10"></app-onboarding10>
@@ -42,7 +43,8 @@ import { RegisterService } from "../../services/register.service";
   styleUrls: ["./register.component.scss"],
   animations: [],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit { 
+
   pages = Array.from({ length: 5 }).fill(0);
   currentPage: number;
   backgroundColor: string;
@@ -51,6 +53,8 @@ export class RegisterComponent implements OnInit {
   onBoardingStep: number;
   userGoals: Goal[];
 
+  valid7 : boolean;
+
   constructor(private registerSrv: RegisterService) {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
@@ -58,14 +62,18 @@ export class RegisterComponent implements OnInit {
 
     this.screenState = "welcome";
     this.onBoardingStep = 2;
-    // this.userGoals = [];
   }
   ngOnInit(): void {
     this.backgroundColor = "#4b643d";
   }
+  validition(isValid : boolean){
+    alert(isValid);
 
+  }
   nextScreen() {
-    if (this.onBoardingStep > 5) {
+    if (this.onBoardingStep > 6 ) {
+      // console.log(this.valid7,'in reg');
+      //  console.log( this.onboarding7.valid, ' in reg');
       this.registerSrv.updateUserInfo(); //save userinfo (answers) to local storage and server database
     }
 
@@ -98,10 +106,9 @@ export class RegisterComponent implements OnInit {
       case 6:
         this.backgroundColor = "#E09167";
         break;
-
+        
       case 16:
         this.backgroundColor = "#bdc3c7";
-        // this.backgroundImage = " url(/assets/images/carousel/2.jpg) ";
         this.backgroundImage = " linear-gradient(to right, #ffffff, #ffffffd2) ";
         break;
 
