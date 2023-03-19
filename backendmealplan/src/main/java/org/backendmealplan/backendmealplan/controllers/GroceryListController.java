@@ -1,5 +1,4 @@
 package org.backendmealplan.backendmealplan.controllers;
-
 import org.backendmealplan.backendmealplan.beans.GroceryList;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.bl.GroceryListBL;
@@ -24,7 +23,7 @@ public class GroceryListController {
 
 
     @PostMapping("deleteIngredient")
-    public ResponseEntity hideIngredientForUser(@RequestBody List<Long> grocerLisIds, @RequestBody Long userId){
+    public ResponseEntity hideIngredientForUser(@RequestBody List<Long> grocerLisIds, @RequestParam Long userId){
         try{
             this.groceryListBL.hideIngredientsForUser(grocerLisIds, userId);
             return (ResponseEntity) ResponseEntity.ok();

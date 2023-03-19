@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,11 @@ public class GroceryList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groceryId;
 
+    @NotNull
     private Integer week;
+    @NotNull
     private Integer amount;
-    private String unit; //change to eum
+    private String unit;
     @ManyToOne
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
