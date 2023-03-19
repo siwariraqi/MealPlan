@@ -10,7 +10,8 @@ import { User } from "../models/User";
   providedIn: "root",
 })
 export class AuthService {
-  private ALL_USERS_API_URL: string = "https://fakestoreapi.com/users";
+  private BASE_URL: string = "http://localhost:8080/";
+  private LOGIN_USER_API: string = "users/login";
 
   private currUser: User;
 
@@ -19,28 +20,10 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.httpClient
-      .get<User[]>(this.ALL_USERS_API_URL, {
-        params: {
-          email,
-          password,
-        },
-      })
-      .pipe(
-        map((response) => {
-          response.map((user) => {
-            if (user.email === email) {
-              if (user.password === password) {
-                this.currUser.email = user.email;
-                this.currUser.password = user.password;
-              } else {
-                console.log("wrong email/password");
-              }
-            }
-          });
-          return this.currUser;
-        })
-      );
+    return this.httpClient.post<any>(this.BASE_URL + this.LOGIN_USER_API, {
+      email: email,
+      password: password,
+    });
   }
 
   getUser() {

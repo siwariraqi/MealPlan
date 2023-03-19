@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { matchingPasswords, emailValidator } from "src/app/theme/utils/app-validators";
 import { DomSanitizer } from "@angular/platform-browser";
+import { RegisterService } from "../../services/register.service";
+import { User } from "../../models/User";
 
 @Component({
   selector: "app-register-form",
@@ -28,6 +30,30 @@ import { DomSanitizer } from "@angular/platform-browser";
                   >
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
+                  <div class="first-last-name-wrapper gap-2">
+                    <mat-form-field appearance="outline">
+                      <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                      <mat-label>First Name</mat-label>
+                      <input matInput placeholder="First Name" formControlName="fname" required />
+                      <mat-error *ngIf="registerForm.controls.fname.errors?.required"
+                        >First Name is required</mat-error
+                      >
+                      <mat-error *ngIf="registerForm.controls.fname.hasError('invalidFirstName')"
+                        >Invalid Input</mat-error
+                      >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                      <mat-label>Last Name</mat-label>
+                      <input matInput placeholder="Last Name" formControlName="lname" required />
+                      <mat-error *ngIf="registerForm.controls.lname.errors?.required"
+                        >Last Name is required</mat-error
+                      >
+                      <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')"
+                        >Invalid Input</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>Email</mat-label>
@@ -95,7 +121,6 @@ import { DomSanitizer } from "@angular/platform-browser";
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
-
                   <div class="text-center mt-2">
                     <button
                       mat-raised-button
@@ -131,7 +156,8 @@ export class RegisterFormComponent implements OnInit {
     public fb: UntypedFormBuilder,
     public router: Router,
     public snackBar: MatSnackBar,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private registerSrv: RegisterService
   ) {}
 
   ngOnInit() {
@@ -140,7 +166,8 @@ export class RegisterFormComponent implements OnInit {
     );
     this.registerForm = this.fb.group(
       {
-        username: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
+        fname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
+        lname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
         email: ["", Validators.compose([Validators.required, emailValidator])],
         password: ["", Validators.required],
         confirmPassword: ["", Validators.required],
@@ -150,13 +177,31 @@ export class RegisterFormComponent implements OnInit {
     );
   }
 
+  public capitalizeFirstLetter(str: string): string {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
   public onRegisterFormSubmit(): void {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      this.snackBar.open("You registered successfully!", "×", {
-        panelClass: "success",
-        verticalPosition: "top",
-        duration: 3000,
+      const formObj = this.registerForm.value;
+      const user = new User(
+        null,
+        formObj.email,
+        formObj.password,
+        this.capitalizeFirstLetter(formObj.fname),
+        this.capitalizeFirstLetter(formObj.lname)
+      );
+      this.registerSrv.registerUser(user).subscribe((user) => {
+        if (user) {
+          this.snackBar.open("You registered successfully!", "×", {
+            panelClass: "success",
+            verticalPosition: "bottom",
+            duration: 3000,
+          });
+          this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+            this.router.navigateByUrl("/mealplan/login");
+          });
+        }
       });
     }
   }

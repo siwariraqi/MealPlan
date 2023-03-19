@@ -143,6 +143,9 @@ export class LoginComponent implements OnInit {
             //login success
             this.err = null;
             console.log("login success!");
+            console.log(user);
+
+            alert("user successfully signed in");
           } else {
             this.err = "Invalid email / password combination!";
           }

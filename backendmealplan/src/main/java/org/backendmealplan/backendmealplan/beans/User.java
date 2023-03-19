@@ -1,7 +1,11 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Set;
 
@@ -16,20 +20,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String password;
-
-    private String phoneNumber;
-
-    private String userName;
-
+    @Email(message = "Invalid email format")
     private String email;
 
+    @NotBlank
+    private String password;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
+
+    @NotBlank
+    @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
+            message = "Invalid phone number format")
+    private String phoneNumber;
+
+    @NotNull
     @OneToOne()
-    @JoinColumn(name="info_id")
+    @JoinColumn(name="info_id", unique=true)
     private UserInfo userInfo;
 
     @ManyToOne
@@ -46,7 +56,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "grocery_list_id"))
     Set<GroceryList> changes;
 
+    @JsonIgnore
     @OneToMany (mappedBy = "user")
-    private List<UserFeedback> feedbacks=new ArrayList<>();
+    private List<UserFeedback> feedbacks;
 
 }

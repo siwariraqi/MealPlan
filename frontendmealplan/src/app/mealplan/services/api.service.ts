@@ -26,7 +26,7 @@ export class ApiService {
     return this.httpClient.post<T>(this.SERVER_BASE_URL + serviceName, body, options);
   }
 
-  delete<T>(serviceName: string,httpHeaders?: HttpHeaders) {
+  delete<T>(serviceName: string, httpHeaders?: HttpHeaders) {
     const options = {
       headers: httpHeaders,
       withCredentials: false
@@ -41,8 +41,4 @@ export class ApiService {
     };
     return this.httpClient.put<T>(this.SERVER_BASE_URL + serviceName, body, options);
   }
-
-
-
-
 }

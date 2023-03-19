@@ -1,0 +1,14 @@
+<div *ngIf="mealItems.length" class="menu-items-carousel">
+    <div class="swiper-container h-100 carousel-outer" [swiper]="config">
+        <div class="swiper-wrapper h-100">
+
+            <div *ngFor="let mealItem of mealItems" class="swiper-slide">
+                <app-meal-items [dayItem]="mealItem" [lazyLoad]="true"></app-meal-items>
+            </div>
+        </div>
+        <button mat-mini-fab color="primary"
+            class="prop-prev swiper-button-prev swipe-arrow"><mat-icon>keyboard_arrow_left</mat-icon></button>
+        <button mat-mini-fab color="primary"
+            class="prop-next swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button>
+    </div>
+</div>
