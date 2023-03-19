@@ -3,6 +3,8 @@ import { Settings, AppSettings } from './app.settings';
 import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { Onboarding7Component } from './mealplan/components/questions/onboarding7/onboarding7.component';
+
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
    
   public settings: Settings;
   constructor(public appSettings:AppSettings, 

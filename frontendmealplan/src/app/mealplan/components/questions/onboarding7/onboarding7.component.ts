@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Goal } from "src/app/mealplan/models/Goal";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
@@ -102,7 +102,10 @@ export class Onboarding7Component implements OnInit {
   toggle5: boolean;
   toggle6: boolean;
   allGoals: Goal[];
-  // @Input() userGoals: Goal[];
+
+  valid: boolean;
+
+  @Output() sendData = new EventEmitter<boolean>();
 
   constructor(private registerSrv: RegisterService) {
     this.toggle1 = false;
@@ -111,6 +114,7 @@ export class Onboarding7Component implements OnInit {
     this.toggle4 = false;
     this.toggle5 = false;
     this.toggle6 = false;
+    this.valid = false;
     this.allGoals = [
       { goalId: 1, text: "Be healthier" },
       { goalId: 2, text: "Manage my glucose" },
@@ -134,26 +138,32 @@ export class Onboarding7Component implements OnInit {
   enableDisableRule1(goal: Goal) {
     this.toggle1 = !this.toggle1;
     this.addOrRemoveGoalSelection(goal, this.toggle1);
+    this.validation();
   }
   enableDisableRule2(goal: Goal) {
     this.toggle2 = !this.toggle2;
     this.addOrRemoveGoalSelection(goal, this.toggle2);
+    this.validation();
   }
   enableDisableRule3(goal: Goal) {
     this.toggle3 = !this.toggle3;
     this.addOrRemoveGoalSelection(goal, this.toggle3);
+    this.validation();
   }
   enableDisableRule4(goal: Goal) {
     this.toggle4 = !this.toggle4;
     this.addOrRemoveGoalSelection(goal, this.toggle4);
+    this.validation();
   }
   enableDisableRule5(goal: Goal) {
     this.toggle5 = !this.toggle5;
     this.addOrRemoveGoalSelection(goal, this.toggle5);
+    this.validation();
   }
   enableDisableRule6(goal: Goal) {
     this.toggle6 = !this.toggle6;
     this.addOrRemoveGoalSelection(goal, this.toggle6);
+    this.validation();
   }
 
   addOrRemoveGoalSelection(goal: Goal, isSelected: boolean) {
@@ -168,7 +178,17 @@ export class Onboarding7Component implements OnInit {
         .getUserInfo()
         .goals?.filter((obj) => obj.goalId !== idx); //remove goal from array
     }
-    // console.log(this.registerSrv.getUserInfo());
-    // console.log(this.registerSrv.getUserInfo().goals);
+  }
+
+  validation(): any {
+    if ( this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5 || this.toggle6){
+      this.valid = true;
+      console.log("Valid")
+    }
+    else {
+      this.valid = false;
+      console.log("not valid")
+    }
+    this.sendData.emit(this.valid);
   }
 }

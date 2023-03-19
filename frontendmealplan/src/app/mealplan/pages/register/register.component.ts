@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Goal } from "../../models/Goal";
 import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
@@ -51,6 +51,9 @@ export class RegisterComponent implements OnInit {
   onBoardingStep: number;
   userGoals: Goal[];
 
+  @Input() valid:boolean; // from conboarding7
+
+
   constructor(private registerSrv: RegisterService) {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
@@ -97,7 +100,8 @@ export class RegisterComponent implements OnInit {
       case 6:
         this.backgroundColor = "#E09167";
         break;
-
+      
+        
       case 16:
         this.backgroundColor = "#bdc3c7";
         this.backgroundImage = " linear-gradient(to right, #ffffff, #ffffffd2) ";
