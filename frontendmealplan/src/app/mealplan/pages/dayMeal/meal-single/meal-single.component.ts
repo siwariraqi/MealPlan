@@ -11,24 +11,15 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 export class MealSingleComponent implements OnInit {
   meal:Meal;
   type:string='x';
-  userFeedback: UserFeedback = new UserFeedback(); 
+  
 constructor(private dayMealService:DayMealService) {}
 
   ngOnInit() {
     this.getType();
     this.getSelectedMeal();
-    this.userFeedback.rating=1;
-    this.userFeedback.isOnIt=true;
-    this.userFeedback.rating=3;
-    this.userFeedback.feedbackText='very bad';
-    this.saveFeedback();
     console.log(this.meal);
   }
-  saveFeedback(){
-    this.dayMealService.saveFeedback(this.userFeedback,1,1).subscribe(response => {
-      console.log('Feedback saved successfully:', response);
-    });
-  }
+
   getSelectedMeal() {
     this.meal=this.dayMealService.getSelectedMeal() 
   }
