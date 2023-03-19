@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.*;
@@ -31,6 +32,7 @@ public class MealBL {
 
     @Autowired
     DayMealsDAO dayMealsDAO;
+
 
     public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
         Optional<User> users = this.usersDAO.findById(userID);
@@ -64,6 +66,27 @@ public class MealBL {
         }
     }
 
+  public List<List<MealIngredients>> getDayPlanMealIngredinets( Integer dayNumber, Long userID ) throws userNotFoundException, paymentNotFoundException, MealNotFoundException {
+    List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
+    List<Long> mealIds=new ArrayList<>();
+    for (DayMeal meal : dayMeals) {
+      mealIds.add(meal.getId().getMeal().getMealId());
+    }
+    System.out.println("mealIds"+mealIds);
+
+      List<List<MealIngredients>> Ingredients= new ArrayList<>();
+
+      for(Long mealid: mealIds){
+        if(!mealsDAO.findById(mealid).isEmpty()){
+          Ingredients.add(mealIngredientsDAO.getMealIngredients(mealid));
+        }
+        else {
+          throw new MealNotFoundException("Meal Id Not Found");
+        }
+
+      }
+     return Ingredients;
+  }
 
     public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
         List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
