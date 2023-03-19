@@ -49,9 +49,13 @@ export class Onboarding14Component implements OnInit {
   toggle2 = false;
   val : String = "CM";
   height : string;
+  heightNum: number;
+  valid : boolean ;
+
 
   constructor(private registerSrv: RegisterService) {
     this.height = null;
+    this.valid = false ;
   }
 
   ngOnInit(): void {}
@@ -60,7 +64,15 @@ export class Onboarding14Component implements OnInit {
     this.toggle1 = !this.toggle1;
     this.toggle2 = true;
     this.val = "FT/IN";
-    this.save(height);
+    this.heightNum = Number(height);
+    if (this.heightNum > 40 && this.heightNum < 80){
+      this.save(height);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
+    }
 
 
   }
@@ -69,6 +81,15 @@ export class Onboarding14Component implements OnInit {
     this.toggle1 = true;
     this.val = "CM";
     this.save(height);
+    this.heightNum = Number(height);
+    if (this.heightNum > 100 && this.heightNum < 200){
+      this.save(height);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
+    }
 
 
   }

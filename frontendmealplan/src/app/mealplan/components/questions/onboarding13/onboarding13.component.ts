@@ -26,14 +26,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
           <div
             class="innerbox"
             (click)="enableDisableRule1(inputValue.value)"
-            [ngClass]="{ orange: !toggle1, white: toggle1 }"
+            [ngClass]="{ orange: toggle1, white: !toggle1 }"
           >
             KG
           </div>
           <div
             class="innerbox"
             (click)="enableDisableRule2(inputValue.value)"
-            [ngClass]="{ orange: !toggle2, white: toggle2 }"
+            [ngClass]="{ orange: toggle2, white: !toggle2 }"
           >
             LB
           </div>
@@ -45,29 +45,47 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding13Component implements OnInit {
   toggle1 = false;
-  toggle2 = true;
+  toggle2 = false;
   val : String = "KG";
+  valid : boolean ;
+  WeightNum : Number;
 
   weight: string;
 
   constructor(private registerSrv: RegisterService) {
     this.weight = null;
+    this.valid = false;
   }
   ngOnInit(): void {}
 
   enableDisableRule1(weight: string) {
     this.toggle1 = !this.toggle1;
-    this.toggle2 = true;
+    this.toggle2 = false;
+    this.WeightNum = Number(weight);
+    if (this.WeightNum > 30 && this.WeightNum < 300){
+      this.save(weight);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
+    }
     this.val = "KG";
-    this.save(weight);
-
   }
   enableDisableRule2(weight: string) {
     this.toggle2 = !this.toggle2;
-    this.toggle1 = true;
+    this.toggle1 = false;
     this.val = "LB";
-    this.save(weight);
-  }
+    this.WeightNum = Number(weight);
+    if (this.WeightNum > 60 && this.WeightNum < 600){
+      this.save(weight);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
+
+    }  }
 
   save(weight: string) {
     this.registerSrv.getUserInfo().weight = weight;

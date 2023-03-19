@@ -33,8 +33,11 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding10Component {
   activityValue: number;
+
+
   constructor(private registerSrv: RegisterService) {
     this.activityValue = 50;
+    this.registerSrv.getUserInfo().activity = '50';
   }
 
   updateVal(target: EventTarget) {

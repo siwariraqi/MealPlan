@@ -3,7 +3,6 @@ import { Settings, AppSettings } from './app.settings';
 import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { Onboarding7Component } from './mealplan/components/questions/onboarding7/onboarding7.component';
 
 
 @Component({
@@ -23,6 +22,7 @@ export class AppComponent {
     translate.addLangs(['en','de','fr','ru','tr']);
     translate.setDefaultLang('en'); 
     translate.use('en');
+    
   }
 
   ngAfterViewInit(){ 

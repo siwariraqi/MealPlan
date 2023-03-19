@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Answer } from "src/app/mealplan/models/Answers";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
@@ -72,9 +72,9 @@ export class Onboarding8Component implements OnInit {
   toggle4: boolean;
   toggle5: boolean;
   valid: boolean;
+  @Output() sendData = new EventEmitter<boolean>();
 
   allAnswers: Answer[];
-
   userAnswers: Answer[] = [];
 
   constructor(private registerSrv: RegisterService) {
@@ -83,7 +83,7 @@ export class Onboarding8Component implements OnInit {
     this.toggle3 = false;
     this.toggle4 = false;
     this.toggle5 = false;
-    this.valid = false;
+    this.valid = true;
 
     this.allAnswers = [
       { index: 0, text: "Type 2 Diabetes" },
@@ -150,10 +150,10 @@ export class Onboarding8Component implements OnInit {
       console.log("Valid")
     }
     else {
-      this.valid = false;
-      console.log("not valid")
+      this.valid = true;
+      console.log("valid")
     }
-    // this.sendData.emit(this.valid);
+     this.sendData.emit(this.valid);
   }
 
 }

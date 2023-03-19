@@ -191,4 +191,6 @@ export class Onboarding7Component implements OnInit {
     }
     this.sendData.emit(this.valid);
   }
+  
+  
 }
