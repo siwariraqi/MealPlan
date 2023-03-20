@@ -1,0 +1,33 @@
+    <h2 class="secondary-font text-center mb-3">Account settings</h2>
+    <div [formGroup]="accountForm" autocomplete="off" fxLayout="row wrap">
+
+        <div fxFlex="100" fxFlex.gt-sm="60" class="px-3" ngClass.sm="mt-2" ngClass.xs="mt-2"> 
+                <div> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Username/Email</mat-label>
+                        <input matInput placeholder="Username/Email" formControlName="username">
+                        <mat-error *ngIf="accountForm.controls.username.hasError('minlength')">Email/Username isn't long enough, minimum of 3 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div> 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" formControlName="password" type="password"> 
+                        <mat-error *ngIf="accountForm.controls.password.hasError('minlength')">Password isn't long enough, minimum of 3 characters</mat-error>
+                    </mat-form-field> 
+                </div>
+         </div>
+
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="end center" ngClass.xs="mb-3"  style="margin-top: 20px;">
+        <button mat-raised-button type="button" color="warn" class="mx-1"> 
+            <mat-icon fxHide="false" fxHide.gt-xs="true">delete</mat-icon>
+            <span fxShow="false" fxShow.gt-xs="true">Delete Account</span>
+        </button>
+        <button mat-raised-button type="button" color="primary" (click)="resetAccount()">
+            <mat-icon fxHide="false" fxHide.gt-xs="true">Reset</mat-icon>
+            <span fxShow="false" fxShow.gt-xs="true">Reset Account</span>
+        </button>
+    </div>
+

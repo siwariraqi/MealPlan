@@ -121,77 +121,93 @@ public class UserBL {
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
-        if(!validateUser(newProfile)) {
-            throw new IllegalArgumentException("Invalid User Input ");
+        if(newProfile.getEmail()!=null){
+            if(isValidEmail(newProfile.getEmail())){
+                user.setEmail(newProfile.getEmail());
+            }
+            else{
+                throw new IllegalArgumentException("Invalid email format");
+            }
         }
-            user.setEmail(newProfile.getEmail());
-            user.setPhoneNumber(newProfile.getPhoneNumber());
-            user.setFirstName(newProfile.getFirstName());
-            user.setLastName(newProfile.getLastName());
-            user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
-            user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
-            this.usersDAO.save(user);
-            return newProfile;
+        if(newProfile.getPhoneNumber()!=null){
+            if(isValidPhoneNumber(newProfile.getPhoneNumber())){
+                user.setPhoneNumber(newProfile.getPhoneNumber());
+            }
+            else{
+                throw new IllegalArgumentException("Invalid phone number");
+            }
+        }
+        if(newProfile.getFirstName()!=null){
+            if(newProfile.getFirstName().isEmpty()){
+                throw new IllegalArgumentException("First name cannot be empty");
+            }
+            else if (newProfile.getFirstName().length() > 30) {
+                throw new IllegalArgumentException("First name is too long");
+            }else{
+                user.setFirstName(newProfile.getFirstName());
+            }
+        }
+        if(newProfile.getLastName()!=null){
+            if(newProfile.getLastName().isEmpty()){
+                throw new IllegalArgumentException("Last name cannot be empty");
+            }
+            else if (newProfile.getLastName().length() > 30) {
+                throw new IllegalArgumentException("Last name is too long");
+            }else{
+                user.setLastName(newProfile.getLastName());
+            }
+        }
+        if(newProfile.getUserInfo()!=null) {
+            if (newProfile.getUserInfo().getGender() != null) {
+                if (isValidGender(newProfile.getUserInfo().getGender())) {
+                    user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
+                } else {
+                    throw new IllegalArgumentException("Invalid gender");
+                }
+            }
+            if (newProfile.getUserInfo().getBirthday() != null) {
+                if (isValidBDate(newProfile.getUserInfo().getBirthday())) {
+                    user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
+                } else {
+                    throw new IllegalArgumentException("Invalid birthday");
+                }
+            }
+        }
+
+        if (newProfile.getPassword() != null) {
+            throw new IllegalArgumentException("Password cannot be updated through this method.");
+        }
+
+        this.usersDAO.save(user);
+        return newProfile;
 
     }
 
-    public boolean validateUser(User user) throws IllegalArgumentException {
-        boolean flag = true ;
-        if (user.getFirstName() == null || user.getFirstName().isEmpty() ) {
-            throw new IllegalArgumentException("First name cannot be empty");
-        }
-        if ( user.getFirstName().length() > 30 ) {
-            throw new IllegalArgumentException("FirstName is too long");
-        }
-        if (user.getLastName() == null || user.getLastName().isEmpty()) {
-            throw new IllegalArgumentException("Last name cannot be empty");
-        }
-        if ( user.getLastName().length() > 30 ) {
-            throw new IllegalArgumentException("LastName is too long");
-        }
-        if (user.getEmail() == null || !isValidEmail(user.getEmail())) {
-            throw new IllegalArgumentException("Invalid email address");
-        }
-        if (user.getPhoneNumber() == null || !isValidPhoneNumber(user.getPhoneNumber())) {
-            throw new IllegalArgumentException("Invalid phone number");
-        }
-        if (user.getUserInfo() != null) {
-            if (user.getUserInfo().getGender() == null || !isValidGender(user.getUserInfo().getGender())) {
-                throw new IllegalArgumentException("Invalid gender");
-            }
-            if (user.getUserInfo().getBirthday() == null || !isValidBDate(user.getUserInfo().getBirthday())) {
-                throw new IllegalArgumentException("Invalid birthday");
-            }
-        }
-        return flag ;
-    }
 
+    /*
+   It checks that the email address has a local part and a domain part separated by an "@" symbol,
+   and that both parts follow specific rules. The local part can contain letters, numbers, dots,
+   underscores, percent signs, plus signs, or hyphens, while the domain part can contain letters,
+   numbers, dots, or hyphens, and must end with a top-level domain that consists of two or more letters.
+*/
     private boolean isValidEmail(String email) {
-        // Implement your own email validation logic here
-
-        String regexp = "/^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$/";
-        if(!email.matches(regexp)){
-            throw new IllegalArgumentException("Invalid Input Exception -  Email");
-        }
-        return true ;
-
+        String regexp = "^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$";
+        return email.matches(regexp);
     }
-
-    private boolean isValidPhoneNumber(String phoneNumber) throws IllegalArgumentException {
+    /*
+      The pattern requires the phone number to start with a plus sign (+), followed by 6 to 14 digits,
+      with an optional space character between each digit. The pattern also requires that the phone
+      number ends with a digit.
+    */
+    private boolean isValidPhoneNumber(String phoneNumber) {
         // Implement your own phone number validation logic here
         String regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$" ;
-        if(!phoneNumber.matches(regexp)){
-            throw new IllegalArgumentException("Invalid Input Exception - phone number format");
-        }
-                return true ;
+        return phoneNumber.matches(regexp);
     }
 
-    private boolean isValidGender(String gender) throws IllegalArgumentException {
+    private boolean isValidGender(String gender) {
         // Implement your own gender validation logic here
-        if( !gender.equals("Male") && !gender.equals("Female")){
-            throw new IllegalArgumentException("Invalid Input Exception - Gender"); // throw an exception
-        }
-        return true ;
+        return ( gender.equals("male") || gender.equals("female") ) ;
     }
 
     // min age - 18
