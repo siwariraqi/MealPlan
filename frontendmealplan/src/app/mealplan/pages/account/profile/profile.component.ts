@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/mealplan/models/User';
@@ -12,6 +12,8 @@ import { UserService } from 'src/app/mealplan/services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
+
+
 export class ProfileComponent implements OnInit {
   public infoForm!:UntypedFormGroup; 
   genderFormControl: FormControl;
@@ -19,18 +21,23 @@ export class ProfileComponent implements OnInit {
   user:User ={};
   today: Date = new Date();
   userInfo:UserInfo={};
+  
   constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
-
+  
   ngOnInit() {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const maxDate = new Date();
     this.genderFormControl = new FormControl();
     this.infoForm = this.formBuilder.group({
       FirstName: ['', Validators.compose([ Validators.minLength(3)])],
       LastName: ['', Validators.compose([ Validators.minLength(3)])],
-      email: ['', Validators.compose([ emailValidator])],
+      email: ['', Validators.compose([Validators.pattern(emailRegex)])],
       phone: ['', Validators.pattern(/^\+(?:[0-9] ?){6,14}[0-9]$/)],
       genderControl: this.genderFormControl,
-      birthday: ['', Validators.compose([ Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$')])],
+      birthday: new FormControl('', [
+        Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$'),
+        ageValidator // add custom age validator
+      ]),
       image: null
     });
     this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
@@ -49,6 +56,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
   public onInfoFormSubmit():void {
     this.userId = Number(localStorage.getItem('userId'));
     this.user.userId=this.userId;
@@ -57,6 +65,9 @@ export class ProfileComponent implements OnInit {
     this.user.email=this.infoForm.controls['email'].value || this.user.email; // use previous value if empty
     this.user.phoneNumber=this.infoForm.controls['phone'].value || this.user.phoneNumber; // use previous value if empty
     this.user.userInfo.birthday=this.infoForm.controls['birthday'].value || this.user.userInfo.birthday; // use previous value if empty
+    if(this.infoForm.controls['birthday'].value === null) {
+      this.user.userInfo.birthday = null;
+    }
     this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
 
     if (this.infoForm.valid) { 
@@ -64,9 +75,6 @@ export class ProfileComponent implements OnInit {
         data => {
           console.log('Profile updated successfully.');
           this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-          setTimeout(() => {
-            location.reload();
-          }, 2000);
         },
         error => {
           console.error('Error updating profile:', error);
@@ -89,4 +97,14 @@ export class ProfileComponent implements OnInit {
     }
   } 
 
+}
+
+function ageValidator(control: FormControl): { [key: string]: boolean } | null {
+  const currentDate = new Date();
+  const birthday = new Date(control.value);
+  const ageInYears = currentDate.getFullYear() - birthday.getFullYear();
+  if (ageInYears < 18 || ageInYears > 120) {
+    return { 'invalidAge': true };
+  }
+  return null;
 }

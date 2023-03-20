@@ -174,9 +174,9 @@ public class UserBL {
             }
         }
 
-        if (newProfile.getPassword() != null) {
-            throw new IllegalArgumentException("Password cannot be updated through this method.");
-        }
+//        if (newProfile.getPassword() != null) {
+//            throw new IllegalArgumentException("Password cannot be updated through this method.");
+//        }
 
         this.usersDAO.save(user);
         return newProfile;
