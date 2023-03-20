@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
 import { PlanService } from '../../services/plan.service';
 
@@ -12,7 +13,7 @@ export class ChooseplanComponent implements OnInit {
   plans: any[] = [];
   length:number;
 
-  constructor(private planService: PlanService) {}
+  constructor(private planService: PlanService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.planService.getPlans().subscribe(

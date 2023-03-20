@@ -20,11 +20,12 @@ export class AccountComponent implements OnInit {
     { name: 'Dashboard', href: 'dashboard', icon: 'dashboard' }, 
     { name: 'Profile', href: 'profile', icon: 'person' },
     { name: 'Password Change', href: 'password-change', icon: 'vpn_key' },  
-    { name: 'Addresses', href: 'addresses', icon: 'location_on' }, 
-    { name: 'Favorites', href: 'favorites', icon: 'favorite' }, 
-    { name: 'Reservations', href: 'reservations', icon: 'event' },
-    { name: 'Orders', href: 'orders', icon: 'list_alt' },  
-    { name: 'Logout', href: '/login', icon: 'power_settings_new' },    
+    { name: 'Account settings', href: 'account-settings', icon: 'settings' } , 
+    { name: 'Help & Support', href: 'help-support', icon: 'help' },
+    { name: 'About App', href: 'about', icon: 'information' }, 
+    { name: 'Privacy Policy', href: 'privacy', icon: 'security' },
+    { name: 'Terms and Conditions', href: 'terms', icon: 'note' },
+    { name: 'Logout', href: '/login', icon: 'power_settings_new' }
   ]; 
   constructor(public router:Router,private userService:UserService) { }
   user:User ={};
