@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
@@ -18,10 +19,15 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
             type="input"
             class="form__field"
             name="name"
+            type="number"
+            [formControl]="weightControl"
             required
-          #inputValue/> 
-         <p class='val'> {{ val }} <p>
+            #inputValue
+          />
+          <p class="val">{{ chosenUnit === "metric" ? "CM" : "LB" }}</p>
+          <p></p>
         </div>
+
         <div class="box">
           <div
             class="innerbox"
@@ -44,51 +50,56 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   styleUrls: ["./onboarding13.component.scss"],
 })
 export class Onboarding13Component implements OnInit {
-  toggle1 = false;
+  chosenUnit: string;
+  weight: number;
+  weightControl: FormControl;
+  toggle1 = true;
   toggle2 = false;
-  val : String = "KG";
-  valid : boolean ;
-  WeightNum : Number;
-
-  weight: string;
+  valid: boolean;
 
   constructor(private registerSrv: RegisterService) {
     this.weight = null;
     this.valid = false;
+    this.weightControl = new FormControl();
+    this.chosenUnit = "metric";
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+    this.weightControl.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.registerSrv.getUserInfo().weight =
+        value + ` ${this.chosenUnit === "metric" ? "KG" : "LB"}`;
+    });
+  }
 
   enableDisableRule1(weight: string) {
+    this.chosenUnit = "metric";
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+
+    this.weight = parseInt(weight);
     this.toggle1 = !this.toggle1;
     this.toggle2 = false;
-    this.WeightNum = Number(weight);
-    if (this.WeightNum > 30 && this.WeightNum < 300){
-      this.save(weight);
+    if (this.weight > 30 && this.weight < 300) {
       this.valid = true;
-    }
-    else {
+    } else {
       this.valid = false;
-      console.log('not valid');
+      console.log("not valid");
     }
-    this.val = "KG";
   }
   enableDisableRule2(weight: string) {
+    this.chosenUnit = "imperial";
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+
+    this.weight = parseInt(weight);
     this.toggle2 = !this.toggle2;
     this.toggle1 = false;
-    this.val = "LB";
-    this.WeightNum = Number(weight);
-    if (this.WeightNum > 60 && this.WeightNum < 600){
-      this.save(weight);
+
+    if (this.weight > 60 && this.weight < 600) {
       this.valid = true;
-    }
-    else {
+    } else {
       this.valid = false;
-      console.log('not valid');
-
-    }  }
-
-  save(weight: string) {
-    this.registerSrv.getUserInfo().weight = weight;
-    console.log(this.registerSrv.getUserInfo().weight);
+      console.log("not valid");
+    }
   }
 }
