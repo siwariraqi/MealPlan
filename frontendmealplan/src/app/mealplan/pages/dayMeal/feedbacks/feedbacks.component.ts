@@ -21,7 +21,6 @@ export class FeedbacksComponent implements OnInit {
   userFeedback: UserFeedback = new UserFeedback(); 
 
   ngOnInit(): void {
-    this.userFeedback.isOnIt=true;
     this.feedbackForm = new FormGroup({
       review: new FormControl('', [Validators.required])
     });

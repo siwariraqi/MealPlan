@@ -20,7 +20,7 @@ export class DayMealService {
   meal: Array<Meal> = [];
   private selectedMeal: any;
   selectedType:string;
-  dayMeals: DayMeal[];
+  public dayMeals:Array<DayMeal> =[];
   mealingridents: MealIngredients[][];
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
@@ -37,13 +37,20 @@ export class DayMealService {
   public saveFeedback(userFeedback: UserFeedback, userId: number, mealId: number) {
     return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${userId}` + '/' + `${mealId}`, userFeedback);
   }
+
+  
   public getIngredients(dayNumber: number, userid: number) {
-    
     return this.apiService.get<MealIngredients[][]>(this.INGREDIENTS_URL + `${dayNumber}` + '/' + `${userid}`);
   }
   
   
-  
+  setDayMeals(dayMeals:DayMeal[]){
+    this.dayMeals=dayMeals;
+  }
+
+  getDayMeals(){
+    return this.dayMeals;
+  }
   
 
   setSelectedMeal(meal:any) {
@@ -54,8 +61,7 @@ export class DayMealService {
   }
 
   setType(type: string) {
-    console.log('tttttttttttttt')
-    console.log(type)
+
     this.selectedType = type;
   }
   getType() {

@@ -20,7 +20,7 @@ export class MealComponent implements OnInit {
   type:string;
   public dayMeals:Array<DayMeal> =[];
   public sortMealsByType() {
-    const order = ['Breakfast', 'Snacks','Snacks', 'Lunch','Dinner'];
+    const order = ['Breakfast', 'Snacks', 'Lunch','Snacks','Dinner'];
     this.dayMeals.sort((a:DayMeal, b:DayMeal) => {
       return order.indexOf(a.type) - order.indexOf(b.type);
     });
@@ -30,7 +30,9 @@ export class MealComponent implements OnInit {
       const snacks = this.dayMeals.splice(firstSnacksIndex, 1)[0];
       this.dayMeals.splice(3, 0, snacks);
     }
-  }
+    this.dayMealService.setDayMeals(this.dayMeals);
+  }  
+
   
 
   public settings: Settings;
@@ -49,28 +51,22 @@ export class MealComponent implements OnInit {
     })
   }
   public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,4).subscribe((dayMeals)=>{
+    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
       this.sortMealsByType();
-    console.log(this.dayMeals)
-      
     })
   }
   mealids=[1,2,3]
   public getIngredients(){
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    console.log(
-    this.dayMealService.getIngredients(1,4)
-    );
+    this.dayMealService.getIngredients(1,1)
   }
 
   data = []
   totalCalories='';
  
   public getTotalDayNutrition(){
-    this.dayMealService.getTotalDayNutrition(1,4).subscribe((nutritions)=>{
+    this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
       this.nutritions = nutritions;
-      console.log(this.nutritions);
       this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
       const newData = [];
       newData.push({
