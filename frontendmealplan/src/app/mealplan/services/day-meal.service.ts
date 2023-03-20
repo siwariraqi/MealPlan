@@ -67,7 +67,7 @@ export class DayMealService {
     this.selectedType = type;
   }
   getType() {
-    return this.selectedMeal;
+    return this.selectedType;
   }
 
 

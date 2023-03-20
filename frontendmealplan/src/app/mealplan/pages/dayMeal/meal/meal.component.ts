@@ -16,7 +16,16 @@ export class MealComponent implements OnInit {
   nutritions:string[];
   dayNumber=1;
   planLength;
- 
+  
+  public sortMealsByType() {
+    const order = ['Snacks','Breakfast',  'Lunch', 'Snacks', 'Dinner'];
+    this.dayMeals.sort((a:DayMeal, b:DayMeal) => {
+      
+      return order.indexOf(a.type) - order.indexOf(b.type);
+    });
+  }
+  
+
   public settings: Settings;
   constructor(private dayMealService:DayMealService) { 
   }
@@ -26,6 +35,7 @@ export class MealComponent implements OnInit {
     this.getTotalDayNutrition();
     this.getIngredients();
     this.dayMealService.testGetIngredients();
+    
   }
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
@@ -36,8 +46,9 @@ export class MealComponent implements OnInit {
   public getDayPlanMeals(){
     this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
-
-     
+      this.sortMealsByType();
+    console.log(this.dayMeals)
+      
     })
   }
   mealids=[1,2,3]
