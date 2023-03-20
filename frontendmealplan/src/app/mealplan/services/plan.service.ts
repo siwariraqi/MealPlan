@@ -10,11 +10,17 @@ import { ApiService } from './api.service';
 
   export class PlanService {
     UPDATEPLAN = 'plans/getPlans';
+    GETPLAN = 'plans/';
 
     constructor(private http:HttpClient, private apiService:ApiService) { }
     
     getPlans(): Observable<Plan[]> {
         return this.apiService.get<Plan[]>(this.UPDATEPLAN);
+    }
+
+    getPlanForUser(userId: number): Observable<Plan> {
+      const url = `${this.GETPLAN}${userId}`;
+      return this.apiService.get<Plan>(url);
     }
 
   }
