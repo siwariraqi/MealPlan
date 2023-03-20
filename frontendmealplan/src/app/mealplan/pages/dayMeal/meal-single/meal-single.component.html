@@ -15,8 +15,8 @@
           <div class="py-3">
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <mat-icon color="primary" class="mat-icon-sm">local_offer</mat-icon>
-              <span class="px-1">Category:</span>
-              <span class="fw-500">{{ meal.calories}}g</span>
+              <span class="px-1">Kilocalorie:</span>
+              <span class="fw-500">{{ meal.calories}} Kcal</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <mat-icon color="primary" class="mat-icon-sm">{{
@@ -63,7 +63,7 @@
               <span class="px-1">Protein:</span>
               <span class="fw-500">{{
                 meal.protein
-                }}</span>
+                }} g</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <span fxLayout="row" fxLayoutAlign="start center">
@@ -77,20 +77,27 @@
               <span class="px-1">Fat:</span>
               <span class="fw-500">{{
                 meal.fat
-                }}</span>
+                }} g</span>
             </p>
           </div>
 
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
             <span class="fw-500">Share: </span>
-            <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons>
+            <!-- <app-share></app-share> -->
+            <!-- <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> -->
+          
+              <app-share fxLayout="row" fxLayoutAlign="start center" ></app-share>
+            
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
             <span class="fw-500">Print: </span>
-            <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons>
+            <!-- <app-print fxLayout="row" fxLayoutAlign="start center"></app-print> -->
+            <!-- <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> -->
+           
           </div>
-        </div>
 
+        </div>
+        
 
 
         <div fxFlex="100" class="px-3 mt-5">
@@ -115,6 +122,13 @@
                   <div class="divider"></div>
                 </ul>
               </div>
+              <div class="button">
+                <!-- (click)="saveFeedback()" -->
+                <button  _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary" ng-reflect-color="primary" fdprocessedid="rpxeid">
+                  <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+                  <span class="mat-button-focus-overlay"></span>
+                </button>
+              </div>
             </mat-tab>
             <mat-tab label="Feedbacks">
               <div class="full-desc">
@@ -127,16 +141,3 @@
     </mat-card>
   </div>
 </div>
-
-<div class="section mt-3">
-  <div class="px-3">
-    <div class="theme-container">
-      <h1 class="section-title">Related Products</h1>
-      <p class="section-desc text-muted">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
-    </div>
-  </div>
-</div>
-
-<app-get-in-touch></app-get-in-touch>
