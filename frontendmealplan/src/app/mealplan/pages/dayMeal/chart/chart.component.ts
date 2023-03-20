@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
 
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',

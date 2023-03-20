@@ -45,7 +45,6 @@ import { AccountModule } from "./pages/account/account.module";
 import { ShareComponent } from './pages/dayMeal/share/share.component';
 import { PrintComponent } from './pages/dayMeal/print/print.component';
 
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -72,6 +71,8 @@ import { PrintComponent } from './pages/dayMeal/print/print.component';
     ShareComponent,
     PrintComponent,
     
+   
+    
   ],
 
   imports: [CommonModule, MealplanRoutingModule,
@@ -89,7 +90,8 @@ import { PrintComponent } from './pages/dayMeal/print/print.component';
     MatCheckboxModule,
     MatRadioModule,
     MatDatepickerModule,
-    AccountModule ] })
+    AccountModule,
+   ] })
 
 
   export class MealplanModule {}

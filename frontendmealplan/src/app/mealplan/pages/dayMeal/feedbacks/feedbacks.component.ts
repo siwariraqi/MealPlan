@@ -89,7 +89,6 @@ export class FeedbacksComponent implements OnInit {
   }
 
   selectedFeedbacksString: string = '';
-  saved=false;
 
   onSelectFeedback(index: number) {
     this.feedbackStates[index] = !this.feedbackStates[index];
@@ -111,7 +110,7 @@ export class FeedbacksComponent implements OnInit {
       this.userFeedback.feedbackText = feedbackText;
       this.dayMealService.saveFeedback(this.userFeedback, 1, 1).subscribe(response => {
         console.log('Feedback saved successfully:', response);
-        this.saved=true;
+       
         this.feedbackForm.reset();
         for (let i = 0; i < this.ratings.length; i++) {
         this.ratings[i].selected=false

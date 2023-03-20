@@ -10,19 +10,26 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
   styleUrls: ['./meal.component.scss']
 })
 export class MealComponent implements OnInit {
-  public dayMeals:Array<DayMeal> =[];
-  type:string;
+  
+
   plan:Plan =new Plan();;
   nutritions:string[];
   dayNumber=1;
   planLength;
   
+  type:string;
+  public dayMeals:Array<DayMeal> =[];
   public sortMealsByType() {
-    const order = ['Snacks','Breakfast',  'Lunch', 'Snacks', 'Dinner'];
+    const order = ['Breakfast', 'Snacks','Snacks', 'Lunch','Dinner'];
     this.dayMeals.sort((a:DayMeal, b:DayMeal) => {
-      
       return order.indexOf(a.type) - order.indexOf(b.type);
     });
+    
+    const firstSnacksIndex = this.dayMeals.findIndex((meal) => meal.type === 'Snacks');
+    if (firstSnacksIndex !== -1 && firstSnacksIndex < 3) {
+      const snacks = this.dayMeals.splice(firstSnacksIndex, 1)[0];
+      this.dayMeals.splice(3, 0, snacks);
+    }
   }
   
 
