@@ -26,7 +26,7 @@
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="infoForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+            <mat-error *ngIf="infoForm.controls.email.hasError('pattern')">Invalid email address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
@@ -37,7 +37,8 @@
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Birthday</mat-label>
-            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'yyyy-MM-dd'}}"> 
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'yyyy-MM-dd'}}">
+            <mat-error *ngIf="infoForm.get('birthday').hasError('invalidAge')">Ages should be 18-120</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
