@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.controllers;
+
 import org.backendmealplan.backendmealplan.beans.GroceryList;
 import org.backendmealplan.backendmealplan.bl.GroceryListBL;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
@@ -15,17 +16,12 @@ import java.util.List;
 @CrossOrigin
 public class GroceryListController {
     @Autowired
-
-    GroceryListBL groceryListBL;
-
-    @Autowired
-    UserBL userBL;
-
-
-
-    @PostMapping("deleteIngredient")
-    public ResponseEntity hideIngredientForUser(@RequestBody List<Long> grocerLisIds, @RequestParam Long userId){
-
+    private GroceryListBL groceryListBL;
+    //TODO:change parameters to body or header
+    @PostMapping("deleteIngredients/{groceryListId}/{userId}")
+        public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @PathVariable Long userId){
+        List<Long> groceryListIds = new ArrayList<>();
+        groceryListIds.add(Long.valueOf(groceryListId));
         try{
             this.groceryListBL.hideIngredientsForUser(groceryListIds, userId);
             return (ResponseEntity) ResponseEntity.ok("okay");
