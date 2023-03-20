@@ -16,7 +16,7 @@
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <mat-icon color="primary" class="mat-icon-sm">local_offer</mat-icon>
               <span class="px-1">Kilocalorie:</span>
-              <span class="fw-500">{{ meal.calories}}g</span>
+              <span class="fw-500">{{ meal.calories}} Kcal</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <mat-icon color="primary" class="mat-icon-sm">{{
@@ -63,7 +63,7 @@
               <span class="px-1">Protein:</span>
               <span class="fw-500">{{
                 meal.protein
-                }}</span>
+                }} g</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
               <span fxLayout="row" fxLayoutAlign="start center">
@@ -77,20 +77,30 @@
               <span class="px-1">Fat:</span>
               <span class="fw-500">{{
                 meal.fat
-                }}</span>
+                }} g</span>
             </p>
           </div>
 
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
-            <span class="fw-500">Share: </span>
+            <span class="fw-500">Share: 
+            
+            </span>
+            <!-- <app-share></app-share> -->
             <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
-            <span class="fw-500">Print: </span>
+            <span class="fw-500">Print: 
+              
+            </span>
+            
             <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons>
+            <div class="Pdf" *ngIf="instruction">
+              <app-share></app-share>
           </div>
-        </div>
+          </div>
 
+        </div>
+        
 
 
         <div fxFlex="100" class="px-3 mt-5">
@@ -134,16 +144,3 @@
     </mat-card>
   </div>
 </div>
-
-<div class="section mt-3">
-  <div class="px-3">
-    <div class="theme-container">
-      <h1 class="section-title">Related Products</h1>
-      <p class="section-desc text-muted">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
-    </div>
-  </div>
-</div>
-
-<app-get-in-touch></app-get-in-touch>

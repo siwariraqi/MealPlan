@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
 import { DayMealService } from "src/app/mealplan/services/day-meal.service";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+
+
 
 @Component({
   selector: 'app-feedbacks',
@@ -10,7 +13,7 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 })
 export class FeedbacksComponent implements OnInit {
    
-  constructor(private fb: FormBuilder,private dayMealService:DayMealService) {
+  constructor(private fb: FormBuilder,private dayMealService:DayMealService ,private snackBar: MatSnackBar) {
     this.feedbackForm = this.fb.group({
       review: ['', Validators.required]
     });
@@ -86,6 +89,7 @@ export class FeedbacksComponent implements OnInit {
   }
 
   selectedFeedbacksString: string = '';
+  saved=false;
 
   onSelectFeedback(index: number) {
     this.feedbackStates[index] = !this.feedbackStates[index];
@@ -107,8 +111,23 @@ export class FeedbacksComponent implements OnInit {
       this.userFeedback.feedbackText = feedbackText;
       this.dayMealService.saveFeedback(this.userFeedback, 1, 1).subscribe(response => {
         console.log('Feedback saved successfully:', response);
+        this.saved=true;
+        this.feedbackForm.reset();
+        for (let i = 0; i < this.ratings.length; i++) {
+        this.ratings[i].selected=false
+        }
+        for (let i = 0; i < this.feedbacks.length; i++) {
+        this.feedbackStates[i]=false;
+        }
+        const config = new MatSnackBarConfig();
+        config.duration = 5000;
+        config.panelClass = ['my-snackbar']
+        this.snackBar.open('Thank you for your feedback!', 'Close', config);
+        
       });
     }
+    
+    
   }
 
 }

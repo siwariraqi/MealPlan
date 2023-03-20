@@ -42,6 +42,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AppSettings } from "../app.settings";
 import { AccountComponent } from "./pages/account/account.component";
 import { AccountModule } from "./pages/account/account.module";
+import { ShareComponent } from './pages/dayMeal/share/share.component';
+import { PrintComponent } from './pages/dayMeal/print/print.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { AccountModule } from "./pages/account/account.module";
     MealItemsComponent,
     MealSingleComponent,
     FeedbacksComponent,
+    ShareComponent,
+    PrintComponent,
     
   ],
 

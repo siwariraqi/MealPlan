@@ -11,7 +11,7 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 export class MealSingleComponent implements OnInit {
   meal:Meal;
   type:string='x';
-  
+  instruction = true; 
 constructor(private dayMealService:DayMealService) {}
 
   ngOnInit() {
