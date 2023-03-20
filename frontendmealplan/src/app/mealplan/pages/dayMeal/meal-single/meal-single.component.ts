@@ -1,5 +1,9 @@
+import { C } from "@angular/cdk/keycodes";
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { DayMeal } from "src/app/mealplan/models/DayMeal";
 import { Meal } from "src/app/mealplan/models/Meal";
+import { MealIngredients } from "src/app/mealplan/models/MealIngredien";
 import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
 import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 
@@ -10,20 +14,35 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 })
 export class MealSingleComponent implements OnInit {
   meal:Meal;
-  type:string='x';
+  type:string = "";
   userFeedback: UserFeedback = new UserFeedback(); 
-constructor(private dayMealService:DayMealService) {}
+  ingredients: MealIngredients[];
+  instruction: string;
+  mealdayingridents: MealIngredients[][];
+constructor(private dayMealService:DayMealService, private activatedroute:ActivatedRoute) {}
 
   ngOnInit() {
-    this.getType();
+    this.activatedroute.params.subscribe((params)=>{
+      let idx = params["id"]
+      
+      this.dayMealService.getDayPlanMeals(1,4).subscribe((dayMeals)=>{
+        
+        this.type=dayMeals[idx].type;
+        this.instruction = dayMeals[idx].id.meal.instructions
+       
+      })
+      this.dayMealService.getIngredients(1,4).subscribe((mealingridents)=>{
+        this.ingredients=mealingridents[idx];
+    
+       
+      })
+      
+      
+    })
     this.getSelectedMeal();
-    this.userFeedback.rating=1;
-    this.userFeedback.isOnIt=true;
-    this.userFeedback.rating=3;
-    this.userFeedback.feedbackText='very bad';
-    this.saveFeedback();
-    console.log(this.meal);
   }
+  
+
   saveFeedback(){
     this.dayMealService.saveFeedback(this.userFeedback,1,1).subscribe(response => {
       console.log('Feedback saved successfully:', response);
@@ -39,12 +58,7 @@ constructor(private dayMealService:DayMealService) {}
   
 
 
-  public instructions: Array<string> = ["this is instructions......"];
-  public ingredients: Array<string> = [
-    "4 Cups unsweetened almond milk",
-    "4.5 oz peanut butter",
-    "1.25 cup chia seeds",
-    "4 bananas - sliced",
-  ];
+  public instructions: Array<string> = []
+  
   public calories: Array<number> = [25, 9, 10, 15];
 }

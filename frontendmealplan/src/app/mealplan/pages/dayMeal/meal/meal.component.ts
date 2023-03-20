@@ -25,7 +25,6 @@ export class MealComponent implements OnInit {
     this.getDayPlanMeals();
     this.getTotalDayNutrition();
     this.getIngredients();
-    this.dayMealService.testGetIngredients();
   }
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
@@ -34,7 +33,7 @@ export class MealComponent implements OnInit {
     })
   }
   public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
+    this.dayMealService.getDayPlanMeals(1,4).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
 
      
@@ -44,7 +43,7 @@ export class MealComponent implements OnInit {
   public getIngredients(){
     console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     console.log(
-    this.dayMealService.getIngredients(this.mealids)
+    this.dayMealService.getIngredients(1,4)
     );
   }
 
@@ -52,7 +51,7 @@ export class MealComponent implements OnInit {
   totalCalories='';
  
   public getTotalDayNutrition(){
-    this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
+    this.dayMealService.getTotalDayNutrition(1,4).subscribe((nutritions)=>{
       this.nutritions = nutritions;
       console.log(this.nutritions);
       this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]

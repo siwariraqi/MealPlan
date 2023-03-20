@@ -16,10 +16,12 @@ export class DayMealService {
   PLAN_URL = "plans/";
   DAYNUTRITION_URL = "plans/day-nutrition/";
   SAVEFEEDBACK_URL = "feedback/save/";
-  INGREDIENTS_URL ="plans/ingredinets"
+  INGREDIENTS_URL ="plans/ingredients/"
   meal: Array<Meal> = [];
   private selectedMeal: any;
   selectedType:string;
+  dayMeals: DayMeal[];
+  mealingridents: MealIngredients[][];
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
   public getDayPlanMeals(dayNumber: number, userid: number) {
@@ -35,26 +37,16 @@ export class DayMealService {
   public saveFeedback(userFeedback: UserFeedback, userId: number, mealId: number) {
     return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${userId}` + '/' + `${mealId}`, userFeedback);
   }
-  public getIngredients(mealIds: number[]) {
-    const requestBody = JSON.stringify({ mealIds: mealIds });
-    console.log(requestBody)
-    return this.apiService.get<string[]>(this.INGREDIENTS_URL, null, requestBody);
+  public getIngredients(dayNumber: number, userid: number) {
+    
+    return this.apiService.get<MealIngredients[][]>(this.INGREDIENTS_URL + `${dayNumber}` + '/' + `${userid}`);
   }
   
-  public testGetIngredients() {
-    const mealIds = [1, 2, 3];
-    this.getIngredients(mealIds).subscribe(
-      (result) => {
-        console.log('Success:', result);
-      },
-      (error) => {
-        console.log('Error:', error);
-      }
-    );
-  }
+  
+  
+  
 
-
-  setSelectedMeal(meal: any) {
+  setSelectedMeal(meal:any) {
     this.selectedMeal = meal;
   }
   getSelectedMeal() {

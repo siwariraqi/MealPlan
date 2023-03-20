@@ -17,6 +17,7 @@ export class MealItemsComponent implements OnInit {
   @Input() lazyLoad: boolean = false;
   @Input() viewType: string = "grid";
   @Input() viewColChanged: any; 
+  @Input () mealindex:number
   public column:number = 4;
   
   constructor(private dayMealService:DayMealService) { }

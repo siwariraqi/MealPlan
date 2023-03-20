@@ -66,26 +66,17 @@ public class MealBL {
         }
     }
 
-  public List<List<MealIngredients>> getDayPlanMealIngredinets( Integer dayNumber, Long userID ) throws userNotFoundException, paymentNotFoundException, MealNotFoundException {
+  public List<List<MealIngredients>> getDayPlanMealIngredients(Integer dayNumber, Long userID ) throws userNotFoundException, paymentNotFoundException, MealNotFoundException {
     List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
     List<Long> mealIds=new ArrayList<>();
     for (DayMeal meal : dayMeals) {
       mealIds.add(meal.getId().getMeal().getMealId());
     }
-    System.out.println("mealIds"+mealIds);
-
-      List<List<MealIngredients>> Ingredients= new ArrayList<>();
-
-      for(Long mealid: mealIds){
-        if(!mealsDAO.findById(mealid).isEmpty()){
-          Ingredients.add(mealIngredientsDAO.getMealIngredients(mealid));
-        }
-        else {
-          throw new MealNotFoundException("Meal Id Not Found");
-        }
-
-      }
-     return Ingredients;
+    List<List<MealIngredients>> Ingredients= new ArrayList<>();
+    for(Long mealid: mealIds){
+        Ingredients.add(mealIngredientsDAO.getMealIngredients(mealid));
+    }
+    return Ingredients;
   }
 
     public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {

@@ -103,7 +103,7 @@
                 </p> -->
                 <!-- <p>Carbs: 10g | Fibre: 10g | Protien: 10g | Fat: 10g</p> -->
                 <ul class="px-2 mt-1" *ngFor="let ingredient of ingredients">
-                  <li>{{ ingredient }}</li>
+                  <li>{{ingredient.amount}} {{ingredient.unit}} {{ingredient.id.ingredient.productName}} </li>
                   <div class="divider"></div>
                 </ul>
               </div>
