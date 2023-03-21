@@ -5,10 +5,10 @@
             <mat-chip color="warn" selected="true">{{type}}</mat-chip>
         </mat-chip-list>
         <div *ngIf="lazyLoad">
-            <img [attr.data-src]="mealItem.imageUrl" class="w-100 d-block swiper-lazy">
-            <div class="swiper-lazy-preloader"></div>
+            <img [src]="mealItem.imageUrl" class="w-100 d-block swiper-lazy">
+            <!-- <div class="swiper-lazy-preloader"></div> -->
         </div>
-        <img *ngIf="!lazyLoad" [src]="mealItem.imageUrl" class="w-100 d-block">
+        <img *ngIf="!lazyLoad" [src]="mealItem.imageUrl" class="w-100 d-block " >
     </div>
     <div fxFlex="100" class="p-3">
         <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">

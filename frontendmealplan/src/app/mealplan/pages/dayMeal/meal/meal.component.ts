@@ -33,19 +33,17 @@ export class MealComponent implements OnInit {
   }
 
 
-  numDayRight(){
-    if(this.choosenDay < this.planLength){
-      if(this.choosenDay === this.planLength){
-        this.choosenDay == 1;
-      }
-      else{
-        this.choosenDay++;
-        this.getDayPlanMeals(this.choosenDay,1)
-        this.getTotalDayNutrition(this.choosenDay,1);
-        this.dayMealService.setChoosenDay(this.choosenDay);
-      }
+  numDayRight() {
+    if (this.choosenDay < this.planLength) {
+      this.choosenDay++;
+    } else {
+      this.choosenDay = 1;
     }
-    }
+    this.getDayPlanMeals(this.choosenDay, 1);
+    this.getTotalDayNutrition(this.choosenDay, 1);
+    this.dayMealService.setChoosenDay(this.choosenDay);
+  }
+  
     numDayLeft(){
       if(this.choosenDay > 1){
         this.choosenDay--;
