@@ -39,9 +39,11 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding9Component implements OnInit {
   isReceiveTreatment: boolean;
+  valid : boolean ;
 
   constructor(private registerSrv: RegisterService) {
     this.isReceiveTreatment = undefined;
+    this.valid = false;
   }
 
   ngOnInit(): void {}
@@ -49,5 +51,8 @@ export class Onboarding9Component implements OnInit {
   booleanAnswer(ans: string) {
     ans === "yes" ? (this.isReceiveTreatment = true) : (this.isReceiveTreatment = false);
     this.registerSrv.getUserInfo().isReceiveTreatment = this.isReceiveTreatment;
+    if( this.isReceiveTreatment == undefined ) this.valid = false;
+    else if ( this.isReceiveTreatment == true || this.isReceiveTreatment == false ) this.valid = true;
   }
+
 }

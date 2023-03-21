@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Answer } from "src/app/mealplan/models/Answers";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
@@ -71,9 +71,10 @@ export class Onboarding8Component implements OnInit {
   toggle3: boolean;
   toggle4: boolean;
   toggle5: boolean;
+  valid: boolean;
+  @Output() sendData = new EventEmitter<boolean>();
 
   allAnswers: Answer[];
-
   userAnswers: Answer[] = [];
 
   constructor(private registerSrv: RegisterService) {
@@ -82,6 +83,8 @@ export class Onboarding8Component implements OnInit {
     this.toggle3 = false;
     this.toggle4 = false;
     this.toggle5 = false;
+    this.valid = true;
+
     this.allAnswers = [
       { index: 0, text: "Type 2 Diabetes" },
       { index: 1, text: "High Cholesterol" },
@@ -96,22 +99,27 @@ export class Onboarding8Component implements OnInit {
   enableDisableRule1(value: Answer) {
     this.toggle1 = !this.toggle1;
     this.addOrRemoveSelection(value, this.toggle1);
+    this.validation();
   }
   enableDisableRule2(value: Answer) {
     this.toggle2 = !this.toggle2;
     this.addOrRemoveSelection(value, this.toggle2);
+    this.validation();
   }
   enableDisableRule3(value: Answer) {
     this.toggle3 = !this.toggle3;
     this.addOrRemoveSelection(value, this.toggle3);
+    this.validation();
   }
   enableDisableRule4(value: Answer) {
     this.toggle4 = !this.toggle4;
     this.addOrRemoveSelection(value, this.toggle4);
+    this.validation();
   }
   enableDisableRule5(value: Answer) {
     this.toggle5 = !this.toggle5;
     this.addOrRemoveSelection(value, this.toggle5);
+    this.validation();
   }
 
   addOrRemoveSelection(answer: Answer, isSelected: boolean) {
@@ -135,4 +143,17 @@ export class Onboarding8Component implements OnInit {
 
     // console.log(this.registerSrv.getUserInfo().medicalRisk);
   }
+
+  validation(): any {
+    if ( this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5){
+      this.valid = true;
+      console.log("Valid")
+    }
+    else {
+      this.valid = true;
+      console.log("valid")
+    }
+     this.sendData.emit(this.valid);
+  }
+
 }

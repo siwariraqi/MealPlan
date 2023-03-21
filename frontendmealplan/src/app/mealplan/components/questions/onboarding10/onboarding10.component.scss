@@ -56,14 +56,21 @@
 }
 .Sedentary {
   position: absolute;
-  left: 0%;
+  left: -18%;
+  margin-top: 15px;
 }
 .Extra {
   position: absolute;
   right: 0%;
+  margin-top: 15px;
+
 }
 
 //  range slider
+
+.range {
+  margin-top: 60px;
+}
 .slider {
   -webkit-appearance: none;
   width: 70%;
