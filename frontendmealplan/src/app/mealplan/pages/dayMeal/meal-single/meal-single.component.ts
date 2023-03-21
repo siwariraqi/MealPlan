@@ -20,7 +20,6 @@ export class MealSingleComponent implements OnInit {
   userFeedback: UserFeedback = new UserFeedback(); 
   ingredients: MealIngredients[];
   instructions: string;
-  mealdayingridents: MealIngredients[][];
   public dayMeals:Array<DayMeal> =[];
   dayNumber:number
 constructor(private dayMealService:DayMealService, private activatedroute:ActivatedRoute ,private snackBar: MatSnackBar) {}
@@ -40,8 +39,8 @@ mealID:number
     let idx = params["id"]
       this.type=this.dayMeals[idx].type;
       this.instructions = this.dayMeals[idx].id.meal.instructions
-    this.dayMealService.getIngredients(this.dayNumber,1).subscribe((mealingridents)=>{
-      this.ingredients=mealingridents[idx];
+    this.dayMealService.getIngredients(this.meal.mealId).subscribe((mealingridents)=>{
+      this.ingredients=mealingridents;
     })
   })
 }

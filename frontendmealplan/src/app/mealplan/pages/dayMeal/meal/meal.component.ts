@@ -23,14 +23,16 @@ export class MealComponent implements OnInit {
   public settings: Settings;
   constructor(private dayMealService:DayMealService) { 
   }
+  choosenDay=1;
   ngOnInit(): void {
+    
     this.getPlan();
     this.getDayPlanMeals(1,1);
     this.getTotalDayNutrition(1,1);
     
   }
 
-  choosenDay=1;
+
   numDayRight(){
     if(this.choosenDay < this.planLength){
       if(this.choosenDay === this.planLength){
