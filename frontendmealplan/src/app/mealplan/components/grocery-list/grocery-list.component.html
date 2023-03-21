@@ -1,10 +1,18 @@
 <div class="container">
-    <div class="Weekbuttons">
+    <div class="Weekbuttons1">
         <div *ngFor="let week of allWeeks" class="p-3" >
-            <button class="weeks" mat-raised-button color="primary" (click)="displayWeek(week)">Week {{week}}</button>
+            <button class="weeks1" (click)="displayWeek(week)" 
+            [ngClass]="{ orange: clicked1, white: !clicked1 }"
+            [ngClass]="{ orange: clicked2, white: !clicked2 }"
+            [ngClass]="{ orange: clicked3, white: !clicked3 }"
+            [ngClass]="{ orange: clicked4, white: !clicked4 }"
+
+            >Week {{week}}</button>
         </div>
+        <!-- mat-raised-button  -->
     </div>
     <div class="mat-table theme-table cart-table">
+        <!-- <div class="line"> </div> -->
         <div class="mat-header-row">
             <div class="mat-header-cell">productName</div>
             <div class="mat-header-cell quantity">Amount</div>

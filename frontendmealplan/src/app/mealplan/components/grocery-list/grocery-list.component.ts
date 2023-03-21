@@ -26,7 +26,19 @@ export class GroceryListComponent implements OnInit {
   public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
 
-  constructor(private grocerListService: GroceryListService) { }
+  clicked1: boolean;
+  clicked2: boolean;
+  clicked3: boolean;
+  clicked4: boolean;
+
+
+  constructor(private grocerListService: GroceryListService) { 
+    this.clicked1 = false ; 
+    this.clicked2 = false ; 
+    this.clicked3 = false ; 
+    this.clicked4 = false ; 
+
+  }
 
   displayWeek(week: number) {
     console.log(week);
