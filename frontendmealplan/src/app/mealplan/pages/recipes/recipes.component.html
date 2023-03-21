@@ -40,8 +40,8 @@
                         </app-recipes-toolbar> 
                     </div>
 
-                    <div *ngFor="let menuItem of filteredMenuItems" [fxFlex]="(viewType=='grid') ? viewCol : 100"  class="item">  
-                        <app-meal-items [dayItem]="menuItem" [viewType]="viewType" [viewColChanged]="viewCol"></app-meal-items>
+                    <div *ngFor="let menuItem of filteredMenuItems;let i=index" [fxFlex]="(viewType=='grid') ? viewCol : 100"  class="item">  
+                        <app-meal-items [dayItem]="menuItem"  [mealindex]="i" [viewType]="viewType" [viewColChanged]="viewCol"></app-meal-items>
                     </div>
                     <div *ngIf="filteredMenuItems && filteredMenuItems.length == 0" fxFlex="100" fxLayoutAlign="center center" [style.min-height.px]="200">                
                         <mat-spinner *ngIf="!message"></mat-spinner>

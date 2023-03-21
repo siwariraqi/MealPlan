@@ -40,20 +40,4 @@ export class RecipesService {
   public getMealsByTime(category:string,userId: number) {
     return this.apiService.get<DayMeal[]>(this.GETMEALSBYTIME +`${category}` + '/'+ `${userId}`);
   }
-
-  setSelectedMeal(meal: any) {
-    this.selectedMeal = meal;
-  }
-  getSelectedMeal() {
-    return this.selectedMeal;
-  }
-
-  setType(type: string) {
-    console.log(type)
-    this.selectedType = type;
-  }
-  getType() {
-    return this.selectedMeal;
-  }
-
 }
