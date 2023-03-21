@@ -1,12 +1,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="container" id="print-me">
-    <button
-      class="printBtn"
-      ngxPrint
-      printSectionId="print-me"
-      printTitle={{ title }}
-    >
-      <mat-icon>print</mat-icon>
-    </button>
-  </div>
-  
+<div class="container">
+  <button class="printBtn" (click)="print()">
+    <mat-icon>print</mat-icon>
+  </button>
+</div>
