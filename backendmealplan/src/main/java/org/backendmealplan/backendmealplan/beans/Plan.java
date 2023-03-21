@@ -32,6 +32,7 @@ public class Plan {
     @Column(name = "benefits", length = 2500)
     private String benefits;
 
+//  @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "plan")
     private List<User> users = new ArrayList<>();

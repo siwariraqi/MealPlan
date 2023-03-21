@@ -1,5 +1,4 @@
 package org.backendmealplan.backendmealplan.controllers;
-
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.backendmealplan.backendmealplan.bl.GoalBL;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,4 @@
 package org.backendmealplan.backendmealplan.beans;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -12,8 +11,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "userInfo")
 public class UserInfo {
-    private static final LocalDate MAX_BIRTHDAY = LocalDate.of(2004, 1, 1);
-    private static final LocalDate MIN_BIRTHDAY = LocalDate.of(1922, 1, 1);
+//    private static final LocalDate MAX_BIRTHDAY = LocalDate.of(2004, 1, 1);
+//    private static final LocalDate MIN_BIRTHDAY = LocalDate.of(1922, 1, 1);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

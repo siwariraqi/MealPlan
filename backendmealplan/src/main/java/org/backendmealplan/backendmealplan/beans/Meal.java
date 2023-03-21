@@ -62,6 +62,7 @@ public class Meal {
     @OneToMany(mappedBy = "meal")
     private List<UserFeedback> feedbacks = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "meal_ingredients",

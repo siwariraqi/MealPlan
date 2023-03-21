@@ -1,9 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.Data;
 import org.backendmealplan.backendmealplan.enums.PaymentTool;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 

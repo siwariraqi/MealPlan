@@ -185,6 +185,7 @@ export class RegisterFormComponent implements OnInit {
     if (this.registerForm.valid) {
       const formObj = this.registerForm.value;
       const user = new User(
+        null,
         formObj.email,
         formObj.password,
         this.capitalizeFirstLetter(formObj.fname),

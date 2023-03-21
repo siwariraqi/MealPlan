@@ -1,5 +1,4 @@
 package org.backendmealplan.backendmealplan.bl;
-
 import org.backendmealplan.backendmealplan.beans.Meal;
 import org.backendmealplan.backendmealplan.beans.User;
 import org.backendmealplan.backendmealplan.beans.UserFeedback;
@@ -11,8 +10,8 @@ import org.backendmealplan.backendmealplan.exceptions.RatingNotInRangeException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +41,12 @@ public class FeedbackBL {
           userFeedback.setUser(user);
           userFeedback.setMeal(meal);
           userFeedback.setDate(new Date());
+          if(userFeedback.getIsOnIt() == null) {
+            userFeedback.setIsOnIt(false);
+          }
+          if(userFeedback.getFeedbackText() == null) {
+            userFeedback.setFeedbackText("");
+          }
           userFeedbacksDAO.save(userFeedback);
           user.getFeedbacks().add(userFeedback);
           meal.getFeedbacks().add(userFeedback);
@@ -73,5 +78,6 @@ public class FeedbackBL {
     }else{
       throw new userNotFoundException("User not found");
     }
+
   }
 }

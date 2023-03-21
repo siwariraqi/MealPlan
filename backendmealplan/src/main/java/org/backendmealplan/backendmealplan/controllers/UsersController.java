@@ -1,7 +1,6 @@
 package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.bl.MealBL;
-import org.backendmealplan.backendmealplan.bl.PlanBL;
+
 import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +49,11 @@ public class UsersController {
 
     @PostMapping("/updateProfile")
     public ResponseEntity updateProfile(@RequestBody User user){
-
-        this.userBL.updateProfile(user);
+        try {
+            this.userBL.updateProfile(user);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         return new ResponseEntity(user,HttpStatus.OK);
     }
 

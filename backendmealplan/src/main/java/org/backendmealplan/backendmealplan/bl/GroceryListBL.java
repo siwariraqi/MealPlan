@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroceryListBL {
@@ -18,18 +19,30 @@ public class GroceryListBL {
     @Autowired
     UserBL userBL;
 
-    public void hideIngredientsForUser(List<Long> ingredientIds, Long userId) throws UNAUTHORIZEDException {
 
-        List<GroceryList> groceryListItems = this.groceryListDAO.findByGroceryIdIn(ingredientIds);
+    public void hideIngredientsForUser(List<Long> ingredientIds, Long userId) throws UNAUTHORIZEDException {
+        List<GroceryList> groceryListItems = null;
+        try{
+            groceryListItems= this.groceryListDAO.findByGroceryIdIn(ingredientIds);
+            this.userBL.addGroceryChangeToUser(userId,groceryListItems);
+        }
+        catch (Exception e){
+            throw new UNAUTHORIZEDException("findByGroceryDidNotWork");
+        }
         if(groceryListItems == null){
             throw new UNAUTHORIZEDException("groceryListItem does not Exist");
         }
-        this.userBL.addGroceryChangeToUser(userId,groceryListItems);
     }
 
-    public List<GroceryList> getIngredientsByWeekAndPlanForUser(Integer week, Plan plan, Long user_id) {
+    public List<GroceryList> getIngredientsByWeekAndPlanForUser(Integer week, Long user_id) throws UNAUTHORIZEDException {
+        Plan plan = userBL.getUserPlan(user_id);
+        if(plan == null) throw new UNAUTHORIZEDException("plan does not exist");
         List<GroceryList> allWeekGroceries = this.groceryListDAO.findByWeekAndPlan(week,plan);
-        List<Long> deletedGroceries = this.userBL.getDeletedGroceries(user_id);
-        return allWeekGroceries;
+        List<GroceryList> deletedGroceries = this.userBL.getDeletedGroceries(user_id);
+        List<GroceryList> filteredList = allWeekGroceries.stream()
+                .filter(groceryList -> {return deletedGroceries.contains(groceryList)!=true;})
+                .collect(Collectors.toList());
+
+        return filteredList;
     }
 }

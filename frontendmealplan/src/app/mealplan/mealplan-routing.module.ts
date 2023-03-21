@@ -10,9 +10,13 @@ import { OrdersComponent } from "./pages/account/orders/orders.component";
 import { PasswordChangeComponent } from "./pages/account/password-change/password-change.component";
 import { ProfileComponent } from "./pages/account/profile/profile.component";
 
+import { GroceryListComponent } from "./components/grocery-list/grocery-list.component";
 import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
+import { MealComponent } from "./pages/dayMeal/meal/meal.component";
+import { MealSingleComponent } from "./pages/dayMeal/meal-single/meal-single.component";
+import { RecipesComponent } from "./pages/recipes/recipes.component";
 
 const routes: Routes = [
   {
@@ -28,19 +32,34 @@ const routes: Routes = [
     component: ChooseplanComponent,
   },
   {
-    path:"account",
+    path: "meals",
+    component: MealComponent,
+  },
+  {
+    path: "meals/:id",
+    component: MealSingleComponent,
+  },
+  {
+    path:"recipes",
+    component:RecipesComponent,
+  },
+    {path:"account",
     component:AccountComponent,
     children: [
-      { path: '', redirectTo:"dashboard",pathMatch:"full" },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'addresses', component: AddressesComponent },
-      { path: 'favorites', component: FavoritesComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'password-change', component: PasswordChangeComponent },
-      { path: 'reservations', component: ReservationsComponent },
-      {path: 'orders/:id', component: OrderComponent}
-   ],
+      { path: "", redirectTo: "dashboard", pathMatch: "full" },
+      { path: "dashboard", component: DashboardComponent },
+      { path: "profile", component: ProfileComponent },
+      { path: "addresses", component: AddressesComponent },
+      { path: "favorites", component: FavoritesComponent },
+      { path: "orders", component: OrdersComponent },
+      { path: "password-change", component: PasswordChangeComponent },
+      { path: "reservations", component: ReservationsComponent },
+      { path: "orders/:id", component: OrderComponent },
+    ],
+  },
+  {
+    path: "groceryList",
+    component: GroceryListComponent,
   },
 ];
 

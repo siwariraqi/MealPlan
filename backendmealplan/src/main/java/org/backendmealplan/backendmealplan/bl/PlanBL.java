@@ -88,25 +88,4 @@ public class PlanBL {
 
     }
 
-    public void printUsers(Long planId) {
-        Plan plan = planDAO.findById(planId).orElse(null);
-
-        if (plan == null) {
-            System.out.println("University not found.");
-            return;
-        }
-
-        List<User> users = plan.getUsers();
-
-        if (users.isEmpty()) {
-            System.out.println("No students found for this university.");
-            return;
-        }
-
-        System.out.println("Students for " + plan.getPlanName() + ":");
-        for (User user : users) {
-            System.out.println("- " + user.getFirstName());
-        }
-    }
-
 }

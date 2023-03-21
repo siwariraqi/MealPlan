@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Goal } from "src/app/mealplan/models/Goal";
+import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
   selector: "app-onboarding7",
@@ -102,15 +103,18 @@ export class Onboarding7Component implements OnInit {
   toggle6: boolean;
   allGoals: Goal[];
 
-  @Input() userGoals: Goal[];
+  valid: boolean;
 
-  constructor() {
+  @Output() sendData = new EventEmitter<boolean>();
+
+  constructor(private registerSrv: RegisterService) {
     this.toggle1 = false;
     this.toggle2 = false;
     this.toggle3 = false;
     this.toggle4 = false;
     this.toggle5 = false;
     this.toggle6 = false;
+    this.valid = false;
     this.allGoals = [
       { goalId: 1, text: "Be healthier" },
       { goalId: 2, text: "Manage my glucose" },
@@ -121,40 +125,72 @@ export class Onboarding7Component implements OnInit {
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userInfo = this.registerSrv.getUserInfo();
+    console.log("current userinfo id " + userInfo.infoId);
+    if (!userInfo.infoId) {
+      this.registerSrv.updateUserInfo().subscribe((userInfo) => {
+        console.log("added new userinfo " + userInfo.infoId);
+      });
+    }
+  }
 
   enableDisableRule1(goal: Goal) {
     this.toggle1 = !this.toggle1;
     this.addOrRemoveGoalSelection(goal, this.toggle1);
+    this.validation();
   }
   enableDisableRule2(goal: Goal) {
     this.toggle2 = !this.toggle2;
     this.addOrRemoveGoalSelection(goal, this.toggle2);
+    this.validation();
   }
   enableDisableRule3(goal: Goal) {
     this.toggle3 = !this.toggle3;
     this.addOrRemoveGoalSelection(goal, this.toggle3);
+    this.validation();
   }
   enableDisableRule4(goal: Goal) {
     this.toggle4 = !this.toggle4;
     this.addOrRemoveGoalSelection(goal, this.toggle4);
+    this.validation();
   }
   enableDisableRule5(goal: Goal) {
     this.toggle5 = !this.toggle5;
     this.addOrRemoveGoalSelection(goal, this.toggle5);
+    this.validation();
   }
   enableDisableRule6(goal: Goal) {
     this.toggle6 = !this.toggle6;
     this.addOrRemoveGoalSelection(goal, this.toggle6);
+    this.validation();
   }
 
   addOrRemoveGoalSelection(goal: Goal, isSelected: boolean) {
+    if (!this.registerSrv.getUserInfo().goals) {
+      this.registerSrv.getUserInfo().goals = [];
+    }
     if (isSelected) {
-      this.userGoals.push(goal);
+      this.registerSrv.getUserInfo().goals.push(goal);
     } else {
       const idx = goal.goalId;
-      this.userGoals = this.userGoals.filter((obj) => obj.goalId !== idx); //remove goal from array
+      this.registerSrv.getUserInfo().goals = this.registerSrv
+        .getUserInfo()
+        .goals?.filter((obj) => obj.goalId !== idx); //remove goal from array
     }
-    console.log(this.userGoals);
   }
+
+  validation(): any {
+    if ( this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5 || this.toggle6){
+      this.valid = true;
+      console.log("Valid")
+    }
+    else {
+      this.valid = false;
+      console.log("not valid")
+    }
+    this.sendData.emit(this.valid);
+  }
+  
+  
 }

@@ -114,28 +114,17 @@ public class UserBL {
         }
     }
 
-    public User updateProfile(User newProfile){
+    public User updateProfile(User newProfile) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(newProfile.getUserId());
-        if(!newProfile.getEmail().equals("")){
-            user.setEmail(newProfile.getEmail());
+        if(user == null){
+            throw new UNAUTHORIZEDException("user does not Exist");
         }
-        if(!newProfile.getPhoneNumber().equals("")){
-            user.setPhoneNumber(newProfile.getPhoneNumber());
-        }
-        if(!newProfile.getFirstName().equals("")){
-            user.setFirstName(newProfile.getFirstName());
-        }
-        if(!newProfile.getLastName().equals("")){
-            user.setLastName(newProfile.getLastName());
-        }
-        if(!newProfile.getUserInfo().equals("")){
-            if(!newProfile.getUserInfo().getGender().equals("")){
-                user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
-            }
-            if(!newProfile.getUserInfo().getBirthday().equals("")){
-                user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
-            }
-        }
+        user.setEmail(newProfile.getEmail());
+        user.setPhoneNumber(newProfile.getPhoneNumber());
+        user.setFirstName(newProfile.getFirstName());
+        user.setLastName(newProfile.getLastName());
+        user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
+        user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
         this.usersDAO.save(user);
         return newProfile;
     }
@@ -151,7 +140,8 @@ public class UserBL {
             throw new UNAUTHORIZEDException("plan id doesn't Exist");
         }
         user.setPlan(plan);
-        return this.usersDAO.save(user);
+        this.usersDAO.save(user);
+        return user;
     }
 
 
@@ -165,7 +155,6 @@ public class UserBL {
         }
     }
 
-
     public User addGroceryChangeToUser(Long userId, List<GroceryList> groceryList) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(userId);
         if(user == null){
@@ -174,17 +163,24 @@ public class UserBL {
         Set<GroceryList> user_groceries = user.getChanges();
         user_groceries.addAll(groceryList);
         user.setChanges(user_groceries);
-        this.usersDAO.save(user);
-        return user;
+        return this.usersDAO.save(user);
     }
 
-    public List<Long> getDeletedGroceries(Long useId){
-        List<Long> deleted = new ArrayList<>();
-        return deleted;
+    public List<GroceryList> getDeletedGroceries(Long userId) throws UNAUTHORIZEDException {
+
+        User user = this.usersDAO.getReferenceById(userId);
+        if(user == null){
+            throw new UNAUTHORIZEDException("user does not Exist");
+        }
+        return user.getChanges().stream().toList();
     }
 
-
-
-
+    public Plan getUserPlan(Long userId) throws UNAUTHORIZEDException {
+        User user = this.usersDAO.getReferenceById(userId);
+        if(user == null){
+            throw new UNAUTHORIZEDException("user does not Exist");
+        }
+        return user.getPlan();
+    }
 
 }
