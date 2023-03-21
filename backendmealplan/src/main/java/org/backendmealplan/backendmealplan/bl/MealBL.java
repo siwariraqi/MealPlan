@@ -133,8 +133,8 @@ public class MealBL {
         this.dayMealsDAO.save(dayMeal);
     }
 
-    public List<Meal> getMealsByTime(String mealTime, Long userId) throws userNotFoundException {
-        List<Meal> returnedList = new ArrayList<>();
+    public List<DayMeal> getMealsByTime(String mealTime, Long userId) throws userNotFoundException {
+        List<DayMeal> returnedList = new ArrayList<>();
         Set<String> mealNamesSet = new HashSet<>();
         Optional<User> users = this.usersDAO.findById(userId);
         if (users.isPresent()) {
@@ -145,7 +145,7 @@ public class MealBL {
                 List<DayMeal> dayMealList = this.dayMealsDAO.findByIdPlanDayIdAndType(dayPlanId, mealTime);
                 for (DayMeal dayMeal : dayMealList) {
                     if (!mealNamesSet.contains(dayMeal.getId().getMeal().getMealName())) {
-                        returnedList.add(dayMeal.getId().getMeal());
+                        returnedList.add(dayMeal);
                         mealNamesSet.add(dayMeal.getId().getMeal().getMealName());
                     }
                 }
