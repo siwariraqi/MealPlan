@@ -64,13 +64,13 @@ public class PlanController {
         return  this.planBL.getAllPlans();
     }
 
-    @GetMapping("/ingredinets")
-  public ResponseEntity <List<List<MealIngredients>>> getDayPlanMealIngredinets(@PathVariable Integer dayNumber, @PathVariable Long userId ){
+    @GetMapping("/ingredients/{mealId}")
+    public ResponseEntity <List<MealIngredients>> getDayPlanMealIngredients(@PathVariable Long mealId){
       try{
-        List<List<MealIngredients>>  Ingredients=this.mealBL.getDayPlanMealIngredinets(dayNumber,userId);
+        List<MealIngredients>  Ingredients=this.mealBL.getDayPlanMealIngredients(mealId);
         return ResponseEntity.ok(Ingredients);
       }
-      catch (MealNotFoundException | userNotFoundException | paymentNotFoundException e){
+      catch (MealNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
       }
 

@@ -16,6 +16,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { MealComponent } from "./pages/dayMeal/meal/meal.component";
 import { MealSingleComponent } from "./pages/dayMeal/meal-single/meal-single.component";
+import { RecipesComponent } from "./pages/recipes/recipes.component";
 
 const routes: Routes = [
   {
@@ -39,8 +40,11 @@ const routes: Routes = [
     component: MealSingleComponent,
   },
   {
-    path: "account",
-    component: AccountComponent,
+    path:"recipes",
+    component:RecipesComponent,
+  },
+    {path:"account",
+    component:AccountComponent,
     children: [
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
       { path: "dashboard", component: DashboardComponent },
