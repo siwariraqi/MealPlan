@@ -81,7 +81,7 @@ export class FeedbacksComponent implements OnInit {
     for (let i = 0; i < this.ratings.length; i++) {
       if (this.ratings[i].title === rating.title) {
         this.ratings[i].selected = true;
-        this.userFeedback.rating=3; 
+        this.userFeedback.rating=i+1; 
       } else {
         this.ratings[i].selected = false;
       }
@@ -89,7 +89,6 @@ export class FeedbacksComponent implements OnInit {
   }
 
   selectedFeedbacksString: string = '';
-
   onSelectFeedback(index: number) {
     this.feedbackStates[index] = !this.feedbackStates[index];
     let selectedFeedbacks = [];
@@ -104,6 +103,7 @@ export class FeedbacksComponent implements OnInit {
   }
   
   saveFeedback() {
+    
     const feedbackText = this.feedbackForm.get('review').value;
     console.log(feedbackText)
     if (feedbackText) {
