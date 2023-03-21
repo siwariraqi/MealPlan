@@ -7,13 +7,11 @@
                 Day {{choosenDay}} 
                 <mat-icon (click)="numDayRight()" >arrow_forward_ios</mat-icon>
             </h2>
-            
             <div style="display: flex; align-items: center;">
                 <ngx-charts-advanced-pie-chart 
                 [view]="[600, 300]" 
                 [results]="data"
                 [label]="'Nutritions '"
-                
                 ></ngx-charts-advanced-pie-chart>
                 <div class="cal">
                     <div class="section-title">
