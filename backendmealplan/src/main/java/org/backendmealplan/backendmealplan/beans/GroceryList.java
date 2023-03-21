@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,11 +27,11 @@ public class GroceryList {
     @ManyToOne
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "changes")
     List<User> users;
 

@@ -41,6 +41,12 @@ public class FeedbackBL {
           userFeedback.setUser(user);
           userFeedback.setMeal(meal);
           userFeedback.setDate(new Date());
+          if(userFeedback.getIsOnIt() == null) {
+            userFeedback.setIsOnIt(false);
+          }
+          if(userFeedback.getFeedbackText() == null) {
+            userFeedback.setFeedbackText("");
+          }
           userFeedbacksDAO.save(userFeedback);
           user.getFeedbacks().add(userFeedback);
           meal.getFeedbacks().add(userFeedback);
