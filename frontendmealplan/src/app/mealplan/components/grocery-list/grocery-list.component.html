@@ -2,12 +2,8 @@
     <div class="Weekbuttons1">
         <div *ngFor="let week of allWeeks" class="p-3" >
             <button class="weeks1" (click)="displayWeek(week)" 
-            [ngClass]="{ orange: clicked1, white: !clicked1 }"
-            [ngClass]="{ orange: clicked2, white: !clicked2 }"
-            [ngClass]="{ orange: clicked3, white: !clicked3 }"
-            [ngClass]="{ orange: clicked4, white: !clicked4 }"
-
             >Week {{week}}</button>
+            <!--[ngClass]="{ orange: clicked[week] , white: !clicked[week] }" -->
         </div>
         <!-- mat-raised-button  -->
     </div>
