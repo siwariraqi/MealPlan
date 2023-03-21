@@ -6,5 +6,6 @@ public enum Unit {
     cup,
     tablespoon,
     slice,
-    lb
+    lb,
+    handful
 }
