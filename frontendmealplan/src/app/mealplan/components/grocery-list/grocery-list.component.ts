@@ -7,15 +7,12 @@ import { GroceryList } from "../../models/GroceryList";
 import { Plan } from "../../models/Plan";
 import { GroceryListService } from "../../services/grocery-list.service";
 
-
-
 @Component({
   selector: "app-grocery-list",
   templateUrl: "./grocery-list.component.html",
   styleUrls: ["./grocery-list.component.scss"],
 })
 export class GroceryListComponent implements OnInit {
-
   //Code We added START
   public AllCatagories = ["Dairy", "Meat", "Fruit", "Vegetables", "Others"];
   public allWeeks = [1, 2, 3, 4];
@@ -26,14 +23,17 @@ export class GroceryListComponent implements OnInit {
   public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
 
-  clicked: boolean[] = null;
+  clicked: boolean[];
 
-  constructor(private grocerListService: GroceryListService) { }
+  constructor(private grocerListService: GroceryListService) {}
 
   displayWeek(week: number) {
-    console.log(week);
-    this.clicked[2] = true;
+    this.getGroceriesForWeek(week);
+    this.weeksToDisplay.add(week);
+    this.filterGroceriesAccordingToWeek();
     //get the groceries for the week
+    /*
+    this.clicked[2] = true;
     if (this.weeksToDisplay.has(week)) {
       this.weeksToDisplay.delete(week);
     } else {
@@ -42,8 +42,21 @@ export class GroceryListComponent implements OnInit {
       this.weeksToDisplay.add(week);
     }
     this.filterGroceriesAccordingToWeek();
+    */
   }
-
+  hideWeek(week: number) {
+    this.weeksToDisplay.delete(week);
+    this.filterGroceriesAccordingToWeek();
+  }
+  weekClicked(week: number) {
+    if (this.clicked[week - 1]) {
+      this.hideWeek(week);
+      this.clicked[week - 1] = false;
+    } else {
+      this.displayWeek(week);
+      this.clicked[week - 1] = true;
+    }
+  }
 
   filterGroceriesAccordingToWeek() {
     //this.groceries = [];
@@ -53,31 +66,32 @@ export class GroceryListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.clicked = [false, false, false, false];
     for (var i = 0; i < this.allWeeks.length; i++) {
       this.hasWeekGrocery.push(false);
     }
     this.initGroceries();
-
   }
 
   initGroceries() {
-    this.displayWeek(1);
+    this.weekClicked(1);
   }
 
-  
-    getGroceriesForWeek(week: number) {
-      if (this.hasWeekGrocery[week - 1]) return;
-      this.grocerListService
-        .getIngredients(week, this.userId)
-        .subscribe((groceriess) => {
-          this.weekGroceries[week - 1] = groceriess;
-          this.mergeWeekGroceries(week);
-        });
-      this.hasWeekGrocery[week - 1] = true;
+  getGroceriesForWeek(week: number) {
+    if (this.hasWeekGrocery[week - 1]) {
+      this.mergeWeekGroceries(week);
+      return;
     }
-    
+    this.grocerListService
+      .getIngredients(week, this.userId)
+      .subscribe((groceriess) => {
+        this.weekGroceries[week - 1] = groceriess;
+        this.mergeWeekGroceries(week);
+      });
+    this.hasWeekGrocery[week - 1] = true;
+  }
 
-    /*
+  /*
   getGroceriesForWeek(week: number) {
     if (this.hasWeekGrocery[week - 1]) return;
     if (this.weekGroceries[week - 1].length === 0) {
@@ -99,8 +113,6 @@ export class GroceryListComponent implements OnInit {
     });
     this.groceries = Array.from(this.groceriesSet);
   }
-
-
 
   hideIngredient(toRemove: GroceryList) {
     const index: number = this.groceries.indexOf(toRemove);

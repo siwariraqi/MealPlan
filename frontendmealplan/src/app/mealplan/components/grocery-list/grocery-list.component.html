@@ -1,11 +1,11 @@
 <div class="container">
     <div class="Weekbuttons1">
         <div *ngFor="let week of allWeeks" class="p-3" >
-            <button class="weeks1" (click)="displayWeek(week)" 
+            <button class="weeks1" [ngClass]="{'orange': clicked[week-1] == true , 'white':clicked[week-1]==false}" (click)="weekClicked(week)"  
             >Week {{week}}</button>
-            <!--[ngClass]="{ orange: clicked[week] , white: !clicked[week] }" -->
+            <!--[ngClass]="{'toggleColor': toggleColor,'orange': val1.value==current_product_size}" -->
         </div>
-        <!-- mat-raised-button  -->
+        <!-- mat-raised-button [ngClass]="{ orange: clicked[week] , white: !clicked[week] }"  -->
     </div>
     <div class="mat-table theme-table cart-table">
         <!-- <div class="line"> </div> -->
@@ -17,7 +17,7 @@
             <div class="mat-header-cell price"> unit</div>
             <div class="mat-header-cell actions text-center">
                 <div class="px-1" (click)="selectAll()">
-                    Delete All
+                    <!--Delete All-->
                     <!--<button mat-raised-button color="warn" >Delete All</button>-->
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     <div class="mat-cell price">{{grocery.unit}}</div>
                     <div class="mat-cell actions text-center">
                         <div class="p-1">
-                            <button mat-mini-fab color="warn" (click)="hideIngredient(grocery)" matTooltip="Clear">
+                            <button mat-mini-fab color="white" (click)="hideIngredient(grocery)" matTooltip="Clear">
                                 <mat-icon>close</mat-icon>
                             </button>
                         </div>
