@@ -27,6 +27,7 @@ mealID:number
   ngOnInit() {
     this.dayNumber=this.dayMealService.getChoosenDay();
     this.dayMeals=this.dayMealService.getDayMeals();
+    console.log(this.dayMeals);
     this.getSelectedMeal();
     this.getTypeIngredientInstructions()
     this.mealID=this.meal.mealId

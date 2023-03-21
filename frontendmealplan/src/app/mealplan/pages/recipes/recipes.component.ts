@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { filter, map } from 'rxjs/operators';
 import { AppSettings, Settings } from 'src/app/app.settings';
 import { DayMeal } from '../../models/DayMeal';
+import { DayMealService } from '../../services/day-meal.service';
 import { RecipesService } from '../../services/recipes.service';
 
 @Component({
@@ -35,7 +36,7 @@ export class RecipesComponent implements OnInit {
   public watcher: Subscription;
   public settings: Settings;
 
-  constructor(public appSettings:AppSettings, public recipesService:RecipesService, public mediaObserver: MediaObserver) {
+  constructor(public dayMealService:DayMealService,public appSettings:AppSettings, public recipesService:RecipesService, public mediaObserver: MediaObserver) {
     this.settings = this.appSettings.settings; 
     this.watcher = mediaObserver.asObservable()
     .pipe(filter((changes: MediaChange[]) => changes.length > 0), map((changes: MediaChange[]) => changes[0]))
@@ -90,10 +91,12 @@ export class RecipesComponent implements OnInit {
     this.menuItems.length = 0;
     this.category = type;
     this.getMenuItems(type);
+    
     this.sidenav.close();
   }
   public onChangeCategory(event:any){ 
     this.selectCategory(event.value);
+
   }
 
   public getMenuItems(category:string){
@@ -105,6 +108,7 @@ export class RecipesComponent implements OnInit {
       else{
         this.menuItems = result; 
         this.filteredMenuItems = result;
+        this.dayMealService.setDayMeals( this.filteredMenuItems);
         this.category = category;
         this.message = null;
       } 
