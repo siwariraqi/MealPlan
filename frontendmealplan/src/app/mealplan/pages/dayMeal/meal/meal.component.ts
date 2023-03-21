@@ -10,51 +10,69 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
   styleUrls: ['./meal.component.scss']
 })
 export class MealComponent implements OnInit {
-  public dayMeals:Array<DayMeal> =[];
-  type:string;
+  
+
   plan:Plan =new Plan();;
   nutritions:string[];
   dayNumber=1;
   planLength;
- 
+  
+  type:string;
+  public dayMeals:Array<DayMeal> =[];  
+
   public settings: Settings;
   constructor(private dayMealService:DayMealService) { 
   }
   ngOnInit(): void {
     this.getPlan();
-    this.getDayPlanMeals();
-    this.getTotalDayNutrition();
-    this.getIngredients();
-    this.dayMealService.testGetIngredients();
+    this.getDayPlanMeals(1,1);
+    this.getTotalDayNutrition(1,1);
+    
   }
+
+  choosenDay=1;
+  numDayRight(){
+    if(this.choosenDay < this.planLength){
+      if(this.choosenDay === this.planLength){
+        this.choosenDay == 1;
+      }
+      else{
+        this.choosenDay++;
+        this.getDayPlanMeals(this.choosenDay,1)
+        this.getTotalDayNutrition(this.choosenDay,1);
+        this.dayMealService.setChoosenDay(this.choosenDay);
+      }
+    }
+    }
+    numDayLeft(){
+      if(this.choosenDay > 1){
+        this.choosenDay--;
+        this.getDayPlanMeals(this.choosenDay,1)
+        this.getTotalDayNutrition(this.choosenDay,1);
+        this.dayMealService.setChoosenDay(this.choosenDay);
+      }
+      }
+    
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
       this.plan=plan;
       this.planLength=plan.length
     })
   }
-  public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
+  public getDayPlanMeals(dayNumber:number,userid:number){
+    this.dayMealService.getDayPlanMeals(dayNumber,userid).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
-
-     
+      this.dayMealService.setDayMeals(this.dayMeals);
     })
   }
-  mealids=[1,2,3]
-  public getIngredients(){
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    console.log(
-    this.dayMealService.getIngredients(this.mealids)
-    );
-  }
+
 
   data = []
   totalCalories='';
  
-  public getTotalDayNutrition(){
-    this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
+  public getTotalDayNutrition(dayNumber:number,userid:number){
+    this.dayMealService.getTotalDayNutrition(dayNumber,userid).subscribe((nutritions)=>{
       this.nutritions = nutritions;
-      console.log(this.nutritions);
       this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
       const newData = [];
       newData.push({
