@@ -71,6 +71,7 @@ export class ProfileComponent implements OnInit {
     this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
 
     if (this.infoForm.valid) { 
+      localStorage.setItem('user',JSON.stringify(this.user))
       this.userService.updateProfile(this.user).subscribe(
         data => {
           console.log('Profile updated successfully.');

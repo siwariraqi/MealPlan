@@ -58,6 +58,19 @@ public class UsersController {
         return new ResponseEntity(user,HttpStatus.OK);
     }
 
+
+
+    @PostMapping("/updatePassword")
+    public ResponseEntity updatePassword(@RequestBody User user){
+        try {
+            this.userBL.updateProfile(user);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return new ResponseEntity(user,HttpStatus.OK);
+    }
+
+
     @GetMapping("/getUser")
     public ResponseEntity<User> getUser(@RequestParam long userId) {
         try {
