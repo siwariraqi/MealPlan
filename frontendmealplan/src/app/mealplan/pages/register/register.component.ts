@@ -19,7 +19,17 @@ import { Onboarding7Component } from "../../components/questions/onboarding7/onb
       <app-onboarding14 *ngIf="onBoardingStep === 14"></app-onboarding14>
       <app-onboarding15 *ngIf="onBoardingStep === 15"></app-onboarding15>
       <app-register-form *ngIf="onBoardingStep === 16"></app-register-form>
-      <button *ngIf="onBoardingStep < 16" class="nextBtn" (click)="nextScreen()" [disabled]="!isCompleted">NEXT</button>
+      <div *ngIf="onBoardingStep >= 7 && onBoardingStep <= 14 && error !== ''" class="errorMsg">
+        <h4>{{ error }}</h4>
+      </div>
+      <button
+        *ngIf="onBoardingStep < 16"
+        class="nextBtn"
+        [ngStyle]="{ 'background-color': btnBackgroundColor, color: btnColor }"
+        (click)="nextScreen()"
+      >
+        NEXT
+      </button>
       <div class="dots">
         <div
           *ngFor="let page of pages; index as i"
@@ -42,33 +52,37 @@ export class RegisterComponent implements OnInit {
   currentPage: number;
   backgroundColor: string;
   backgroundImage: string;
+  btnBackgroundColor: string;
+  btnColor: string;
   screenState: string;
   onBoardingStep: number;
   userGoals: Goal[];
-
-  isCompleted: boolean;
+  error: string;
 
   constructor(private registerSrv: RegisterService) {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
-
     this.screenState = "welcome";
     this.onBoardingStep = 2;
-    this.isCompleted = true;
+    this.error = "";
   }
 
   ngOnInit(): void {
     this.backgroundColor = "#4b643d";
+    this.btnBackgroundColor = "#ffffff";
+    this.btnColor = "black";
   }
 
   nextScreen() {
-    if (this.onBoardingStep > 6) {
+    if (this.onBoardingStep > 5) {
+      this.btnBackgroundColor = "#dd9670c4";
+      this.btnColor = "white";
       if (!this.screenValidation()) {
         return;
       } else {
         console.log("isValid YESS");
-
+        this.error = "";
         this.registerSrv.updateUserInfo(); //if valid save in db
       }
     }
@@ -120,6 +134,7 @@ export class RegisterComponent implements OnInit {
     switch (this.onBoardingStep) {
       case 7: //goals
         if (!this.registerSrv.getUserInfo().goals || !this.registerSrv.getUserInfo().goals.length) {
+          this.error = "You must select at least one goal!";
           isValid = false;
         }
         break;
@@ -127,23 +142,44 @@ export class RegisterComponent implements OnInit {
         isValid = true;
         break;
       case 9: //isReceiveTreatment
-        if (this.registerSrv.getUserInfo().isReceiveTreatment === null || this.registerSrv.getUserInfo().isReceiveTreatment === undefined)
+        if (this.registerSrv.getUserInfo().isReceiveTreatment === null || this.registerSrv.getUserInfo().isReceiveTreatment === undefined) {
+          this.error = "You must select an answer first";
           isValid = false;
+        }
         break;
       case 10: //activity
         isValid = true;
         break;
       case 11: //gender
-        if (!this.registerSrv.getUserInfo().gender) isValid = false;
+        if (!this.registerSrv.getUserInfo().gender) {
+          isValid = false;
+          this.error = "You must select an answer first";
+        }
         break;
       case 12: //birthday
-        if (!this.validateBirthday()) isValid = false; //TODO
+        if (!this.validateBirthday()) {
+          this.error = "Invalid birthdate! dates accepted between 1/1/1922 and 1/1/2004";
+          isValid = false;
+          this.registerSrv.getUserInfo().birthday = null;
+        }
         break;
       case 13: //weight
-        if (!this.validateWeight()) isValid = false; //TODO
+        if (!this.validateWeight()) {
+          this.error = `Invalid weight input! Weight must be between ${
+            this.registerSrv.getUserInfo().unit === "metric" ? "30 and 300 kg" : "66 and 661 lb"
+          }`;
+          isValid = false;
+          this.registerSrv.getUserInfo().weight = null;
+        }
         break;
       case 14: //height
-        if (!this.validateHeight()) isValid = false; //TODO
+        if (!this.validateHeight()) {
+          this.error = `Invalid height input! height must be between ${
+            this.registerSrv.getUserInfo().unit === "metric" ? "100 and 220 cm" : "3'28'' and 7'21'' ft"
+          }`;
+          isValid = false;
+          this.registerSrv.getUserInfo().height = null;
+        }
         break;
     }
     return isValid;
