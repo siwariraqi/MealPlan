@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
@@ -14,29 +15,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
           <img src=" /assets/images/questions_icons/{{ ['weight2.png'] }}" />
         </div>
         <div class="form__group field">
-          <input
-            type="input"
-            class="form__field"
-            name="name"
-            required
-          #inputValue/> 
-         <p class='val'> {{ val }} <p>
+          <input type="input" class="form__field" name="name" type="number" [formControl]="weightControl" required #inputValue />
+          <p class="val">{{ chosenUnit === "metric" ? "KG" : "LB" }}</p>
+          <p></p>
         </div>
+
         <div class="box">
-          <div
-            class="innerbox"
-            (click)="enableDisableRule1(inputValue.value)"
-            [ngClass]="{ orange: toggle1, white: !toggle1 }"
-          >
-            KG
-          </div>
-          <div
-            class="innerbox"
-            (click)="enableDisableRule2(inputValue.value)"
-            [ngClass]="{ orange: toggle2, white: !toggle2 }"
-          >
-            LB
-          </div>
+          <div class="innerbox" (click)="enableDisableRule1(inputValue.value)" [ngClass]="{ orange: toggle1, white: !toggle1 }">KG</div>
+          <div class="innerbox" (click)="enableDisableRule2(inputValue.value)" [ngClass]="{ orange: toggle2, white: !toggle2 }">LB</div>
         </div>
       </div>
     </div>
@@ -44,51 +30,39 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   styleUrls: ["./onboarding13.component.scss"],
 })
 export class Onboarding13Component implements OnInit {
-  toggle1 = false;
+  chosenUnit: string;
+  weightControl: FormControl;
+  toggle1 = true;
   toggle2 = false;
-  val : String = "KG";
-  valid : boolean ;
-  WeightNum : Number;
-
-  weight: string;
 
   constructor(private registerSrv: RegisterService) {
-    this.weight = null;
-    this.valid = false;
+    this.weightControl = new FormControl();
+    this.chosenUnit = "metric";
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+    this.weightControl.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.registerSrv.getUserInfo().weight = value;
+      // this.registerSrv.getUserInfo().weight = value + ` ${this.chosenUnit === "metric" ? "KG" : "LB"}`;
+    });
+  }
 
   enableDisableRule1(weight: string) {
+    this.chosenUnit = "metric";
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+    this.registerSrv.getUserInfo().weight = weight;
+
     this.toggle1 = !this.toggle1;
     this.toggle2 = false;
-    this.WeightNum = Number(weight);
-    if (this.WeightNum > 30 && this.WeightNum < 300){
-      this.save(weight);
-      this.valid = true;
-    }
-    else {
-      this.valid = false;
-      console.log('not valid');
-    }
-    this.val = "KG";
   }
   enableDisableRule2(weight: string) {
+    this.chosenUnit = "imperial";
+    this.registerSrv.getUserInfo().unit = this.chosenUnit;
+    this.registerSrv.getUserInfo().weight = weight;
+
     this.toggle2 = !this.toggle2;
     this.toggle1 = false;
-    this.val = "LB";
-    this.WeightNum = Number(weight);
-    if (this.WeightNum > 60 && this.WeightNum < 600){
-      this.save(weight);
-      this.valid = true;
-    }
-    else {
-      this.valid = false;
-      console.log('not valid');
-
-    }  }
-
-  save(weight: string) {
-    this.registerSrv.getUserInfo().weight = weight;
-    console.log(this.registerSrv.getUserInfo().weight);
   }
 }
