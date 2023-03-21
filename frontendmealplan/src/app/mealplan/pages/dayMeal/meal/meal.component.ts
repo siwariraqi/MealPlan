@@ -18,54 +18,60 @@ export class MealComponent implements OnInit {
   planLength;
   
   type:string;
-  public dayMeals:Array<DayMeal> =[];
-  public sortMealsByType() {
-    const order = ['Breakfast', 'Snacks', 'Lunch','Snacks','Dinner'];
-    this.dayMeals.sort((a:DayMeal, b:DayMeal) => {
-      return order.indexOf(a.type) - order.indexOf(b.type);
-    });
-    
-    const firstSnacksIndex = this.dayMeals.findIndex((meal) => meal.type === 'Snacks');
-    if (firstSnacksIndex !== -1 && firstSnacksIndex < 3) {
-      const snacks = this.dayMeals.splice(firstSnacksIndex, 1)[0];
-      this.dayMeals.splice(3, 0, snacks);
-    }
-    this.dayMealService.setDayMeals(this.dayMeals);
-  }  
-
-  
+  public dayMeals:Array<DayMeal> =[];  
 
   public settings: Settings;
   constructor(private dayMealService:DayMealService) { 
   }
   ngOnInit(): void {
     this.getPlan();
-    this.getDayPlanMeals();
-    this.getTotalDayNutrition();
-    this.getIngredients();
+    this.getDayPlanMeals(1,1);
+    this.getTotalDayNutrition(1,1);
+    
   }
+
+  choosenDay=1;
+  numDayRight(){
+    if(this.choosenDay < this.planLength){
+      if(this.choosenDay === this.planLength){
+        this.choosenDay == 1;
+      }
+      else{
+        this.choosenDay++;
+        this.getDayPlanMeals(this.choosenDay,1)
+        this.getTotalDayNutrition(this.choosenDay,1);
+        this.dayMealService.setChoosenDay(this.choosenDay);
+      }
+    }
+    }
+    numDayLeft(){
+      if(this.choosenDay > 1){
+        this.choosenDay--;
+        this.getDayPlanMeals(this.choosenDay,1)
+        this.getTotalDayNutrition(this.choosenDay,1);
+        this.dayMealService.setChoosenDay(this.choosenDay);
+      }
+      }
+    
   public getPlan(){
     this.dayMealService.getPlan(1).subscribe((plan)=>{
       this.plan=plan;
       this.planLength=plan.length
     })
   }
-  public getDayPlanMeals(){
-    this.dayMealService.getDayPlanMeals(1,1).subscribe((dayMeals)=>{
+  public getDayPlanMeals(dayNumber:number,userid:number){
+    this.dayMealService.getDayPlanMeals(dayNumber,userid).subscribe((dayMeals)=>{
       this.dayMeals=dayMeals;
-      this.sortMealsByType();
+      this.dayMealService.setDayMeals(this.dayMeals);
     })
   }
-  mealids=[1,2,3]
-  public getIngredients(){
-    this.dayMealService.getIngredients(1,1)
-  }
+
 
   data = []
   totalCalories='';
  
-  public getTotalDayNutrition(){
-    this.dayMealService.getTotalDayNutrition(1,1).subscribe((nutritions)=>{
+  public getTotalDayNutrition(dayNumber:number,userid:number){
+    this.dayMealService.getTotalDayNutrition(dayNumber,userid).subscribe((nutritions)=>{
       this.nutritions = nutritions;
       this.totalCalories= this.nutritions.find(item => item.includes('totalCalories')).split(':')[1]
       const newData = [];

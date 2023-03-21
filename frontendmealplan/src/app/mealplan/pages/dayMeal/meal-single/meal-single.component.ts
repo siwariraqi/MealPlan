@@ -22,12 +22,16 @@ export class MealSingleComponent implements OnInit {
   instructions: string;
   mealdayingridents: MealIngredients[][];
   public dayMeals:Array<DayMeal> =[];
+  dayNumber:number
 constructor(private dayMealService:DayMealService, private activatedroute:ActivatedRoute ,private snackBar: MatSnackBar) {}
-
+mealID:number
   ngOnInit() {
+    this.dayNumber=this.dayMealService.getChoosenDay();
     this.dayMeals=this.dayMealService.getDayMeals();
     this.getSelectedMeal();
     this.getTypeIngredientInstructions()
+    this.mealID=this.meal.mealId
+    
     
   }
   
@@ -36,7 +40,7 @@ constructor(private dayMealService:DayMealService, private activatedroute:Activa
     let idx = params["id"]
       this.type=this.dayMeals[idx].type;
       this.instructions = this.dayMeals[idx].id.meal.instructions
-    this.dayMealService.getIngredients(1,1).subscribe((mealingridents)=>{
+    this.dayMealService.getIngredients(this.dayNumber,1).subscribe((mealingridents)=>{
       this.ingredients=mealingridents[idx];
     })
   })
@@ -45,7 +49,7 @@ constructor(private dayMealService:DayMealService, private activatedroute:Activa
 
   onItFeedback(){
     this.userFeedback.isOnIt=true;
-    this.dayMealService.saveFeedback(this.userFeedback,1,1).subscribe(response => {
+    this.dayMealService.saveFeedback(this.userFeedback,1,this.meal.mealId).subscribe(response => {
       console.log('Feedback saved successfully:', response);
       const config = new MatSnackBarConfig();
       config.duration = 5000;

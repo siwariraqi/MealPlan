@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
 import { DayMealService } from "src/app/mealplan/services/day-meal.service";
@@ -12,7 +12,8 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   styleUrls: ['./feedbacks.component.scss']
 })
 export class FeedbacksComponent implements OnInit {
-   
+  @Input () mealId :number
+  
   constructor(private fb: FormBuilder,private dayMealService:DayMealService ,private snackBar: MatSnackBar) {
     this.feedbackForm = this.fb.group({
       review: ['', Validators.required]
@@ -107,7 +108,7 @@ export class FeedbacksComponent implements OnInit {
     console.log(feedbackText)
     if (feedbackText) {
       this.userFeedback.feedbackText = feedbackText;
-      this.dayMealService.saveFeedback(this.userFeedback, 1, 1).subscribe(response => {
+      this.dayMealService.saveFeedback(this.userFeedback, 1, this.mealId).subscribe(response => {
         console.log('Feedback saved successfully:', response);
        
         this.feedbackForm.reset();

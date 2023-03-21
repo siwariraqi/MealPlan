@@ -68,6 +68,14 @@ export class DayMealService {
     return this.selectedType;
   }
 
+  selectedDay:number
+
+  setChoosenDay(day: number) {
+    this.selectedDay = day;
+  }
+  getChoosenDay() {
+    return this.selectedDay;
+  }
 
 
 

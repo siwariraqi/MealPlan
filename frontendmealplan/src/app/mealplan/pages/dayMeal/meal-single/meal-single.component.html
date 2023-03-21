@@ -83,32 +83,19 @@
 
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
             <span class="fw-500">Share: </span>
-            <!-- <app-share></app-share> -->
-            <!-- <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> -->
-          
-              <app-share fxLayout="row" fxLayoutAlign="start center" ></app-share>
-            
+            <app-share fxLayout="row" fxLayoutAlign="start center"></app-share>
+
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
             <span class="fw-500">Print: </span>
             <!-- <app-print fxLayout="row" fxLayoutAlign="start center"></app-print> -->
             <!-- <app-social-icons fxLayout="row" fxLayoutAlign="start center"></app-social-icons> -->
-           
           </div>
-
         </div>
-        
-
-
         <div fxFlex="100" class="px-3 mt-5">
           <mat-tab-group [@.disabled]="true" [selectedIndex]="0">
             <mat-tab label="Ingredients">
               <div class="full-desc">
-                <!-- <p *ngFor="let calorie of calories">
-                  Carbs: {{ calorie }}g | Fibre: {{ calorie }}g | Protien:
-                  {{ calorie }}g | Fat: {{ calorie }}g
-                </p> -->
-                <!-- <p>Carbs: 10g | Fibre: 10g | Protien: 10g | Fat: 10g</p> -->
                 <ul class="px-2 mt-1" *ngFor="let ingredient of ingredients">
                   <li>{{ingredient.amount}} {{ingredient.unit}} {{ingredient.id.ingredient.productName}} </li>
                   <div class="divider"></div>
@@ -117,23 +104,21 @@
             </mat-tab>
             <mat-tab label="Instructions">
               <div class="full-desc" [innerHTML]="instructions">
-                <!-- <ul class="px-2 mt-1" >
-                  <li >.....</li>
-                  <div class="divider"></div>
-                  <li>.....</li>
-                  <div class="divider"></div>
-                </ul> -->
               </div>
               <div class="button">
-                <button (click)="onItFeedback()"  _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary" ng-reflect-color="primary" fdprocessedid="rpxeid">
-                  <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+                <button (click)="onItFeedback()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit"
+                  color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary"
+                  ng-reflect-color="primary" fdprocessedid="rpxeid">
+                  <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple"
+                    ng-reflect-disabled="false" ng-reflect-centered="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"></span>
                   <span class="mat-button-focus-overlay"></span>
                 </button>
               </div>
             </mat-tab>
             <mat-tab label="Feedbacks">
               <div class="full-desc">
-                <app-feedbacks></app-feedbacks>
+                <app-feedbacks [mealId]="mealID"></app-feedbacks>
               </div>
             </mat-tab>
           </mat-tab-group>
