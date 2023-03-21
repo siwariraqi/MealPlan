@@ -23,7 +23,7 @@ export class AccountComponent implements OnInit {
     { name: 'Account settings', href: 'account-settings', icon: 'settings' } , 
     { name: 'Help & Support', href: 'help-support', icon: 'help' },
     { name: 'About App', href: 'about', icon: 'information' }, 
-    { name: 'Privacy Policy', href: 'privacy', icon: 'security' },
+    { name: 'Privacy Policy', href: 'privacy', icon: 'lock' },
     { name: 'Terms and Conditions', href: 'terms', icon: 'note' },
     { name: 'Logout', href: '/login', icon: 'power_settings_new' }
   ]; 
