@@ -54,6 +54,7 @@ public class UsersController {
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        user.setPassword(null); // remove password field
         return new ResponseEntity(user,HttpStatus.OK);
     }
 
@@ -61,6 +62,7 @@ public class UsersController {
     public ResponseEntity<User> getUser(@RequestParam long userId) {
         try {
             User user = userBL.getUser(userId);
+            user.setPassword(null); // remove password field
             return ResponseEntity.ok(user);
         } catch (userNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
