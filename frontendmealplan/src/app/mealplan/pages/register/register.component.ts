@@ -7,14 +7,8 @@ import { Onboarding7Component } from "../../components/questions/onboarding7/onb
 @Component({
   selector: "app-register",
   template: `
-    <div
-      class="registerContainer"
-      [ngStyle]="{ 'background-color': backgroundColor, 'background-image': backgroundImage }"
-    >
-      <app-welcome-screen
-        *ngIf="screenState === 'welcome'"
-        [currentPage]="currentPage"
-      ></app-welcome-screen>
+    <div class="registerContainer" [ngStyle]="{ 'background-color': backgroundColor, 'background-image': backgroundImage }">
+      <app-welcome-screen *ngIf="screenState === 'welcome'" [currentPage]="currentPage"></app-welcome-screen>
       <app-onboarding7 *ngIf="onBoardingStep === 7"></app-onboarding7>
       <app-onboarding8 *ngIf="onBoardingStep === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="onBoardingStep === 9"></app-onboarding9>
@@ -25,14 +19,7 @@ import { Onboarding7Component } from "../../components/questions/onboarding7/onb
       <app-onboarding14 *ngIf="onBoardingStep === 14"></app-onboarding14>
       <app-onboarding15 *ngIf="onBoardingStep === 15"></app-onboarding15>
       <app-register-form *ngIf="onBoardingStep === 16"></app-register-form>
-      <button
-        *ngIf="onBoardingStep < 16"
-        class="nextBtn"
-        (click)="nextScreen()"
-        [disabled]="!isCompleted"
-      >
-        NEXT
-      </button>
+      <button *ngIf="onBoardingStep < 16" class="nextBtn" (click)="nextScreen()" [disabled]="!isCompleted">NEXT</button>
       <div class="dots">
         <div
           *ngFor="let page of pages; index as i"
@@ -80,6 +67,8 @@ export class RegisterComponent implements OnInit {
       if (!this.screenValidation()) {
         return;
       } else {
+        console.log("isValid YESS");
+
         this.registerSrv.updateUserInfo(); //if valid save in db
       }
     }
@@ -130,10 +119,7 @@ export class RegisterComponent implements OnInit {
     let isValid: boolean = true;
     switch (this.onBoardingStep) {
       case 7: //goals
-        if (
-          this.registerSrv.getUserInfo().goals === null ||
-          this.registerSrv.getUserInfo().goals.length === 0
-        ) {
+        if (!this.registerSrv.getUserInfo().goals || !this.registerSrv.getUserInfo().goals.length) {
           isValid = false;
         }
         break;
@@ -141,13 +127,14 @@ export class RegisterComponent implements OnInit {
         isValid = true;
         break;
       case 9: //isReceiveTreatment
-        if (this.registerSrv.getUserInfo().isReceiveTreatment === null) isValid = false;
+        if (this.registerSrv.getUserInfo().isReceiveTreatment === null || this.registerSrv.getUserInfo().isReceiveTreatment === undefined)
+          isValid = false;
         break;
       case 10: //activity
         isValid = true;
         break;
       case 11: //gender
-        if (this.registerSrv.getUserInfo().gender === null) isValid = false;
+        if (!this.registerSrv.getUserInfo().gender) isValid = false;
         break;
       case 12: //birthday
         if (!this.validateBirthday()) isValid = false; //TODO
@@ -163,24 +150,70 @@ export class RegisterComponent implements OnInit {
   }
 
   validateBirthday(): boolean {
+    const userBday = this.registerSrv.getUserInfo().birthday;
+    console.log(typeof userBday);
+    if (!userBday || userBday === "") {
+      return false;
+    }
+    const userBdayDate = new Date(userBday);
+    const minDate = new Date("1/1/1922");
+    const maxDate = new Date("1/1/2004");
+    if (userBdayDate < minDate || userBdayDate > maxDate) {
+      return false;
+    }
     return true;
   }
 
   validateWeight(): boolean {
-    if (
-      this.registerSrv.getUserInfo().weight === null ||
-      this.registerSrv.getUserInfo().weight === ""
-    ) {
+    const userWeight = this.registerSrv.getUserInfo().weight;
+    if (!userWeight || userWeight === "") {
+      return false;
+    }
+    const userWeightNum = parseInt(userWeight);
+    const userUnit = this.registerSrv.getUserInfo().unit;
+    const minWeightKg: number = 30;
+    const maxWeightKg: number = 300;
+    const imperialFactor: number = 2.2;
+    if (userUnit === "metric") {
+      if (!(userWeightNum > minWeightKg && userWeightNum < maxWeightKg)) {
+        return false;
+      }
+    } else {
+      //imperial
+      if (!(userWeightNum > minWeightKg * imperialFactor && userWeightNum < maxWeightKg * imperialFactor)) {
+        return false;
+      }
     }
     return true;
   }
 
   validateHeight(): boolean {
-    if (
-      this.registerSrv.getUserInfo().height === null ||
-      this.registerSrv.getUserInfo().height === ""
-    ) {
+    const userheight = this.registerSrv.getUserInfo().height;
+    console.log(userheight);
+    if (!userheight || userheight === "") {
+      return false;
+    }
+    const userheightNum = parseFloat(userheight);
+    const userUnit = this.registerSrv.getUserInfo().unit;
+    const minHeightCm: number = 100;
+    const maxHeightCm: number = 220;
+    if (userUnit === "metric") {
+      if (!(userheightNum > minHeightCm && userheightNum < maxHeightCm)) {
+        return false;
+      }
+    } else {
+      //imperial
+      if (!(userheightNum > this.convertToFeet(minHeightCm) && userheightNum < this.convertToFeet(maxHeightCm))) {
+        return false;
+      }
     }
     return true;
+  }
+
+  convertToFeet(n: number): number {
+    const realFeet: number = (n * 0.3937) / 12;
+    const feet: number = Math.floor(realFeet);
+    const inches: number = Math.round((realFeet - feet) * 12);
+    return parseFloat(feet + "." + inches);
   }
 }

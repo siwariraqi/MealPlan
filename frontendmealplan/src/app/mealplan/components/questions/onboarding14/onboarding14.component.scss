@@ -14,42 +14,37 @@
   height: 13vh;
   position: absolute;
   top: 11%;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 
   // border: 1vh solid black;
 }
-.question
-{
+.question {
   line-height: 24px;
   font-weight: 400;
   font-size: 20px;
 }
-.text
-{
-  font-family: 'Montserrat';
+.text {
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 20px;
 }
-.line
-{ 
+.line {
   position: absolute;
   left: 0%;
   right: 0%;
-  border: 3px solid #4B643D;
+  border: 3px solid #4b643d;
 }
-.content
-{
-    position: absolute;
-    top: 17%;
-    width: 40vw;
-    margin-left: auto;
-    margin-right: auto;
-  }
-.box
-{ 
-  background: linear-gradient(90deg, #F9F9F9 0%, #F6F6F8 21.33%, #F2F2F4 100%);
+.content {
+  position: absolute;
+  top: 17%;
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.box {
+  background: linear-gradient(90deg, #f9f9f9 0%, #f6f6f8 21.33%, #f2f2f4 100%);
   box-shadow: 0.764706px 0.764706px 3.82353px rgba(0, 0, 0, 0.15);
   border-radius: 35.1765px;
   display: inline-block;
@@ -57,39 +52,35 @@
   margin-top: 183px;
   height: 45%;
 }
-.innerbox
-{
+.innerbox {
   display: inline-block;
 
-  background: #E09167;
+  background: #e09167;
   // box-shadow: 0px 3.05882px 9.17647px rgba(90, 90, 90, 0.17);
   border-radius: 22.9412px;
   width: 8vw;
   // height: 43%;
   padding: 1vh;
-
 }
 
 .orange {
-  background-color: #E09167;
-  ;
+  background-color: #e09167;
 }
 
 .white {
-  background-color: #F2F2F4;
+  background-color: #f2f2f4;
+  opacity: 0.4;
 }
 
-.val
-{
+.val {
   font-style: bold;
   font-size: large;
   align-items: center;
   justify-content: center;
   margin-bottom: 0%;
-  
 }
 
-// input 
+// input
 $primary: black;
 $secondary: black;
 $white: black;
@@ -105,7 +96,6 @@ $gray: #9b9b9b;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .form__field {
@@ -124,7 +114,6 @@ $gray: #9b9b9b;
   &::placeholder {
     color: transparent;
   }
-
 }
 
 .form__field:focus {
@@ -135,21 +124,24 @@ $gray: #9b9b9b;
     transition: 0.2s;
     font-size: 1rem;
     color: $primary;
-    font-weight:700;    
+    font-weight: 700;
   }
-  padding-bottom: 6px;  
+  padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, $primary,$secondary);
+  border-image: linear-gradient(to right, $primary, $secondary);
   border-image-slice: 1;
   text-align: center;
 }
-.form__field{
-  &:required,&:invalid { box-shadow:none; }
+.form__field {
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
 }
 
-  @media screen and (max-width: 600px) {
-    .container{
-      width: 95vw;
-    }
+@media screen and (max-width: 600px) {
+  .container {
+    width: 95vw;
   }
+}
