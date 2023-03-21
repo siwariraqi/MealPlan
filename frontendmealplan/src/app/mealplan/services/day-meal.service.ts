@@ -39,8 +39,8 @@ export class DayMealService {
   }
 
   
-  public getIngredients(dayNumber: number, userid: number) {
-    return this.apiService.get<MealIngredients[][]>(this.INGREDIENTS_URL + `${dayNumber}` + '/' + `${userid}`);
+  public getIngredients(mealId: number) {
+    return this.apiService.get<MealIngredients[]>(this.INGREDIENTS_URL + `${mealId}`);
   }
   
   
