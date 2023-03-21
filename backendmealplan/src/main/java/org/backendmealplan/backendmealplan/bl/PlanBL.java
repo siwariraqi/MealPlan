@@ -1,20 +1,8 @@
 package org.backendmealplan.backendmealplan.bl;
 
-import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
-import org.backendmealplan.backendmealplan.beans.DayPlan;
-import org.backendmealplan.backendmealplan.beans.DayPlanId;
-import org.backendmealplan.backendmealplan.beans.Plan;
-import org.backendmealplan.backendmealplan.beans.User;
-import org.backendmealplan.backendmealplan.dao.*;
-
-
 import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.dao.DayMealsDAO;
-import org.backendmealplan.backendmealplan.dao.DayPlanDAO;
-import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
-import org.backendmealplan.backendmealplan.beans.Plan;
-import org.backendmealplan.backendmealplan.dao.PlansDAO;
-
+import org.backendmealplan.backendmealplan.dao.*;
+import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +25,7 @@ public class PlanBL {
 
 
     public Plan getPlan(Long userid) throws userNotFoundException {
+
         Optional<User> users = this.usersDAO.findById(userid);
         if (users.isPresent()) {
             User user = users.get();
@@ -52,39 +41,40 @@ public class PlanBL {
         //check if plan exists
         List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
         if (plans.isEmpty()) {
-            return this.planDAO.save(plan);
+            this.planDAO.save(plan);
+            System.out.println("Plan added successfully!");
         }
-        return null;
+        return plan;
     }
 
-    public DayPlanId addDayPlanId(DayPlanId dayPlanId) {
+    public DayPlanId addDayPlanId(DayPlanId dayPlanId){
         //check if dayPlanId exists
         List<DayPlanId> dayPlanIds = this.dayPlanIdDAO.findByDayPlanId(dayPlanId.getDayPlanId());
-        if (dayPlanIds.isEmpty()) {
+        if(dayPlanIds.isEmpty()) {
             return this.dayPlanIdDAO.save(dayPlanId);
         }
         return null;
     }
 
-    public DayPlan addDayPlan(DayPlan dayPlan) {
+    public DayPlan addDayPlan(DayPlan dayPlan){
         //check if dayPlan exists
         List<DayPlan> dayPlanList = this.dayPlanDAO.findByDayPlanKey(dayPlan.getDayPlanKey());
-        if (dayPlanList.isEmpty()) {
+        if(dayPlanList.isEmpty()) {
             return this.dayPlanDAO.save(dayPlan);
         }
         return null;
     }
 
-    public List<DayMeal> getAllDayMeals() {
+    public List<DayMeal> getAllDayMeals(){
         return this.dayMealsDAO.findAll();
     }
 
-    public List<Plan> getAllPlans() {
+    public List<Plan> getAllPlans(){
         return this.planDAO.findAll();
     }
 
-    public Plan getPlanById(Long id) {
-        return this.planDAO.findPlanByPlanId(id);
+    public Plan getPlanById(Long id){
+        return this.planDAO.findPlanByplanId(id);
 
     }
 

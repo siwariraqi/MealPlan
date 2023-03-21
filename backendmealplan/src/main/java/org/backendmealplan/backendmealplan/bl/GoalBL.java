@@ -13,12 +13,8 @@ public class GoalBL {
     @Autowired
     GoalsDAO goalsDAO;
 
-    public List<Goal> getAllGoals() throws Exception {
-        List<Goal> goals = this.goalsDAO.findAll();
-        if (goals == null || goals.isEmpty()) {
-            throw new Exception("No goals found");
-        }
-        return goals;
+    public List<Goal> getAllGoals(){
+        return this.goalsDAO.findAll();
     }
 
     public List<Goal> getAllTexts(Collection<String> text){

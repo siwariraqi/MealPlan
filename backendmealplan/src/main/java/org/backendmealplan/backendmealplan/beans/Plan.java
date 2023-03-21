@@ -1,9 +1,12 @@
 package org.backendmealplan.backendmealplan.beans;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,42 +20,36 @@ public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long planId;
-    @NotBlank
-    private String planName;
-    @NotBlank
-    private String length;
-    @NotNull
-    private double price;
 
-    @NotBlank
+    private String planName;
+    private String length;
+    private double price;
     @Column(name = "includes", length = 2500)
     private String includes;
-
-    @NotBlank
     @Column(name = "benefits", length = 2500)
     private String benefits;
-
 //  @ToString.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "plan")
+    @OneToMany (mappedBy = "plan")
     private List<User> users = new ArrayList<>();
 
+//    @ToString.Exclude
     @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "dayPlan",
             joinColumns = @JoinColumn(name = "plan_id"),
             inverseJoinColumns = @JoinColumn(name = "day_plan_id"))
-    List<DayPlanId> dayPlanIdList = new ArrayList<>();
+    List<DayPlanId> dayPlanIdList;
 
-    @ToString.Exclude
-    @JsonIgnore
-    @OneToMany(mappedBy = "plan")
+   @ToString.Exclude
+   @JsonIgnore
+    @OneToMany (mappedBy = "plan")
     private List<GroceryList> groceryLists;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "plan")
+    @OneToMany (mappedBy = "plan")
     private List<Payment> payments;
 
 }

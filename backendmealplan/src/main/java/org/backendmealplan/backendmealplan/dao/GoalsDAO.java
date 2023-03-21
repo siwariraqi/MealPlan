@@ -1,6 +1,8 @@
 package org.backendmealplan.backendmealplan.dao;
+
 import org.backendmealplan.backendmealplan.beans.Goal;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.Collection;
 import java.util.List;
 

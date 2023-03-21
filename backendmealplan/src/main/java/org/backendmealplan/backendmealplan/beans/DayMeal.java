@@ -1,9 +1,11 @@
 package org.backendmealplan.backendmealplan.beans;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -13,6 +15,5 @@ public class DayMeal {
 
     @EmbeddedId
     private DayMealKey id;
-    @NotBlank
-    private String type;
+    private String Type;
 }

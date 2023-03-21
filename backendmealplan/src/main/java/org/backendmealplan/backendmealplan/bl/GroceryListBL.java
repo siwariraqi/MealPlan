@@ -3,7 +3,6 @@ package org.backendmealplan.backendmealplan.bl;
 import org.backendmealplan.backendmealplan.beans.GroceryList;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.dao.GroceryListDAO;
-import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

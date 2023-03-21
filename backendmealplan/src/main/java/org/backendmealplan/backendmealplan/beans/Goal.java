@@ -1,9 +1,10 @@
 package org.backendmealplan.backendmealplan.beans;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,9 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goalId;
 
-    @JsonProperty("text")
     @Column(nullable = false)
     private String text;
 
-    @JsonIgnore
-    @ToString.Exclude
     @ManyToMany(mappedBy = "goals")
     List<UserInfo> usersInfo;
 
