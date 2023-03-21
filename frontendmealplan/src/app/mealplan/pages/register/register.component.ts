@@ -28,7 +28,7 @@ import { Onboarding7Component } from "../../components/questions/onboarding7/onb
         [ngStyle]="{ 'background-color': btnBackgroundColor, color: btnColor }"
         (click)="nextScreen()"
       >
-        NEXT
+        {{ onBoardingStep === 15 ? "CONFIRM & CONTINUE" : "NEXT" }}
       </button>
       <div class="dots">
         <div

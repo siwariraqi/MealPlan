@@ -15,46 +15,46 @@
   height: 13vh;
   position: absolute;
   top: 11%;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 
   // border: 1vh solid black;
 }
-.question
-{
+.question {
   line-height: 24px;
   font-weight: 400;
   font-size: 20px;
 }
-.text
-{
-  font-family: 'Montserrat';
+.text {
+  font-family: "Montserrat";
   font-style: normal;
-
+  margin-top: -3vh;
   font-weight: 400;
   font-size: 30px;
   line-height: 37px;
 }
-.line
-{ 
+.line {
   position: absolute;
   left: 0%;
   right: 0%;
-  border: 3px solid #4B643D;
+  border: 3px solid #4b643d;
 }
-.content
-{
+.content {
   position: absolute;
-  top: 25%;
+  top: 20%;
   width: 70vw;
   margin-left: auto;
   margin-right: auto;
   // border: 1px solid black;
-
 }
 
+.loading {
+  margin: auto;
+  text-align: center;
+  // margin-top: -1vh;
+}
 
 @media screen and (max-width: 600px) {
-  .container{
+  .container {
     width: 95vw;
   }
 }

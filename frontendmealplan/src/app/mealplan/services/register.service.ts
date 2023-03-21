@@ -23,20 +23,19 @@ export class RegisterService {
   }
 
   registerUser(user: User): Observable<User> {
+    // user.userInfo.infoId = 1; //TODO: delete this
     return this.httpClient.post<User>(this.BASE_URL + this.ADD_USER_API, user);
   }
 
   updateUserInfo(): Observable<UserInfo> {
     console.log(this.currUserInfo);
-    return this.httpClient
-      .post<UserInfo>(this.BASE_URL + this.UPDATE_USER_INFO_API, this.currUserInfo)
-      .pipe(
-        tap((response) => {
-          // console.log("response = " + response);
-          this.currUserInfo = response;
-          this.setUserInfoLocalStorage();
-        })
-      );
+    return this.httpClient.post<UserInfo>(this.BASE_URL + this.UPDATE_USER_INFO_API, this.currUserInfo).pipe(
+      tap((response) => {
+        // console.log("response = " + response);
+        this.currUserInfo = response;
+        this.setUserInfoLocalStorage();
+      })
+    );
   }
 
   getUserInfo(): UserInfo {
