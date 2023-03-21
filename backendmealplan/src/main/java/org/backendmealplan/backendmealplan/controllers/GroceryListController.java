@@ -19,7 +19,7 @@ public class GroceryListController {
     private GroceryListBL groceryListBL;
     //TODO:change parameters to body or header
     @PostMapping("deleteIngredients/{groceryListId}/{userId}")
-        public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @PathVariable Long userId){
+    public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @PathVariable Long userId){
         List<Long> groceryListIds = new ArrayList<>();
         groceryListIds.add(Long.valueOf(groceryListId));
         try{

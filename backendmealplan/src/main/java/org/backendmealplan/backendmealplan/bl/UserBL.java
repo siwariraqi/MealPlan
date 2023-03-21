@@ -7,16 +7,17 @@ import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
-import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
-import org.backendmealplan.backendmealplan.exceptions.userExistException;
-import org.backendmealplan.backendmealplan.exceptions.userInfoNotFound;
-import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.*;
+import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.dao.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 public class UserBL {
@@ -49,18 +50,34 @@ public class UserBL {
 
     }
 
-    public User adduser(User user) throws userExistException {
-        User u = this.usersDAO.findByEmail(user.getEmail());
-        if (u != null) {
+    @Transactional
+    public User adduser(User user) throws userExistException, InvalidUserException {
+        // Validate input parameters
+        if (!isValidPassword(user.getPassword())) {
+            throw new InvalidUserException("Password must include at least 8 characters, letter, number, cannot include: ./=_-()");
+        }
+
+        // Check if user with email already exists
+        if (usersDAO.findByEmail(user.getEmail()) != null) {
             throw new userExistException("Email already in use!");
         }
-        String normalPassword = user.getPassword();
-        String hashedPassword = passwordEncoder.encode(normalPassword);
+
+        // Hash the password
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        this.usersDAO.save(user);
-        return user;
+
+        // Save the user to the database
+        try {
+            return usersDAO.save(user);
+        } catch (DataAccessException e) {
+            throw new InvalidUserException("Failed to save user: " + e.getMessage());
+        }
     }
 
+    private boolean isValidPassword(String password) {
+        // Password must include at least 8 characters, letter, number, cannot include: ./=_-()
+        return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+    }
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.
@@ -69,10 +86,16 @@ public class UserBL {
 
     public UserInfo addUserInfoGoals(UserInfo userInfo) {
         UserInfo added = this.usersInfoDAO.save(userInfo);
-        //update the goals table;
-        //TODO: should we update the goals table manually?
-        //added.setGoals(userInfo.getGoals());
-        return added;
+        Set<Goal> goals = new HashSet<>();
+        for (Goal goal : userInfo.getGoals()) {
+            Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
+            if (optionalGoal.isPresent()) {
+                Goal existingGoal = optionalGoal.get();
+                goals.add(existingGoal);
+            }
+        }
+        userInfo.setGoals(goals);
+        return this.usersInfoDAO.save(userInfo);
     }
 
     /*
@@ -82,18 +105,17 @@ public class UserBL {
      * output: None
      * exceptions: userInfoNotFound - indicating that no user with the given id was found.
      */
-    public UserInfo updateUserInfo(UserInfo userInfo) throws userInfoNotFound {
-        this.usersInfoDAO.save(userInfo);
-//        UserInfo existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
-        if (userInfo != null) {
-            return userInfo;
+    public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws userInfoNotFound {
+        Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
+        if (existingUsersInfo.isPresent()) {
+            return this.usersInfoDAO.save(userInfo);
         } else {
             throw new userInfoNotFound();
         }
     }
 
     public User updateProfile(User newProfile) throws UNAUTHORIZEDException {
-        User user = this.usersDAO.findUserByuserId(newProfile.getUserId());
+        User user = this.usersDAO.findByUserId(newProfile.getUserId());
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
@@ -109,7 +131,7 @@ public class UserBL {
 
 
     public User userSetPlan( Long userId,  Long planId) throws UNAUTHORIZEDException {
-        User user = this.usersDAO.findUserByuserId(userId);
+        User user = this.usersDAO.findByUserId(userId);
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
@@ -125,7 +147,7 @@ public class UserBL {
 
     public User getUser(Long userid) throws userNotFoundException {
 
-        User user = this.usersDAO.findUserByuserId(userid);
+        User user = this.usersDAO.findByUserId(userid);
         if (user!=null) {
             return user;
         } else {
@@ -133,9 +155,8 @@ public class UserBL {
         }
     }
 
-
     public User addGroceryChangeToUser(Long userId, List<GroceryList> groceryList) throws UNAUTHORIZEDException {
-        User user = this.usersDAO.findUserByuserId(userId);
+        User user = this.usersDAO.findByUserId(userId);
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
@@ -161,5 +182,5 @@ public class UserBL {
         }
         return user.getPlan();
     }
-}
 
+}

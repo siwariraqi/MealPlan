@@ -10,13 +10,15 @@ import { DayMeal } from 'src/app/mealplan/models/DayMeal';
   styleUrls: ['./meal-items.component.scss']
 })
 export class MealItemsComponent implements OnInit {
+  @Input() lazyLoad: boolean = false;
+  @Input () dayItem!:DayMeal;
+  @Input() viewType: string = "grid";
+  @Input() viewColChanged: any; 
+  @Input () mealindex:number
   meal:Meal
   type: string;
   mealItem:Meal;
-  @Input () dayItem!:DayMeal;
-  @Input() lazyLoad: boolean = false;
-  @Input() viewType: string = "grid";
-  @Input() viewColChanged: any; 
+
   public column:number = 4;
   
   constructor(private dayMealService:DayMealService) { }
