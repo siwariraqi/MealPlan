@@ -1,36 +1,57 @@
-<div class = "container">
+<div class="container">
+    <div class="Weekbuttons1">
+        <div *ngFor="let week of allWeeks" class="p-3" >
+            <button class="weeks1" [ngClass]="{'orange': clicked[week-1] == true , 'white':clicked[week-1]==false}" (click)="weekClicked(week)"  
+            >Week {{week}}</button>
+            <!--[ngClass]="{'toggleColor': toggleColor,'orange': val1.value==current_product_size}" -->
+        </div>
+        <!-- mat-raised-button [ngClass]="{ orange: clicked[week] , white: !clicked[week] }"  -->
+    </div>
     <div class="mat-table theme-table cart-table">
+        <!-- <div class="line"> </div> -->
         <div class="mat-header-row">
             <div class="mat-header-cell">productName</div>
             <div class="mat-header-cell quantity">Amount</div>
-            <div class="mat-header-cell price"> unit</div>      
+            <div class="mat-header-cell price"> catagory</div>
+            <div class="mat-header-cell price"> week</div>
+            <div class="mat-header-cell price"> unit</div>
             <div class="mat-header-cell actions text-center">
                 <div class="px-1" (click)="selectAll()">
-                    Delete All
+                    <!--Delete All-->
                     <!--<button mat-raised-button color="warn" >Delete All</button>-->
                 </div>
             </div>
         </div>
-    <div *ngFor="let grocery of groceries"  class="mat-row">
-        <!--<div class="mat-cell image"><img [src]="item.image.small"></div>-->
-        <div class="mat-cell productName">
-            <input class="checkbox" type="checkbox">
-            <div >{{grocery.ingredient.productName}}</div>
-        </div>
-        
-        <div class="mat-cell quantity">
-            {{grocery.amount}}
-        </div>
-        <div class="mat-cell price">{{grocery.unit}}</div>      
-        <div class="mat-cell actions text-center">
-            <div class="p-1">
-                <button mat-mini-fab color="warn" (click)="hideIngredient(grocery)" matTooltip="Clear">
-                    <mat-icon>close</mat-icon>
-                </button>
+    </div>
+    <div *ngFor="let catagoryy of AllCatagories" class="catagories">
+        <div class="catagoriesTitle">{{catagoryy}}</div>
+        <div class="mat-table theme-table cart-table">
+            <div *ngFor="let grocery of groceries">
+                <div *ngIf="grocery.ingredient.category == catagoryy" class="mat-row">
+                    <!--<div class="mat-cell image"><img [src]="item.image.small"></div>-->
+                    <div class="mat-cell productName">
+                        <input class="checkbox" type="checkbox">
+                        <div>{{grocery.ingredient.productName}}</div>
+                    </div>
+
+                    <div class="mat-cell quantity">
+                        {{grocery.amount}}
+                    </div>
+                    <div class="mat-cell price">{{grocery.ingredient.category}}</div>
+                    <div class="mat-cell price">{{grocery.week}}</div>
+                    <div class="mat-cell price">{{grocery.unit}}</div>
+                    <div class="mat-cell actions text-center">
+                        <div class="p-1">
+                            <button mat-mini-fab color="white" (click)="hideIngredient(grocery)" matTooltip="Clear">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div> 
-        
+        </div>
     </div>
 </div>
+
 
 <!--Our Code ends here-->
