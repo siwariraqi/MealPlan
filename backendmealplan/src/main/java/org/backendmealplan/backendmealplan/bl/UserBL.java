@@ -33,6 +33,9 @@ public class UserBL {
     UsersInfoDAO usersInfoDAO;
 
     @Autowired
+    FeedbackBL feedbackBL;
+
+    @Autowired
     GoalsDAO goalsDAO;
 
     @Autowired
@@ -255,6 +258,8 @@ public class UserBL {
 
         if(user != null){
                 UserInfo userInfo = user.getUserInfo();
+                feedbackBL.deleteFeedbacksByUser(user);
+                //TODO : remove grocerylist changes when ready team5 @Maha ?
                 usersDAO.delete(user);
                 usersInfoDAO.delete(userInfo);
                 return;
