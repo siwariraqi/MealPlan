@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
-import { catchError, observable, Observable, tap, throwError } from 'rxjs';
+import { catchError, observable, Observable, switchMap, tap, throwError } from 'rxjs';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { User } from '../models/User';
 import { ApiService } from './api.service';
@@ -15,6 +15,9 @@ export class UserService {
   CHOOSEPLAN = 'users/choosePlan?userId=';
   UPDATEPROFILE = 'users/updateProfile';
   GETUSER = 'users/getUser?userId=';
+  CHANGEPASSWORD = 'users/changePassword';
+  DELETEACCOUNT = 'users/deleteAccount?userId=';
+  CHECKACCOUNT = 'users/checkAccount';
 
   constructor(private http:HttpClient, private apiService:ApiService) { }
 
@@ -32,7 +35,7 @@ export class UserService {
   }
 
   changePassword(request:ChangePasswordRequest):Observable<string>{
-    return this.apiService.post<string>('users/changePassword',request);
+    return this.apiService.post<string>(this.CHANGEPASSWORD,request);
   }
 
   
@@ -55,5 +58,22 @@ export class UserService {
         })
       );
   }
+
+  checkAccount(email: string, password: string): Observable<number> {
+  
+    const body = {
+      email: email,
+      password: password
+    };
+
+   
+    return this.apiService.post<number>(this.CHECKACCOUNT, body);
+  }
+
+  deleteAccount(userId:number) : Observable<string>{
+    return this.apiService.delete(this.DELETEACCOUNT+`${userId}`);
+  }
+
+  
 
 }

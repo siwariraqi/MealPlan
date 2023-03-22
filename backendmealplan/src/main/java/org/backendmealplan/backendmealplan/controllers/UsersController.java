@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("users")
@@ -56,6 +57,31 @@ public class UsersController {
         }
         user.setPassword(null); // remove password field
         return new ResponseEntity(user,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteAccount")
+    public ResponseEntity deleteUser(@RequestParam Long userId) {
+        try {
+            this.userBL.deleteAccount(userId);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/checkAccount")
+    public ResponseEntity checkAccount(@RequestBody Map<String, String> credentials){
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+        if (email == null || password==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        try {
+            User user = this.userBL.checkAccount(email, password);
+            return ResponseEntity.ok(user.getUserId());
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
