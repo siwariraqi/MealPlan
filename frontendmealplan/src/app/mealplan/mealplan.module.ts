@@ -46,6 +46,7 @@ import { ShareComponent } from './pages/dayMeal/share/share.component';
 import { PrintComponent } from './pages/dayMeal/print/print.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
+import { DietTypeComponent } from './pages/dayMeal/diet-type/diet-type.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes
     PrintComponent,
     GroceryListComponent,
     RecipesComponent,
-    RecipesToolbarComponent
+    RecipesToolbarComponent,
+    DietTypeComponent
   ],
 
   imports: [
