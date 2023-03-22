@@ -16,6 +16,9 @@ export class PasswordChangeComponent implements OnInit {
   public passwordForm!:UntypedFormGroup;
   userId:number;
   user:User ={};
+  hideCurrent = true;
+  hideNew = true;
+  hideConfirm = true;
 
   constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
   
