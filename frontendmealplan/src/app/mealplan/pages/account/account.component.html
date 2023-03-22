@@ -2,13 +2,13 @@
     <div class="theme-container"> 
         <mat-sidenav-container class="account">
             <mat-sidenav #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'">
-                <mat-card [perfectScrollbar]="psConfig"> 
+                <mat-card [perfectScrollbar]="psConfig" class="bigger-font"> 
                     <button fxHide="false" fxHide.gt-sm mat-mini-fab color="warn" class="close" (click)="sidenav.toggle()">
                         <mat-icon>close</mat-icon>
                     </button>
                     <mat-card-header fxLayoutAlign="start center">                       
                         <img mat-card-avatar src="assets/images/others/user.jpg" alt="">
-                        <mat-card-title class="text-muted mb-0 secondary-font">{{name}}</mat-card-title> 
+                        <mat-card-title class="text-muted mb-0 secondary-font bigger-title">{{name}}</mat-card-title> 
                     </mat-card-header>
                     <div class="divider my-3"></div>
                     <div *ngFor="let link of links">

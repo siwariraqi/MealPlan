@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, observable, Observable, throwError } from 'rxjs';
+import { response } from 'express';
+import { catchError, observable, Observable, tap, throwError } from 'rxjs';
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { User } from '../models/User';
 import { ApiService } from './api.service';
 
@@ -29,9 +31,13 @@ export class UserService {
       );
   }
 
+  changePassword(request:ChangePasswordRequest):Observable<string>{
+    return this.apiService.post<string>('users/changePassword',request);
+  }
+
   
-  updateProfile(user:User):Observable<string>{
-    return this.apiService.post<any>(this.UPDATEPROFILE,user);
+  updateProfile(user:User):Observable<User>{
+    return this.apiService.post<User>(this.UPDATEPROFILE,user);
   }
 
   choosePlan(userId: number, planId: number): Observable<string> {

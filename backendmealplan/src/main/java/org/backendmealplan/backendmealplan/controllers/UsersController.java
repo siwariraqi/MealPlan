@@ -60,14 +60,16 @@ public class UsersController {
 
 
 
-    @PostMapping("/updatePassword")
-    public ResponseEntity updatePassword(@RequestBody User user){
+    @PostMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
         try {
-            this.userBL.updateProfile(user);
+            this.userBL.changePassword(request.getUserId(),request.getCurrentPassword(),request.getNewPassword(),request.getConfirmPassword());
         } catch (UNAUTHORIZEDException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return new ResponseEntity(user,HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 
