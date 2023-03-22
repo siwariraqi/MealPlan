@@ -18,6 +18,7 @@ export class MealItemsComponent implements OnInit {
   meal:Meal
   type: string;
   mealItem:Meal;
+  
 
   public column:number = 4;
   

@@ -87,13 +87,42 @@
                 }} g</span>
             </p>
           </div>
+          <div class="text-muted divider"></div>
 
-          <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
+          <div  fxLayoutAlign="start center" >
+            <app-diet-type  ></app-diet-type> 
+          </div>
+          
+          <div>
+            <span  class="mat-icon mat-icon-sm primary-color  ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20"  class="bi bi-check" viewBox="0 0 20 20"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+          </span>
+            KETO </div>
+          <div>
+            <span  class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20"  class="bi bi-check" viewBox="0 0 20 20"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+            </span>
+            Gluten Free </div>
+          <div>
+            <span  class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20"  class="bi bi-check" viewBox="0 0 20 20"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+            </span>
+            Vagan  </div>
+          <div>
+            <span  class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20"  class="bi bi-check" viewBox="0 0 20 20"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+            </span>
+            Dairy  </div>
+          <div fxLayout=" row " class="mt-2">
+                  
+          </div>
+
+
+          <div fxLayout="row" fxLayoutAlign="start center" class=" divider pt-3">
             <span class="fw-500">Share: </span>
             <app-share fxLayout="row" fxLayoutAlign="start center"></app-share>
-
           </div>
-          <div fxLayout="row" fxLayoutAlign="start center" class="text-muted divider pt-3">
+          <div fxLayout="row" fxLayoutAlign="start center" class=" pt-3">
             <span class="fw-500">Print: </span>
             <app-print fxLayout="row" fxLayoutAlign="start center"></app-print>
           </div>
@@ -121,12 +150,27 @@
                   <span class="mat-button-focus-overlay"></span>
                 </button>
               </div>
+              <mat-tab label="Tips">
+                <div class="full-desc" [innerHTML]="instructions">
+                </div>
+                <div class="button">
+                  <button  _ngcontent-serverapp-c218="" mat-flat-button="" type="submit"
+                    color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary"
+                    ng-reflect-color="primary" fdprocessedid="rpxeid">
+                    <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple"
+                      ng-reflect-disabled="false" ng-reflect-centered="false"
+                      ng-reflect-trigger="[object HTMLButtonElement]"></span>
+                    <span class="mat-button-focus-overlay"></span>
+                  </button>
+                </div>
+              </mat-tab>
             </mat-tab>
-            <mat-tab label="Feedbacks">
+              <mat-tab label="Feedbacks">
               <div class="full-desc">
                 <app-feedbacks [mealId]="mealID"></app-feedbacks>
               </div>
             </mat-tab>
+         
           </mat-tab-group>
         </div>
       </div>

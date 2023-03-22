@@ -14,7 +14,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   styleUrls: ["./meal-single.component.scss"],
 })
 export class MealSingleComponent implements OnInit {
-
+  grid='grid';
   meal:Meal;
   type:string = "";
   userFeedback: UserFeedback = new UserFeedback(); 

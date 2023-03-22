@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-diet-type',
@@ -11,5 +11,9 @@ export class DietTypeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  keto=true;
+  vegan=true;
+  gluten=true;
+  dairy=true;
 
 }
