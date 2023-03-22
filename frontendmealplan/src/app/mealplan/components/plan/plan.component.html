@@ -1,12 +1,12 @@
 <div class="planContainer">
     <div>
-        <h2>The {{name}} Plan</h2>
+        <h2 class="bigger-title">The {{name}} Plan</h2>
     </div>
     <div>
         <h2>${{price}} / <span class="lenSpan">{{length}}</span></h2>
     </div>
     <div>
-        <h2 class="title">The {{name}} Plan Includes:</h2>
+        <h2 class="bigger-font">The {{name}} Plan Includes:</h2>
     </div>
     <div [innerHTML]="includes">
         
@@ -14,12 +14,12 @@
         
     </div>
     <div>
-        <h2>Benefits:</h2>
+        <h2 class="bigger-font">Benefits:</h2>
     </div>
     <div [innerHTML]="benefits">
     </div>
     <div>
-        <button (click)="choosePlan()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary right-bottom" ng-reflect-color="primary" fdprocessedid="rpxeid">
+        <button (click)="choosePlan()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit" color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary right-bottom custom-button" ng-reflect-color="primary" fdprocessedid="rpxeid">
             <span class="mat-button-wrapper">Select Plan</span><span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
             <span class="mat-button-focus-overlay"></span>
         </button>

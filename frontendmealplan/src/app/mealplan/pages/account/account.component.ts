@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit {
     { name: 'Help & Support', href: 'help-support', icon: 'help' },
     { name: 'About App', href: 'about', icon: 'information' }, 
     { name: 'Privacy Policy', href: 'privacy', icon: 'lock' },
-    { name: 'Terms and Conditions', href: 'terms', icon: 'note' },
+    { name: 'Terms & Conditions', href: 'terms', icon: 'note' },
     { name: 'Logout', href: '/login', icon: 'power_settings_new' }
   ]; 
   constructor(public router:Router,private userService:UserService) { }

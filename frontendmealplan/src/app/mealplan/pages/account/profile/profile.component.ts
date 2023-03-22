@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/mealplan/models/User';
 import { UserInfo } from 'src/app/mealplan/models/UserInfo';
 import { UserService } from 'src/app/mealplan/services/user.service';
+import { catchError, of } from 'rxjs';
 
 
 @Component({
@@ -58,6 +59,10 @@ export class ProfileComponent implements OnInit {
 
 
   public onInfoFormSubmit():void {
+    if (Object.keys(this.user).length === 0) {
+      this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+      return;
+    }
     this.userId = Number(localStorage.getItem('userId'));
     this.user.userId=this.userId;
     this.user.firstName=this.infoForm.controls['FirstName'].value || this.user.firstName; // use previous value if empty
@@ -70,18 +75,23 @@ export class ProfileComponent implements OnInit {
     }
     this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
 
-    if (this.infoForm.valid) { 
-      localStorage.setItem('user',JSON.stringify(this.user))
-      this.userService.updateProfile(this.user).subscribe(
-        data => {
-          console.log('Profile updated successfully.');
-          this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-        },
-        error => {
-          console.error('Error updating profile:', error);
-          this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-        }
-      );
+    if (this.infoForm.valid) {
+      this.userService.updateProfile(this.user)
+        .pipe(
+          catchError(error => {
+            console.error('Error updating profile:', error);
+            this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+            return of(null); // Return an observable with null value to continue the observable chain
+          })
+        )
+        .subscribe(
+          data => {
+            if (data) { // Only execute the success logic if data is not null
+              console.log('Profile updated successfully.');
+            }
+          }
+        );
+        this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
     }
     else{
       this.snackBar.open('Wrong information. Please fix it and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });

@@ -52,6 +52,18 @@ public class UserBL {
 
     }
 
+    public void changePassword(long userID, String currentPassword, String newPassword, String confirmPassword) throws UNAUTHORIZEDException {
+        User user = this.usersDAO.findByUserId(userID);
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new UNAUTHORIZEDException("Wrong current password");
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            throw new UNAUTHORIZEDException("New password and confirmation password do not match");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        this.usersDAO.save(user);
+    }
+
     @Transactional
     public User adduser(User user) throws userExistException, InvalidUserException {
         // Validate input parameters

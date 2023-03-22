@@ -1,5 +1,5 @@
 .planContainer {
-    min-height: 86vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     font-family: Montserrat;
@@ -12,6 +12,23 @@
     padding: 10px;
     margin: 10px;
     width: 350px;
+  }
+
+  .bigger-font {
+    font-size: 1.2rem; /* adjust the value as needed */
+    font-weight: bold;
+    text-decoration: underline;
+    font-family: 'Montserrat', sans-serif ;
+  }
+
+  .bigger-title{
+    font-size: 1.5rem; /* adjust the value as needed */
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif ;
+  }
+
+  .custom-button {
+    font-size: 1.2em; /* Adjust the value to your liking */
   }
   
   .bullet {
@@ -27,8 +44,15 @@
     margin-left: 30px;
   }
 
+  .secondary-font {
+    font-family: 'Montserrat', sans-serif ;
+  }
+
   ul {
     list-style: none;
+    font-size: 1rem; /* adjust the value as needed */
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
   }
   
   .bullet {
