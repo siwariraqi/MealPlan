@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
   selector: "app-onboarding13",
@@ -18,21 +19,21 @@ import { Component, OnInit } from "@angular/core";
             class="form__field"
             name="name"
             required
-          /> 
+          #inputValue/> 
          <p class='val'> {{ val }} <p>
         </div>
         <div class="box">
           <div
             class="innerbox"
-            (click)="enableDisableRule1()"
-            [ngClass]="{ orange: !toggle1, white: toggle1 }"
+            (click)="enableDisableRule1(inputValue.value)"
+            [ngClass]="{ orange: toggle1, white: !toggle1 }"
           >
             KG
           </div>
           <div
             class="innerbox"
-            (click)="enableDisableRule2()"
-            [ngClass]="{ orange: !toggle2, white: toggle2 }"
+            (click)="enableDisableRule2(inputValue.value)"
+            [ngClass]="{ orange: toggle2, white: !toggle2 }"
           >
             LB
           </div>
@@ -44,22 +45,50 @@ import { Component, OnInit } from "@angular/core";
 })
 export class Onboarding13Component implements OnInit {
   toggle1 = false;
-  toggle2 = true;
+  toggle2 = false;
   val : String = "KG";
+  valid : boolean ;
+  WeightNum : Number;
 
-  constructor() {}
+  weight: string;
 
+  constructor(private registerSrv: RegisterService) {
+    this.weight = null;
+    this.valid = false;
+  }
   ngOnInit(): void {}
 
-  enableDisableRule1() {
+  enableDisableRule1(weight: string) {
     this.toggle1 = !this.toggle1;
-    this.toggle2 = true;
+    this.toggle2 = false;
+    this.WeightNum = Number(weight);
+    if (this.WeightNum > 30 && this.WeightNum < 300){
+      this.save(weight);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
+    }
     this.val = "KG";
   }
-  enableDisableRule2() {
+  enableDisableRule2(weight: string) {
     this.toggle2 = !this.toggle2;
-    this.toggle1 = true;
+    this.toggle1 = false;
     this.val = "LB";
+    this.WeightNum = Number(weight);
+    if (this.WeightNum > 60 && this.WeightNum < 600){
+      this.save(weight);
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+      console.log('not valid');
 
+    }  }
+
+  save(weight: string) {
+    this.registerSrv.getUserInfo().weight = weight;
+    console.log(this.registerSrv.getUserInfo().weight);
   }
 }

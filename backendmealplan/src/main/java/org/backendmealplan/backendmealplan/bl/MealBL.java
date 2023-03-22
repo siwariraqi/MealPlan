@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.*;
@@ -32,16 +33,18 @@ public class MealBL {
     @Autowired
     DayMealsDAO dayMealsDAO;
 
+
     public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
         Optional<User> users = this.usersDAO.findById(userID);
         if (users.isPresent()) {
             User user = users.get();
             Plan plan = user.getPlan();
             List<DayPlanId> dayPlanIds = plan.getDayPlanIdList();
+            List<DayMeal> dayMeals;
             if (dayNumber != 0) {
                 DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
-                return dayMeals;
+                dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
+
             } else {
                 Optional<Payment> payment = paymentDAO.findByUserUserId(userID);
                 if (payment.isPresent()) {
@@ -53,17 +56,37 @@ public class MealBL {
                     long daysBetween = ChronoUnit.DAYS.between(paymentOfLocalDate, currentDate);
                     dayNumber = (int) daysBetween;
                     DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                    List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
-                    return dayMeals;
+                    dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
                 } else {
                     throw new paymentNotFoundException("Payment not found");
                 }
+
             }
+            Collections.sort(dayMeals,new Comparator<DayMeal>() {
+                @Override
+                public int compare(DayMeal o1, DayMeal o2) {
+                    String[] order = {"Breakfast", "Snacks","Snacks", "Lunch","Dinner"};
+                    List<String> ord = new ArrayList<>();
+                    for(String type:order){
+                        ord.add(type);
+                    }
+                    return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
+                }
+            });
+            if(dayMeals.size() == 5){
+                DayMeal snack = dayMeals.get(2);
+                dayMeals.remove(2);
+                dayMeals.add(3,snack);
+            }
+            return dayMeals;
         } else {
             throw new userNotFoundException("User not found");
         }
     }
 
+  public List<MealIngredients> getDayPlanMealIngredients(Long mealId) throws MealNotFoundException {
+    return mealIngredientsDAO.getMealIngredients(mealId);
+  }
 
     public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
         List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
@@ -110,8 +133,8 @@ public class MealBL {
         this.dayMealsDAO.save(dayMeal);
     }
 
-    public List<Meal> getMealsByTime(String mealTime, Long userId) throws userNotFoundException {
-        List<Meal> returnedList = new ArrayList<>();
+    public List<DayMeal> getMealsByTime(String mealTime, Long userId) throws userNotFoundException {
+        List<DayMeal> returnedList = new ArrayList<>();
         Set<String> mealNamesSet = new HashSet<>();
         Optional<User> users = this.usersDAO.findById(userId);
         if (users.isPresent()) {
@@ -122,7 +145,7 @@ public class MealBL {
                 List<DayMeal> dayMealList = this.dayMealsDAO.findByIdPlanDayIdAndType(dayPlanId, mealTime);
                 for (DayMeal dayMeal : dayMealList) {
                     if (!mealNamesSet.contains(dayMeal.getId().getMeal().getMealName())) {
-                        returnedList.add(dayMeal.getId().getMeal());
+                        returnedList.add(dayMeal);
                         mealNamesSet.add(dayMeal.getId().getMeal().getMealName());
                     }
                 }

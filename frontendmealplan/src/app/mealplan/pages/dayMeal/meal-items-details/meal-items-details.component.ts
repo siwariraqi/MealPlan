@@ -12,6 +12,7 @@ export class MealItemsDetailsComponent implements OnInit {
   public config: SwiperConfigInterface = {}; 
   constructor() { }
   ngOnInit() {
+    console.log(this.mealItems)
   }
   ngAfterViewInit(){
     this.config = {

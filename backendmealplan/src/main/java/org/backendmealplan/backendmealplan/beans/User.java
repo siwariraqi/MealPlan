@@ -46,6 +46,7 @@ public class User {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
+
     @OneToMany (mappedBy = "user")
     private List<Payment> payments;
 

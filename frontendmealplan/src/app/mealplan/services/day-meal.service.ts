@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { DayMeal } from '../models/DayMeal';
 import { Meal } from '../models/Meal';
+import { MealIngredients } from '../models/MealIngredien';
 import { Plan } from '../models/Plan';
 import { UserFeedback } from '../models/UserFeedback';
 import { ApiService } from './api.service';
@@ -11,13 +12,16 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class DayMealService {
-  GETDAYPLANMEAL_URL = "users/day-plan-meals/";
-  PLAN_URL = "users/plan/";
-  DAYNUTRITION_URL = "users/day-nutrition/";
+  GETDAYPLANMEAL_URL = "plans/day-plan-meals/";
+  PLAN_URL = "plans/";
+  DAYNUTRITION_URL = "plans/day-nutrition/";
   SAVEFEEDBACK_URL = "feedback/save/";
+  INGREDIENTS_URL ="plans/ingredients/"
   meal: Array<Meal> = [];
   private selectedMeal: any;
   selectedType:string;
+  public dayMeals:Array<DayMeal> =[];
+  mealingridents: MealIngredients[][];
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
   public getDayPlanMeals(dayNumber: number, userid: number) {
@@ -34,7 +38,22 @@ export class DayMealService {
     return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${userId}` + '/' + `${mealId}`, userFeedback);
   }
 
-  setSelectedMeal(meal: any) {
+  
+  public getIngredients(mealId: number) {
+    return this.apiService.get<MealIngredients[]>(this.INGREDIENTS_URL + `${mealId}`);
+  }
+  
+  
+  setDayMeals(dayMeals:DayMeal[]){
+    this.dayMeals=dayMeals;
+  }
+
+  getDayMeals(){
+    return this.dayMeals;
+  }
+  
+
+  setSelectedMeal(meal:any) {
     this.selectedMeal = meal;
   }
   getSelectedMeal() {
@@ -42,14 +61,21 @@ export class DayMealService {
   }
 
   setType(type: string) {
-    console.log('tttttttttttttt')
-    console.log(type)
+
     this.selectedType = type;
   }
   getType() {
-    return this.selectedMeal;
+    return this.selectedType;
   }
 
+  selectedDay:number
+
+  setChoosenDay(day: number) {
+    this.selectedDay = day;
+  }
+  getChoosenDay() {
+    return this.selectedDay;
+  }
 
 
 

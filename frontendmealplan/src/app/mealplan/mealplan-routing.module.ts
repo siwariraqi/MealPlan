@@ -5,6 +5,7 @@ import { DashboardComponent } from "./pages/account/dashboard/dashboard.componen
 import { PasswordChangeComponent } from "./pages/account/password-change/password-change.component";
 import { ProfileComponent } from "./pages/account/profile/profile.component";
 
+import { GroceryListComponent } from "./components/grocery-list/grocery-list.component";
 import { ChooseplanComponent } from "./pages/chooseplan/chooseplan.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
@@ -15,6 +16,7 @@ import { HelpSupportComponent } from "./pages/account/help-support/help-support.
 import { AboutComponent } from "./pages/account/about/about.component";
 import { PrivacyComponent } from "./pages/account/privacy/privacy.component";
 import { TermsComponent } from "./pages/account/terms/terms.component";
+import { RecipesComponent } from "./pages/recipes/recipes.component";
 
 const routes: Routes = [
   {
@@ -30,12 +32,16 @@ const routes: Routes = [
     component: ChooseplanComponent,
   },
   {
-    path:"meals",
-    component:MealComponent,
+    path: "meals",
+    component: MealComponent,
   },
   {
-    path:"meals/:id",
-    component:MealSingleComponent,
+    path: "meals/:id",
+    component: MealSingleComponent,
+  },
+  {
+    path:"recipes",
+    component:RecipesComponent,
   },
     {path:"account",
     component:AccountComponent,
@@ -50,6 +56,10 @@ const routes: Routes = [
       { path: 'help-support', component: HelpSupportComponent },
       { path: 'terms', component: TermsComponent}
    ],
+  },
+  {
+    path: "groceryList",
+    component: GroceryListComponent,
   },
 ];
 
