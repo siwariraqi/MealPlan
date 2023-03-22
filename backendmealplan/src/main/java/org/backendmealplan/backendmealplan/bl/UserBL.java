@@ -250,6 +250,36 @@ public class UserBL {
         return user;
     }
 
+    public void deleteAccount(Long userId) throws UNAUTHORIZEDException {
+        User user = usersDAO.findByUserId(userId);
+
+        if(user != null){
+                UserInfo userInfo = user.getUserInfo();
+                usersDAO.delete(user);
+                usersInfoDAO.delete(userInfo);
+                return;
+        }
+        else {
+            throw new UNAUTHORIZEDException("Wrong Info");
+        }
+    }
+
+    public User checkAccount(String email, String password) throws UNAUTHORIZEDException {
+        User user = usersDAO.findByEmail(email);
+
+        if(user != null){
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
+        }
+        if (!passwordEncoder.matches(password, user != null ? user.getPassword() : null)) {
+            throw new UNAUTHORIZEDException("Wrong Password");
+        }
+        else {
+            throw new UNAUTHORIZEDException("Wrong Info");
+        }
+    }
+
 
     public User getUser(Long userid) throws userNotFoundException {
 
