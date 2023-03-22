@@ -2,8 +2,8 @@
     <div class="px-3">
         <div class="theme-container">
             <h1 class="section-title">Meal Plan</h1>
-            <h2 class="section-desc ">
-                <mat-icon (click)="numDayLeft()">arrow_back_ios</mat-icon>
+            <h2 fxLayoutAlign="center" >
+                <mat-icon (click)="numDayLeft()" >arrow_back_ios</mat-icon>
                 Day {{choosenDay}} 
                 <mat-icon (click)="numDayRight()" >arrow_forward_ios</mat-icon>
             </h2>
@@ -13,11 +13,11 @@
                 [results]="data"
                 [label]="'Nutritions '"
                 ></ngx-charts-advanced-pie-chart>
-                <div class="cal">
+                <div class="cal" style="margin-left:400px ;">
                     <div class="section-title">
                         <h6>Calories</h6>
                     </div>
-                    <p class="section-desc"> {{totalCalories}}g</p>
+                    <h2 > {{totalCalories}}g</h2>
                 </div>
 
             </div>
