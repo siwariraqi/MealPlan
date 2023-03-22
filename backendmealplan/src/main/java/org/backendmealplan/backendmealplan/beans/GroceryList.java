@@ -27,11 +27,11 @@ public class GroceryList {
     @ManyToOne
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "changes")
     List<User> users;
 

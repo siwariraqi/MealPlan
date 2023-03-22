@@ -163,7 +163,8 @@ public class UserBL {
         Set<GroceryList> user_groceries = user.getChanges();
         user_groceries.addAll(groceryList);
         user.setChanges(user_groceries);
-        return this.usersDAO.save(user);
+        this.usersDAO.save(user);
+        return user;
     }
 
     public List<GroceryList> getDeletedGroceries(Long userId) throws UNAUTHORIZEDException {
@@ -182,5 +183,7 @@ public class UserBL {
         }
         return user.getPlan();
     }
+
+
 
 }

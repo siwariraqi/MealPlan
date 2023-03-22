@@ -154,5 +154,3 @@ public class MealBL {
         } else throw new userNotFoundException("User not found");
     }
 }
-
-

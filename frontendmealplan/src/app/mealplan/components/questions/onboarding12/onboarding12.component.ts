@@ -29,7 +29,7 @@ export class Onboarding12Component implements OnInit {
   selected: Date | null;
   birthDate: string;
   errorMsg: string;
-  valid : boolean ;
+  valid: boolean;
 
   constructor(private registerSrv: RegisterService) {
     this.birthDate = null;
@@ -40,21 +40,24 @@ export class Onboarding12Component implements OnInit {
   ngOnInit(): void {}
 
   validateInputsAndSave() {
-    this.errorMsg = "";
-    const currentDate = new Date(Date.now());
-    if (currentDate.getFullYear() - this.selected.getFullYear() < 12) {
-      this.errorMsg = "You must be at least 12 years old to register";
-      this.valid = false;
-    }
+    this.birthDate = this.selected.toDateString();
+    this.registerSrv.getUserInfo().birthday = this.birthDate;
 
-    //save
-    if (this.errorMsg === null || this.errorMsg === "") {
-      this.birthDate = this.selected.toDateString();
-      this.valid = true;
-      // console.log(this.birthDate);
-      this.registerSrv.getUserInfo().birthday = this.birthDate;
-      console.log(this.registerSrv.getUserInfo().birthday);
+    // this.errorMsg = "";
+    // const currentDate = new Date(Date.now());
+    // if (currentDate.getFullYear() - this.selected.getFullYear() < 12) {
+    //   this.errorMsg = "You must be at least 12 years old to register";
+    //   this.valid = false;
+    // }
 
-    }
+    // //save
+    // if (this.errorMsg === null || this.errorMsg === "") {
+    //   this.birthDate = this.selected.toDateString();
+    //   this.valid = true;
+    //   // console.log(this.birthDate);
+    //   this.registerSrv.getUserInfo().birthday = this.birthDate;
+    //   console.log(this.registerSrv.getUserInfo().birthday);
+
+    // }
   }
 }

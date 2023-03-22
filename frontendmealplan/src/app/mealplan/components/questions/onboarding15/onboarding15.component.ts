@@ -9,9 +9,12 @@ import { Component, OnInit } from "@angular/core";
         <p class="line"></p>
       </div>
       <div class="content">
-        <div class='text'> Your plan is baking </div>
+        <div class="text">Your plan is baking</div>
+        <div class="loading">
+          <img src="/assets/images/others/loading.gif" width="380px" />
+        </div>
+      </div>
     </div>
-</div>
   `,
   styleUrls: ["./onboarding15.component.scss"],
 })
