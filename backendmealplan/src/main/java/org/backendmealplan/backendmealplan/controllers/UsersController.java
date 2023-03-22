@@ -26,11 +26,16 @@ public class UsersController {
 
     @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
+        System.out.println(userInfo);
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+            if(userInfo != null){
+                long userInfoId = userInfo.getInfoId();
+                updatedUserInfo = userBL.updateUserInfo(userInfoId, userInfo);
+            }
+
         } catch (userInfoNotFound e) {
-            return (ResponseEntity) ResponseEntity.notFound();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedUserInfo);
     }

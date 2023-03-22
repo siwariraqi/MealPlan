@@ -72,18 +72,29 @@ export class RegisterComponent implements OnInit {
     this.backgroundColor = "#4b643d";
     this.btnBackgroundColor = "#ffffff";
     this.btnColor = "black";
+    // this.registerSrv.getUserInfoLocalStorage();
   }
 
   nextScreen() {
     if (this.onBoardingStep > 5) {
       this.btnBackgroundColor = "#dd9670c4";
       this.btnColor = "white";
-      if (!this.screenValidation()) {
-        return;
-      } else {
-        console.log("isValid YESS");
-        this.error = "";
-        this.registerSrv.updateUserInfo(); //if valid save in db
+      if (this.onBoardingStep > 6) {
+        if (!this.screenValidation()) {
+          return;
+        } else {
+          console.log("isValid YESS");
+          this.error = "";
+          //if valid save in db
+          this.registerSrv.updateUserInfo().subscribe({
+            next: (updatedUserInfo) => {
+              console.log(updatedUserInfo);
+              this.registerSrv.setUserInfo(updatedUserInfo);
+            },
+            error: (e) => console.error(e),
+            complete: () => console.info("complete"),
+          });
+        }
       }
     }
 

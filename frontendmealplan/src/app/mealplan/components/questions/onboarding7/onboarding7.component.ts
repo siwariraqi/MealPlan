@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { Goal } from "src/app/mealplan/models/Goal";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
@@ -27,22 +19,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
       <div class="content">
         <div class="boxesWrapper">
           <!-- box1 -->
-          <div
-            class="box"
-            (click)="enableDisableRule1(allGoals[0])"
-            [ngClass]="{ green: toggle1, white: !toggle1 }"
-          >
+          <div class="box" (click)="enableDisableRule1(allGoals[0])" [ngClass]="{ green: toggle1, white: !toggle1 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['healthy.png'] }}" />
             </div>
             <div class="text">{{ allGoals[0]?.text }}</div>
           </div>
           <!-- box2 -->
-          <div
-            class="box"
-            (click)="enableDisableRule2(allGoals[1])"
-            [ngClass]="{ green: toggle2, white: !toggle2 }"
-          >
+          <div class="box" (click)="enableDisableRule2(allGoals[1])" [ngClass]="{ green: toggle2, white: !toggle2 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['glucose.png'] }}" />
             </div>
@@ -51,22 +35,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         </div>
         <div class="boxesWrapper">
           <!-- box3 -->
-          <div
-            class="box"
-            (click)="enableDisableRule3(allGoals[2])"
-            [ngClass]="{ green: toggle3, white: !toggle3 }"
-          >
+          <div class="box" (click)="enableDisableRule3(allGoals[2])" [ngClass]="{ green: toggle3, white: !toggle3 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['energy.png'] }}" />
             </div>
             <div class="text">{{ allGoals[2]?.text }}</div>
           </div>
           <!-- box4 -->
-          <div
-            class="box"
-            (click)="enableDisableRule4(allGoals[3])"
-            [ngClass]="{ green: toggle4, white: !toggle4 }"
-          >
+          <div class="box" (click)="enableDisableRule4(allGoals[3])" [ngClass]="{ green: toggle4, white: !toggle4 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['weight.png'] }}" />
             </div>
@@ -75,22 +51,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         </div>
         <div class="boxesWrapper">
           <!-- box5 -->
-          <div
-            class="box"
-            (click)="enableDisableRule5(allGoals[4])"
-            [ngClass]="{ green: toggle5, white: !toggle5 }"
-          >
+          <div class="box" (click)="enableDisableRule5(allGoals[4])" [ngClass]="{ green: toggle5, white: !toggle5 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['cook.png'] }}" />
             </div>
             <div class="text">{{ allGoals[4]?.text }}</div>
           </div>
           <!-- box6 -->
-          <div
-            class="box"
-            (click)="enableDisableRule6(allGoals[5])"
-            [ngClass]="{ green: toggle6, white: !toggle6 }"
-          >
+          <div class="box" (click)="enableDisableRule6(allGoals[5])" [ngClass]="{ green: toggle6, white: !toggle6 }">
             <div class="img">
               <img src=" /assets/images/questions_icons/{{ ['recipe.png'] }}" />
             </div>
@@ -126,10 +94,11 @@ export class Onboarding7Component implements OnInit {
       this.allGoals = goals;
     });
     const userInfo = this.registerSrv.getUserInfo();
-    console.log("current userinfo id " + userInfo.infoId);
-    if (!userInfo.infoId) {
-      this.registerSrv.updateUserInfo().subscribe((userInfo) => {
+    console.log("current userinfo id " + userInfo?.infoId);
+    if (!userInfo || !userInfo?.infoId) {
+      this.registerSrv.addUserInfo().subscribe((userInfo) => {
         console.log("added new userinfo " + userInfo.infoId);
+        this.registerSrv.setUserInfo(userInfo);
       });
     }
   }
@@ -167,21 +136,12 @@ export class Onboarding7Component implements OnInit {
       this.registerSrv.getUserInfo().goals.push(goal);
     } else {
       const idx = goal.goalId;
-      this.registerSrv.getUserInfo().goals = this.registerSrv
-        .getUserInfo()
-        .goals?.filter((obj) => obj.goalId !== idx); //remove goal from array
+      this.registerSrv.getUserInfo().goals = this.registerSrv.getUserInfo().goals?.filter((obj) => obj.goalId !== idx); //remove goal from array
     }
   }
 
   checkValidation() {
-    if (
-      this.toggle1 ||
-      this.toggle2 ||
-      this.toggle3 ||
-      this.toggle4 ||
-      this.toggle5 ||
-      this.toggle6
-    ) {
+    if (this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5 || this.toggle6) {
       this.registerSrv.setCurrOnBoardingValidation(true);
     } else {
       this.registerSrv.setCurrOnBoardingValidation(false);

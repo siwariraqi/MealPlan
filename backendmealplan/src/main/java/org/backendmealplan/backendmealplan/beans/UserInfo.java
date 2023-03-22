@@ -7,8 +7,8 @@ import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "userInfo")
 public class UserInfo {
 //    private static final LocalDate MAX_BIRTHDAY = LocalDate.of(2004, 1, 1);
