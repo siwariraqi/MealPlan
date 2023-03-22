@@ -8,13 +8,21 @@
             <img [src]="mealItem.imageUrl" class="w-100 d-block swiper-lazy">
             <!-- <div class="swiper-lazy-preloader"></div> -->
         </div>
-        <img *ngIf="!lazyLoad" [src]="mealItem.imageUrl" class="w-100 d-block " >
+        <img *ngIf="!lazyLoad" [src]="mealItem.imageUrl" class="w-100 d-block ">
+        <!-- <mat-chip-list style="margin-left: 230px; margin-top: 315px;" >
+        <app-diet-type></app-diet-type>
+    </mat-chip-list> -->
     </div>
     <div fxFlex="100" class="p-3">
         <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
+
+
+           
+
+
             <mat-card-content class="mb-0">
-                <h1 class="title" routerLink="/mealplan/meals/{{mealindex}}"
-                    (click)="onMealClick(mealItem.mealId)"><a>{{mealItem.mealName}}</a>
+                <h1 class="title" routerLink="/mealplan/meals/{{mealindex}}" (click)="onMealClick(mealItem.mealId)">
+                    <a>{{mealItem.mealName}}</a>
                 </h1>
             </mat-card-content>
             <div class="sticky-footer-helper" fxFlex="grow"></div>
@@ -28,27 +36,27 @@
                     </p>
                     <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
                         <span fxLayout="row" fxLayoutAlign="start center">
-                        <span class="mat-icon mat-icon-sm primary-color">
-                            <svg viewBox="0 0 24 24">
-                                <path
-                                    d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
-                            </svg>
+                            <span class="mat-icon mat-icon-sm primary-color">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
+                                </svg>
+                            </span>
+                            <span class="px-1">Prepare Time:</span>
                         </span>
-                        <span class="px-1">Prepare Time:</span>
-                    </span>
                         <span class="dots"></span>
                         <span class="fw-500">{{ mealItem.prepareTime }}</span>
                     </p>
-                     <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
                         <span fxLayout="row" fxLayoutAlign="start center">
-                        <span class="mat-icon mat-icon-sm primary-color">
-                            <svg viewBox="0 0 24 24">
-                                <path
-                                    d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
-                            </svg>
+                            <span class="mat-icon mat-icon-sm primary-color">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
+                                </svg>
+                            </span>
+                            <span class="px-1">Cook Time:</span>
                         </span>
-                        <span class="px-1">Cook Time:</span>
-                      </span>
                         <span class="dots"></span>
                         <span class="fw-500">{{ mealItem.cookTime }}</span>
                     </p>
@@ -105,6 +113,13 @@
                         <span class="fw-500">{{ mealItem.fat }}g</span>
                     </p>
                 </div>
+                <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="divider mt-3"> 
+
+            
+                        <span class="text-muted mt-2">Diet Type </span>
+                       
+                </div>  -->
+<app-diet-type ></app-diet-type>
             </mat-card-actions>
         </div>
     </div>
