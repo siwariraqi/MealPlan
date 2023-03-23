@@ -41,7 +41,6 @@ export class RegisterService {
     );
   }
 
-  //----------------------------------------------------------
   updateUserInfo(): Observable<UserInfo> {
     console.log(this.currUserInfo);
 
@@ -54,7 +53,6 @@ export class RegisterService {
 
     return this.httpClient.put<UserInfo>(this.BASE_URL + this.UPDATE_USER_INFO_API, userInfoJson, httpOptions);
   }
-  //---------------------------------------------------------------
 
   getUserInfo(): UserInfo {
     return this.currUserInfo;

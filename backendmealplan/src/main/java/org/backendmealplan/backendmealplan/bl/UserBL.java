@@ -58,6 +58,10 @@ public class UserBL {
             throw new InvalidUserException("Password must include at least 8 characters, letter, number, cannot include: ./=_-()");
         }
 
+        if (!isValidPhoneNumber(user.getPhoneNumber())){
+            throw new InvalidUserException("Phone number must only include numbers 0-9. minimum 9 and maximum 16");
+        }
+
         // Check if user with email already exists
         if (usersDAO.findByEmail(user.getEmail()) != null) {
             throw new userExistException("Email already in use!");
@@ -78,7 +82,14 @@ public class UserBL {
     private boolean isValidPassword(String password) {
         // Password must include at least 8 characters, letter, number, cannot include: ./=_-()
         return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+
     }
+
+    private boolean isValidPhoneNumber(String phoneNum){
+        // Phone number must only include numbers 0-9. minimum 9 and maximum 16
+        return phoneNum.matches("^[0-9]{9,16}$");
+    }
+
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.

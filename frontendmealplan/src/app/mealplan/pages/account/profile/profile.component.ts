@@ -1,12 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  ValidationErrors,
-  Validators,
-} from "@angular/forms";
+import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { emailValidator } from "src/app/theme/utils/app-validators";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { User } from "src/app/mealplan/models/User";
@@ -24,11 +17,7 @@ export class ProfileComponent implements OnInit {
   userId: number;
   user: User = {};
   userInfo: UserInfo = null;
-  constructor(
-    public formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
-    private userService: UserService
-  ) {}
+  constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar, private userService: UserService) {}
 
   ngOnInit() {
     this.user.userInfo = this.userInfo;
@@ -64,10 +53,8 @@ export class ProfileComponent implements OnInit {
     this.user.lastName = this.infoForm.controls["LastName"].value || this.user.lastName; // use previous value if empty
     this.user.email = this.infoForm.controls["email"].value || this.user.email; // use previous value if empty
     this.user.phoneNumber = this.infoForm.controls["phone"].value || this.user.phoneNumber; // use previous value if empty
-    this.user.userInfo.birthday =
-      this.infoForm.controls["birthday"].value || this.user.userInfo.birthday; // use previous value if empty
-    this.user.userInfo.gender =
-      this.infoForm.controls["genderControl"].value || this.user.userInfo.gender; // use previous value if empty
+    this.user.userInfo.birthday = this.infoForm.controls["birthday"].value || this.user.userInfo.birthday; // use previous value if empty
+    this.user.userInfo.gender = this.infoForm.controls["genderControl"].value || this.user.userInfo.gender; // use previous value if empty
 
     if (this.infoForm.valid) {
       this.userService.updateProfile(this.user).subscribe(
