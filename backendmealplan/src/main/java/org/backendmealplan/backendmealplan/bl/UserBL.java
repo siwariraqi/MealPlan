@@ -259,10 +259,10 @@ public class UserBL {
             throw new UNAUTHORIZEDException("User NOT FOUND");
         }
         if(!user.getEmail().equals(email)){
-            throw new UNAUTHORIZEDException("Wrong Email");
+            throw new UNAUTHORIZEDException("Wrong Email Password combination");
         }
         if (!passwordEncoder.matches(password,  user.getPassword())) {
-            throw new UNAUTHORIZEDException("Wrong Password");
+            throw new UNAUTHORIZEDException("Wrong Email Password combination");
         }
         else{
             UserInfo userInfo = user.getUserInfo();
@@ -280,10 +280,10 @@ public class UserBL {
             throw new UNAUTHORIZEDException("User NOT FOUND");
         }
         if(!user.getEmail().equals(email)){
-            throw new UNAUTHORIZEDException("Wrong Email");
+            throw new UNAUTHORIZEDException("Wrong Email Password combination");
         }
         if (!passwordEncoder.matches(password,  user.getPassword())) {
-            throw new UNAUTHORIZEDException("Wrong Password");
+            throw new UNAUTHORIZEDException("Wrong Email Password combination");
         }
         else{
             feedbackBL.deleteFeedbacksByUser(user);
