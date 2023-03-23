@@ -7,6 +7,7 @@ import { MealIngredients } from "src/app/mealplan/models/MealIngredien";
 import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
 import { DayMealService } from "src/app/mealplan/services/day-meal.service";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { DietType } from "src/app/mealplan/models/DietType";
 
 @Component({
   selector: "app-meal-single",
@@ -14,14 +15,20 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   styleUrls: ["./meal-single.component.scss"],
 })
 export class MealSingleComponent implements OnInit {
-
+  grid='grid';
   meal:Meal;
   type:string = "";
   userFeedback: UserFeedback = new UserFeedback(); 
   ingredients: MealIngredients[];
   instructions: string;
+  tips:string;
   public dayMeals:Array<DayMeal> =[];
   dayNumber:number
+  keto=true;
+  vegan=true;
+  gluten=true;
+  dairy=true;
+  mealDietType:DietType[];
 constructor(private dayMealService:DayMealService, private activatedroute:ActivatedRoute ,private snackBar: MatSnackBar) {}
 mealID:number
   ngOnInit() {
@@ -30,7 +37,9 @@ mealID:number
     console.log(this.dayMeals);
     this.getSelectedMeal();
     this.getTypeIngredientInstructions()
-    this.mealID=this.meal.mealId
+    this.mealID=this.meal.mealId;
+    this.getMealDietType();
+    this.mealDietTypeConditions();
     
     
   }
@@ -40,6 +49,7 @@ mealID:number
     let idx = params["id"]
       this.type=this.dayMeals[idx].type;
       this.instructions = this.dayMeals[idx].id.meal.instructions
+      this.tips=this.dayMeals[idx].id.meal.tips
     this.dayMealService.getIngredients(this.meal.mealId).subscribe((mealingridents)=>{
       this.ingredients=mealingridents;
     })
@@ -61,5 +71,27 @@ mealID:number
     this.meal=this.dayMealService.getSelectedMeal() 
   }
   
-  public calories: Array<number> = [25, 9, 10, 15];
+ 
+
+  public getMealDietType () {
+    this.mealDietType=this.dayMealService.getMealDietType();
+  }
+
+  public mealDietTypeConditions(){
+    for(let i=0;i<this.mealDietType.length;i++)
+    {
+    if(this.mealDietType[i].text=="KETO FRIENDLY"){
+      this.keto=true;
+    }
+    if(this.mealDietType[i].text=="VEGAN FRIENDLY"){
+      this.vegan=true;
+    }
+    if(this.mealDietType[i].text=="GLUTEN FREE"){
+      this.gluten=true;
+    }
+    if(this.mealDietType[i].text=="DAIRY FREE"){
+      this.dairy=true;
+    }
+  }
+  }
 }
