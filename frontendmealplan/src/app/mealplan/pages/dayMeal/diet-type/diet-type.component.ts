@@ -43,12 +43,13 @@ export class DietTypeComponent implements OnInit {
     if(this.mealDietType[i].text=="VEGAN FRIENDLY"){
       this.vegan=true;
     }
-    if(this.mealDietType[i].text=="GLUTEN FREE"){
-      this.gluten=true;
-    }
     if(this.mealDietType[i].text=="DAIRY FREE"){
       this.dairy=true;
     }
+    if(this.mealDietType[i].text=="GLUTEN FREE"){
+      this.gluten=true;
+    }
+   
   }
   }
 
