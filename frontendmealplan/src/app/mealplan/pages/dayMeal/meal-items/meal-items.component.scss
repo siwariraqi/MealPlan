@@ -1,6 +1,8 @@
 @import "../../../../theme/styles/variables";
 
 .menu-item{
+    // font-family:'Lucida Sans Typewriter';
+    font-size: 18px;
     height: 100%;
     overflow: hidden;
     .thumbnail-section{
@@ -13,8 +15,7 @@
         }
     } 
     .title{ 
-        font-family: $secondary-font-family;
-        font-size: 18px;       
+        font-size:22px;       
         a{
             transition: 0.2s;
             text-decoration: none; 
