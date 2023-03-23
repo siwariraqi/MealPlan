@@ -24,24 +24,21 @@ export class MealSingleComponent implements OnInit {
   tips:string;
   public dayMeals:Array<DayMeal> =[];
   dayNumber:number
-  keto=true;
-  vegan=true;
-  gluten=true;
-  dairy=true;
+  keto=false;
+  vegan=false;
+  gluten=false;
+  dairy=false;
   mealDietType:DietType[];
 constructor(private dayMealService:DayMealService, private activatedroute:ActivatedRoute ,private snackBar: MatSnackBar) {}
 mealID:number
   ngOnInit() {
     this.dayNumber=this.dayMealService.getChoosenDay();
     this.dayMeals=this.dayMealService.getDayMeals();
-    console.log(this.dayMeals);
     this.getSelectedMeal();
     this.getTypeIngredientInstructions()
     this.mealID=this.meal.mealId;
     this.getMealDietType();
     this.mealDietTypeConditions();
-    
-    
   }
   
   getTypeIngredientInstructions(){
@@ -71,10 +68,8 @@ mealID:number
     this.meal=this.dayMealService.getSelectedMeal() 
   }
   
- 
-
   public getMealDietType () {
-    this.mealDietType=this.dayMealService.getMealDietType();
+    this.mealDietType=this.meal.dietTypes;
   }
 
   public mealDietTypeConditions(){
