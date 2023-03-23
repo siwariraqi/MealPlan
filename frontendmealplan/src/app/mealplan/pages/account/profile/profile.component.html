@@ -1,6 +1,6 @@
 <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()" autocomplete="off" fxLayout="row wrap">
     <div fxFlex="100">
-        <h2 class="secondary-font text-center mb-3">Account Details</h2> 
+        <h2 class="secondary-font text-center mb-3 bigger-title">Account Details</h2> 
     </div>
     <!-- <div fxFlex="100" fxFlex.gt-sm="40" class="px-3 mb-3">  
         <app-image-upload [base64]="infoForm.controls.image.value"
@@ -9,7 +9,7 @@
                         (onFileChange)="fileChange($event)">
         </app-image-upload>  
     </div>  -->
-    <div fxFlex="100" fxFlex.gt-sm="60" class="px-3" ngClass.sm="mt-2" ngClass.xs="mt-2"> 
+    <div fxFlex="100" fxFlex.gt-sm="60" class="px-3 bigger-font" ngClass.sm="mt-2" ngClass.xs="mt-2"> 
         
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>First Name</mat-label>
@@ -26,18 +26,19 @@
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="infoForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+            <mat-error *ngIf="infoForm.controls.email.hasError('pattern')">Invalid email address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" formControlName="phone" onlyNumber>
-            <mat-error *ngIf="infoForm.controls.phone.hasError('minlength')">Phone isn't long enough, minimum of 9 characters</mat-error>
+            <input matInput placeholder="Phone" formControlName="phone">
+            <mat-error *ngIf="infoForm.controls.phone.hasError('pattern')">Invalid phone number format</mat-error>
         </mat-form-field>  
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Birthday</mat-label>
-            <input matInput placeholder="Birthday" formControlName="birthday" type="date"> 
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'yyyy-MM-dd'}}">
+            <mat-error *ngIf="infoForm.get('birthday').hasError('invalidAge')">Ages should be 18-120</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
@@ -52,6 +53,6 @@
     </div> 
     
     <div fxFlex="100" class="text-center mt-2">
-        <button mat-raised-button color="primary" type="submit" class="uppercase">Update profile</button>
+        <button mat-raised-button color="primary" type="submit" class="uppercase custom-button">Update profile</button>
     </div>  
 </form> 

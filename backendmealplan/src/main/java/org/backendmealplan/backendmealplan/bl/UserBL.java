@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 @Service
@@ -29,6 +31,9 @@ public class UserBL {
 
     @Autowired
     UsersInfoDAO usersInfoDAO;
+
+    @Autowired
+    FeedbackBL feedbackBL;
 
     @Autowired
     GoalsDAO goalsDAO;
@@ -48,6 +53,18 @@ public class UserBL {
             throw new UNAUTHORIZEDException("wrong email or password");
         }
 
+    }
+
+    public void changePassword(long userID, String currentPassword, String newPassword, String confirmPassword) throws UNAUTHORIZEDException {
+        User user = this.usersDAO.findByUserId(userID);
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new UNAUTHORIZEDException("Wrong current password");
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            throw new UNAUTHORIZEDException("New password and confirmation password do not match");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        this.usersDAO.save(user);
     }
 
     @Transactional
@@ -119,16 +136,108 @@ public class UserBL {
         if(user == null){
             throw new UNAUTHORIZEDException("user does not Exist");
         }
-        user.setEmail(newProfile.getEmail());
-        user.setPhoneNumber(newProfile.getPhoneNumber());
-        user.setFirstName(newProfile.getFirstName());
-        user.setLastName(newProfile.getLastName());
-        user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
-        user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
+        if(newProfile.getEmail()!=null){
+            if(isValidEmail(newProfile.getEmail())){
+                user.setEmail(newProfile.getEmail());
+            }
+            else{
+                throw new IllegalArgumentException("Invalid email format");
+            }
+        }
+        if(newProfile.getPhoneNumber()!=null){
+            if(isValidPhoneNumber(newProfile.getPhoneNumber())){
+                user.setPhoneNumber(newProfile.getPhoneNumber());
+            }
+            else{
+                throw new IllegalArgumentException("Invalid phone number");
+            }
+        }
+        if(newProfile.getFirstName()!=null){
+            if(newProfile.getFirstName().isEmpty()){
+                throw new IllegalArgumentException("First name cannot be empty");
+            }
+            else if (newProfile.getFirstName().length() > 30) {
+                throw new IllegalArgumentException("First name is too long");
+            }else{
+                user.setFirstName(newProfile.getFirstName());
+            }
+        }
+        if(newProfile.getLastName()!=null){
+            if(newProfile.getLastName().isEmpty()){
+                throw new IllegalArgumentException("Last name cannot be empty");
+            }
+            else if (newProfile.getLastName().length() > 30) {
+                throw new IllegalArgumentException("Last name is too long");
+            }else{
+                user.setLastName(newProfile.getLastName());
+            }
+        }
+        if(newProfile.getUserInfo()!=null) {
+            if (newProfile.getUserInfo().getGender() != null) {
+                if (isValidGender(newProfile.getUserInfo().getGender())) {
+                    user.getUserInfo().setGender(newProfile.getUserInfo().getGender());
+                } else {
+                    throw new IllegalArgumentException("Invalid gender");
+                }
+            }
+            if (newProfile.getUserInfo().getBirthday() != null) {
+                if (isValidBDate(newProfile.getUserInfo().getBirthday())) {
+                    user.getUserInfo().setBirthday(newProfile.getUserInfo().getBirthday());
+                } else {
+                    throw new IllegalArgumentException("Invalid birthday");
+                }
+            }
+        }
+
+//        if (newProfile.getPassword() != null) {
+//            throw new IllegalArgumentException("Password cannot be updated through this method.");
+//        }
+
         this.usersDAO.save(user);
         return newProfile;
+
     }
 
+
+    /*
+   It checks that the email address has a local part and a domain part separated by an "@" symbol,
+   and that both parts follow specific rules. The local part can contain letters, numbers, dots,
+   underscores, percent signs, plus signs, or hyphens, while the domain part can contain letters,
+   numbers, dots, or hyphens, and must end with a top-level domain that consists of two or more letters.
+*/
+    private boolean isValidEmail(String email) {
+        String regexp = "^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$";
+        return email.matches(regexp);
+    }
+    /*
+      The pattern requires the phone number to start with a plus sign (+), followed by 6 to 14 digits,
+      with an optional space character between each digit. The pattern also requires that the phone
+      number ends with a digit.
+    */
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Implement your own phone number validation logic here
+        String regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$" ;
+        return phoneNumber.matches(regexp);
+    }
+
+    private boolean isValidGender(String gender) {
+        // Implement your own gender validation logic here
+        return ( gender.equals("male") || gender.equals("female") ) ;
+    }
+
+    // min age - 18
+    // max age - 120
+    private boolean isValidBDate(LocalDate date) {
+
+            LocalDate today = LocalDate.now();
+            LocalDate eighteenYearsAgo = today.minusYears(18);
+            LocalDate oneHundredYearsAgo = today.minusYears(120);
+
+            // Check if the date is at least 18 years ago and not more than 100 years ago
+            return (date.isBefore(eighteenYearsAgo) || date.isEqual(eighteenYearsAgo))
+                    && (date.isAfter(oneHundredYearsAgo) || date.isEqual(oneHundredYearsAgo));
+
+    }
 
     public User userSetPlan( Long userId,  Long planId) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(userId);
@@ -142,6 +251,38 @@ public class UserBL {
         user.setPlan(plan);
         this.usersDAO.save(user);
         return user;
+    }
+
+    public void deleteAccount(Long userId) throws UNAUTHORIZEDException {
+        User user = usersDAO.findByUserId(userId);
+
+        if(user != null){
+                UserInfo userInfo = user.getUserInfo();
+                feedbackBL.deleteFeedbacksByUser(user);
+                //TODO : remove grocerylist changes when ready team5 @Maha ?
+                usersDAO.delete(user);
+                usersInfoDAO.delete(userInfo);
+                return;
+        }
+        else {
+            throw new UNAUTHORIZEDException("Wrong Info");
+        }
+    }
+
+    public User checkAccount(String email, String password) throws UNAUTHORIZEDException {
+        User user = usersDAO.findByEmail(email);
+
+        if(user != null){
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
+        }
+        if (!passwordEncoder.matches(password, user != null ? user.getPassword() : null)) {
+            throw new UNAUTHORIZEDException("Wrong Password");
+        }
+        else {
+            throw new UNAUTHORIZEDException("Wrong Info");
+        }
     }
 
 
