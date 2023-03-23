@@ -41,62 +41,74 @@ export class ProfileComponent implements OnInit {
       ]),
       image: null
     });
-    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
-      data => {
-         this.user = data;
-         // set the value of the form controls using the user object
-         this.infoForm.controls['FirstName'].setValue(this.user.firstName);
-         this.infoForm.controls['LastName'].setValue(this.user.lastName);
-         this.infoForm.controls['email'].setValue(this.user.email);
-         this.infoForm.controls['phone'].setValue(this.user.phoneNumber);
-         this.infoForm.controls['birthday'].setValue(this.user.userInfo.birthday);
-         this.infoForm.controls['genderControl'].setValue(this.user.userInfo.gender);
+    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe({
+      next: (data) => {
+        this.user = data;
+        // set the value of the form controls using the user object
+        this.infoForm.controls['FirstName'].setValue(this.user.firstName);
+        this.infoForm.controls['LastName'].setValue(this.user.lastName);
+        this.infoForm.controls['email'].setValue(this.user.email);
+        this.infoForm.controls['phone'].setValue(this.user.phoneNumber);
+        this.infoForm.controls['birthday'].setValue(this.user.userInfo.birthday);
+        this.infoForm.controls['genderControl'].setValue(this.user.userInfo.gender);
       },
-      error => console.error('Error fetching user:', error)
-   );
+      error: (error) => {
+        console.error('Error fetching user:', error);
+        this.snackBar.open('An error occurred while fetching your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+      }
+    });
   }
 
 
 
-  public onInfoFormSubmit():void {
+  public onInfoFormSubmit(): void {
+    // If user object is empty, show an error message and return early
     if (Object.keys(this.user).length === 0) {
       this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
       return;
     }
-    this.userId = Number(localStorage.getItem('userId'));
-    this.user.userId=this.userId;
-    this.user.firstName=this.infoForm.controls['FirstName'].value || this.user.firstName; // use previous value if empty
-    this.user.lastName=this.infoForm.controls['LastName'].value || this.user.lastName; // use previous value if empty
-    this.user.email=this.infoForm.controls['email'].value || this.user.email; // use previous value if empty
-    this.user.phoneNumber=this.infoForm.controls['phone'].value || this.user.phoneNumber; // use previous value if empty
-    this.user.userInfo.birthday=this.infoForm.controls['birthday'].value || this.user.userInfo.birthday; // use previous value if empty
-    if(this.infoForm.controls['birthday'].value === null) {
-      this.user.userInfo.birthday = null;
-    }
-    this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
-
+  
+    // Update user object with form values
+    this.updateUserWithFormValues();
+  
+    // If form is valid, update profile and show success message
     if (this.infoForm.valid) {
       this.userService.updateProfile(this.user)
         .pipe(
           catchError(error => {
             console.error('Error updating profile:', error);
             this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-            return of(null); // Return an observable with null value to continue the observable chain
+            return of(null);
           })
         )
-        .subscribe(
-          data => {
-            if (data) { // Only execute the success logic if data is not null
-              console.log('Profile updated successfully.');
-            }
+        .subscribe(data => {
+          if (data) {
+            console.log('Profile updated successfully.');
           }
-        );
+        });
         this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
     }
-    else{
+    // If form is invalid, show error message
+    else {
       this.snackBar.open('Wrong information. Please fix it and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
     }
-    
+  }
+  
+  private updateUserWithFormValues(): void {
+    const formValue = this.infoForm.value;
+    const userInfo = this.user.userInfo;
+  
+    this.user.userId = Number(localStorage.getItem('userId'));
+    this.user.firstName = formValue.FirstName || this.user.firstName;
+    this.user.lastName = formValue.LastName || this.user.lastName;
+    this.user.email = formValue.email || this.user.email;
+    this.user.phoneNumber = formValue.phone || this.user.phoneNumber;
+    this.user.userInfo.birthday = formValue.birthday || userInfo.birthday;
+    this.user.userInfo.gender = formValue.genderControl || userInfo.gender;
+  
+    if (formValue.birthday === null) {
+      this.user.userInfo.birthday = null;
+    }
   } 
 
   public fileChange(files:any){ 

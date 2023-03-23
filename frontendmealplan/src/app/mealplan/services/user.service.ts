@@ -16,8 +16,7 @@ export class UserService {
   UPDATEPROFILE = 'users/updateProfile';
   GETUSER = 'users/getUser?userId=';
   CHANGEPASSWORD = 'users/changePassword';
-  DELETEACCOUNT = 'users/deleteAccount?userId=';
-  CHECKACCOUNT = 'users/checkAccount';
+  DELETEACCOUNT = 'users/deleteAccount';
 
   constructor(private http:HttpClient, private apiService:ApiService) { }
 
@@ -59,19 +58,9 @@ export class UserService {
       );
   }
 
-  checkAccount(email: string, password: string): Observable<number> {
-  
-    const body = {
-      email: email,
-      password: password
-    };
-
-   
-    return this.apiService.post<number>(this.CHECKACCOUNT, body);
-  }
-
-  deleteAccount(userId:number) : Observable<string>{
-    return this.apiService.delete(this.DELETEACCOUNT+`${userId}`);
+  deleteAccount(email, password, userId) {
+     return this.apiService.delete<string>(this.DELETEACCOUNT+"?email="+`${email}` 
+                +"&password="+`${password}` + "&userId=" + `${userId}` );
   }
 
   
