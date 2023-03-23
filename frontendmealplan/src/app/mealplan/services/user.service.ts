@@ -17,6 +17,7 @@ export class UserService {
   GETUSER = 'users/getUser?userId=';
   CHANGEPASSWORD = 'users/changePassword';
   DELETEACCOUNT = 'users/deleteAccount';
+  RESETACCOUNT = 'users/resetAccount';
 
   constructor(private http:HttpClient, private apiService:ApiService) { }
 
@@ -59,9 +60,14 @@ export class UserService {
   }
 
   deleteAccount(email, password, userId) {
-     return this.apiService.delete<string>(this.DELETEACCOUNT+"?email="+`${email}` 
-                +"&password="+`${password}` + "&userId=" + `${userId}` );
-  }
+    return this.apiService.delete<string>(this.DELETEACCOUNT+"?email="+`${email}` 
+               +"&password="+`${password}` + "&userId=" + `${userId}` );
+ }
+
+ resetAccount(email, password, userId) {
+  return this.apiService.post<string>(this.RESETACCOUNT+"?email="+`${email}` 
+             +"&password="+`${password}` + "&userId=" + `${userId}` );
+}
 
   
 

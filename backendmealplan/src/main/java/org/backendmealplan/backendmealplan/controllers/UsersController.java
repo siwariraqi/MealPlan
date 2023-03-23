@@ -60,14 +60,29 @@ public class UsersController {
     }
 
     @DeleteMapping("/deleteAccount")
-    public ResponseEntity deleteUser(@RequestParam String email,
-                                       @RequestParam String password,
-                                       @RequestParam Long userId) {
+    public ResponseEntity deleteAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
         if (email == null || password==null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
             this.userBL.deleteAccount(email, password, userId);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resetAccount")
+    public ResponseEntity resetAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
+        if (email == null || password==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        try {
+            this.userBL.resetAccount(email, password, userId);
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

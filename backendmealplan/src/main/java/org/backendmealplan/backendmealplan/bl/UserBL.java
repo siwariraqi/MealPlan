@@ -274,6 +274,24 @@ public class UserBL {
         }
     }
 
+    public void resetAccount(String email, String password, Long userId) throws UNAUTHORIZEDException {
+        User user = usersDAO.findByUserId(userId);
+        if(user == null){
+            throw new UNAUTHORIZEDException("User NOT FOUND");
+        }
+        if(!user.getEmail().equals(email)){
+            throw new UNAUTHORIZEDException("Wrong Email");
+        }
+        if (!passwordEncoder.matches(password,  user.getPassword())) {
+            throw new UNAUTHORIZEDException("Wrong Password");
+        }
+        else{
+            feedbackBL.deleteFeedbacksByUser(user);
+            //TODO : remove grocerylist changes when ready team5 @Maha ?
+
+        }
+    }
+
 
 
     public User getUser(Long userid) throws userNotFoundException {

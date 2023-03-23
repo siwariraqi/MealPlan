@@ -48,7 +48,25 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   public resetAccount(): void {
-    console.log("Resetting...");
+    const email = this.accountForm.controls['username'].value;
+    const password = this.accountForm.controls['password'].value;
+    const userId = Number(localStorage.getItem('userId'));
+    
+    if (this.accountForm.valid) {
+      this.userService.resetAccount(email,password,userId).subscribe({
+        next: () => {
+          console.log('Account resetted successfully.');
+          this.snackBar.open('Your account resetted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+        },
+        error: (error) => {
+          console.error(error);
+          this.snackBar.open('FAILED TO RESET ACCOUNT : ' + error.error, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+        }
+    })
+    }
+    else{
+      this.snackBar.open('Wrong information. Please fill the fields and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+    }
   }
 
 }
