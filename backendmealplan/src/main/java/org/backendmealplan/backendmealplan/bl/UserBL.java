@@ -40,6 +40,7 @@ public class UserBL {
     public UserBL(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+
     public User authentication(String email, String password) throws Exception {
         User user = usersDAO.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
@@ -86,7 +87,7 @@ public class UserBL {
 
     public UserInfo addUserInfoGoals(UserInfo userInfo) {
 //        UserInfo added = this.usersInfoDAO.save(userInfo);
-        if(userInfo.getGoals() != null){
+        if (userInfo.getGoals() != null) {
             Set<Goal> goals = new HashSet<>();
             for (Goal goal : userInfo.getGoals()) {
                 Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
@@ -108,14 +109,34 @@ public class UserBL {
      * output: None
      * exceptions: userInfoNotFound - indicating that no user with the given id was found.
      */
-    public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws userInfoNotFound {
-        Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
-        if (existingUsersInfo.isPresent()) {
-            return this.usersInfoDAO.save(userInfo);
+    public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws UNAUTHORIZEDException {
+        if (userInfo.getGoals() != null && userInfo.getGoals().size() != 0) {
+            Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
+            if (existingUsersInfo.isPresent()) {
+                existingUsersInfo.ifPresent(user -> {
+                    user.setGoals(null);
+                });
+                Set<Goal> goals = new HashSet<>();
+                for (Goal goal : userInfo.getGoals()) {
+                    Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
+                    if (optionalGoal.isPresent()) {
+                        Goal existingGoal = optionalGoal.get();
+                        goals.add(existingGoal);
+                    }
+                }
+                userInfo.setGoals(goals);
+                return this.usersInfoDAO.save(userInfo);
+            } else {
+                throw new UNAUTHORIZEDException("userInfo was not found");
+            }
         } else {
-            throw new userInfoNotFound();
+            throw new UNAUTHORIZEDException("empty goal array was given");
         }
     }
+
+
+
+
 
     public User updateProfile(User newProfile) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(newProfile.getUserId());

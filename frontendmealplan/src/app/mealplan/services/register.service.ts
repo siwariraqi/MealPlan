@@ -1,12 +1,10 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { response } from "express";
 import { Observable, tap } from "rxjs";
 import { Goal } from "../models/Goal";
 import { User } from "../models/User";
 import { UserInfo } from "../models/UserInfo";
-import { JsonPipe } from "@angular/common";
 
 @Injectable({
   providedIn: "root",
@@ -27,34 +25,34 @@ export class RegisterService {
   }
 
   registerUser(user: User): Observable<User> {
-    // user.userInfo.infoId = 1; //TODO: delete this
     return this.httpClient.post<User>(this.BASE_URL + this.ADD_USER_API, user);
   }
 
   addUserInfo(): Observable<UserInfo> {
-    const newUserInfo = new UserInfo(null);
-    return this.httpClient.post<UserInfo>(this.BASE_URL + this.ADD_USER_INFO_API, newUserInfo).pipe(
+    this.currUserInfo = this.getUserInfoLocalStorage();
+    if (!this.currUserInfo || !this.currUserInfo?.infoId) {
+      this.currUserInfo = new UserInfo(null);
+    }
+    return this.httpClient.post<UserInfo>(this.BASE_URL + this.ADD_USER_INFO_API, this.currUserInfo).pipe(
       tap((response) => {
         // console.log(response);
-        this.currUserInfo = response;
-        this.setUserInfoLocalStorage();
+        this.setUserInfo(response);
       })
     );
   }
 
   //----------------------------------------------------------
-  updateUserInfo(): Observable<any> {
+  updateUserInfo(): Observable<UserInfo> {
     console.log(this.currUserInfo);
-    // this.currUserInfo.goals = null; //TODO: delete this
 
-    //extract to json object
     const httpOptions = {
-      headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      headers: new HttpHeaders({ "Content-Type": "application/json" }), //telling the server that angular is sending a json
     };
-    const userInfoJson = JSON.stringify(this.currUserInfo);
+    const userInfoJson = JSON.stringify(this.currUserInfo); //convert userinfo object to json
+
     console.log(userInfoJson);
 
-    return this.httpClient.put<any>("http://localhost:8080/users/updateUserInfo", userInfoJson, httpOptions);
+    return this.httpClient.put<UserInfo>(this.BASE_URL + this.UPDATE_USER_INFO_API, userInfoJson, httpOptions);
   }
   //---------------------------------------------------------------
 

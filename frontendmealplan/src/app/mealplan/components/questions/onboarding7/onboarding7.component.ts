@@ -93,13 +93,38 @@ export class Onboarding7Component implements OnInit {
     this.registerSrv.getAllGoals().subscribe((goals) => {
       this.allGoals = goals;
     });
-    const userInfo = this.registerSrv.getUserInfo();
+    const userInfo = this.registerSrv.getUserInfoLocalStorage();
     console.log("current userinfo id " + userInfo?.infoId);
     if (!userInfo || !userInfo?.infoId) {
       this.registerSrv.addUserInfo().subscribe((userInfo) => {
         console.log("added new userinfo " + userInfo.infoId);
         this.registerSrv.setUserInfo(userInfo);
       });
+    } else {
+      if (userInfo && userInfo.goals.length > 0) {
+        userInfo.goals.map((goal) => {
+          switch (goal.goalId) {
+            case 1:
+              this.enableDisableRule1(goal);
+              break;
+            case 2:
+              this.enableDisableRule2(goal);
+              break;
+            case 3:
+              this.enableDisableRule3(goal);
+              break;
+            case 4:
+              this.enableDisableRule4(goal);
+              break;
+            case 5:
+              this.enableDisableRule5(goal);
+              break;
+            case 6:
+              this.enableDisableRule6(goal);
+              break;
+          }
+        });
+      }
     }
   }
 

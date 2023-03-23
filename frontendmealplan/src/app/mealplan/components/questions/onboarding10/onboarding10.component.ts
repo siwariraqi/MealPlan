@@ -15,12 +15,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         </div>
 
         <div class="range">
-          <input
-            type="range"
-            [value]="activityValue"
-            class="slider"
-            (change)="updateVal($event.target)"
-          />
+          <input type="range" [value]="activityValue" class="slider" (change)="updateVal($event.target)" />
           <div class="text">
             <p class="Sedentary">Sedentary</p>
             <p class="Extra">Extra Active</p>
@@ -31,19 +26,22 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   `,
   styleUrls: ["./onboarding10.component.scss"],
 })
-export class Onboarding10Component {
+export class Onboarding10Component implements OnInit {
   activityValue: number;
-
 
   constructor(private registerSrv: RegisterService) {
     this.activityValue = 50;
-    this.registerSrv.getUserInfo().activity = '50';
+  }
+  ngOnInit(): void {
+    if (this.registerSrv.getUserInfo().activity) {
+      this.activityValue = this.registerSrv.getUserInfo().activity;
+    }
   }
 
   updateVal(target: EventTarget) {
     const value = (target as HTMLInputElement).value;
     console.log(value); //value is string
     this.activityValue = parseInt(value);
-    this.registerSrv.getUserInfo().activity = value;
+    this.registerSrv.getUserInfo().activity = this.activityValue;
   }
 }

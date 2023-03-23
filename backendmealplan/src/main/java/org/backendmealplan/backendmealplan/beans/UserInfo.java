@@ -23,12 +23,12 @@ public class UserInfo {
     private String unit;
 
 
-    @Past(message = "Birthday must be valid")
+//    @Past(message = "Birthday must be valid")
 //    @Max(value = MAX_BIRTHDAY, message = "Birthday cannot be after 2004-01-01")
 //    @Min(value = MIN_BIRTHDAY, message = "Birthday cannot be before 1922-01-01")
-    private LocalDate birthday;
+    private String birthday;
 
-    private String activity;
+    private Integer activity;
     private String medicalRisk;
     private Boolean isReceiveTreatment;
     private String gender;

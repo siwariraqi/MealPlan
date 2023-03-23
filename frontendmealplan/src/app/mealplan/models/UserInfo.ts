@@ -7,7 +7,7 @@ export class UserInfo {
     public weight?: string,
     public unit?: string,
     public birthday?: string,
-    public activity?: string,
+    public activity?: number,
     public medicalRisk?: string,
     public isReceiveTreatment?: boolean,
     public gender?: string,

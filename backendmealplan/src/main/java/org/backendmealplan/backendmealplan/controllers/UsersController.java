@@ -26,7 +26,6 @@ public class UsersController {
 
     @PutMapping("updateUserInfo")
     public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
-        System.out.println(userInfo);
         UserInfo updatedUserInfo = null;
         try {
             if(userInfo != null){
@@ -34,7 +33,7 @@ public class UsersController {
                 updatedUserInfo = userBL.updateUserInfo(userInfoId, userInfo);
             }
 
-        } catch (userInfoNotFound e) {
+        } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedUserInfo);

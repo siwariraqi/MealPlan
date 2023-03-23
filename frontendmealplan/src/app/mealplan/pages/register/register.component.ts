@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
       this.btnBackgroundColor = "#dd9670c4";
       this.btnColor = "white";
       if (this.onBoardingStep > 6) {
-        if (!this.screenValidation()) {
+        if (!this.screenValidation(this.onBoardingStep)) {
           return;
         } else {
           console.log("isValid YESS");
@@ -140,9 +140,9 @@ export class RegisterComponent implements OnInit {
 
   prevScreen() {}
 
-  screenValidation(): boolean {
+  screenValidation(stepNum: number): boolean {
     let isValid: boolean = true;
-    switch (this.onBoardingStep) {
+    switch (stepNum) {
       case 7: //goals
         if (!this.registerSrv.getUserInfo().goals || !this.registerSrv.getUserInfo().goals.length) {
           this.error = "You must select at least one goal!";
@@ -159,6 +159,9 @@ export class RegisterComponent implements OnInit {
         }
         break;
       case 10: //activity
+        if (!this.registerSrv.getUserInfo().activity) {
+          this.registerSrv.getUserInfo().activity = 50; //default activity value
+        }
         isValid = true;
         break;
       case 11: //gender
@@ -176,6 +179,8 @@ export class RegisterComponent implements OnInit {
         break;
       case 13: //weight
         if (!this.validateWeight()) {
+          console.log("unit is: ", this.registerSrv.getUserInfo().unit);
+
           this.error = `Invalid weight input! Weight must be between ${
             this.registerSrv.getUserInfo().unit === "metric" ? "30 and 300 kg" : "66 and 661 lb"
           }`;
@@ -212,6 +217,10 @@ export class RegisterComponent implements OnInit {
   }
 
   validateWeight(): boolean {
+    if (!this.registerSrv.getUserInfo().unit) {
+      //if unit is null
+      this.registerSrv.getUserInfo().unit = "metric"; //default value of unit
+    }
     const userWeight = this.registerSrv.getUserInfo().weight;
     if (!userWeight || userWeight === "") {
       return false;

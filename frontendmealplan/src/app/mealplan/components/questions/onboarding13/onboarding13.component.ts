@@ -37,10 +37,11 @@ export class Onboarding13Component implements OnInit {
 
   constructor(private registerSrv: RegisterService) {
     this.weightControl = new FormControl();
-    this.chosenUnit = "metric";
+    this.chosenUnit = null;
   }
 
   ngOnInit(): void {
+    this.chosenUnit = "metric";
     this.registerSrv.getUserInfo().unit = this.chosenUnit;
     this.weightControl.valueChanges.subscribe((value) => {
       console.log(value);
