@@ -80,16 +80,16 @@ mealID:number
   public mealDietTypeConditions(){
     for(let i=0;i<this.mealDietType.length;i++)
     {
-    if(this.mealDietType[i].text=="keto"){
+    if(this.mealDietType[i].text=="KETO FRIENDLY"){
       this.keto=true;
     }
-    if(this.mealDietType[i].text=="vegan"){
+    if(this.mealDietType[i].text=="VEGAN FRIENDLY"){
       this.vegan=true;
     }
-    if(this.mealDietType[i].text=="gluten"){
+    if(this.mealDietType[i].text=="GLUTEN FREE"){
       this.gluten=true;
     }
-    if(this.mealDietType[i].text=="dairy"){
+    if(this.mealDietType[i].text=="DAIRY FREE"){
       this.dairy=true;
     }
   }
