@@ -45,6 +45,7 @@ public class UserBL {
     public UserBL(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+
     public User authentication(String email, String password) throws Exception {
         User user = usersDAO.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
@@ -125,6 +126,17 @@ public class UserBL {
     public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws userInfoNotFound {
         Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
         if (existingUsersInfo.isPresent()) {
+            if (!userInfo.getGoals().isEmpty()) {
+                Set<Goal> goals = new HashSet<>();
+                for (Goal goal : userInfo.getGoals()) {
+                    Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
+                    if (optionalGoal.isPresent()) {
+                        Goal existingGoal = optionalGoal.get();
+                        goals.add(existingGoal);
+                    }
+                }
+                userInfo.setGoals(goals);
+            }
             return this.usersInfoDAO.save(userInfo);
         } else {
             throw new userInfoNotFound();
@@ -133,7 +145,7 @@ public class UserBL {
 
     public User updateProfile(User newProfile) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(newProfile.getUserId());
-        if(user == null){
+        if (user == null) {
             throw new UNAUTHORIZEDException("user does not Exist");
         }
         if(newProfile.getEmail()!=null){
@@ -241,11 +253,11 @@ public class UserBL {
 
     public User userSetPlan( Long userId,  Long planId) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(userId);
-        if(user == null){
+        if (user == null) {
             throw new UNAUTHORIZEDException("user does not Exist");
         }
         Plan plan = this.planBL.getPlanById(planId);
-        if(plan == null){
+        if (plan == null) {
             throw new UNAUTHORIZEDException("plan id doesn't Exist");
         }
         user.setPlan(plan);
@@ -289,7 +301,7 @@ public class UserBL {
     public User getUser(Long userid) throws userNotFoundException {
 
         User user = this.usersDAO.findByUserId(userid);
-        if (user!=null) {
+        if (user != null) {
             return user;
         } else {
             throw new userNotFoundException("User not found");
@@ -298,7 +310,7 @@ public class UserBL {
 
     public User addGroceryChangeToUser(Long userId, List<GroceryList> groceryList) throws UNAUTHORIZEDException {
         User user = this.usersDAO.findByUserId(userId);
-        if(user == null){
+        if (user == null) {
             throw new UNAUTHORIZEDException("user does not Exist");
         }
         Set<GroceryList> user_groceries = user.getChanges();
@@ -310,7 +322,7 @@ public class UserBL {
     public List<GroceryList> getDeletedGroceries(Long userId) throws UNAUTHORIZEDException {
 
         User user = this.usersDAO.getReferenceById(userId);
-        if(user == null){
+        if (user == null) {
             throw new UNAUTHORIZEDException("user does not Exist");
         }
         return user.getChanges().stream().toList();
@@ -318,7 +330,7 @@ public class UserBL {
 
     public Plan getUserPlan(Long userId) throws UNAUTHORIZEDException {
         User user = this.usersDAO.getReferenceById(userId);
-        if(user == null){
+        if (user == null) {
             throw new UNAUTHORIZEDException("user does not Exist");
         }
         return user.getPlan();
