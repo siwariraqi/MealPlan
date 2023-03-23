@@ -1,10 +1,13 @@
 package org.backendmealplan.backendmealplan.beans;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DayMealKey implements Serializable {
     @ManyToOne
     @JoinColumn(name = "meal_id")

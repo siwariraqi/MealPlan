@@ -1,0 +1,207 @@
+<div class="px-3" id="printPdf">
+  <div class="theme-container">
+    <mat-card class="menu-single my-5">
+      <div fxLayout="row wrap" class="flex-wrapper">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+          <mat-chip-list>
+            <mat-chip color="warn" selected="true">{{type}}</mat-chip>
+          </mat-chip-list>
+
+          <img [src]="meal.imageUrl" class="w-100" />
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+          <h1 class="secondary-font meal-name">{{ meal.mealName }}</h1>
+
+          <div class="py-3">
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span class="mat-icon mat-icon-sm primary-color">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12,3C10.73,3 9.6,3.8 9.18,5H3V7H4.95L2,14C1.53,16 3,17 5.5,17C8,17 9.56,16 9,14L6.05,7H9.17C9.5,7.85 10.15,8.5 11,8.83V20H2V22H22V20H13V8.82C13.85,8.5 14.5,7.85 14.82,7H17.95L15,14C14.53,16 16,17 18.5,17C21,17 22.56,16 22,14L19.05,7H21V5H14.83C14.4,3.8 13.27,3 12,3M12,5A1,1 0 0,1 13,6A1,1 0 0,1 12,7A1,1 0 0,1 11,6A1,1 0 0,1 12,5M5.5,10.25L7,14H4L5.5,10.25M18.5,10.25L20,14H17L18.5,10.25Z" />
+                </svg>
+              </span>
+              <span class="px-1  detailes">Kilocalorie:</span>
+              <span class="fw-500">{{ meal.calories}} Kcal</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span class="mat-icon mat-icon-sm primary-color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-alarm-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z" />
+                </svg>
+              </span>
+              <span class="px-1 detailes">Prepare Time:</span>
+              <span class="fw-500">{{
+                meal.prepareTime
+                }}</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-icon mat-icon-sm primary-color">
+                  <span class="mat-icon mat-icon-sm primary-color">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                      <rect width="256" height="256" fill="none" />
+                      <path
+                        d="M88,48V16a8,8,0,0,1,16,0V48a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V16a8,8,0,0,0-16,0V48A8,8,0,0,0,128,56Zm32,0a8,8,0,0,0,8-8V16a8,8,0,0,0-16,0V48A8,8,0,0,0,160,56Zm94.4,35.2a8,8,0,0,0-11.2-1.6L224,104V88a16,16,0,0,0-16-16H48A16,16,0,0,0,32,88v16L12.8,89.6a8,8,0,0,0-9.6,12.8L32,124v60a32.1,32.1,0,0,0,32,32H192a32.1,32.1,0,0,0,32-32V124l28.8-21.6A8,8,0,0,0,254.4,91.2Z" />
+                    </svg>
+                  </span>
+                </span>
+                <span class="px-1 detailes">Cook Time:</span>
+              </span>
+              <span class="dots"></span>
+              <span class="fw-500">{{ meal.cookTime }}</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-icon mat-icon-sm primary-color">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                      d="M100.4 112.3L.5101 491.7c-1.375 5.625 .1622 11.6 4.287 15.6c4.127 4.125 10.13 5.744 15.63 4.119l379.1-105.1C395.3 231.4 276.5 114.1 100.4 112.3zM127.1 416c-17.62 0-32-14.38-32-31.1c0-17.62 14.39-32 32.01-32c17.63 0 32 14.38 32 31.1C160 401.6 145.6 416 127.1 416zM175.1 271.1c-17.63 0-32-14.38-32-32c0-17.62 14.38-31.1 32-31.1c17.62 0 32 14.38 32 31.1C208 257.6 193.6 271.1 175.1 271.1zM272 367.1c-17.62 0-32-14.38-32-31.1c0-17.62 14.38-32 32-32c17.63 0 32 14.38 32 32C304 353.6 289.6 367.1 272 367.1zM158.9 .1406c-16.13-1.5-31.25 8.501-35.38 24.12L108.7 80.52c187.6 5.5 314.5 130.6 322.5 316.1l56.88-15.75c15.75-4.375 25.5-19.62 23.63-35.87C490.9 165.1 340.8 17.39 158.9 .1406z" />
+                  </svg>
+                </span>
+                <span class="px-1 detailes">Carbs:</span>
+              </span>
+              <span class="fw-500">{{ meal.carbs }} g</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-icon mat-icon-sm primary-color">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                      d="M336 128c-32 0-80.02 16.03-112 32.03c-32.01-16-79.1-32.02-111.1-32.03C32 128 .4134 210.5 .0033 288c-.5313 99.97 63.99 224 159.1 224c32 0 48-16 64-16c16 0 32 16 64 16c96 0 160.4-122.8 159.1-224C447.7 211.6 416 128 336 128zM320 32V0h-32C243.8 0 208 35.82 208 80v32h32C284.2 112 320 76.18 320 32z" />
+                  </svg>
+
+                </span>
+                <span class="px-1 detailes">Fibre:</span>
+              </span>
+              <span class="fw-500">{{ meal.fibre }} g</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-icon mat-icon-sm primary-color">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                    <rect width="256" height="256" fill="none" />
+                    <path
+                      d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm37.7,83.5c-20.4,25.9-53.2,40.1-97.5,42.1L87.4,251.1A8.1,8.1,0,0,1,80,256h-.5a7.9,7.9,0,0,1-7.2-5.8L57.5,198.5,5.8,183.7a8,8,0,0,1-.9-15.1l49.5-20.8c2-44.3,16.1-77.1,42.1-97.5,41.1-32.4,99.4-23,116.3-19.3A15.9,15.9,0,0,1,225,43.2C228.7,60.1,238.1,118.4,205.7,159.5Zm3.7-112.9c-15.2-3.2-67.4-11.8-103,16.3A74.1,74.1,0,0,0,96,72.7,40.1,40.1,0,0,0,136,112a8,8,0,0,1,8,8,40.1,40.1,0,0,0,39.3,40,80,80,0,0,0,9.8-10.4C221.2,114,212.6,61.8,209.4,46.6Z" />
+                  </svg>
+                </span>
+              </span>
+              <span class="px-1 detailes">Protein:</span>
+              <span class="fw-500">{{
+                meal.protein
+                }} g</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mb-1">
+              <span fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-icon mat-icon-sm primary-color">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 9v4c-.667 0-2 .4-2 2s1.333 2 2 2v3H4.5C2 15 2 6 11 4l10 5zm0 0H5m3 7h.001M13 13h.001M15 16h.001" />
+                  </svg>
+                </span>
+              </span>
+              <span class="px-1 detailes">Fat:</span>
+              <span class="fw-500">{{
+                meal.fat
+                }} g</span>
+            </p>
+          </div>
+          <div class="text-muted "></div>
+
+          <div fxLayoutAlign="start center">
+            <app-diet-type [DietType]="mealDietType"></app-diet-type>
+          </div>
+          <div *ngIf="keto">
+            <span class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" class="bi bi-check" viewBox="0 0 20 20">
+                <path
+                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            </span>
+            KETO FRIENDLY
+          </div>
+          <div *ngIf="vegan">
+            <span class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" class="bi bi-check" viewBox="0 0 20 20">
+                <path
+                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            </span>
+            VEGAN FRIENDLY
+          </div>
+          <div *ngIf="dairy">
+            <span class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" class="bi bi-check" viewBox="0 0 20 20">
+                <path
+                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            </span>
+            DAIRY FREE
+          </div>
+          <div *ngIf="gluten">
+            <span class="mat-icon mat-icon-sm primary-color  ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" class="bi bi-check" viewBox="0 0 20 20">
+                <path
+                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            </span>
+            GLUTEN FREE
+          </div>
+         
+          <div fxLayout=" row " class="mt-2">
+
+          </div>
+
+
+          <div fxLayout="row" fxLayoutAlign="start center" class=" divider pt-3">
+            <span class="fw-500">Share: </span>
+            <app-share fxLayout="row" fxLayoutAlign="start center"></app-share>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" class=" pt-3">
+            <span class="fw-500">Print: </span>
+            <app-print fxLayout="row" fxLayoutAlign="start center"></app-print>
+          </div>
+        </div>
+        <div fxFlex="100" class="px-3 mt-5">
+          <mat-tab-group [@.disabled]="true" [selectedIndex]="0">
+            <mat-tab label="Ingredients">
+              <div class="full-desc">
+                <ul class="px-2 mt-1" *ngFor="let ingredient of ingredients">
+                  <li>{{ingredient.amount}} {{ingredient.unit}} {{ingredient.id.ingredient.productName}} </li>
+                  <div class="divider"></div>
+                </ul>
+              </div>
+            </mat-tab>
+            <mat-tab label="Instructions">
+              <div class="full-desc" [innerHTML]="instructions">
+              </div>
+              <div class="button">
+                <button (click)="onItFeedback()" _ngcontent-serverapp-c218="" mat-flat-button="" type="submit"
+                  color="primary" class="mat-focus-indicator subscribe-btn mat-flat-button mat-button-base mat-primary"
+                  ng-reflect-color="primary" fdprocessedid="rpxeid">
+                  <span class="mat-button-wrapper">On it!</span><span matripple="" class="mat-ripple mat-button-ripple"
+                    ng-reflect-disabled="false" ng-reflect-centered="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"></span>
+                  <span class="mat-button-focus-overlay"></span>
+                </button>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Tips">
+              <div class="full-desc" [innerHTML]="tips">
+              </div>
+
+            </mat-tab>
+
+            <mat-tab label="Feedbacks">
+              <div class="full-desc">
+                <app-feedbacks [mealId]="mealID"></app-feedbacks>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

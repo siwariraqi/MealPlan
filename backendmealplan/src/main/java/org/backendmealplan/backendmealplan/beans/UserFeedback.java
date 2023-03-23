@@ -1,6 +1,7 @@
 package org.backendmealplan.backendmealplan.beans;
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
@@ -23,9 +24,14 @@ public class UserFeedback {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private boolean isOnIt;
+    @NotNull
+    private Boolean isOnIt;
+
     private Date date;
-    private int rating;
+
+    private int rating = -1;
+
+    @NotNull
     private String feedbackText;
 
 }

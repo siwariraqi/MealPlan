@@ -1,0 +1,27 @@
+<div class="section default mt-3" >
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">Meal Plan</h1>
+            <h2 fxLayoutAlign="center " >
+                <mat-icon (click)="numDayLeft()" class="left-arrow">arrow_back_ios</mat-icon>
+                Day {{choosenDay}} 
+                <mat-icon (click)="numDayRight()" class="right-arrow">arrow_forward_ios</mat-icon>
+            </h2>
+            <div style="display: flex; align-items: center;">
+                <ngx-charts-advanced-pie-chart 
+                [view]="[600, 300]" 
+                [results]="data"
+                [label]="'Nutritions '"
+                ></ngx-charts-advanced-pie-chart>
+                <div class="cal" style="margin-left:400px ;">
+                    <div class="section-title calories">
+                        <h6>Calories</h6>
+                    </div>
+                    <h2 class="calories-number"> {{totalCalories}}g</h2>
+                </div>
+
+            </div>
+            <app-meal-items-details [mealItems]="dayMeals"></app-meal-items-details>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+.container {
+    width: 95vw;
+    max-width: 1200px;
+    margin: auto;
+    background-color: white;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+}
+
+.productName {
+    display: flex;
+}
+
+.checkbox {
+    margin-right: 5px;
+}
+
+
+.p-3 {
+    display: inline;
+    margin: auto;
+    background-color: white;
+
+}
+
+.Weekbuttons1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 5%;
+    
+}
+.weeks1{
+    background-color: white;
+    //border-radius: 50%;
+    border-color: #E09167;
+    padding: 15%;
+    width: 6vw;
+}
+.weeks1:hover{
+    background-color: #E09167;
+    border-color: white;
+}
+
+
+.line {
+    border: 0.04px solid #99B182;
+    margin-top: 3%;
+
+}
+
+.catagoriesTitle {
+    margin: 1%;
+    --swiper-navigation-size: 44px;
+    line-height: 1.7;
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    margin: 0;
+    padding: 10px;
+    width: 20vw;
+    background-color: #E09167;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.orange {
+    background-color: #E09167;
+
+}
+
+.white {
+    background-color: white;
+}
