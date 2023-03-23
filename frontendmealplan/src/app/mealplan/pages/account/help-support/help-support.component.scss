@@ -1,0 +1,37 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif ;
+    }
+    
+    
+    ul li:before {
+    font-family: FontAwesome;
+    font-weight: 400;
+    margin-right: 10px;
+    color: #003366;
+    }
+    
+    .lead {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #333;
+    }
+
+    .secondary-font {
+        font-family: 'Montserrat', sans-serif ;
+      }
+    
+
+      .bigger-font {
+        font-size: 1.2rem; /* adjust the value as needed */
+      }
+    
+      .bigger-title{
+        font-size: 2rem; /* adjust the value as needed */
+      }
+    
+      .custom-button {
+        font-size: 1.2em; /* Adjust the value to your liking */
+      }
+    

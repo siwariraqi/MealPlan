@@ -13,44 +13,105 @@ import { GroceryListService } from "../../services/grocery-list.service";
   styleUrls: ["./grocery-list.component.scss"],
 })
 export class GroceryListComponent implements OnInit {
-  public total: any[] = [];
-  public cartItemCount: any[] = [];
-  public cartItemCountTotal: number = 0;
-  public currentTotalCartCount: number = 0;
-
   //Code We added START
+  public AllCatagories = ["Dairy", "Meat", "Fruit", "Vegetables", "Others"];
   public allWeeks = [1, 2, 3, 4];
-  public weeksToDisplay = [];
-  public groceries: GroceryList[] = [];
+  public weeksToDisplay = new Set(); //weeks the user clicked
+  public groceries: GroceryList[] = []; //groceris we iterate over in html (final)
+  public groceriesSet: Set<GroceryList> = new Set(); //all groceries to make sure we dont add duplicates
   public userId = 1; //should be changed to getting current user
-  public weekGroceries = [[], [], [], []];
-  public groceriesWeek = [];
+  public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
+  public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
 
-  constructor(
-    public appService: AppService,
-    public snackBar: MatSnackBar,
-    private grocerListService: GroceryListService
-  ) {}
+  clicked: boolean[];
+
+  constructor(private grocerListService: GroceryListService) {}
+
+  displayWeek(week: number) {
+    this.getGroceriesForWeek(week);
+    this.weeksToDisplay.add(week);
+    this.filterGroceriesAccordingToWeek();
+    //get the groceries for the week
+    /*
+    this.clicked[2] = true;
+    if (this.weeksToDisplay.has(week)) {
+      this.weeksToDisplay.delete(week);
+    } else {
+      // get the groceries for the week
+      this.getGroceriesForWeek(week);
+      this.weeksToDisplay.add(week);
+    }
+    this.filterGroceriesAccordingToWeek();
+    */
+  }
+  hideWeek(week: number) {
+    this.weeksToDisplay.delete(week);
+    this.filterGroceriesAccordingToWeek();
+  }
+  weekClicked(week: number) {
+    if (this.clicked[week - 1]) {
+      this.hideWeek(week);
+      this.clicked[week - 1] = false;
+    } else {
+      this.displayWeek(week);
+      this.clicked[week - 1] = true;
+    }
+  }
+
+  filterGroceriesAccordingToWeek() {
+    //this.groceries = [];
+    this.groceries = Array.from(this.groceriesSet).filter((groList) => {
+      return this.weeksToDisplay.has(groList.week);
+    });
+  }
 
   ngOnInit(): void {
+    this.clicked = [false, false, false, false];
+    for (var i = 0; i < this.allWeeks.length; i++) {
+      this.hasWeekGrocery.push(false);
+    }
     this.initGroceries();
-    this.weeksToDisplay.push(1);
-    //their code
-    this.updateCartTotal();
   }
 
   initGroceries() {
-    this.getGroceriesForWeek(1);
+    this.weekClicked(1);
   }
 
   getGroceriesForWeek(week: number) {
-    //should not add directly to this.groceries
+    if (this.hasWeekGrocery[week - 1]) {
+      this.mergeWeekGroceries(week);
+      return;
+    }
     this.grocerListService
       .getIngredients(week, this.userId)
       .subscribe((groceriess) => {
-        this.groceries = groceriess;
+        this.weekGroceries[week - 1] = groceriess;
+        this.mergeWeekGroceries(week);
       });
-    //this.groceries = this.groceriesWeek;
+    this.hasWeekGrocery[week - 1] = true;
+  }
+
+  /*
+  getGroceriesForWeek(week: number) {
+    if (this.hasWeekGrocery[week - 1]) return;
+    if (this.weekGroceries[week - 1].length === 0) {
+      this.grocerListService
+        .getIngredients(week, this.userId)
+        .subscribe((groceriess) => {
+          this.weekGroceries[week - 1] = groceriess;
+          this.mergeWeekGroceries(week);
+        });
+    } else {
+      this.mergeWeekGroceries(week);
+    }
+  }
+  */
+
+  mergeWeekGroceries(week: number) {
+    this.weekGroceries[week - 1].forEach((element) => {
+      this.groceriesSet.add(element);
+    });
+    this.groceries = Array.from(this.groceriesSet);
   }
 
   hideIngredient(toRemove: GroceryList) {
@@ -62,100 +123,11 @@ export class GroceryListComponent implements OnInit {
           alert("error in deleting");
         });
       this.groceries.splice(index, 1);
+      this.groceriesSet.delete(toRemove);
     }
   }
+
   selectAll() {
     this.getGroceriesForWeek(1);
-  }
-
-  //Code We added END
-
-  //their functions
-
-  ngDoCheck() {
-    if (this.currentTotalCartCount !== this.appService.Data.totalCartCount) {
-      this.updateCartTotal();
-      this.currentTotalCartCount = this.appService.Data.totalCartCount;
-    }
-  }
-
-  public updateCartTotal() {
-    this.cartItemCountTotal = 0;
-    this.appService.Data.cartList.forEach((item) => {
-      let price = 0;
-      if (item.discount) {
-        price = item.price - item.price * (item.discount / 100);
-      } else {
-        price = item.price;
-      }
-      this.total[item.id] = item.cartCount * price;
-      this.cartItemCount[item.id] = item.cartCount;
-      this.cartItemCountTotal += item.cartCount;
-    });
-  }
-
-  public onQuantityChange(count: number, menuItem: MenuItem) {
-    menuItem.cartCount = count;
-    if (menuItem.cartCount <= menuItem.availibilityCount) {
-      let price = 0;
-      if (menuItem.discount) {
-        price = menuItem.price - menuItem.price * (menuItem.discount / 100);
-      } else {
-        price = menuItem.price;
-      }
-      this.total[menuItem.id] = count * price;
-      this.cartItemCount[menuItem.id] = count;
-      this.appService.calculateCartTotal();
-      this.cartItemCountTotal = 0;
-      this.cartItemCount.forEach((value) => {
-        this.cartItemCountTotal += value;
-      });
-      this.appService.Data.totalCartCount = this.cartItemCountTotal;
-      this.appService.Data.cartList.forEach((item) => {
-        this.cartItemCount.forEach((value, index) => {
-          if (item.id == index) {
-            item.cartCount = value;
-          }
-        });
-      });
-    } else {
-      menuItem.cartCount = menuItem.availibilityCount;
-      this.snackBar.open(
-        "You can not add more items than available. In stock " +
-          menuItem.availibilityCount +
-          " items and you already added " +
-          menuItem.cartCount +
-          " item to your cart",
-        "×",
-        { panelClass: "error", verticalPosition: "top", duration: 5000 }
-      );
-    }
-  }
-
-  public remove(item: MenuItem) {
-    const index: number = this.appService.Data.cartList.indexOf(item);
-    if (index !== -1) {
-      this.appService.Data.cartList.splice(index, 1);
-      this.appService.calculateCartTotal();
-      this.total.forEach((val) => {
-        if (val == this.total[item.id]) {
-          this.total[item.id] = 0;
-        }
-      });
-      this.cartItemCountTotal =
-        this.cartItemCountTotal - this.cartItemCount[item.id];
-      this.appService.Data.totalCartCount = this.cartItemCountTotal;
-      this.cartItemCount.forEach((val) => {
-        if (val == this.cartItemCount[item.id]) {
-          this.cartItemCount[item.id] = 0;
-        }
-      });
-    }
-  }
-
-  public clear() {
-    this.appService.Data.cartList.length = 0;
-    this.appService.Data.totalPrice = 0;
-    this.appService.Data.totalCartCount = 0;
   }
 }

@@ -1,4 +1,18 @@
-.secondary-font {
+.app-description-container {
+    max-width: 670px;
+    margin: auto;
+    padding: 30px;
+    background-color: #F7F7F7;
+    border-radius: 5px;
+  }
+  
+  .app-description {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: justify;
+  }
+
+  .secondary-font{
     font-family: 'Montserrat', sans-serif ;
   }
 
@@ -12,14 +26,4 @@
 
   .custom-button {
     font-size: 1.2em; /* Adjust the value to your liking */
-  }
-
-  .mat-icon{
-    
-  }
-
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 20px; /* or any desired value for the gap between form fields */
-    box-sizing: content-box;
   }

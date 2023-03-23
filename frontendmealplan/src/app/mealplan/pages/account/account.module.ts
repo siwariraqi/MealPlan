@@ -6,11 +6,11 @@ import { AccountComponent } from './account.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
-import { AddressesComponent } from './addresses/addresses.component';
-import { FavoritesComponent } from './favorites/favorites.component';
-import { ReservationsComponent } from './reservations/reservations.component';
-import { OrdersComponent } from './orders/orders.component';
-import { OrderComponent } from './orders/order/order.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { HelpSupportComponent } from './help-support/help-support.component';
+import { AboutComponent } from './about/about.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 export const routes: Routes = [
@@ -21,11 +21,11 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'password-change', component: PasswordChangeComponent },
-      { path: 'addresses', component: AddressesComponent },
-      { path: 'favorites', component: FavoritesComponent },
-      { path: 'reservations', component: ReservationsComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'orders/:id', component: OrderComponent } 
+      { path: 'account-settings', component: AccountSettingsComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'help-support', component: HelpSupportComponent },
+      { path: 'privacy', component: PrivacyComponent },
+      { path: 'terms', component: TermsComponent }
     ]
   }
 ];
@@ -37,11 +37,11 @@ export const routes: Routes = [
     DashboardComponent,
     ProfileComponent,
     PasswordChangeComponent,
-    AddressesComponent,
-    FavoritesComponent,
-    ReservationsComponent,
-    OrdersComponent,
-    OrderComponent 
+    AccountSettingsComponent,
+    HelpSupportComponent,
+    AboutComponent,
+    PrivacyComponent,
+    TermsComponent 
   ],
   imports: [
     CommonModule,

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/mealplan/models/User';
 import { UserInfo } from 'src/app/mealplan/models/UserInfo';
 import { UserService } from 'src/app/mealplan/services/user.service';
+import { catchError, of } from 'rxjs';
 
 
 @Component({
@@ -12,24 +13,32 @@ import { UserService } from 'src/app/mealplan/services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
+
+
 export class ProfileComponent implements OnInit {
   public infoForm!:UntypedFormGroup; 
   genderFormControl: FormControl;
   userId:number;
   user:User ={};
+  today: Date = new Date();
   userInfo:UserInfo={};
+  
   constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
-
+  
   ngOnInit() {
-    this.user.userInfo=this.userInfo;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const maxDate = new Date();
     this.genderFormControl = new FormControl();
     this.infoForm = this.formBuilder.group({
       FirstName: ['', Validators.compose([ Validators.minLength(3)])],
       LastName: ['', Validators.compose([ Validators.minLength(3)])],
-      email: ['', Validators.compose([ emailValidator])],
-      phone: ['', Validators.minLength(9)],
+      email: ['', Validators.compose([Validators.pattern(emailRegex)])],
+      phone: ['', Validators.pattern(/^\+(?:[0-9] ?){6,14}[0-9]$/)],
       genderControl: this.genderFormControl,
-      birthday:null,
+      birthday: new FormControl('', [
+        Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$'),
+        ageValidator // add custom age validator
+      ]),
       image: null
     });
     this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
@@ -48,7 +57,12 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
   public onInfoFormSubmit():void {
+    if (Object.keys(this.user).length === 0) {
+      this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+      return;
+    }
     this.userId = Number(localStorage.getItem('userId'));
     this.user.userId=this.userId;
     this.user.firstName=this.infoForm.controls['FirstName'].value || this.user.firstName; // use previous value if empty
@@ -56,16 +70,31 @@ export class ProfileComponent implements OnInit {
     this.user.email=this.infoForm.controls['email'].value || this.user.email; // use previous value if empty
     this.user.phoneNumber=this.infoForm.controls['phone'].value || this.user.phoneNumber; // use previous value if empty
     this.user.userInfo.birthday=this.infoForm.controls['birthday'].value || this.user.userInfo.birthday; // use previous value if empty
+    if(this.infoForm.controls['birthday'].value === null) {
+      this.user.userInfo.birthday = null;
+    }
     this.user.userInfo.gender=this.infoForm.controls['genderControl'].value || this.user.userInfo.gender; // use previous value if empty
 
-    if (this.infoForm.valid) { 
-      this.userService.updateProfile(this.user).subscribe(
-        data => {console.log('Profile updated successfully.');
+    if (this.infoForm.valid) {
+      this.userService.updateProfile(this.user)
+        .pipe(
+          catchError(error => {
+            console.error('Error updating profile:', error);
+            this.snackBar.open('An error occurred while updating your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+            return of(null); // Return an observable with null value to continue the observable chain
+          })
+        )
+        .subscribe(
+          data => {
+            if (data) { // Only execute the success logic if data is not null
+              console.log('Profile updated successfully.');
+            }
+          }
+        );
         this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-      },
-        error => console.error('Error updating profile:', error)
-      );
-      
+    }
+    else{
+      this.snackBar.open('Wrong information. Please fix it and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
     }
     
   } 
@@ -79,4 +108,14 @@ export class ProfileComponent implements OnInit {
     }
   } 
 
+}
+
+function ageValidator(control: FormControl): { [key: string]: boolean } | null {
+  const currentDate = new Date();
+  const birthday = new Date(control.value);
+  const ageInYears = currentDate.getFullYear() - birthday.getFullYear();
+  if (ageInYears < 18 || ageInYears > 120) {
+    return { 'invalidAge': true };
+  }
+  return null;
 }
