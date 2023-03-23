@@ -1,12 +1,15 @@
 package org.backendmealplan.backendmealplan.bl;
-
+import org.backendmealplan.backendmealplan.dao.DietTypesDAO;
+import org.backendmealplan.backendmealplan.dao.MealsDAO;
+import org.backendmealplan.backendmealplan.enums.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.PlansDAO;
-import org.backendmealplan.backendmealplan.enums.*;
+import org.backendmealplan.backendmealplan.beans.DietType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,9 @@ public class InitDataBL {
     MealBL mealBL;
 
     @Autowired
+    MealsDAO mealsDAO;
+
+    @Autowired
     IngredientBL ingredientBL;
 
     Ingredient[] ingredients = new Ingredient[135];
@@ -36,15 +42,49 @@ public class InitDataBL {
     @Autowired
     PlansDAO plansDAO;
 
+    @Autowired
+    DietTypesDAO dietTypesDAO;
+
     public void run() {
         createGoals();
+        createDietType();
         createIngredients();
         createMeals();
         createMealIngredients();
+        createMealTypes();
         createPlans();
         createDays();
         createDayMeals();
         createDayPlan();
+    }
+
+    private void createMealTypes() {
+        insertMealTypes(meals[0],new DietType(DietTypes.DAIRY_FREE.getValue()));
+        insertMealTypes(meals[0],new DietType(DietTypes.VEGAN_FRIENDLY.getValue()));
+        insertMealTypes(meals[0],new DietType(DietTypes.KETO_FRIENDLY.getValue()));
+        insertMealTypes(meals[0],new DietType(DietTypes.GLUTEN_FREE.getValue()));
+        insertMealTypes(meals[1],new DietType(DietTypes.GLUTEN_FREE.getValue()));
+        insertMealTypes(meals[1],new DietType(DietTypes.KETO_FRIENDLY.getValue()));
+        insertMealTypes(meals[1],new DietType(DietTypes.DAIRY_FREE.getValue()));
+        insertMealTypes(meals[2],new DietType(DietTypes.KETO_FRIENDLY.getValue()));
+        insertMealTypes(meals[2],new DietType(DietTypes.VEGAN_FRIENDLY.getValue()));
+        insertMealTypes(meals[3],new DietType(DietTypes.DAIRY_FREE.getValue()));
+        insertMealTypes(meals[21],new DietType(DietTypes.VEGAN_FRIENDLY.getValue()));
+        insertMealTypes(meals[21],new DietType(DietTypes.DAIRY_FREE.getValue()));
+        insertMealTypes(meals[16],new DietType(DietTypes.KETO_FRIENDLY.getValue()));
+        insertMealTypes(meals[15],new DietType(DietTypes.GLUTEN_FREE.getValue()));
+        insertMealTypes(meals[15],new DietType(DietTypes.KETO_FRIENDLY.getValue()));
+        insertMealTypes(meals[15],new DietType(DietTypes.VEGAN_FRIENDLY.getValue()));
+        insertMealTypes(meals[15],new DietType(DietTypes.DAIRY_FREE.getValue()));
+    }
+
+    private void insertMealTypes(Meal meal, DietType dietType) {
+        Meal savedMeal = this.mealsDAO.findByMealName(meal.getMealName());
+        DietType savedDiet = this.dietTypesDAO.findByText(dietType.getText());
+        Set<DietType> dietTypeSet = savedMeal.getDietTypes();
+        dietTypeSet.add(savedDiet);
+        savedMeal.setDietTypes(dietTypeSet);
+        this.mealsDAO.save(savedMeal);
     }
 
     private void createDays() {
@@ -234,7 +274,7 @@ public class InitDataBL {
         ingredients[93] = insertIngredient("Black Beans (cooked, rinsed)", FoodCategories.Vegetables.name());
         ingredients[94] = insertIngredient("Enchilada Sauce", FoodCategories.Others.name());
         ingredients[95] = insertIngredient("avocado (sliced)", FoodCategories.Vegetables.name());
-        ingredients[96] = insertIngredient("brown rice tortilla",FoodCategories.Others.name());
+        ingredients[96] = insertIngredient("brown rice tortilla", FoodCategories.Others.name());
 
         //lunch7
         ingredients[97] = insertIngredient("boiling water", FoodCategories.Others.name());
@@ -304,6 +344,14 @@ public class InitDataBL {
         }
     }
 
+    private void createDietType() {
+        for (DietTypes goalType : DietTypes.values()) {
+            DietType diet = new DietType();
+            diet.setText(goalType.getValue());
+            mealBL.addDietType(diet);
+        }
+    }
+
 
     private void createMeals() {
         List<String> instructions = new ArrayList<>();
@@ -321,7 +369,6 @@ public class InitDataBL {
                 "assets/images/foods/meat-courses/1/medium.jpg", instructions,
                 "10 minutes",
                 "3 hours", tips);
-
         instructions = new ArrayList<>();
         instructions.add("Mix the grated carrot, mixed spice, cinnamon, and oats");
         instructions.add("Add 2⁄3 cup (X4) water and a pinch of salt");
@@ -446,15 +493,12 @@ public class InitDataBL {
         meals[13] = insertMeal("Homemade Muesli",
                 458, 46, 7, 17, 23,
                 "assets/images/foods/salads/3/medium.jpg", instructions, "10 minutes", "10 minutes", new ArrayList<>());
-
         meals[14] = insertMeal("Turkey roll up",
                 272, 28, 4.8, 22.8, 7,
                 "assets/images/foods/chicken-courses/1/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
-
         meals[15] = insertMeal("almonds",
                 122, 2, 12, 4, 2,
                 "assets/images/foods/chicken-courses/2/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
-
         meals[16] = insertMeal("mature cheddar",
                 123, 0.03, 0, 7.5, 10.4,
                 "assets/images/foods/chicken-courses/3/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
