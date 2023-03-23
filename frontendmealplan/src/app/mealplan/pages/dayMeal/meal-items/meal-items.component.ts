@@ -31,8 +31,8 @@ export class MealItemsComponent implements OnInit {
     public mealType (){
       this.type=this.dayItem.type;
       this.mealItem=this.dayItem.id.meal;
-      this.mealDietType=this.dayItem.id.meal.dietType;
-      // this.dayMealService.setMealDietType(this.mealDietType);
+      this.mealDietType=this.dayItem.id.meal.dietTypes;  
+      this.dayMealService.setMealDietType(this.mealDietType);
     }
     onMealClick(mealId: number) {
       if(this.mealItem.mealId === mealId){
