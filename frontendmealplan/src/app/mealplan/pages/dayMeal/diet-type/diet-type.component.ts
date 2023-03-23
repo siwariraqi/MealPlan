@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,Input,OnInit } from '@angular/core';
 import { DietType } from 'src/app/mealplan/models/DietType';
 import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
 
@@ -9,21 +9,29 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
   styleUrls: ['./diet-type.component.scss']
 })
 export class DietTypeComponent implements OnInit {
-  keto=true;
-  vegan=true;
-  gluten=true;
-  dairy=true;
+  keto=false;
+  vegan=false;
+  gluten=false;
+  dairy=false;
+  @Input () DietType:DietType[];
   mealDietType:DietType[];
+
   constructor(private dayMealService:DayMealService) { }
 
   ngOnInit(): void {
     this.getMealDietType();
     this.mealDietTypeConditions();
+    
   }
 
 
   public getMealDietType () {
-    this.mealDietType=this.dayMealService.getMealDietType();
+    if(this.DietType != null){
+      this.mealDietType=this.DietType;
+    }else{
+     this.mealDietType=this.dayMealService.getMealDietType();
+    }
+    
   }
 
   public mealDietTypeConditions(){
@@ -35,12 +43,13 @@ export class DietTypeComponent implements OnInit {
     if(this.mealDietType[i].text=="VEGAN FRIENDLY"){
       this.vegan=true;
     }
-    if(this.mealDietType[i].text=="GLUTEN FREE"){
-      this.gluten=true;
-    }
     if(this.mealDietType[i].text=="DAIRY FREE"){
       this.dairy=true;
     }
+    if(this.mealDietType[i].text=="GLUTEN FREE"){
+      this.gluten=true;
+    }
+   
   }
   }
 
