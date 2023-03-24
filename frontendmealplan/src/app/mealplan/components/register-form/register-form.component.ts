@@ -15,19 +15,10 @@ import { User } from "../../models/User";
         <div class="theme-container ">
           <mat-card class="p-0 o-hidden px-3 py-3 formContainer">
             <div fxLayout="column">
-              <div
-                fxFlex="100"
-                fxFlex.gt-sm="50"
-                class="py-3"
-                ngClass.gt-sm="px-5"
-                ngClass.sm="px-3"
-                ngClass.xs="px-3"
-              >
+              <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" ngClass.gt-sm="px-5" ngClass.sm="px-3" ngClass.xs="px-3">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
                   <h1 class="">Register</h1>
-                  <a mat-button routerLink="/mealplan/login" color="warn" class="w-100"
-                    >Already have an account? Sign in!</a
-                  >
+                  <a mat-button routerLink="/mealplan/login" color="warn" class="w-100">Already have an account? Sign in!</a>
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
                   <div class="first-last-name-wrapper gap-2">
@@ -35,36 +26,35 @@ import { User } from "../../models/User";
                       <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                       <mat-label>First Name</mat-label>
                       <input matInput placeholder="First Name" formControlName="fname" required />
-                      <mat-error *ngIf="registerForm.controls.fname.errors?.required"
-                        >First Name is required</mat-error
-                      >
-                      <mat-error *ngIf="registerForm.controls.fname.hasError('invalidFirstName')"
-                        >Invalid Input</mat-error
-                      >
+                      <mat-error *ngIf="registerForm.controls.fname.errors?.required">First Name is required</mat-error>
+                      <mat-error *ngIf="registerForm.controls.fname.hasError('invalidFirstName')">Invalid Input</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                       <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                       <mat-label>Last Name</mat-label>
                       <input matInput placeholder="Last Name" formControlName="lname" required />
-                      <mat-error *ngIf="registerForm.controls.lname.errors?.required"
-                        >Last Name is required</mat-error
-                      >
-                      <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')"
-                        >Invalid Input</mat-error
-                      >
+                      <mat-error *ngIf="registerForm.controls.lname.errors?.required">Last Name is required</mat-error>
+                      <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')">Invalid Input</mat-error>
                     </mat-form-field>
                   </div>
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="email" required />
-                    <mat-error *ngIf="registerForm.controls.email.errors?.required"
-                      >Email is required</mat-error
-                    >
-                    <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')"
-                      >Invalid email address</mat-error
-                    >
+                    <mat-error *ngIf="registerForm.controls.email.errors?.required">Email is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
                   </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput placeholder="Phone Number" formControlName="phone" required />
+                    <mat-error *ngIf="registerForm.controls.phone.errors?.required">Phone Number is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.phone.hasError('pattern')">
+                      Phone number must only include numbers 0-9. minimum 9 and maximum 16"
+                    </mat-error>
+                  </mat-form-field>
+
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Password</mat-label>
@@ -77,19 +67,11 @@ import { User } from "../../models/User";
                       required
                       [type]="hide ? 'password' : 'text'"
                     />
-                    <mat-error *ngIf="registerForm.controls.password.errors?.required"
-                      >Password is required</mat-error
+                    <mat-error *ngIf="registerForm.controls.password.errors?.required">Password is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.password.hasError('pattern')">
+                      Password must include at least 8 characters, letter, number, cannot include: ./=_-()</mat-error
                     >
-                    <mat-error *ngIf="registerForm.controls.password.hasError('minlength')"
-                      >Password isn't long enough, minimum of 6 characters</mat-error
-                    >
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      type="button"
-                      class="text-muted"
-                    >
+                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
@@ -104,32 +86,16 @@ import { User } from "../../models/User";
                       required
                       [type]="hide ? 'password' : 'text'"
                     />
-                    <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.required"
-                      >Confirm Password is required</mat-error
-                    >
-                    <mat-error
-                      *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')"
+                    <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.required">Confirm Password is required</mat-error>
+                    <mat-error *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')"
                       >Passwords do not match</mat-error
                     >
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      type="button"
-                      class="text-muted"
-                    >
+                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
                   <div class="text-center mt-2">
-                    <button
-                      mat-raised-button
-                      color="accent"
-                      class="uppercase signupBtn"
-                      type="submit"
-                    >
-                      Create an Account
-                    </button>
+                    <button mat-raised-button color="accent" class="uppercase signupBtn" type="submit">Create an Account</button>
                   </div>
                 </form>
                 <div class="divider mt-4"></div>
@@ -152,6 +118,10 @@ export class RegisterFormComponent implements OnInit {
   public registerForm!: UntypedFormGroup;
   public hide = true;
   public bgImage: any;
+
+  PHONE_PATTERN = "^[0-9]{9,16}$";
+  PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$";
+
   constructor(
     public fb: UntypedFormBuilder,
     public router: Router,
@@ -161,15 +131,14 @@ export class RegisterFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.bgImage = this.sanitizer.bypassSecurityTrustStyle(
-      "url(assets/images/others/register.jpg)"
-    );
+    this.bgImage = this.sanitizer.bypassSecurityTrustStyle("url(assets/images/others/register.jpg)");
     this.registerForm = this.fb.group(
       {
         fname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
         lname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
         email: ["", Validators.compose([Validators.required, emailValidator])],
-        password: ["", Validators.required],
+        phone: ["", Validators.compose([Validators.required, Validators.pattern(this.PHONE_PATTERN)])],
+        password: ["", Validators.compose([Validators.required, Validators.pattern(this.PASSWORD_PATTERN)])],
         confirmPassword: ["", Validators.required],
         receiveNewsletter: false,
       },
@@ -184,13 +153,13 @@ export class RegisterFormComponent implements OnInit {
   public onRegisterFormSubmit(): void {
     if (this.registerForm.valid) {
       const formObj = this.registerForm.value;
-      const user = new User(
-        null,
-        formObj.email,
-        formObj.password,
-        this.capitalizeFirstLetter(formObj.fname),
-        this.capitalizeFirstLetter(formObj.lname)
-      );
+      const user = new User(null);
+      user.email = formObj.email;
+      user.password = formObj.password;
+      user.firstName = this.capitalizeFirstLetter(formObj.fname);
+      user.lastName = this.capitalizeFirstLetter(formObj.lname);
+      user.phoneNumber = formObj.phone;
+      user.userInfo = this.registerSrv.getUserInfo();
       this.registerSrv.registerUser(user).subscribe((user) => {
         if (user) {
           this.snackBar.open("You registered successfully!", "×", {

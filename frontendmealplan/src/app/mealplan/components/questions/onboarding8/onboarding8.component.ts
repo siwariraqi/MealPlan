@@ -19,45 +19,25 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
       </div>
       <div class="content">
         <!-- box1 -->
-        <div
-          class="box-answers"
-          (click)="enableDisableRule1(allAnswers[0])"
-          [ngClass]="{ green: toggle1, white: !toggle1 }"
-        >
+        <div class="box-answers" (click)="enableDisableRule1(allAnswers[0])" [ngClass]="{ green: toggle1, white: !toggle1 }">
           <div class="text">{{ allAnswers[0].text }}</div>
         </div>
 
         <!-- box2 -->
-        <div
-          class="box-answers"
-          (click)="enableDisableRule2(allAnswers[1])"
-          [ngClass]="{ green: toggle2, white: !toggle2 }"
-        >
+        <div class="box-answers" (click)="enableDisableRule2(allAnswers[1])" [ngClass]="{ green: toggle2, white: !toggle2 }">
           <div class="text">{{ allAnswers[1].text }}</div>
         </div>
 
         <!-- box3 -->
-        <div
-          class="box-answers"
-          (click)="enableDisableRule3(allAnswers[2])"
-          [ngClass]="{ green: toggle3, white: !toggle3 }"
-        >
+        <div class="box-answers" (click)="enableDisableRule3(allAnswers[2])" [ngClass]="{ green: toggle3, white: !toggle3 }">
           <div class="text">{{ allAnswers[2].text }}</div>
         </div>
         <!-- box4 -->
-        <div
-          class="box-answers"
-          (click)="enableDisableRule4(allAnswers[3])"
-          [ngClass]="{ green: toggle4, white: !toggle4 }"
-        >
+        <div class="box-answers" (click)="enableDisableRule4(allAnswers[3])" [ngClass]="{ green: toggle4, white: !toggle4 }">
           <div class="text">{{ allAnswers[3].text }}</div>
         </div>
         <!-- box5 -->
-        <div
-          class="box-answers"
-          (click)="enableDisableRule5(allAnswers[4])"
-          [ngClass]="{ green: toggle5, white: !toggle5 }"
-        >
+        <div class="box-answers" (click)="enableDisableRule5(allAnswers[4])" [ngClass]="{ green: toggle5, white: !toggle5 }">
           <div class="text">{{ allAnswers[4].text }}</div>
         </div>
       </div>
@@ -99,27 +79,22 @@ export class Onboarding8Component implements OnInit {
   enableDisableRule1(value: Answer) {
     this.toggle1 = !this.toggle1;
     this.addOrRemoveSelection(value, this.toggle1);
-    this.validation();
   }
   enableDisableRule2(value: Answer) {
     this.toggle2 = !this.toggle2;
     this.addOrRemoveSelection(value, this.toggle2);
-    this.validation();
   }
   enableDisableRule3(value: Answer) {
     this.toggle3 = !this.toggle3;
     this.addOrRemoveSelection(value, this.toggle3);
-    this.validation();
   }
   enableDisableRule4(value: Answer) {
     this.toggle4 = !this.toggle4;
     this.addOrRemoveSelection(value, this.toggle4);
-    this.validation();
   }
   enableDisableRule5(value: Answer) {
     this.toggle5 = !this.toggle5;
     this.addOrRemoveSelection(value, this.toggle5);
-    this.validation();
   }
 
   addOrRemoveSelection(answer: Answer, isSelected: boolean) {
@@ -144,16 +119,15 @@ export class Onboarding8Component implements OnInit {
     // console.log(this.registerSrv.getUserInfo().medicalRisk);
   }
 
-  validation(): any {
-    if ( this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5){
-      this.valid = true;
-      console.log("Valid")
-    }
-    else {
-      this.valid = true;
-      console.log("valid")
-    }
-     this.sendData.emit(this.valid);
-  }
-
+  // validation(): any {
+  //   if ( this.toggle1 || this.toggle2 || this.toggle3 || this.toggle4 || this.toggle5){
+  //     this.valid = true;
+  //     console.log("Valid")
+  //   }
+  //   else {
+  //     this.valid = true;
+  //     console.log("valid")
+  //   }
+  //    this.sendData.emit(this.valid);
+  // }
 }
