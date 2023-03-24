@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { DayMeal } from '../models/DayMeal';
+import { DietType } from '../models/DietType';
 import { Meal } from '../models/Meal';
 import { MealIngredients } from '../models/MealIngredien';
 import { Plan } from '../models/Plan';
@@ -22,6 +23,7 @@ export class DayMealService {
   selectedType:string;
   public dayMeals:Array<DayMeal> =[];
   mealingridents: MealIngredients[][];
+  mealDietType:DietType[];
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
   public getDayPlanMeals(dayNumber: number, userid: number) {
@@ -60,13 +62,13 @@ export class DayMealService {
     return this.selectedMeal;
   }
 
-  setType(type: string) {
+  // setType(type: string) {
 
-    this.selectedType = type;
-  }
-  getType() {
-    return this.selectedType;
-  }
+  //   this.selectedType = type;
+  // }
+  // getType() {
+  //   return this.selectedType;
+  // }
 
   selectedDay:number
 
@@ -76,6 +78,15 @@ export class DayMealService {
   getChoosenDay() {
     return this.selectedDay;
   }
+
+  setMealDietType(type: DietType[]) {
+
+    this.mealDietType = type;
+  }
+  getMealDietType() {
+    return this.mealDietType;
+  }
+
 
 
 

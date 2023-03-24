@@ -1,5 +1,6 @@
 import { UserFeedback } from "./UserFeedback";
 import { Ingredient } from "./Ingredient";
+import { DietType } from "./DietType";
 
 export class Meal{
   constructor(     public mealId?: number,
@@ -14,7 +15,7 @@ export class Meal{
                      public carbs?: number,
                      public fibre?: number,
                      public tips?: string,
-                     public dietType?: string,
+                     public dietTypes?: DietType[],
                      public feedbacks?: UserFeedback[],
                      public mealIngredients?: Ingredient[],
                      ) {
