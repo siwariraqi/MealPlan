@@ -27,7 +27,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding12Component implements OnInit {
   selected: Date | null;
-  birthDate: string;
+  birthDate: Date;
   errorMsg: string;
   valid: boolean;
 
@@ -40,7 +40,7 @@ export class Onboarding12Component implements OnInit {
   ngOnInit(): void {}
 
   validateInputsAndSave() {
-    this.birthDate = this.selected.toDateString();
+    this.birthDate = this.selected;
     this.registerSrv.getUserInfo().birthday = this.birthDate;
 
     // this.errorMsg = "";
