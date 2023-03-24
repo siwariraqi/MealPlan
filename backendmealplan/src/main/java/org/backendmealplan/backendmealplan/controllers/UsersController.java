@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("users")
@@ -58,13 +59,59 @@ public class UsersController {
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        user.setPassword(null); // remove password field
         return new ResponseEntity(user,HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteAccount")
+    public ResponseEntity deleteAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
+        if (email == null || password==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        try {
+            this.userBL.deleteAccount(email, password, userId);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resetAccount")
+    public ResponseEntity resetAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
+        if (email == null || password==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        try {
+            this.userBL.resetAccount(email, password, userId);
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+        try {
+            this.userBL.changePassword(request.getUserId(),request.getCurrentPassword(),request.getNewPassword(),request.getConfirmPassword());
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/getUser")
     public ResponseEntity<User> getUser(@RequestParam long userId) {
         try {
             User user = userBL.getUser(userId);
+            user.setPassword(null); // remove password field
             return ResponseEntity.ok(user);
         } catch (userNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
