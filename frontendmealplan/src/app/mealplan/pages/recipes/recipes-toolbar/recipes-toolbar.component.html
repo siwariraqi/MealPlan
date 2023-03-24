@@ -4,7 +4,27 @@
     </button>
     <div>
         <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
-            {{sort}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+            {{sortings[0]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
+            <span (mouseleave)="sortMenuTrigger.closeMenu()">
+                <button mat-menu-item *ngFor="let time of times" (click)="changeSorting(sort)">
+                    <span>{{time}}</span>
+                </button>
+            </span>
+        </mat-menu>
+        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
+            {{sortings[1]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
+            <span (mouseleave)="sortMenuTrigger.closeMenu()">
+                <button mat-menu-item *ngFor="let type of types" (click)="changeSorting(sort)">
+                    <span>{{type}}</span>
+                </button>
+            </span>
+        </mat-menu>
+        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
+            {{sortings[2]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
         </a>
         <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
             <span (mouseleave)="sortMenuTrigger.closeMenu()">
