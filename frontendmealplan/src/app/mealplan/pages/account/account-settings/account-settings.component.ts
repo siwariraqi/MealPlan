@@ -13,6 +13,7 @@ import { UserSearchPipe } from 'src/app/theme/pipes/user-search.pipe';
 export class AccountSettingsComponent implements OnInit {
 
   accountForm: FormGroup;
+  hideConfirm = true;
   
   constructor(private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
     this.accountForm = new FormGroup({

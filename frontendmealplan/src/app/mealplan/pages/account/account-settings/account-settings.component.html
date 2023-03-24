@@ -13,7 +13,8 @@
                 <div> 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Password</mat-label>
-                        <input matInput placeholder="Password" formControlName="password" type="password"> 
+                        <input matInput placeholder="Password" formControlName="password" [type]="hideConfirm ? 'password' : 'text'">
+                        <mat-icon matSuffix (click)="hideConfirm = !hideConfirm">{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon> 
                         <mat-error *ngIf="accountForm.controls.password.errors?.required">Password is required</mat-error>                    </mat-form-field> 
                 </div>
          </div>
