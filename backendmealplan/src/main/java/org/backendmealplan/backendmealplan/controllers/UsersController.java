@@ -25,20 +25,16 @@ public class UsersController {
         return ResponseEntity.ok(updatedUserInfo);
     }
 
-    @PutMapping("updateUserInfo")
-    public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
-        UserInfo updatedUserInfo = null;
-        try {
-            if(userInfo != null){
-                long userInfoId = userInfo.getInfoId();
-                updatedUserInfo = userBL.updateUserInfo(userInfoId, userInfo);
-            }
-
-        } catch (UNAUTHORIZEDException e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(updatedUserInfo);
+  @PutMapping("updateUserInfo")
+  public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
+    UserInfo updatedUserInfo = null;
+    try {
+      updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
+    } catch (userInfoNotFound e) {
+      return (ResponseEntity) ResponseEntity.notFound();
     }
+    return ResponseEntity.ok(updatedUserInfo);
+  }
 
 
 
