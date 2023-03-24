@@ -4,6 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/mealplan/services/api.service';
 import { UserService } from 'src/app/mealplan/services/user.service';
 import { UserSearchPipe } from 'src/app/theme/pipes/user-search.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from '../DialogContentComponent/dialog-content.component';
+
 
 @Component({
   selector: 'app-account-settings',
@@ -15,7 +18,7 @@ export class AccountSettingsComponent implements OnInit {
   accountForm: FormGroup;
   hideConfirm = true;
   
-  constructor(private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
+  constructor(private dialog:MatDialog,private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
     this.accountForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -24,6 +27,36 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit(): void {
     
   }
+
+  public confirmDeleteAccount(): void {
+    const dialogRef = this.dialog.open(DialogContentComponent, {
+        data: { message: 'Are you sure you want to delete your account? This action cannot be undone.' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+            // user confirmed deletion
+            this.deleteAccount();
+        } else {
+            // user cancelled deletion
+        }
+    });
+}
+
+public confirmResetAccount(): void {
+  const dialogRef = this.dialog.open(DialogContentComponent, {
+      data: { message: 'Are you sure you want to reset your account? This action cannot be undone.' },
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+          // user confirmed deletion
+          this.resetAccount();
+      } else {
+          // user cancelled deletion
+      }
+  });
+}
 
   public deleteAccount(): void {
     const email = this.accountForm.controls['username'].value;

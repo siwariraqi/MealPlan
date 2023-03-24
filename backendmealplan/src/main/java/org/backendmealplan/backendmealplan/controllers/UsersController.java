@@ -74,6 +74,11 @@ public class UsersController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity logout(){
+        return ResponseEntity.ok("OK");
+    }
+
     @PostMapping("/resetAccount")
     public ResponseEntity resetAccount(@RequestParam String email,
                                      @RequestParam String password,
