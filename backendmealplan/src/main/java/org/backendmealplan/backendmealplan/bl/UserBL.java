@@ -243,11 +243,7 @@ public class UserBL {
     with an optional space character between each digit. The pattern also requires that the phone
     number ends with a digit.
   */
-  private boolean isValidPhoneNumber(String phoneNumber) {
-    // Implement your own phone number validation logic here
-    String regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$" ;
-    return phoneNumber.matches(regexp);
-  }
+
 
   private boolean isValidGender(String gender) {
     // Implement your own gender validation logic here
