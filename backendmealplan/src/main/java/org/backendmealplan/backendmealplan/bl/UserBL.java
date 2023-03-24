@@ -357,4 +357,12 @@ public class UserBL {
     return user.getPlan();
   }
 
+  public List<User> getAllUsers(){
+    List<User> userList = this.usersDAO.findAll();
+    if(userList.isEmpty()){
+      throw new userNotFoundException("No exist users");
+
+    }
+  }
+
 }

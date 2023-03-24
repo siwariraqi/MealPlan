@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -143,5 +144,11 @@ public class UsersController {
         } catch (InvalidUserException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
+}
+
+    @PostMapping("/all")
+    public ResponseEntity getAllUsers(){
+        List<User> userList = userBL.fin
     }
 }
