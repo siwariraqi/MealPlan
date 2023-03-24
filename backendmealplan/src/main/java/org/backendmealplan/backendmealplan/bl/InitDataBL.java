@@ -366,7 +366,7 @@ public class InitDataBL {
         meals[0] = insertMeal(
                 "Peanut butter and banana chia pudding",
                 300, 15, 10, 9, 25,
-                "assets/images/foods/meat-courses/1/medium.jpg", instructions,
+                "https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg", instructions,
                 "10 minutes",
                 "3 hours", tips);
         instructions = new ArrayList<>();
@@ -377,7 +377,7 @@ public class InitDataBL {
         instructions.add("Add honey and sultanas and Greek yogurt in the morning");
         meals[1] = insertMeal("Carrot cake overnight oats",
                 319, 9, 9, 6, 29,
-                "assets/images/foods/meat-courses/2/medium.jpg", instructions,
+                "https://nutritionstarringyou.com/wp-content/uploads/2017/04/carrot-cake-overnight-oats-blurred-1.jpg", instructions,
                 "5 minutes", "Overnight", new ArrayList<>());
 
         instructions = new ArrayList<>();
@@ -386,7 +386,7 @@ public class InitDataBL {
         instructions.add("Place in 4 bowls and serve with yogurt and fruit");
         meals[2] = insertMeal("Oat and Chia porridge",
                 370, 19, 11, 8, 34,
-                "assets/images/foods/meat-courses/3/medium.jpg", instructions, "5 minutes", "Overnight", new ArrayList<>());
+                "https://images.food52.com/ufX6dEF27gyGoY2gvezwyqgvuC8=/1200x1200/853e1f6f-4bfb-4e5f-a1a0-185053651e57--porridge.jpg", instructions, "5 minutes", "Overnight", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Cut the slices of salmon into small pieces.");
@@ -394,14 +394,14 @@ public class InitDataBL {
         instructions.add("Place mixture onto half the slices of bread, top with lettuce and remaining bread slices.");
         meals[3] = insertMeal("Smoked salmon sandwich",
                 667, 6.6, 5.6, 2, 10.5,
-                "assets/images/foods/meat-courses/4/medium.jpg", instructions, "10 minutes", "", new ArrayList<>());
+                "https://homemadeandyummy.com/wp-content/uploads/2022/04/Simple-Smoked-Salmon-Sandwich.jpg", instructions, "10 minutes", "", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("In a small bowl, mix together the chicken and half the cream cheese.");
         instructions.add("Lay the tortilla flat and spread the remaining cream cheese, then add the arugula, chicken, and celery. Roll the tortilla tightly and enjoy!");
         meals[4] = insertMeal("Chicken and cream cheese wrap",
                 151, 3.5, 3.4, 7, 23,
-                "assets/images/foods/breakfast/1/medium.jpg", instructions, "5 minutes", "Overnight", new ArrayList<>());
+                "https://i.ytimg.com/vi/NsfO3EAeApY/hqdefault.jpg", instructions, "5 minutes", "Overnight", new ArrayList<>());
 
 
         instructions = new ArrayList<>();
@@ -413,7 +413,7 @@ public class InitDataBL {
         instructions.add("Blend until smooth");
         meals[5] = insertMeal("Carrot and parsnip soup",
                 400, 12, 12, 4, 33,
-                "assets/images/foods/breakfast/2/medium.jpg", instructions,
+                "https://hermiseenplace.com/wp-content/uploads/2020/09/Carrot-Soup-1-1140x912.jpg", instructions,
                 "10 minutes", "20 minutes", new ArrayList<>());
 
         instructions = new ArrayList<>();
@@ -428,7 +428,7 @@ public class InitDataBL {
         tips.add("Optional : Add cauliflower, Brussels sprouts, cabbage, zucchini, or bell pepper");
         meals[6] = insertMeal("Lemon garlic salmon, broccoli and sweet potatoes",
                 450, 20, 40, 6, 30,
-                "assets/images/foods/breakfast/3/medium.jpg", instructions,
+                "https://littlespicejar.com/wp-content/uploads/2016/10/Roasted-Salmon-with-Broccolini-and-Sweet-Potato-Meal-Prep-10.jpg", instructions,
                 "10 minutes", "15 minutes", tips);
 
         instructions = new ArrayList<>();
@@ -439,17 +439,17 @@ public class InitDataBL {
         instructions.add("Add the rice and cooked chicken. Stir until well combined and season with additional salt and pepper if needed. Divide into bowls and enjoy!");
         meals[7] = insertMeal("Chicken fried rice",
                 450, 15, 30, 5, 40,
-                "assets/images/foods/breakfast/4/medium.jpg", instructions, "10 minutes", "15 minutes", new ArrayList<>());
+                "https://thehappyfoodie.co.uk/wp-content/uploads/2021/08/chicken-fried-rice-e54d23ea-751f-4497-8c96-dc9fabc644c8_s900x0_c2263x1316_l0x1032.jpg", instructions, "10 minutes", "15 minutes", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("1 apple cut into wedges dipped into 1⁄3 oz sugar salt free peanut butter");
         meals[8] = insertMeal("apple and peanut butter",
                 159, 21, 2.6, 3, 7,
-                "assets/images/foods/breakfast/5/medium.jpg", instructions, "", "", new ArrayList<>());
+                "https://static.toiimg.com/photo/msid-71613646/71613646.jpg", instructions, "", "", new ArrayList<>());
 
         meals[9] = insertMeal("Roasted chickpeas",
                 157, 16.1, 4.1, 7.2, 7.1,
-                "assets/images/foods/breakfast/6/medium.jpg", new ArrayList<>(), "30 minutes", "30 minutes", new ArrayList<>());
+                "https://thecleaneatingcouple.com/wp-content/uploads/2019/01/roasted-chickpeas-1.jpg", new ArrayList<>(), "30 minutes", "30 minutes", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Heat 2 teaspoons oil in a non-stick pan");
@@ -460,7 +460,7 @@ public class InitDataBL {
         instructions.add("Spread mustard on the wrap and add 1⁄4 of the tomatoes and mushrooms and roll up");
         meals[10] = insertMeal("Breakfast egg wraps",
                 429, 16.1, 6, 28, 20,
-                "assets/images/foods/breakfast/7/medium.jpg", instructions, "10 minutes", "15 minutes", new ArrayList<>());
+                "https://feelgoodfoodie.net/wp-content/uploads/2018/04/Low-Carb-Egg-Wrap-09.jpg", instructions, "10 minutes", "15 minutes", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Separate the eggs");
@@ -471,7 +471,7 @@ public class InitDataBL {
         instructions.add("Add 1-2tbsp of batter to pan and cook for 1-2minutes before flipping and cooking for another minute");
         meals[11] = insertMeal("Banana oat pancakes",
                 350, 46, 5, 15, 9.9,
-                "assets/images/foods/salads/1/medium.jpg", instructions, "5 minutes", "5 hours", new ArrayList<>());
+                "https://cleananddelicious.com/wp-content/uploads/2019/08/banana_oatmeal_pancakes_1200.jpg", instructions, "5 minutes", "5 hours", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Add the oats and 1 cup water to a pan. Bring to the boil, then turn down the heat and stir regularly for 4–5 minutes.");
@@ -483,7 +483,7 @@ public class InitDataBL {
         tips.add("You can also add cinnamon and raisins for an added iron and flavour.");
         meals[12] = insertMeal("Berry Porridge",
                 300, 40, 8, 13, 10,
-                "assets/images/foods/salads/2/medium.jpg", instructions, "5 minutes", "5 minutes", tips);
+                "https://www.throughthefibrofog.com/wp-content/uploads/2022/04/berry-porridge-3.jpg", instructions, "5 minutes", "5 minutes", tips);
 
         instructions = new ArrayList<>();
         instructions.add("Add oats to frying pan and heat gently stirring frequently");
@@ -492,24 +492,24 @@ public class InitDataBL {
         instructions.add("Serve with yogurt and mixed berries");
         meals[13] = insertMeal("Homemade Muesli",
                 458, 46, 7, 17, 23,
-                "assets/images/foods/salads/3/medium.jpg", instructions, "10 minutes", "10 minutes", new ArrayList<>());
+                "https://choosingchia.com/jessh-jessh/uploads/2021/01/Easy-Muesli-5.jpg", instructions, "10 minutes", "10 minutes", new ArrayList<>());
         meals[14] = insertMeal("Turkey roll up",
                 272, 28, 4.8, 22.8, 7,
-                "assets/images/foods/chicken-courses/1/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
+                "https://www.culinaryhill.com/wp-content/uploads/2017/08/Turkey-Roll-Ups-Costco-Copycat-Culinary-Hill-SQ-e1580315804204.jpg", new ArrayList<>(), "", "", new ArrayList<>());
         meals[15] = insertMeal("almonds",
                 122, 2, 12, 4, 2,
-                "assets/images/foods/chicken-courses/2/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
+                "https://i0.wp.com/post.healthline.com/wp-content/uploads/2023/02/Almonds-Table-Bowl-1296x728-Header.jpg?w=1155&h=1528", new ArrayList<>(), "", "", new ArrayList<>());
         meals[16] = insertMeal("mature cheddar",
                 123, 0.03, 0, 7.5, 10.4,
-                "assets/images/foods/chicken-courses/3/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
+                "https://images.squarespace-cdn.com/content/v1/59a30ddff5e231745bbe02ac/1627986598422-NM1G7GFKMH14GPSCOF2M/MATURE+CHEDDAR+1KG+4.jpg?format=1000w", new ArrayList<>(), "", "", new ArrayList<>());
 
         meals[17] = insertMeal("2 rice cakes with 1/3oz peanut butter",
                 130, 14, 1.4, 3.3, 6.7,
-                "assets/images/foods/desserts/1/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
+                "https://hurrythefoodup.com/wp-content/uploads/2021/09/2-Wholegrain-Rice-Cakes-with-Peanut-Butter.jpg", new ArrayList<>(), "", "", new ArrayList<>());
 
         meals[18] = insertMeal("Carrot or red pepper sticks dipped in 2/3oz hummus",
                 82, 6.7, 3.4, 1.9, 5.4,
-                "assets/images/foods/desserts/2/medium.jpg", new ArrayList<>(), "", "", new ArrayList<>());
+                "https://thetastytip.com/wp-content/uploads/2020/04/roasted-red-pepper-hummus-17.jpg", new ArrayList<>(), "", "", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Add red onion, tomatoes, cucumber mix well and leave to infuse for a couple of minutes");
@@ -519,7 +519,7 @@ public class InitDataBL {
         tips.add("Only add the lemon prior to eating the salad. Alternative proteins: Salmon and prawns are a good alternative to tuna.");
         meals[19] = insertMeal("Chickpea and Tuna salad",
                 350, 12, 32, 13, 23,
-                "assets/images/foods/appetizers/3/medium.jpg", instructions, "15 minutes", "5 minutes", tips);
+                "https://dishingouthealth.com/wp-content/uploads/2021/05/ChickpeaTunaSalad_Square.jpg", instructions, "15 minutes", "5 minutes", tips);
 
         instructions = new ArrayList<>();
         instructions.add("Warm the tortilla in a dry frying pan for 1 minute each side (this makes it more pliable).\n" +
@@ -532,7 +532,7 @@ public class InitDataBL {
         instructions.add("Wrap in greaseproof paper or foil and twist the ends.");
         meals[20] = insertMeal("Vegetable Wraps",
                 290, 9, 9, 11, 40,
-                "assets/images/foods/appetizers/1/medium.jpg", instructions, "5 minutes", "2 minutes", new ArrayList<>());
+                "https://www.hiddenvalley.com/wp-content/uploads/2021/04/roasted-ranch-veggie-wrap-RDP.jpg", instructions, "5 minutes", "2 minutes", new ArrayList<>());
 
         instructions = new ArrayList<>();
         instructions.add("Preheat the oven to 375oF");
@@ -549,7 +549,7 @@ public class InitDataBL {
                 "Remove, let cool slightly before serving. Top with avocado. Enjoy!");
         meals[21] = insertMeal("Enchiladas",
                 400, 13, 25, 10, 25,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
+                "https://www.isabeleats.com/wp-content/uploads/2020/05/chicken-enchiladas-2020-small-3.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
 
         //lunch7
         instructions = new ArrayList<>();
@@ -566,7 +566,7 @@ public class InitDataBL {
                 "if eating this salad on the go");
         meals[22] = insertMeal("Chicken and soya bean salad",
                 390,15, 45, 8, 11,
-                "assets/images/foods/appetizers/2/medium.jpg",
+                "https://www.cooksmarts.com/wp-content/uploads/2019/01/2016Q1-Asian-Chicken-Edamame-Salad-Blog-Thumbnail-800x600.jpg",
                 instructions,"10 minutes","10 minutes",new ArrayList<>() );
 
         //dinner3
@@ -579,7 +579,7 @@ public class InitDataBL {
         tips = new ArrayList<>();
         tips.add(": If you’re wanting more micro-nutrients , add red peppers and mushrooms to the mix.");
         meals[23]=insertMeal("Chicken and chickpea curry", 447, 10, 42.7, 10, 30,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions,"15 minutes", "20 minutes",tips);
+                "https://nishkitchen.com/wp-content/uploads/2020/01/Chicken-Chickpeas-Curry-1B.jpg", instructions,"15 minutes", "20 minutes",tips);
 
         //dinner4
         instructions = new ArrayList<>();
@@ -590,7 +590,7 @@ public class InitDataBL {
         instructions.add("Cook the pasta until al dente.");
         instructions.add("Add the cooked pasta to the sauce and serve with cheese.");
         meals[24]=insertMeal("Pasta arrabbiata with aubergine",500 ,12, 19, 12, 65,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
+                "https://images.squarespace-cdn.com/content/v1/57afb7b93e00be9be5e829ba/1494300692431-71M94Q8ZICJQVJUG4ROV/image-asset.jpeg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
 
         //dinner5
         instructions = new ArrayList<>();
@@ -608,7 +608,7 @@ public class InitDataBL {
         tips.add(":Try adding salmon or another fish instead of prawns.");
         tips.add(":For a vegetarian/vegan version, use mushrooms or tofu in place of prawns.");
         meals[25]=insertMeal("Prawn Noodles",190 ,3, 13, 5, 25,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions, "15 minutes", "10 minutes", tips);
+                "https://production-media.gousto.co.uk/cms/mood-image/3540---Spicy-Peanut-King-Prawn-Noodles2821-copy-1624026464652.jpg", instructions, "15 minutes", "10 minutes", tips);
 
         //dinner6
         instructions = new ArrayList<>();
@@ -624,7 +624,7 @@ public class InitDataBL {
         instructions.add("Grill for 7-8mins.");
         instructions.add("Serve with capers, chives, and rocket.");
         meals[26]=insertMeal("Salmon, leek and potato tray bake",714 ,52, 39, 5, 20,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions, "15 minutes", "25 minutes", new ArrayList<>());
+                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/creamy-salmon-leek-potato-traybake-367b3ff.jpg", instructions, "15 minutes", "25 minutes", new ArrayList<>());
 
         //dinner7
         instructions = new ArrayList<>();
@@ -632,7 +632,7 @@ public class InitDataBL {
                 "to coat. Bake at 400°F until chicken is cooked through and vegetables are tender, about 15–20 minutes.\n" +
                 "Serve over brown rice..");
         meals[27]=insertMeal("Chicken teriyaki with vegetables",350 ,6, 39, 4, 38,
-                "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
+                "https://www.wellplated.com/wp-content/uploads/2019/07/Teriyaki-Stir-Fry-Vegetables-with-Chicken.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
     }
 
     private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, List<String> instructions, String prepareTime, String cookTime, List<String> tips) {
