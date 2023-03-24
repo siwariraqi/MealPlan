@@ -75,15 +75,20 @@ export class RecipesComponent implements OnInit {
     this.watcher.unsubscribe();
   }
 
+  
+  public getDietTypes(){
+    this.recipesService.getDietTypesApi().subscribe(types=>{
+      this.recipesService.Data.dietTypesList = types;
+    })
+  }
+
   public getCategories(){
     this.recipesService.getMealsTime().subscribe(categories=>{
       this.categories = categories;
-      // for (let i = 0; i < this.categories.length; i++) {
-      //   console.log(this.categories[i]);
-      // }
       this.recipesService.Data.categories = categories;
       this.getMenuItems(this.categories[0]);
       this.selectedCategoryId = 0;
+      this.getDietTypes();
     })
   } 
   public selectCategory(type:any){
