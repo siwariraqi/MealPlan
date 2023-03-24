@@ -6,6 +6,8 @@ import { User } from 'src/app/mealplan/models/User';
 import { UserService } from 'src/app/mealplan/services/user.service';
 import { catchError, of, throwError } from 'rxjs';
 import { ChangePasswordRequest } from 'src/app/mealplan/models/ChangePasswordRequest';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from '../DialogContentComponent/dialog-content.component';
 
 @Component({
   selector: 'app-password-change',
@@ -20,7 +22,7 @@ export class PasswordChangeComponent implements OnInit {
   hideNew = true;
   hideConfirm = true;
 
-  constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
+  constructor(private dialog:MatDialog, public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
   
   ngOnInit(): void {
     this.passwordForm = this.formBuilder.group({
@@ -30,6 +32,21 @@ export class PasswordChangeComponent implements OnInit {
       { 
         validators: this.matchingPasswords('newPassword','confirmNewPassword') 
       });
+  }
+
+  public confirmChange(): void {
+    const dialogRef = this.dialog.open(DialogContentComponent, {
+        data: { message: 'Are you sure you want to change your password?' },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+            // user confirmed deletion
+            this.onPasswordFormSubmit();
+        } else {
+            // user cancelled deletion
+        }
+    });
   }
 
     public onPasswordFormSubmit(): void {
