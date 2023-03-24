@@ -37,7 +37,7 @@
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Birthday</mat-label>
-            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'yyyy-MM-dd'}}">
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'2005-01-01'}}">
             <mat-error *ngIf="infoForm.get('birthday').hasError('invalidAge')">Ages should be 18-120</mat-error>
         </mat-form-field>
 
