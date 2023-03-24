@@ -27,8 +27,8 @@ public class InitDataBL {
     @Autowired
     IngredientBL ingredientBL;
 
-    Ingredient[] ingredients = new Ingredient[100];
-    Meal[] meals = new Meal[25];
+    Ingredient[] ingredients = new Ingredient[135];
+    Meal[] meals = new Meal[30];
     Plan freemuimPlan, basicPlan, premiumPlan;
 
     DayPlanId[] dayPlanIds = new DayPlanId[28];
@@ -185,7 +185,7 @@ public class InitDataBL {
         ingredients[18] = insertIngredient("Salmon Fillet", FoodCategories.Meat.name());
 
 
-        //dinner3
+        //dinner2
         ingredients[31] = insertIngredient("wild or brown Rice (dry, uncooked)", FoodCategories.Others.name());
         ingredients[32] = insertIngredient("chicken breast (cubed)", FoodCategories.Meat.name());
         ingredients[33] = insertIngredient("Sea Salt & Black Pepper (to taste)", FoodCategories.Others.name());
@@ -235,6 +235,56 @@ public class InitDataBL {
         ingredients[94] = insertIngredient("Enchilada Sauce", FoodCategories.Others.name());
         ingredients[95] = insertIngredient("avocado (sliced)", FoodCategories.Vegetables.name());
         ingredients[96] = insertIngredient("brown rice tortilla",FoodCategories.Others.name());
+
+        //lunch7
+        ingredients[97] = insertIngredient("boiling water", FoodCategories.Others.name());
+        ingredients[98] = insertIngredient("frozen soya (edamame) beans, defrosted", FoodCategories.Others.name());
+        ingredients[99] = insertIngredient("large tomato,sliced", FoodCategories.Vegetables.name());
+        ingredients[100] = insertIngredient("cress", FoodCategories.Vegetables.name());
+        ingredients[101] = insertIngredient("0% fat yogurt", FoodCategories.Dairy.name());
+        ingredients[102] = insertIngredient("tahini (sesame paste)",FoodCategories.Others.name());
+        ingredients[103] = insertIngredient("sesame seeds",FoodCategories.Others.name());
+        ingredients[104] = insertIngredient("black pepper",FoodCategories.Others.name());
+
+        //dinner3
+        ingredients[105] = insertIngredient("oil", FoodCategories.Others.name());
+        ingredients[106] = insertIngredient("onion, sliced", FoodCategories.Vegetables.name());
+        ingredients[107] = insertIngredient("curry paste", FoodCategories.Others.name());
+        ingredients[108] = insertIngredient("chicken stock", FoodCategories.Others.name());
+        ingredients[109] = insertIngredient("cooked chicken, chopped", FoodCategories.Meat.name());
+        ingredients[110] = insertIngredient("Greek 0% yoghurt",FoodCategories.Dairy.name());
+        ingredients[111] = insertIngredient("Coriander, to garnish",FoodCategories.Vegetables.name());
+
+        //dinner4
+        ingredients[112] = insertIngredient("chilli flakes", FoodCategories.Others.name());
+        ingredients[113] = insertIngredient("smoked paprika", FoodCategories.Others.name());
+        ingredients[114] = insertIngredient("aubergine , chopped", FoodCategories.Vegetables.name());
+        ingredients[115] = insertIngredient("wholemeal penne", FoodCategories.Others.name());
+        ingredients[116] = insertIngredient("large handful of basil , plus extra to serve", FoodCategories.Others.name());
+        ingredients[117] = insertIngredient("parmesan or vegetarian Italian-style hard cheese, finely grated",FoodCategories.Dairy.name());
+
+       //dinner6
+        ingredients[118] = insertIngredient("baby potatoes , thickly sliced", FoodCategories.Vegetables.name());
+        ingredients[119] = insertIngredient("leeks, halved, washed and sliced", FoodCategories.Vegetables.name());
+        ingredients[120] = insertIngredient("double cream", FoodCategories.Dairy.name());
+        ingredients[121] = insertIngredient("chives , plus extra to serve", FoodCategories.Vegetables.name());
+        ingredients[122] = insertIngredient("mixed rocket salad , to serve (optional)", FoodCategories.Vegetables.name());
+
+        //dinner7
+        ingredients[123] = insertIngredient("boneless, skinless chicken breast, cut in half", FoodCategories.Meat.name());
+        ingredients[124] = insertIngredient("pepper, sliced", FoodCategories.Vegetables.name());
+        ingredients[125] = insertIngredient("teriyaki sauce", FoodCategories.Others.name());
+        ingredients[126] = insertIngredient("cooked brown rice, for serving", FoodCategories.Others.name());
+
+        //dinner5
+        ingredients[127] = insertIngredient("ginger root, grated", FoodCategories.Vegetables.name());
+        ingredients[128] = insertIngredient("pack raw king prawns", FoodCategories.Others.name());
+        ingredients[129] = insertIngredient("courgette spaghetti", FoodCategories.Vegetables.name());
+        ingredients[130] = insertIngredient("ready-to-use rice noodles", FoodCategories.Others.name());
+        ingredients[131] = insertIngredient("baby leaf spinach", FoodCategories.Vegetables.name());
+        ingredients[132] = insertIngredient("grated zest and juice 1 lime", FoodCategories.Vegetables.name());
+        ingredients[133] = insertIngredient("reduced-salt soy sauce", FoodCategories.Others.name());
+        ingredients[134] = insertIngredient("small red chilli, finely chopped", FoodCategories.Vegetables.name());
 
     }
 
@@ -457,6 +507,88 @@ public class InitDataBL {
                 400, 13, 25, 10, 25,
                 "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
 
+        //lunch7
+        instructions = new ArrayList<>();
+        instructions.add("Squeeze 1 wedge of lemon over the chicken. Place the chicken in a pan and just cover with\n" +
+                "boiling water. Add a lid and simmer for 5–6 minutes.");
+        instructions.add("Turn off the heat and leave with the lid on for another 5 minutes.");
+        instructions.add("Meanwhile, add the soya beans, salad leaves and spring onions to your container. Next, add\n" +
+                "the cucumber, tomato and cress.");
+        instructions.add("In a small bowl, mix together the yogurt and tahini, and place in a small container with a\n" +
+                "leak-proof lid.");
+        instructions.add("Drain the chicken, allow to cool and then slice");
+        instructions.add("Arrange the chicken on top of the salad. Serve with the second wedge of lemon, a sprinkle\n" +
+                "of sesame seeds and a pinch of black pepper. Pop the lid on and pack with the tahini dressing,\n" +
+                "if eating this salad on the go");
+        meals[22] = insertMeal("Chicken and soya bean salad",
+                390,15, 45, 8, 11,
+                "assets/images/foods/appetizers/2/medium.jpg",
+                instructions,"10 minutes","10 minutes",new ArrayList<>() );
+
+        //dinner3
+        instructions = new ArrayList<>();
+        instructions.add("Head the oil in a non-stick pan. Add onion and fry for 2 minutes until browned and softened.");
+        instructions.add("Add the curry paste and continue to cook for 1 minute");
+        instructions.add("Add the stock, chicken, chickpeas and tomatoes, and simmer uncovered for 15 minutes.");
+        instructions.add("Str throughout the yoghurt.");
+        instructions.add("Serve with steamed wild rice and garnish with coriander.");
+        tips = new ArrayList<>();
+        tips.add(": If you’re wanting more micro-nutrients , add red peppers and mushrooms to the mix.");
+        meals[23]=insertMeal("Chicken and chickpea curry", 447, 10, 42.7, 10, 30,
+                "assets/images/foods/appetizers/2/medium.jpg", instructions,"15 minutes", "20 minutes",tips);
+
+        //dinner4
+        instructions = new ArrayList<>();
+        instructions.add("Heat the oil in a non-stick pan and add the onions.");
+        instructions.add("Cover and cook for 5mins then remove the lid and cook for a further 5mins until soft.");
+        instructions.add("Add the garlic, chilli flakes, and paprika.");
+        instructions.add("Add the tomatoes and 1 2⁄3 cup water the bring to the boil and simmer for 20mins.");
+        instructions.add("Cook the pasta until al dente.");
+        instructions.add("Add the cooked pasta to the sauce and serve with cheese.");
+        meals[24]=insertMeal("Pasta arrabbiata with aubergine",500 ,12, 19, 12, 65,
+                "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
+
+        //dinner5
+        instructions = new ArrayList<>();
+        instructions.add("Add the broccoli to a microwave-proof dish with 1 teaspoon of water, cover with cling film, then\n" +
+                "pierce and heat on full for 1.5 minutes, then reserve.");
+        instructions.add("Meanwhile, heat the oil in a non-stick pan or wok, then add the spring onions and pepper. Cook for\n" +
+                "2-3 minutes over a high heat, stirring constantly.");
+        instructions.add("Next, add the ginger, chilli and garlic to the pan and cook for 1 minute.");
+        instructions.add("Add the king prawns, water, courgette spaghetti, noodles and reserved broccoli and mix well. Add\n" +
+                "a lid and cook for 2 minutes.");
+        instructions.add("Add the spinach, lime juice, zest and soy sauce and mix again.");
+        instructions.add("Cover and heat for another 2-3 minutes.");
+        instructions.add("Make sure the dish is heated through and the prawns are pink, then serve immediately.");
+        tips = new ArrayList<>();
+        tips.add(":Try adding salmon or another fish instead of prawns.");
+        tips.add(":For a vegetarian/vegan version, use mushrooms or tofu in place of prawns.");
+        meals[25]=insertMeal("Prawn Noodles",190 ,3, 13, 5, 25,
+                "assets/images/foods/appetizers/2/medium.jpg", instructions, "15 minutes", "10 minutes", tips);
+
+        //dinner6
+        instructions = new ArrayList<>();
+        instructions.add("Heat the oven to 400°F or gas 6.");
+        instructions.add("Parboil potatoes for 8mins.");
+        instructions.add("Drain potatoes and leave to dry.");
+        instructions.add("Place the potatoes in the oven for 20mins.");
+        instructions.add("Heat the oil in a frying pan over a medium heat and add the leek frying for 5mins.");
+        instructions.add("Stir in the garlic and cook for 1min.");
+        instructions.add("Add the cream, capers, 1⁄3 cup water and bring to boil.");
+        instructions.add("Stir in the chives.");
+        instructions.add("Pour the creamy leek mixture over the potatoes and sit the salmon fillets on top.");
+        instructions.add("Grill for 7-8mins.");
+        instructions.add("Serve with capers, chives, and rocket.");
+        meals[26]=insertMeal("Salmon, leek and potato tray bake",714 ,52, 39, 5, 20,
+                "assets/images/foods/appetizers/2/medium.jpg", instructions, "15 minutes", "25 minutes", new ArrayList<>());
+
+        //dinner7
+        instructions = new ArrayList<>();
+        instructions.add("Place chicken, broccoli, carrots, bell pepper on a foil-lined sheet pan, drizzle with teriyaki sauce and toss\n" +
+                "to coat. Bake at 400°F until chicken is cooked through and vegetables are tender, about 15–20 minutes.\n" +
+                "Serve over brown rice..");
+        meals[27]=insertMeal("Chicken teriyaki with vegetables",350 ,6, 39, 4, 38,
+                "assets/images/foods/appetizers/2/medium.jpg", instructions, "10 minutes", "20 minutes", new ArrayList<>());
     }
 
     private Meal insertMeal(String MealName, int calories, double fat, double protein, double fibre, double carbs, String imageUrl, List<String> instructions, String prepareTime, String cookTime, List<String> tips) {
@@ -630,6 +762,80 @@ public class InitDataBL {
         insertMealIngredients(meals[21], ingredients[96], Optional.of(4.0), Optional.empty());
         insertMealIngredients(meals[21], ingredients[95], Optional.of(0.667), Optional.empty());
 
+        //lunch7
+        insertMealIngredients(meals[22], ingredients[32], Optional.of(4.4), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[22], ingredients[89], Optional.of(4.0), Optional.empty());
+        insertMealIngredients(meals[22], ingredients[97], Optional.of(2.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[22], ingredients[98], Optional.of(1.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[22], ingredients[88], Optional.of(4.0), Optional.of(Unit.handful.name()));
+        insertMealIngredients(meals[22], ingredients[7], Optional.of(8.0), Optional.empty());
+        insertMealIngredients(meals[22], ingredients[8], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[22], ingredients[99], Optional.of(4.0), Optional.empty());
+        insertMealIngredients(meals[22], ingredients[100], Optional.of(2.0), Optional.of(Unit.punnet.name()));
+        insertMealIngredients(meals[22], ingredients[101], Optional.of(4.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[22], ingredients[102], Optional.of(4.0), Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[22], ingredients[103], Optional.of(2.0), Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[22], ingredients[104],Optional.empty(), Optional.empty());
+
+        //dinner3
+        insertMealIngredients(meals[23], ingredients[105], Optional.of(1.0), Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[23], ingredients[106], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[23], ingredients[107], Optional.of(1.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[23], ingredients[108], Optional.of(1.5), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[23], ingredients[109], Optional.of(7.0), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[23], ingredients[86], Optional.of(14.0), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[23], ingredients[99], Optional.of(2.0), Optional.empty());
+        insertMealIngredients(meals[23], ingredients[110], Optional.of(1.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[23], ingredients[111], Optional.empty(), Optional.empty());
+
+        //dinner4
+        insertMealIngredients(meals[24], ingredients[53], Optional.of(2.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[24], ingredients[106], Optional.of(2.0), Optional.empty());
+        insertMealIngredients(meals[24], ingredients[44], Optional.of(4.0), Optional.empty());
+        insertMealIngredients(meals[24], ingredients[112], Optional.of(2.0), Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[24], ingredients[113], Optional.of(2.0), Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[24], ingredients[99], Optional.of(28.0), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[24], ingredients[47], Optional.of(1.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[24], ingredients[114], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[24], ingredients[115], Optional.of(9.5), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[24], ingredients[116], Optional.of(1.0), Optional.of(Unit.handful.name()));
+        insertMealIngredients(meals[24], ingredients[117], Optional.of(1.5), Optional.of(Unit.oz.name()));
+
+        //dinner5
+        insertMealIngredients(meals[25], ingredients[12], Optional.of(2.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[25], ingredients[53], Optional.of(2.0),  Optional.of(Unit.teaspoon.name()));
+        insertMealIngredients(meals[25], ingredients[7], Optional.of(6.0), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[77], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[127], Optional.of(2.0), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[134], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[44], Optional.of(3.0), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[128], Optional.of(4.2), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[25], ingredients[97], Optional.of(0.33), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[25], ingredients[129], Optional.of(0.5), Optional.of(Unit.lb.name()));
+        insertMealIngredients(meals[25], ingredients[130], Optional.of(10.6), Optional.of(Unit.oz.name()));
+        insertMealIngredients(meals[25], ingredients[131], Optional.of(1.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[25], ingredients[132], Optional.of(0.5), Optional.empty());
+        insertMealIngredients(meals[25], ingredients[133], Optional.of(2.0),  Optional.of(Unit.teaspoon.name()));
+
+        //dinner6
+        insertMealIngredients(meals[26], ingredients[118], Optional.of(1.0), Optional.of(Unit.lb.name()));
+        insertMealIngredients(meals[26], ingredients[42], Optional.of(4.0),  Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[26], ingredients[119], Optional.of(2.0), Optional.empty());
+        insertMealIngredients(meals[26], ingredients[44], Optional.of(2.0), Optional.empty());
+        insertMealIngredients(meals[26], ingredients[120], Optional.of(0.66), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[26], ingredients[6], Optional.of(2.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[26], ingredients[121], Optional.of(2.0), Optional.of(Unit.tablespoon.name()));
+        insertMealIngredients(meals[26], ingredients[18], Optional.of(4.0), Optional.empty());
+        insertMealIngredients(meals[26], ingredients[122], Optional.empty(), Optional.empty());
+
+        //dinner7
+        insertMealIngredients(meals[27], ingredients[123], Optional.of(1.5), Optional.of(Unit.lb.name()));
+        insertMealIngredients(meals[27], ingredients[12], Optional.of(3.0),  Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[27], ingredients[83], Optional.of(1.0), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[27], ingredients[124], Optional.of(1.0), Optional.empty());
+        insertMealIngredients(meals[27], ingredients[125], Optional.of(0.25), Optional.of(Unit.cup.name()));
+        insertMealIngredients(meals[27], ingredients[126], Optional.of(2.0), Optional.of(Unit.cup.name()));
+
     }
 
     private void insertMealIngredients(Meal meal, Ingredient ingredient, Optional<Double> amount, Optional<String> unit) {
@@ -665,31 +871,31 @@ public class InitDataBL {
         insertDayMeals(meals[2], dayPlanIds[2], MealTime.Breakfast.name());
         insertDayMeals(meals[5], dayPlanIds[2], MealTime.Lunch.name());
         insertDayMeals(meals[8], dayPlanIds[2], MealTime.Snacks.name());
-        insertDayMeals(meals[7], dayPlanIds[2], MealTime.Dinner.name());
+        insertDayMeals(meals[23], dayPlanIds[2], MealTime.Dinner.name());
         insertDayMeals(meals[15], dayPlanIds[2], MealTime.Snacks.name());
 
         insertDayMeals(meals[10], dayPlanIds[3], MealTime.Breakfast.name());
         insertDayMeals(meals[19], dayPlanIds[3], MealTime.Lunch.name());
         insertDayMeals(meals[16], dayPlanIds[3], MealTime.Snacks.name());
-        insertDayMeals(meals[7], dayPlanIds[3], MealTime.Dinner.name());
+        insertDayMeals(meals[27], dayPlanIds[3], MealTime.Dinner.name());
         insertDayMeals(meals[17], dayPlanIds[3], MealTime.Snacks.name());
 
         insertDayMeals(meals[11], dayPlanIds[4], MealTime.Breakfast.name());
         insertDayMeals(meals[20], dayPlanIds[4], MealTime.Lunch.name());
         insertDayMeals(meals[14], dayPlanIds[4], MealTime.Snacks.name());
-        insertDayMeals(meals[7], dayPlanIds[4], MealTime.Dinner.name());
+        insertDayMeals(meals[24], dayPlanIds[4], MealTime.Dinner.name());
         insertDayMeals(meals[9], dayPlanIds[4], MealTime.Snacks.name());
 
         insertDayMeals(meals[12], dayPlanIds[5], MealTime.Breakfast.name());
         insertDayMeals(meals[21], dayPlanIds[5], MealTime.Lunch.name());
         insertDayMeals(meals[8], dayPlanIds[5], MealTime.Snacks.name());
-        insertDayMeals(meals[7], dayPlanIds[5], MealTime.Dinner.name());
+        insertDayMeals(meals[26], dayPlanIds[5], MealTime.Dinner.name());
         insertDayMeals(meals[18], dayPlanIds[5], MealTime.Snacks.name());
 
         insertDayMeals(meals[13], dayPlanIds[6], MealTime.Breakfast.name());
-        insertDayMeals(meals[5], dayPlanIds[6], MealTime.Lunch.name());
+        insertDayMeals(meals[22], dayPlanIds[6], MealTime.Lunch.name());
         insertDayMeals(meals[16], dayPlanIds[6], MealTime.Snacks.name());
-        insertDayMeals(meals[7], dayPlanIds[6], MealTime.Dinner.name());
+        insertDayMeals(meals[25], dayPlanIds[6], MealTime.Dinner.name());
         insertDayMeals(meals[14], dayPlanIds[6], MealTime.Snacks.name());
 
     }
