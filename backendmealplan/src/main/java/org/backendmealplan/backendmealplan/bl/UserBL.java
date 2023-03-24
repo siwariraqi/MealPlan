@@ -67,35 +67,47 @@ public class UserBL {
     user.setPassword(passwordEncoder.encode(newPassword));
     this.usersDAO.save(user);
   }
+  
+    @Transactional
+    public User adduser(User user) throws userExistException, InvalidUserException {
+        // Validate input parameters
+        if (!isValidPassword(user.getPassword())) {
+            throw new InvalidUserException("Password must include at least 8 characters, letter, number, cannot include: ./=_-()");
+        }
 
-  @Transactional
-  public User adduser(User user) throws userExistException, InvalidUserException {
-    // Validate input parameters
-    if (!isValidPassword(user.getPassword())) {
-      throw new InvalidUserException("Password must include at least 8 characters, letter, number, cannot include: ./=_-()");
+        if (!isValidPhoneNumber(user.getPhoneNumber())){
+            throw new InvalidUserException("Phone number must only include numbers 0-9. minimum 9 and maximum 16");
+        }
+
+        // Check if user with email already exists
+        if (usersDAO.findByEmail(user.getEmail()) != null) {
+            throw new userExistException("Email already in use!");
+        }
+
+        // Hash the password
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+
+        // Save the user to the database
+        try {
+            return usersDAO.save(user);
+        } catch (DataAccessException e) {
+            throw new InvalidUserException("Failed to save user: " + e.getMessage());
+        }
     }
 
-    // Check if user with email already exists
-    if (usersDAO.findByEmail(user.getEmail()) != null) {
-      throw new userExistException("Email already in use!");
+    private boolean isValidPassword(String password) {
+        // Password must include at least 8 characters, letter, number, cannot include: ./=_-()
+        return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+
     }
 
-    // Hash the password
-    String hashedPassword = passwordEncoder.encode(user.getPassword());
-    user.setPassword(hashedPassword);
-
-    // Save the user to the database
-    try {
-      return usersDAO.save(user);
-    } catch (DataAccessException e) {
-      throw new InvalidUserException("Failed to save user: " + e.getMessage());
+    private boolean isValidPhoneNumber(String phoneNum){
+        // Phone number must only include numbers 0-9. minimum 9 and maximum 16
+        return phoneNum.matches("^[0-9]{9,16}$");
     }
-  }
-
-  private boolean isValidPassword(String password) {
-    // Password must include at least 8 characters, letter, number, cannot include: ./=_-()
-    return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
-  }
+  
+  
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.
@@ -123,25 +135,30 @@ public class UserBL {
    * output: None
    * exceptions: userInfoNotFound - indicating that no user with the given id was found.
    */
-  public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws userInfoNotFound {
-    Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
-    if (existingUsersInfo.isPresent()) {
-      if (!userInfo.getGoals().isEmpty()) {
-        Set<Goal> goals = new HashSet<>();
-        for (Goal goal : userInfo.getGoals()) {
-          Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
-          if (optionalGoal.isPresent()) {
-            Goal existingGoal = optionalGoal.get();
-            goals.add(existingGoal);
-          }
+    public UserInfo updateUserInfo(Long userInfoId, UserInfo userInfo) throws UNAUTHORIZEDException {
+        if (userInfo.getGoals() != null && userInfo.getGoals().size() != 0) {
+            Optional<UserInfo> existingUsersInfo = this.usersInfoDAO.findById(userInfoId);
+            if (existingUsersInfo.isPresent()) {
+                existingUsersInfo.ifPresent(user -> {
+                    user.setGoals(null);
+                });
+                Set<Goal> goals = new HashSet<>();
+                for (Goal goal : userInfo.getGoals()) {
+                    Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
+                    if (optionalGoal.isPresent()) {
+                        Goal existingGoal = optionalGoal.get();
+                        goals.add(existingGoal);
+                    }
+                }
+                userInfo.setGoals(goals);
+                return this.usersInfoDAO.save(userInfo);
+            } else {
+                throw new UNAUTHORIZEDException("userInfo was not found");
+            }
+        } else {
+            throw new UNAUTHORIZEDException("empty goal array was given");
         }
-        userInfo.setGoals(goals);
-      }
-      return this.usersInfoDAO.save(userInfo);
-    } else {
-      throw new userInfoNotFound();
     }
-  }
 
   public User updateProfile(User newProfile) throws UNAUTHORIZEDException {
     User user = this.usersDAO.findByUserId(newProfile.getUserId());
