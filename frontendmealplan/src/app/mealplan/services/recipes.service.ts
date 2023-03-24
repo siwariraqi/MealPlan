@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DayMeal } from '../models/DayMeal';
+import { DietType } from '../models/DietType';
 import { ApiService } from './api.service';
 
 export class Data {
     constructor(public categories: String[], 
-                // public cartList: MenuItem[],
+                public dietTypesList: DietType[],
                 // public orderList: Order[],
                 // public favorites: MenuItem[], 
                 // public totalPrice: number,
@@ -20,7 +21,7 @@ export class Data {
 export class RecipesService {
     public Data = new Data(
         [],  // categories 
-        // [],  // cartList
+        [],  // types
         // [],  // orderList
         // [],  // favorites 
         // 0, // totalPrice
@@ -29,6 +30,7 @@ export class RecipesService {
 
   GETMEALSTIME = "meals/meal-times";
   GETMEALSBYTIME = "meals/"
+  GETDIETTYPES = "meals/diet-types"
   meal: Array<DayMeal> = [];
   private selectedMeal: any;
   selectedType:string;
@@ -40,4 +42,7 @@ export class RecipesService {
   public getMealsByTime(category:string,userId: number) {
     return this.apiService.get<DayMeal[]>(this.GETMEALSBYTIME +`${category}` + '/'+ `${userId}`);
   }
+  public getDietTypesApi() {
+    return this.apiService.get<DietType[]>(this.GETDIETTYPES);
+  } 
 }
