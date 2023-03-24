@@ -276,6 +276,7 @@ public class InitDataBL {
         ingredients[95] = insertIngredient("avocado (sliced)", FoodCategories.Vegetables.name());
         ingredients[96] = insertIngredient("brown rice tortilla", FoodCategories.Others.name());
 
+
         //lunch7
         ingredients[97] = insertIngredient("boiling water", FoodCategories.Others.name());
         ingredients[98] = insertIngredient("frozen soya (edamame) beans, defrosted", FoodCategories.Others.name());
@@ -325,7 +326,6 @@ public class InitDataBL {
         ingredients[132] = insertIngredient("grated zest and juice 1 lime", FoodCategories.Vegetables.name());
         ingredients[133] = insertIngredient("reduced-salt soy sauce", FoodCategories.Others.name());
         ingredients[134] = insertIngredient("small red chilli, finely chopped", FoodCategories.Vegetables.name());
-
     }
 
     private Ingredient insertIngredient(String ingredientName, String categoryOfFood) {

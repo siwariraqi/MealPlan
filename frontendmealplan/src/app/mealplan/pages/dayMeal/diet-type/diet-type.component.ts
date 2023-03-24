@@ -13,6 +13,7 @@ export class DietTypeComponent implements OnInit {
   vegan=false;
   gluten=false;
   dairy=false;
+  reqular=false;
   @Input () DietType:DietType[];
   mealDietType:DietType[];
 
@@ -35,6 +36,9 @@ export class DietTypeComponent implements OnInit {
   }
 
   public mealDietTypeConditions(){
+    if(this.mealDietType.length==0){
+this.reqular=true;
+    }
     for(let i=0;i<this.mealDietType.length;i++)
     {
     if(this.mealDietType[i].text=="KETO FRIENDLY"){

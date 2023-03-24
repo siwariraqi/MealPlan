@@ -16,15 +16,17 @@ export class ChooseplanComponent implements OnInit {
   constructor(private planService: PlanService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.planService.getPlans().subscribe(
-      (data: any) => {
+    this.planService.getPlans().subscribe({
+      next: (data: any[]) => {
         this.plans = data;
         console.log(this.plans);
       },
-      (error: any) => {
+      error: (error: any) => {
         console.error(error);
       }
-    );
+    });
   }
+
+  
 
 }

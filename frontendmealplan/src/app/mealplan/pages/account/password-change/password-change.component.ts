@@ -26,7 +26,10 @@ export class PasswordChangeComponent implements OnInit {
     this.passwordForm = this.formBuilder.group({
       currentPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")]],
-      confirmNewPassword: ['', [Validators.required, this.passwordMatchValidator()]]});
+      confirmNewPassword: ['', [Validators.required]]},
+      { 
+        validators: this.matchingPasswords('newPassword','confirmNewPassword') 
+      });
   }
 
     public onPasswordFormSubmit(): void {
@@ -45,8 +48,8 @@ export class PasswordChangeComponent implements OnInit {
           .pipe(
             catchError(error => {
               console.error('Error updating password:', error);
-              const errorMessage = 'An error occurred while updating your profile. Please try again later.';
-              this.snackBar.open(errorMessage, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+              const errorMessage = 'Failed to change password. Error: ';
+              this.snackBar.open(errorMessage + error.error, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
               return throwError(error); // Return the observable with the error object
             })
           )
@@ -72,14 +75,26 @@ export class PasswordChangeComponent implements OnInit {
         }
       }
     }
-    
-    private passwordMatchValidator(): ValidatorFn {
-      return (control: AbstractControl): ValidationErrors | null => {
-        const newPassword = this.passwordForm?.get('newPassword')?.value;
-        const confirmNewPassword = control?.value;
-        return newPassword === confirmNewPassword ? null : { 'passwordMismatch': true };
-      };
+
+    get f(){
+      return this.passwordForm.controls;
     }
+    
+    matchingPasswords(newPassowrd:any, confirmPassword :any){
+      return(formgroup:UntypedFormGroup) =>{
+        const password = formgroup.controls[newPassowrd];
+        const confirm = formgroup.controls[confirmPassword];
+        // if(confirm.errors && password.errors['matchingPasswords']){
+        //   return;
+        // }
+        if(password.value!==confirm.value){
+          confirm.setErrors({matchingPasswords:true});
+        }
+        else{
+          confirm.setErrors(null);
+        }
+    }
+  }
 
 }
 
