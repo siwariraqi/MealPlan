@@ -18,6 +18,6 @@ public class BackendmealplanApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) {
-//		InitDataBL.run();
+		InitDataBL.run();
 	}
 }

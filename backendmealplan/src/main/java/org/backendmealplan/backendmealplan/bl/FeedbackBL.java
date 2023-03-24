@@ -80,4 +80,10 @@ public class FeedbackBL {
     }
 
   }
+
+  @Transactional
+  public void deleteFeedbacksByUser(User user) {
+    userFeedbacksDAO.deleteByUser(user);
+  }
+
 }

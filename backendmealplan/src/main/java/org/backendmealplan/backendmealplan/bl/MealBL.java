@@ -19,6 +19,8 @@ import org.backendmealplan.backendmealplan.beans.Meal;
 @Service
 public class MealBL {
 
+    @Autowired
+    DietTypesDAO dietTypesDAO;
 
     @Autowired
     private UsersDAO usersDAO;
@@ -118,8 +120,8 @@ public class MealBL {
 
     public Meal addMeal(Meal meal) {
         //check if meal exists
-        List<Meal> meals = this.mealsDAO.findByMealName(meal.getMealName());
-        if (meals.isEmpty()) {
+        Meal retunedMeal = this.mealsDAO.findByMealName(meal.getMealName());
+        if (retunedMeal==null) {
             return this.mealsDAO.save(meal);
         }
         return null;
@@ -152,6 +154,14 @@ public class MealBL {
             }
             return returnedList;
         } else throw new userNotFoundException("User not found");
+    }
+
+    public void addDietType(DietType dietType) {
+        //check if dietType exists
+        DietType dietTypes = this.dietTypesDAO.findByText(dietType.getText());
+        if (dietTypes==null) {
+            this.dietTypesDAO.save(dietType);
+        }
     }
 }
 

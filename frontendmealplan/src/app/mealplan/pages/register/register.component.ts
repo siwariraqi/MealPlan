@@ -204,7 +204,7 @@ export class RegisterComponent implements OnInit {
   validateBirthday(): boolean {
     const userBday = this.registerSrv.getUserInfo().birthday;
     console.log(typeof userBday);
-    if (!userBday || userBday === "") {
+    if (!userBday) {
       return false;
     }
     const userBdayDate = new Date(userBday);

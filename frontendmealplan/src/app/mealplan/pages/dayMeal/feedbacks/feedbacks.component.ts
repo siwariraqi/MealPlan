@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserFeedback } from "src/app/mealplan/models/UserFeedback";
 import { DayMealService } from "src/app/mealplan/services/day-meal.service";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+
+
 
 @Component({
   selector: 'app-feedbacks',
@@ -9,8 +12,9 @@ import { DayMealService } from "src/app/mealplan/services/day-meal.service";
   styleUrls: ['./feedbacks.component.scss']
 })
 export class FeedbacksComponent implements OnInit {
-   
-  constructor(private fb: FormBuilder,private dayMealService:DayMealService) {
+  @Input () mealId :number
+  
+  constructor(private fb: FormBuilder,private dayMealService:DayMealService ,private snackBar: MatSnackBar) {
     this.feedbackForm = this.fb.group({
       review: ['', Validators.required]
     });
@@ -18,7 +22,6 @@ export class FeedbacksComponent implements OnInit {
   userFeedback: UserFeedback = new UserFeedback(); 
 
   ngOnInit(): void {
-    this.userFeedback.isOnIt=true;
     this.feedbackForm = new FormGroup({
       review: new FormControl('', [Validators.required])
     });
@@ -78,7 +81,7 @@ export class FeedbacksComponent implements OnInit {
     for (let i = 0; i < this.ratings.length; i++) {
       if (this.ratings[i].title === rating.title) {
         this.ratings[i].selected = true;
-        this.userFeedback.rating=3; 
+        this.userFeedback.rating=i+1; 
       } else {
         this.ratings[i].selected = false;
       }
@@ -86,7 +89,6 @@ export class FeedbacksComponent implements OnInit {
   }
 
   selectedFeedbacksString: string = '';
-
   onSelectFeedback(index: number) {
     this.feedbackStates[index] = !this.feedbackStates[index];
     let selectedFeedbacks = [];
@@ -101,14 +103,30 @@ export class FeedbacksComponent implements OnInit {
   }
   
   saveFeedback() {
+    
     const feedbackText = this.feedbackForm.get('review').value;
     console.log(feedbackText)
     if (feedbackText) {
       this.userFeedback.feedbackText = feedbackText;
-      this.dayMealService.saveFeedback(this.userFeedback, 1, 1).subscribe(response => {
+      this.dayMealService.saveFeedback(this.userFeedback, 1, this.mealId).subscribe(response => {
         console.log('Feedback saved successfully:', response);
+       
+        this.feedbackForm.reset();
+        for (let i = 0; i < this.ratings.length; i++) {
+        this.ratings[i].selected=false
+        }
+        for (let i = 0; i < this.feedbacks.length; i++) {
+        this.feedbackStates[i]=false;
+        }
+        const config = new MatSnackBarConfig();
+        config.duration = 5000;
+        config.panelClass = ['my-snackbar']
+        this.snackBar.open('Thank you for your feedback!', 'Close', config);
+        
       });
     }
+    
+    
   }
 
 }
