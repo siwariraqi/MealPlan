@@ -6,6 +6,7 @@ import { UserService } from 'src/app/mealplan/services/user.service';
 import { UserSearchPipe } from 'src/app/theme/pipes/user-search.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../DialogContentComponent/dialog-content.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class AccountSettingsComponent implements OnInit {
   accountForm: FormGroup;
   hideConfirm = true;
   
-  constructor(private dialog:MatDialog,private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
+  constructor(private router:Router,private dialog:MatDialog,private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
     this.accountForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -68,7 +69,7 @@ public confirmResetAccount(): void {
         next: () => {
           console.log('Account deleted successfully.');
           this.snackBar.open('Your account deleted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-          // TODO: Redirect to login page or display success message.
+          this.router.navigate(['/mealplan/login']);
         },
         error: (error) => {
           console.error(error);

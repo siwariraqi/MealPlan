@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Map;
@@ -75,8 +77,11 @@ public class UsersController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(){
-        return ResponseEntity.ok("OK");
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
 
     @PostMapping("/resetAccount")
