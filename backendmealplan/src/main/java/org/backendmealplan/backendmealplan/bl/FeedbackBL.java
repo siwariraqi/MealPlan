@@ -5,6 +5,7 @@ import org.backendmealplan.backendmealplan.beans.UserFeedback;
 import org.backendmealplan.backendmealplan.dao.MealsDAO;
 import org.backendmealplan.backendmealplan.dao.UserFeedbacksDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
+import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.RatingNotInRangeException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
@@ -85,5 +86,16 @@ public class FeedbackBL {
   public void deleteFeedbacksByUser(User user) {
     userFeedbacksDAO.deleteByUser(user);
   }
+
+  public List<UserFeedback> getAllFeedbacks() throws FeedbackNotFoundException {
+
+    List<UserFeedback> feedbacks = this.userFeedbacksDAO.findAll();
+    if (feedbacks != null) {
+      return feedbacks;
+    } else {
+      throw new FeedbackNotFoundException("User not found");
+    }
+  }
+
 
 }

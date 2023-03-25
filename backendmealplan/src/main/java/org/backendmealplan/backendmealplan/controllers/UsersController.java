@@ -146,4 +146,16 @@ public class UsersController {
         }
     }
 
+  @GetMapping("/getall")
+  public ResponseEntity <List<User>> getAll() {
+    try {
+      List<User> users = userBL.getAll();
+      for(User user: users) {
+        user.setPassword(null);
+      }
+      return ResponseEntity.ok(users);
+    } catch (userNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 }
