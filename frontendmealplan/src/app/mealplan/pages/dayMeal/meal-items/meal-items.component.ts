@@ -40,9 +40,6 @@ export class MealItemsComponent implements OnInit {
         this.dayMealService.setSelectedMeal(this.meal);
       }
     }
-
-    
-    
   }
 
 
