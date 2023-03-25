@@ -1,6 +1,8 @@
 package org.backendmealplan.backendmealplan.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.backendmealplan.backendmealplan.enums.Role;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotBlank;
@@ -25,6 +27,8 @@ public class User {
 
     @NotBlank
     private String password;
+
+    private Role userRole;
 
     @NotBlank
     private String firstName;
