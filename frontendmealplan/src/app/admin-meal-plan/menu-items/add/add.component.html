@@ -13,13 +13,13 @@
                     <div fxLayout="row wrap">
                         <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Name</mat-label>
+                                <mat-label>Meal Name</mat-label>
                                 <input matInput formControlName="name" required>
                                 <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error>
                                 <mat-error *ngIf="form.controls.name.hasError('minlength')">Name isn't long enough, minimum of 4 characters</mat-error>
                             </mat-form-field>
                         </div> 
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+                        <!-- <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Category</mat-label>
                                 <mat-select formControlName="categoryId" required>
@@ -29,8 +29,8 @@
                                 </mat-select>
                                 <mat-error *ngIf="form.controls.categoryId.errors?.required">Category is required</mat-error>
                             </mat-form-field>
-                        </div>  
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
+                        </div>   -->
+                        <!-- <div fxFlex="100" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Price</mat-label>
                                 <input matInput formControlName="price" required>
@@ -42,28 +42,68 @@
                                 <mat-label>Discount</mat-label>
                                 <input matInput formControlName="discount" type="number"> 
                             </mat-form-field>
-                        </div> 
+                        </div>  -->
                         <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Availibility Count</mat-label>
+                                <mat-label>Calories (Kcal) </mat-label>
                                 <input matInput formControlName="availibilityCount" type="number"> 
                             </mat-form-field>
                         </div>  
                         <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Weight</mat-label>
+                                <mat-label>Prepare Time (min)</mat-label>
                                 <input matInput formControlName="weight" type="number"> 
                             </mat-form-field>
                         </div> 
+                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Cook Time (min)</mat-label>
+                                <input matInput formControlName="weight" type="number"> 
+                            </mat-form-field>
+                        </div> 
+                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Fat (gr)</mat-label>
+                                <input matInput formControlName="weight" type="number"> 
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Protien (gr)</mat-label>
+                                <input matInput formControlName="weight" type="number"> 
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Carbs (gr)</mat-label>
+                                <input matInput formControlName="weight" type="number"> 
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Fibre (gr)</mat-label>
+                                <input matInput formControlName="weight" type="number"> 
+                            </mat-form-field>
+                        </div>
                         <div fxFlex="100" fxFlex.gt-sm="33.3" class="p-3">
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">Is Vegetarian</mat-checkbox>
+                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">GLUTEN FREE</mat-checkbox>
+                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">DAIRY FREE</mat-checkbox>
+                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">KETO FRIENDLY</mat-checkbox>
+                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">VEGAN FRIENDLY</mat-checkbox> 
+                        </div>  
+                        
+                        <div fxFlex="100" class="px-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Instructions</mat-label> 
+                                <textarea matInput formControlName="description" rows="2"></textarea> 
+                            </mat-form-field> 
                         </div>  
                         <div fxFlex="100" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Description</mat-label> 
-                                <textarea matInput formControlName="description" rows="7"></textarea> 
+                                <mat-label>Tips</mat-label> 
+                                <textarea matInput formControlName="description" rows="2"></textarea> 
                             </mat-form-field> 
-                        </div>   
+                        </div>  
                         <div fxFlex="100" class="mt-2 text-center w-100">
                             <button mat-raised-button color="primary" type="submit" class="uppercase">Submit</button>
                         </div>
