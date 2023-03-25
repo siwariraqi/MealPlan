@@ -145,10 +145,5 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-}
 
-    @PostMapping("/all")
-    public ResponseEntity getAllUsers(){
-        List<User> userList = userBL.fin
-    }
 }

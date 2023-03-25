@@ -28,7 +28,6 @@ public class User {
     @NotBlank
     private String password;
 
-    @NotBlank
     private Role userRole;
 
     @NotBlank

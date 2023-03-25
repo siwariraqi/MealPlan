@@ -24,8 +24,13 @@ public class MealsController{
     }
 
     @GetMapping("/diet-types")
-    public DietTypes[] getDietTypes() {
-        return DietTypes.values();
+    public String[] getDietTypes() {
+        DietTypes[] dietTypes = DietTypes.values();
+        String[] dietTypeValues = new String[dietTypes.length];
+        for (int i = 0; i < dietTypes.length; i++) {
+            dietTypeValues[i] = dietTypes[i].getValue();
+        }
+        return dietTypeValues;
     }
 
     @GetMapping("/{mealTime}/{userId}")

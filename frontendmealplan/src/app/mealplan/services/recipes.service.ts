@@ -44,5 +44,13 @@ export class RecipesService {
   }
   public getDietTypesApi() {
     return this.apiService.get<DietType[]>(this.GETDIETTYPES);
-  } 
+  }
+  
+  setDietTypes(dietTypesList:DietType[]){
+    this.Data.dietTypesList=dietTypesList;
+    console.log("service here")
+  }
+  getDietTypes(){
+    return this.Data.dietTypesList;
+  }
 }
