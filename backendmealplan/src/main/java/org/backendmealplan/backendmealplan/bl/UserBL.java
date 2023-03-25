@@ -67,7 +67,7 @@ public class UserBL {
     user.setPassword(passwordEncoder.encode(newPassword));
     this.usersDAO.save(user);
   }
-  
+
     @Transactional
     public User adduser(User user) throws userExistException, InvalidUserException {
         // Validate input parameters
@@ -106,8 +106,8 @@ public class UserBL {
         // Phone number must only include numbers 0-9. minimum 9 and maximum 16
         return phoneNum.matches("^[0-9]{9,16}$");
     }
-  
-  
+
+
     /*
     Goal: creating a new userInfo and adding it to the database - table:UserInfo.
     input: UserInfo object that contains some info (probably goals), no Id yet!.
@@ -357,6 +357,16 @@ public class UserBL {
       throw new UNAUTHORIZEDException("user does not Exist");
     }
     return user.getPlan();
+  }
+
+  public List<User> getAll() throws userNotFoundException {
+
+    List<User> users = this.usersDAO.findAll();
+    if (users != null) {
+      return users;
+    } else {
+      throw new userNotFoundException("User not found");
+    }
   }
 
 }

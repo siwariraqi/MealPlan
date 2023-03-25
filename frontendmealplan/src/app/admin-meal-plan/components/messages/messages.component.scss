@@ -1,0 +1,50 @@
+.messages{
+    .mat-tab-label{
+        min-width: 93.3px;
+        height: 40px;
+    }
+    .content{
+        padding: 0;
+        height: 250px;
+    }
+    img{
+        margin-right: 8px;
+        border-radius: 4px;
+    }
+    span.name{
+        text-transform: capitalize;
+        font-size: 13px;
+        line-height: 22px;
+    }
+    span.info{
+        font-size: 12px;
+        opacity: 0.8;
+        line-height: 22px;
+    }
+    span.text{
+        font-size: 11px;
+        line-height: 14px;
+        white-space: initial;
+        text-align: left;
+    }  
+    .mat-button{
+        padding: 8px;
+        .mat-button-wrapper{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+        .mat-icon{
+            height: 16px;
+            font-size: 12px;
+            width: 12px;
+            vertical-align: middle;
+        }
+    }
+    .row-1{
+        box-shadow: 0 0 5px #ccc;
+        border-radius: 4px;
+        padding: 2px 13px;
+        margin-right: 8px;
+    }
+}

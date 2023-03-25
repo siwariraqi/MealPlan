@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -144,4 +145,17 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+  @GetMapping("/getall")
+  public ResponseEntity <List<User>> getAll() {
+    try {
+      List<User> users = userBL.getAll();
+      for(User user: users) {
+        user.setPassword(null);
+      }
+      return ResponseEntity.ok(users);
+    } catch (userNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 }

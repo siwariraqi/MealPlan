@@ -1,0 +1,64 @@
+<mat-card class="m-2 p-0">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        
+        <!-- On It Column -->
+        <ng-container matColumnDef="isOnIt">
+          <th mat-header-cell *matHeaderCellDef> On It </th>
+          <td mat-cell *matCellDef="let feedback">
+            <mat-icon color="{{ feedback.isOnIt ? 'primary' : 'warn' }}"> {{ feedback.isOnIt ? 'check' : 'clear' }} </mat-icon>
+          </td>
+        </ng-container>
+        
+        <!-- meal image Column -->
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Meal Image </th>
+          <td mat-cell *matCellDef="let feedback"> <img [src]="feedback.meal.imageUrl" alt="user" width="60" class="d-block"> </td>
+        </ng-container>
+
+        <!-- User Name Column -->
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+          <td mat-cell *matCellDef="let feedback"> {{ feedback.user.firstName+' ' }}{{feedback.user.lastName}} </td>
+        </ng-container>
+  
+        <!-- Meal Name Column -->
+        <ng-container matColumnDef="mealName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Meal Name </th>
+          <td mat-cell *matCellDef="let feedback" style="word-wrap: break-word; white-space: pre-line;"> 
+            {{ feedback.meal.mealName }} 
+          </td>
+        </ng-container>
+        
+  
+        <!-- Plan Name Column -->
+        <ng-container matColumnDef="planName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Plan Name </th>
+          <td mat-cell *matCellDef="let feedback"> {{ feedback.user.plan.planName }} </td>
+        </ng-container>
+  
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+          <td mat-cell *matCellDef="let feedback"> {{ feedback.date | date:"dd MMMM, yyyy 'at' HH:mm" }} </td>
+        </ng-container>
+  
+        <!-- Rating Column -->
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+          <!-- <td mat-cell *matCellDef="let feedback"> {{ feedback.rating }} </td> -->
+          <td mat-cell *matCellDef="let feedback">  <app-rating [ratingsCount]="5" [ratingsValue]="feedback.rating*100"></app-rating> </td>
+        </ng-container>
+  
+        <!-- Feedback Text Column -->
+        <ng-container matColumnDef="feedbackText">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Feedback Text </th>
+          <td mat-cell *matCellDef="let feedback" style="word-wrap: break-word; white-space: pre-line;"> {{ feedback.feedbackText }} </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let feedback; columns: displayedColumns;"></tr>
+      </table>
+      <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p>
+    </div>
+  </mat-card>
