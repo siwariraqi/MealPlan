@@ -31,6 +31,7 @@ export class AuthService {
             if (data.email) {
               this.currUser = data;
               console.log("cur user=> ", this.currUser);
+              this.setUserLocalStorage();
             }
           }
         })
@@ -38,7 +39,23 @@ export class AuthService {
   }
 
   getUser() {
+    this.getUserLocalStorage();
     return this.currUser;
+  }
+
+  getUserLocalStorage(): User {
+    const userInfo = localStorage.getItem("currUser");
+    if (userInfo) {
+      this.currUser = JSON.parse(userInfo);
+    } else {
+      this.currUser = new User(null);
+      localStorage.setItem("currUser", JSON.stringify(this.currUser));
+    }
+    return this.currUser;
+  }
+
+  setUserLocalStorage() {
+    localStorage.setItem("currUser", JSON.stringify(this.currUser));
   }
 
   // logout() {

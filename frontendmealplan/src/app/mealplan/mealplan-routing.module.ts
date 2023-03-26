@@ -17,8 +17,10 @@ import { AboutComponent } from "./pages/account/about/about.component";
 import { PrivacyComponent } from "./pages/account/privacy/privacy.component";
 import { TermsComponent } from "./pages/account/terms/terms.component";
 import { RecipesComponent } from "./pages/recipes/recipes.component";
+import { EducationComponent } from "./pages/education/education.component";
 
 const routes: Routes = [
+  { path: "", redirectTo: "register", pathMatch: "full" },
   {
     path: "login",
     component: LoginComponent,
@@ -40,23 +42,25 @@ const routes: Routes = [
     component: MealSingleComponent,
   },
   {
-    path:"recipes",
-    component:RecipesComponent,
+    path: "recipes",
+    component: RecipesComponent,
   },
-    {path:"account",
-    component:AccountComponent,
+  {
+    path: "account",
+    component: AccountComponent,
     children: [
-      { path: '', redirectTo:"dashboard",pathMatch:"full" },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'about', component: AboutComponent },
-      { path: 'privacy', component: PrivacyComponent },
-      { path: 'account-settings', component: AccountSettingsComponent},
-      { path: 'password-change', component: PasswordChangeComponent },
-      { path: 'help-support', component: HelpSupportComponent },
-      { path: 'terms', component: TermsComponent}
-   ],
+      { path: "", redirectTo: "dashboard", pathMatch: "full" },
+      { path: "dashboard", component: DashboardComponent },
+      { path: "profile", component: ProfileComponent },
+      { path: "about", component: AboutComponent },
+      { path: "privacy", component: PrivacyComponent },
+      { path: "account-settings", component: AccountSettingsComponent },
+      { path: "password-change", component: PasswordChangeComponent },
+      { path: "help-support", component: HelpSupportComponent },
+      { path: "terms", component: TermsComponent },
+    ],
   },
+  { path: "education", component: EducationComponent },
   {
     path: "groceryList",
     component: GroceryListComponent,
