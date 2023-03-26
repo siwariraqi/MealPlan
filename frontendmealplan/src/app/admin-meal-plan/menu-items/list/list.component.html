@@ -8,77 +8,60 @@
     </div>
     <mat-divider></mat-divider>
 
-    <div class="table-wrapper"> 
+    <div class="table-wrapper">
         <table mat-table [dataSource]="dataSource" matSort class="w-100">
-        
+
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                <td mat-cell *matCellDef="let menuItem"> {{menuItem.id}} </td>
-            </ng-container> 
-            
+                <td mat-cell *matCellDef="let meals"> {{meals.mealId}} </td>
+            </ng-container>
+
             <!-- Image Column -->
             <ng-container matColumnDef="image">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
-                <td mat-cell *matCellDef="let menuItem"> <img [src]="menuItem.image.small" alt="item" width="60"> </td>
-            </ng-container> 
-
-            <!-- Category Column -->
-            <ng-container matColumnDef="categoryId">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-                <td mat-cell *matCellDef="let menuItem"> {{( appService.Data.categories | filterById : menuItem.categoryId )?.name}}  </td>
-            </ng-container> 
+                <td mat-cell *matCellDef="let meals"> <img [src]="meals.imageUrl" alt="item" width="60"> </td>
+            </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let menuItem"> {{menuItem.name}} </td>
-            </ng-container> 
+                <td mat-cell *matCellDef="let meals"> {{meals.mealName}} </td>
+            </ng-container>
 
             <!-- Price Column -->
-            <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-                <td mat-cell *matCellDef="let menuItem"> <b class="primary-color">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</b> </td>
-            </ng-container> 
+            <ng-container matColumnDef="Calories">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Calories (Kcal)</th>
+                <td mat-cell *matCellDef="let meals"> <b class="primary-color">{{meals.calories}}</b> </td>
+            </ng-container>
 
-            <!-- Discount Column -->
-            <ng-container matColumnDef="discount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
-                <td mat-cell *matCellDef="let menuItem"> {{menuItem.discount}} </td>
-            </ng-container> 
-
-            <!-- Availibility Count Column -->
-            <ng-container matColumnDef="availibilityCount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Availibility Count </th>
-                <td mat-cell *matCellDef="let menuItem"> {{menuItem.availibilityCount}} </td>
-            </ng-container> 
-
-            <!-- Is Vegetarian Column -->
-            <ng-container matColumnDef="isVegetarian">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Vegetarian </th>
-                <td mat-cell *matCellDef="let menuItem"> {{(menuItem.isVegetarian) ? 'Yes':'No'}} </td>
-            </ng-container> 
 
             <!-- Actions Column -->
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
-                <td mat-cell *matCellDef="let menuItem"> 
-                    <a mat-icon-button color="primary" [routerLink]="['/admin/menu-items/add', menuItem.id]" matTooltip="Edit">
+                <td mat-cell *matCellDef="let meals">
+                    <a mat-icon-button color="primary" [routerLink]="['/admin/meal-items/add', meals.mealId]"
+                        matTooltip="Edit">
                         <mat-icon>edit</mat-icon>
-                    </a> 
-                    <a mat-icon-button color="primary" [routerLink]="['/admin/menu-items/detail', menuItem.id]" matTooltip="View">
-                        <mat-icon>visibility</mat-icon>
-                    </a>  
-                    <button mat-icon-button color="warn" (click)="remove(menuItem)" matTooltip="Remove">
+                    </a>
+                    <a mat-icon-button color="primary" routerLink="/adminside/meal-items/detail/{{meals.mealId}}"
+                        matTooltip="View">
+                        <mat-icon (click)="onMealClick(meals.mealId)">visibility</mat-icon>
+                    </a>
+
+                    <mat-card-content class="mb-0">
+
+                    </mat-card-content>
+                    <button mat-icon-button color="warn" (click)="remove(meals)" matTooltip="Remove">
                         <mat-icon>delete</mat-icon>
-                    </button>   
+                    </button>
                 </td>
-            </ng-container>  
-        
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let menuItem; columns: displayedColumns;"></tr>
-        </table> 
-        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p> 
+        </table>
+        <p *ngIf="dataSource && dataSource.data.length === 0" class="py-5 mb-0 text-center">No data available</p>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator> -->
 </mat-card>

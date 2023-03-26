@@ -1,8 +1,13 @@
 package org.backendmealplan.backendmealplan.controllers;
-import org.backendmealplan.backendmealplan.beans.*;
+import org.backendmealplan.backendmealplan.beans.DayMeal;
+import org.backendmealplan.backendmealplan.beans.Meal;
+import org.backendmealplan.backendmealplan.beans.UserFeedback;
+
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.enums.DietTypes;
 import org.backendmealplan.backendmealplan.enums.MealTime;
+import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +50,7 @@ public class MealsController{
         }
     }
 
+
 //    @PostMapping("")
 //    public ResponseEntity createMeal(@Valid @RequestBody Meal meal){
 //        try {
@@ -56,5 +62,16 @@ public class MealsController{
 //            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
 //        }
 //    }
+
+
+  @GetMapping("/getall")
+  public ResponseEntity <List<Meal>> getAllMeals() {
+    try {
+      List<Meal> meals = mealBL.getAllMeals();
+      return  ResponseEntity.ok(meals);
+    } catch (MealNotFoundException e) {
+      return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 
 }

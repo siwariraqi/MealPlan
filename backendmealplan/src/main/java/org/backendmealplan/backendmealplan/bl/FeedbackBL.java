@@ -93,7 +93,7 @@ public class FeedbackBL {
     if (feedbacks != null) {
       return feedbacks;
     } else {
-      throw new FeedbackNotFoundException("User not found");
+      throw new FeedbackNotFoundException("Feedback Not Found ");
     }
   }
 
