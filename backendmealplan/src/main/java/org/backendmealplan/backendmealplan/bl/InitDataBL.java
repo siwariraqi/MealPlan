@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.bl;
+import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
 import org.backendmealplan.backendmealplan.dao.DietTypesDAO;
 import org.backendmealplan.backendmealplan.dao.MealsDAO;
 import org.backendmealplan.backendmealplan.enums.*;
@@ -32,7 +33,7 @@ public class InitDataBL {
 
   @Autowired
   IngredientBL ingredientBL;
-  
+
   @Autowired
   GroceryListBL groceryListBl;
 
@@ -1036,5 +1037,3 @@ public class InitDataBL {
         }
     }
     */
-
-}
