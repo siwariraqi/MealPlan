@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.bl;
+import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
 import org.backendmealplan.backendmealplan.dao.DietTypesDAO;
 import org.backendmealplan.backendmealplan.dao.MealsDAO;
 import org.backendmealplan.backendmealplan.enums.*;
@@ -32,6 +33,12 @@ public class InitDataBL {
 
   @Autowired
   IngredientBL ingredientBL;
+
+  @Autowired
+  GroceryListBL groceryListBl;
+
+  @Autowired
+  DayPlanIdDAO dayPlanIdDAO;
 
   Ingredient[] ingredients = new Ingredient[135];
   Meal[] meals = new Meal[30];
@@ -986,6 +993,25 @@ public class InitDataBL {
     insertDayPlan(basicPlan, dayPlanIds[5], 6);
     insertDayPlan(basicPlan, dayPlanIds[6], 7);
 
+    insertDayPlan(freemuimPlan, dayPlanIds[0], 1);
+    insertDayPlan(freemuimPlan, dayPlanIds[1], 2);
+    insertDayPlan(freemuimPlan, dayPlanIds[2], 3);
+
+    insertDayPlan(premiumPlan, dayPlanIds[0], 1);
+    insertDayPlan(premiumPlan, dayPlanIds[1], 2);
+    insertDayPlan(premiumPlan, dayPlanIds[2], 3);
+    insertDayPlan(premiumPlan, dayPlanIds[3], 4);
+    insertDayPlan(premiumPlan, dayPlanIds[4], 5);
+    insertDayPlan(premiumPlan, dayPlanIds[5], 6);
+    insertDayPlan(premiumPlan, dayPlanIds[6], 7);
+    insertDayPlan(premiumPlan, dayPlanIds[0], 8);
+    insertDayPlan(premiumPlan, dayPlanIds[1], 9);
+    insertDayPlan(premiumPlan, dayPlanIds[2], 10);
+    insertDayPlan(premiumPlan, dayPlanIds[3], 11);
+    insertDayPlan(premiumPlan, dayPlanIds[4], 12);
+    insertDayPlan(premiumPlan, dayPlanIds[5], 13);
+    insertDayPlan(premiumPlan, dayPlanIds[6], 14);
+
   }
 
   private void insertDayPlan(Plan plan, DayPlanId dayPlanId, Integer dayNumber) {
@@ -996,3 +1022,37 @@ public class InitDataBL {
     plan.getDayPlanIdList().add(dayPlanId);
   }
 }
+
+    /*
+
+    private void addToGroceryList(Plan plan, Long dayPlanIdId, Integer dayNumber) {
+        Integer week = (dayNumber%7==0)? dayNumber/7: dayNumber/7 +1;
+        List<DayPlanId> dayPlanIdsList = dayPlanIdDAO.findByDayPlanId(dayPlanIdId);
+        List<Meal> dayMeals = dayPlanIdsList.get(0).getMeals();
+
+        for(int i=0; i<dayMeals.size(); i++){
+            Meal currentMeal = dayMeals.get(i);
+            try {
+                groceryListBl.addMealIngredientsToGroceries(plan, currentMeal, week);
+            } catch (UNAUTHORIZEDException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initGroceries(){
+        List<Plan> allPlans = planBL.getAllPlans();
+        for(int i=0; i<allPlans.size(); i++){
+            Plan currPlan = allPlans.get(i);
+            List<DayPlanId> planDayIds = currPlan.getDayPlanIdList();
+            for(int j=0; j<planDayIds.size(); j++){
+                List<Meal> dayPlanMeals = planDayIds.get(j).getMeals();
+
+                for(int k=0; k<dayPlanMeals.size(); k++){
+                    Meal currMeal = dayPlanMeals.get(k);
+                    groceryListBl.addMealIngredientsToGroceries(currPlan, currMeal, );
+                }
+            }
+        }
+    }
+    */

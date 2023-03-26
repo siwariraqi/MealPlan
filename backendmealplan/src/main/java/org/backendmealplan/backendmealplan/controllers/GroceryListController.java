@@ -18,14 +18,15 @@ public class GroceryListController {
     @Autowired
     private GroceryListBL groceryListBL;
     //TODO:change parameters to body or header
-    @PostMapping("deleteIngredients/{groceryListId}/{userId}")
-    public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @PathVariable Long userId){
+    @PostMapping("deleteIngredients/{groceryListId}")
+    public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @RequestParam Long loggedInUserId){
+        Long userId = 1L;
         List<Long> groceryListIds = new ArrayList<>();
         groceryListIds.add(Long.valueOf(groceryListId));
         try{
             this.groceryListBL.hideIngredientsForUser(groceryListIds, userId);
             return (ResponseEntity) ResponseEntity.ok("okay");
-        } catch (UNAUTHORIZEDException e) {
+        } catch (UNAUTHORIZEDException e){
             return (ResponseEntity) ResponseEntity.ok("okay");//(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         catch(Exception e){
@@ -33,9 +34,10 @@ public class GroceryListController {
         }
     }
     //TODO:change user_id to body or header
-    @GetMapping("getIngredients/{week}/{user_id}")
-    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @PathVariable Long user_id){
+    @GetMapping("getIngredients/{week}")
+    public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long loggedInUserId){
         //ResponseEntity<List<GroceryList>>
+        Long user_id = 1L;
         List<GroceryList> userGroceries = new ArrayList<>();
         try {
             userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, user_id);

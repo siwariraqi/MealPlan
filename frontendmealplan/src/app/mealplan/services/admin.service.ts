@@ -8,13 +8,13 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class AdminService {
-  GETALLUSERS_URL = "users/getall/";
+  GETALLUSERS_URL = "admin/getall/";
   GETALLFEEDBACKS_URL = "feedback/getall/";
   GETALLMEALS_URL="meals/getall/";
-  DELETEUSER_URL="users/delete";
-  RESETUSER_URL="users/resetUser";
-  UPDATEUSERD_URL="users/update";
-  CHANGEPLAN_URL="users/changeRole"
+  DELETEUSER_URL="admin/delete";
+  RESETUSER_URL="admin/resetUser";
+  UPDATEUSERD_URL="admin/update";
+  CHANGEPLAN_URL="admin/changeRole"
   constructor(private apiService: ApiService) { }
 
   getAllUsers() {

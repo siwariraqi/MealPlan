@@ -14,7 +14,7 @@ import { ApiService } from './api.service';
 })
 export class DayMealService {
   GETDAYPLANMEAL_URL = "plans/day-plan-meals/";
-  PLAN_URL = "plans";
+  PLAN_URL = "plans/";
   DAYNUTRITION_URL = "plans/day-nutrition/";
   SAVEFEEDBACK_URL = "feedback/save/";
   INGREDIENTS_URL ="plans/ingredients/"
@@ -29,7 +29,7 @@ export class DayMealService {
   public getDayPlanMeals(dayNumber: number, userid: number) {
     return this.apiService.get<DayMeal[]>(this.GETDAYPLANMEAL_URL + `${dayNumber}`  );
   }
-  public getPlan(userid: number) {
+  public getPlan() {
     return this.apiService.get<Plan>(this.PLAN_URL );
   }
   public getTotalDayNutrition(dayNumber: number, userid: number) {
