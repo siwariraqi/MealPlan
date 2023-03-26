@@ -1,0 +1,66 @@
+<mat-toolbar color="primary" class="admin-toolbar mat-elevation-z2">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">  
+        <div fxLayout="row" fxLayoutAlign="center center"> 
+            <div class="logo-section" fxShow="false" fxShow.gt-xs> 
+                <a routerLink="/adminside"><app-logo></app-logo></a> 
+            </div>                    
+            <button mat-icon-button (click)="toggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>  
+            <button mat-icon-button (click)="settings.adminSidenavIsPinned = !settings.adminSidenavIsPinned" fxShow="false" fxShow.gt-xs>
+                <svg class="pin">
+                    <path *ngIf="!settings.adminSidenavIsPinned" d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z" />
+                    <path *ngIf="settings.adminSidenavIsPinned" d="M2,5.27L3.28,4L20,20.72L18.73,22L12.8,16.07V22H11.2V16H6V14L8,12V11.27L2,5.27M16,12L18,14V16H17.82L8,6.18V4H7V2H17V4H16V12Z" />
+                </svg> 
+            </button> 
+            <button fxShow="false" fxShow.gt-xs mat-icon-button (click)="settings.adminSidenavUserBlock = !settings.adminSidenavUserBlock">
+                <mat-icon>person</mat-icon>
+            </button>    
+            <button mat-icon-button (click)="settings.rtl = !settings.rtl" matTooltip="LTR / RTL">
+                <mat-icon>swap_horiz</mat-icon>
+            </button> 
+            <a mat-icon-button routerLink="/"><mat-icon>home</mat-icon></a>                 
+        </div>            
+        <div fxLayout="row" fxLayoutAlign="end center">   
+            <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+                <form method="get">
+                    <input type="text" placeholder="Type to search..." class="mat-elevation-z3"  [class.show]="toggleSearchBar">
+                    <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                        <mat-icon>search</mat-icon>
+                    </button> 
+                </form>
+            </div>
+            <app-lang></app-lang>
+            <app-fullscreen></app-fullscreen>  
+            <app-messages fxShow="false" fxShow.gt-xs></app-messages>
+            <app-user-menu></app-user-menu> 
+        </div>
+    </div>
+</mat-toolbar>
+<mat-drawer-container class="admin-container"> 
+    <mat-drawer #sidenav [opened]="settings.adminSidenavIsOpened" [mode]="(settings.adminSidenavIsPinned) ? 'side' : 'over'" class="admin-sidenav mat-elevation-z6" autoFocus="false">
+        <perfect-scrollbar>
+            <div fxLayout="column" fxLayoutAlign="center center" class="user-block transition-2" [class.show]="settings.adminSidenavUserBlock"> 
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info-wrapper">
+                    <img [src]="userImage" alt="user-image">
+                    <div class="user-info">
+                        <p class="name">Emilio Verdines</p>
+                        <p class="position">General Manager <br> <small class="muted-text">Member since May. 2016</small></p>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
+                    <button mat-icon-button><mat-icon>person_outline</mat-icon></button>
+                    <button mat-icon-button><mat-icon>mail_outline</mat-icon></button> 
+                    <a mat-icon-button routerLink="/login">
+                        <mat-icon>power_settings_new</mat-icon>
+                    </a>
+                </div>
+            </div> 
+            <app-admin-menu [menuItems]="menuItems" [menuParentId]="0"></app-admin-menu>
+        </perfect-scrollbar>
+    </mat-drawer> 
+    <mat-drawer-content>  
+        <app-breadcrumb></app-breadcrumb>  
+        <router-outlet></router-outlet>  
+    </mat-drawer-content>    
+</mat-drawer-container>

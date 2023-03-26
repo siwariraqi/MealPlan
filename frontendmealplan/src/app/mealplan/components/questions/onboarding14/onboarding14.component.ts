@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
@@ -14,30 +15,14 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
           <img src=" /assets/images/questions_icons/{{ ['group2.png'] }}" />
         </div>
         <div class="form__group field">
-          <input
-            type="input"
-            class="form__field"
-            placeholder="Name"
-            name="name"
-            required
-          #inputValue/>
-          <p class='val'> {{ val }} <p>
+          <input type="input" class="form__field" placeholder="Name" name="name" [formControl]="heightControl" required #inputValue />
+          <p class="val">{{ chosenUnit === "metric" ? "CM" : "FT/IN" }}</p>
+          <p></p>
         </div>
+
         <div class="box">
-          <div
-            class="innerbox"
-            (click)="enableDisableRule1(inputValue.value)"
-            [ngClass]="{ orange: !toggle1, white: toggle1 }"
-          >
-            FT IN
-          </div>
-          <div
-            class="innerbox"
-            (click)="enableDisableRule2(inputValue.value)"
-            [ngClass]="{ orange: !toggle2, white: toggle2 }"
-          >
-            CM
-          </div>
+          <div class="innerbox" [ngClass]="{ orange: isImperial, white: !isImperial }">FT IN</div>
+          <div class="innerbox" [ngClass]="{ orange: isMetric, white: !isMetric }">CM</div>
         </div>
       </div>
     </div>
@@ -45,58 +30,29 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   styleUrls: ["./onboarding14.component.scss"],
 })
 export class Onboarding14Component implements OnInit {
-  toggle1 = true;
-  toggle2 = false;
-  val : String = "CM";
-  height : string;
-  heightNum: number;
-  valid : boolean ;
+  chosenUnit: string;
+  heightControl: FormControl;
 
+  isMetric: boolean;
+  isImperial: boolean;
 
   constructor(private registerSrv: RegisterService) {
-    this.height = null;
-    this.valid = false ;
+    this.chosenUnit = this.registerSrv.getUserInfo().unit;
+    this.heightControl = new FormControl();
   }
 
-  ngOnInit(): void {}
-
-  enableDisableRule1(height : string) {
-    this.toggle1 = !this.toggle1;
-    this.toggle2 = true;
-    this.val = "FT/IN";
-    this.heightNum = Number(height);
-    if (this.heightNum > 40 && this.heightNum < 80){
-      this.save(height);
-      this.valid = true;
+  ngOnInit(): void {
+    if (this.chosenUnit === "metric") {
+      this.isMetric = true;
+      this.isImperial = false;
+    } else {
+      this.isMetric = false;
+      this.isImperial = true;
     }
-    else {
-      this.valid = false;
-      console.log('not valid');
-    }
-
-
+    this.heightControl.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.registerSrv.getUserInfo().height = value;
+      // this.registerSrv.getUserInfo().height = value + ` ${this.chosenUnit === "metric" ? "CM" : "FT"}`;
+    });
   }
-  enableDisableRule2(height : string) {
-    this.toggle2 = !this.toggle2;
-    this.toggle1 = true;
-    this.val = "CM";
-    this.save(height);
-    this.heightNum = Number(height);
-    if (this.heightNum > 100 && this.heightNum < 200){
-      this.save(height);
-      this.valid = true;
-    }
-    else {
-      this.valid = false;
-      console.log('not valid');
-    }
-
-
-  }
-  
-  save(height: string) {
-    this.registerSrv.getUserInfo().height = height;
-    console.log(this.registerSrv.getUserInfo().height);
-  }
-
 }

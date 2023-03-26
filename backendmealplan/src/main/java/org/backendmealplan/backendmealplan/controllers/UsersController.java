@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +21,7 @@ import java.util.Map;
 public class UsersController {
     @Autowired
     private UserBL userBL;
+
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@Valid @RequestBody UserInfo userInfo){
         userInfo.setInfoId(null); // set infoId to null to ensure client cannot set it
@@ -31,9 +33,13 @@ public class UsersController {
     public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
-        } catch (userInfoNotFound e) {
-            return (ResponseEntity) ResponseEntity.notFound();
+            if(userInfo != null){
+                long userInfoId = userInfo.getInfoId();
+                updatedUserInfo = userBL.updateUserInfo(userInfoId, userInfo);
+            }
+
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
@@ -149,4 +155,17 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+  @GetMapping("/getall")
+  public ResponseEntity <List<User>> getAll() {
+    try {
+      List<User> users = userBL.getAll();
+      for(User user: users) {
+        user.setPassword(null);
+      }
+      return ResponseEntity.ok(users);
+    } catch (userNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 }

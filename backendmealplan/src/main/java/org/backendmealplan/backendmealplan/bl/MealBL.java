@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
@@ -163,6 +164,16 @@ public class MealBL {
             this.dietTypesDAO.save(dietType);
         }
     }
+
+  public List<Meal> getAllMeals() throws MealNotFoundException {
+
+    List<Meal> meals = this.mealsDAO.findAll();
+    if (meals != null) {
+      return meals;
+    } else {
+      throw new MealNotFoundException("Meal Not Found");
+    }
+  }
 }
 
 

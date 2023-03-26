@@ -33,8 +33,6 @@ public class User {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
-            message = "Invalid phone number format")
     private String phoneNumber;
 
     @NotNull

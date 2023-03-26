@@ -1,0 +1,39 @@
+<button mat-icon-button [matMenuTriggerFor]="userMenu" #userMenuTrigger="matMenuTrigger" >
+    <mat-icon>account_circle</mat-icon>
+</button>
+
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu admin-user-menu">
+    <span (mouseleave)="userMenuTrigger.closeMenu()">
+        <mat-toolbar color="primary">
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info">
+                <img [src]="userImage" alt="user-image" width="80" class="mat-elevation-z6">
+                <p class="mb-0">Emilio Verdines <br> <small>General Manager</small></p>
+            </div>  
+        </mat-toolbar>
+        <a mat-menu-item routerLink="/admin"> 
+            <mat-icon>person</mat-icon>
+            <span>Profile</span> 
+        </a>
+        <a mat-menu-item routerLink="/admin"> 
+            <mat-icon>edit</mat-icon>
+            <span>Edit Profile</span> 
+        </a>
+        <a mat-menu-item routerLink="/admin"> 
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span> 
+        </a>
+        <a mat-menu-item routerLink="/admin"> 
+            <mat-icon>lock</mat-icon>
+            <span>Lock screen</span> 
+        </a>
+        <a mat-menu-item routerLink="/admin"> 
+            <mat-icon>help</mat-icon>
+            <span>Help</span> 
+        </a>
+        <div class="divider"></div>
+        <a mat-menu-item routerLink="/login"> 
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Log out</span> 
+        </a>
+    </span>
+</mat-menu>
