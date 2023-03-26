@@ -59,6 +59,7 @@ export class UserService {
         })
       );
   }
+  
 
   deleteAccount(email, password, userId) {
     return this.apiService.delete<string>(this.DELETEACCOUNT+"?email="+`${email}` 

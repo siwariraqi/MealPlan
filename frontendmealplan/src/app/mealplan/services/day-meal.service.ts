@@ -14,7 +14,7 @@ import { ApiService } from './api.service';
 })
 export class DayMealService {
   GETDAYPLANMEAL_URL = "plans/day-plan-meals/";
-  PLAN_URL = "plans/";
+  PLAN_URL = "plans";
   DAYNUTRITION_URL = "plans/day-nutrition/";
   SAVEFEEDBACK_URL = "feedback/save/";
   INGREDIENTS_URL ="plans/ingredients/"
@@ -27,17 +27,17 @@ export class DayMealService {
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
   public getDayPlanMeals(dayNumber: number, userid: number) {
-    return this.apiService.get<DayMeal[]>(this.GETDAYPLANMEAL_URL + `${dayNumber}` + '/' + `${userid}`);
+    return this.apiService.get<DayMeal[]>(this.GETDAYPLANMEAL_URL + `${dayNumber}`  );
   }
   public getPlan(userid: number) {
-    return this.apiService.get<Plan>(this.PLAN_URL + `${userid}`);
+    return this.apiService.get<Plan>(this.PLAN_URL );
   }
   public getTotalDayNutrition(dayNumber: number, userid: number) {
-    return this.apiService.get<string[]>(this.DAYNUTRITION_URL + `${dayNumber}` + '/' + `${userid}`);
+    return this.apiService.get<string[]>(this.DAYNUTRITION_URL  + `${dayNumber}`  );
   }
 
   public saveFeedback(userFeedback: UserFeedback, userId: number, mealId: number) {
-    return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${userId}` + '/' + `${mealId}`, userFeedback);
+    return this.apiService.post<UserFeedback>(this.SAVEFEEDBACK_URL + `${mealId}`, userFeedback);
   }
 
   
