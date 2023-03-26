@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
 import { MenuItem } from 'src/app/app.models';
 import { ActivatedRoute } from '@angular/router';
@@ -19,9 +19,25 @@ export class AddComponent implements OnInit {
   constructor(public appService:AppService, 
               public formBuilder: UntypedFormBuilder, 
               private activatedRoute: ActivatedRoute,
-              @Inject(PLATFORM_ID) private platformId: Object) { }
+              @Inject(PLATFORM_ID) private platformId: Object) 
+              {
+                this.formGroup = new FormGroup({
+                  name: new FormControl('', Validators.required),
+                  weight: new FormControl('', Validators.required)
+                });
+
+                this.ingredientName = '';
+                this.isChecked = false;
+               }
 
   ngOnInit(): void {  
+    this.formGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      weight: ['', Validators.required],
+      // add other form controls here
+    });
+
+
     this.form = this.formBuilder.group({ 
       "id": 0,
       "name": [null, Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -71,7 +87,7 @@ export class AddComponent implements OnInit {
   }
 
   public fileChange(files:any){ 
-    console.log(files)
+    // console.log(files)
     if(files.length){
       this.form.controls.image.patchValue(files[0].content); 
     } 
@@ -81,7 +97,23 @@ export class AddComponent implements OnInit {
   } 
 
   public onSubmit(){
-    console.log(this.form.value);
+    // console.log(this.form.value);
   }  
+
+  formGroup: FormGroup;
+
+  ingr: { name: string, weight: number }[] = [];
+
+  addIngredient(): void {
+    const name = this.formGroup.get('name').value;
+    const weight = this.formGroup.get('weight').value;
+    this.ingr.push({ name, weight });
+    console.log(this.ingr);
+    this.formGroup.reset(); // reset the form after adding the ingredient
+  }
+
+  ingredientName: string;
+  isChecked: boolean;
+
 
 } 
