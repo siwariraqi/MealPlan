@@ -12,8 +12,6 @@
         <div class="mat-header-row">
             <div class="mat-header-cell">productName</div>
             <div class="mat-header-cell quantity">Amount</div>
-            <div class="mat-header-cell price"> catagory</div>
-            <div class="mat-header-cell price"> week</div>
             <div class="mat-header-cell price"> unit</div>
             <div class="mat-header-cell actions text-center">
                 <div class="px-1" (click)="selectAll()">
@@ -37,8 +35,6 @@
                     <div class="mat-cell quantity">
                         {{grocery.amount}}
                     </div>
-                    <div class="mat-cell price">{{grocery.ingredient.category}}</div>
-                    <div class="mat-cell price">{{grocery.week}}</div>
                     <div class="mat-cell price">{{grocery.unit}}</div>
                     <div class="mat-cell actions text-center">
                         <div class="p-1">

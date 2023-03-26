@@ -22,6 +22,7 @@ export class GroceryListComponent implements OnInit {
   public userId = 1; //should be changed to getting current user
   public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
+  public combinedGroceries: Map<String, Set<GroceryList>>;
 
   clicked: boolean[];
 
@@ -82,12 +83,10 @@ export class GroceryListComponent implements OnInit {
       this.mergeWeekGroceries(week);
       return;
     }
-    this.grocerListService
-      .getIngredients(week, this.userId)
-      .subscribe((groceriess) => {
-        this.weekGroceries[week - 1] = groceriess;
-        this.mergeWeekGroceries(week);
-      });
+    this.grocerListService.getIngredients(week).subscribe((groceriess) => {
+      this.weekGroceries[week - 1] = groceriess;
+      this.mergeWeekGroceries(week);
+    });
     this.hasWeekGrocery[week - 1] = true;
   }
 
@@ -118,7 +117,7 @@ export class GroceryListComponent implements OnInit {
     const index: number = this.groceries.indexOf(toRemove);
     if (index !== -1) {
       this.grocerListService
-        .DeleteIngredient(toRemove.groceryId, this.userId)
+        .DeleteIngredient(toRemove.groceryId)
         .subscribe((error) => {
           alert("error in deleting");
         });

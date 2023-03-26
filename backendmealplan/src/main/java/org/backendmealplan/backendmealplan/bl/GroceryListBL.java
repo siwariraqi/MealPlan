@@ -1,9 +1,9 @@
 package org.backendmealplan.backendmealplan.bl;
 
-import org.backendmealplan.backendmealplan.beans.GroceryList;
-import org.backendmealplan.backendmealplan.beans.Plan;
+import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.GroceryListDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
+import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,9 @@ public class GroceryListBL {
 
     @Autowired
     UserBL userBL;
+
+    @Autowired
+    MealBL mealBL;
 
 
     public void hideIngredientsForUser(List<Long> ingredientIds, Long userId) throws UNAUTHORIZEDException {
@@ -45,4 +48,35 @@ public class GroceryListBL {
 
         return filteredList;
     }
+    /*
+    public void addMealIngredientsToGroceries(Plan plan, Meal currentMeal, Integer week) throws UNAUTHORIZEDException {
+
+        try {
+            List<MealIngredients> ingredients = mealBL.getDayPlanMealIngredients(currentMeal.getMealId());
+            for(MealIngredients ingredient : ingredients){
+                List<GroceryList> list = groceryListDAO.findByWeekAndIngredientAndUnit(week, ingredient.getId().getIngredient(), ingredient.getUnit());
+                if(list.size() == 1){
+                    GroceryList found = list.get(0);
+                    found.setAmount((int) (found.getAmount()+ingredient.getAmount()));
+                }
+                else if(list.size() == 0){
+                    GroceryList newGroceryList = new GroceryList();
+                    newGroceryList.setIngredient(ingredient.getId().getIngredient());
+                    newGroceryList.setWeek(week);
+                    newGroceryList.setAmount((int) ingredient.getAmount());
+                    newGroceryList.setPlan(plan);
+                    newGroceryList.setUnit(ingredient.getUnit());
+                }
+                else{
+                    throw new UNAUTHORIZEDException("more than grocery list item for week, integer, unit");
+                }
+
+            }
+
+        } catch (MealNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+     */
 }
