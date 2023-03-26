@@ -30,30 +30,30 @@ public class PlanController {
     }
 
 
-    @GetMapping("day-plan-meals/{dayNumber}/{userId}")
-    public ResponseEntity<List<DayMeal>> getDayPlanMeals(@PathVariable Integer dayNumber, @PathVariable Long userId) {
+    @GetMapping("day-plan-meals/{dayNumber}")
+    public ResponseEntity<List<DayMeal>> getDayPlanMeals(@PathVariable Integer dayNumber, @RequestParam Long loggedInUserId) {
         try {
-            List<DayMeal> meals = mealBL.getDayPlanMeals(dayNumber, userId);
+            List<DayMeal> meals = mealBL.getDayPlanMeals(dayNumber, loggedInUserId);
             return ResponseEntity.ok(meals);
         } catch (userNotFoundException | paymentNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    @GetMapping("/day-nutrition/{dayNumber}/{userId}")
-    public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer dayNumber, @PathVariable Long userId) {
+    @GetMapping("/day-nutrition/{dayNumber}")
+    public ResponseEntity<List<String>> getTotalDayNutrition(@PathVariable Integer dayNumber, @RequestParam Long loggedInUserId) {
         try {
-            List<String> nutritions = mealBL.getTotalDayNutrition(dayNumber, userId);
+            List<String> nutritions = mealBL.getTotalDayNutrition(dayNumber, loggedInUserId);
             return ResponseEntity.ok(nutritions);
         } catch (userNotFoundException | paymentNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    @GetMapping("{userId}")
-    public ResponseEntity<Plan> getPlan(@PathVariable Long userId) {
+    @GetMapping("")
+    public ResponseEntity<Plan> getPlan(@RequestParam Long loggedInUserId) {
         try {
-            Plan plan = planBL.getPlan(userId);
+            Plan plan = planBL.getPlan(loggedInUserId);
             return ResponseEntity.ok(plan);
         } catch (userNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

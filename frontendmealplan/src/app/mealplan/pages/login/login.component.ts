@@ -15,70 +15,34 @@ import { AuthService } from "../../services/auth.service";
               <div class="py-5 formG">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
                   <h1 class="">Sign In</h1>
-                  <a mat-button routerLink="/mealplan/register" color="warn" class="w-100"
-                    >Don't have an account? Sign up now!</a
-                  >
+                  <a mat-button routerLink="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
                 </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
                   <mat-form-field appearance="outline" class="w-100 mt-4">
                     <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                     <mat-label>Email</mat-label>
-                    <input
-                      matInput
-                      placeholder="Email"
-                      formControlName="email"
-                      type="email"
-                      required
-                    />
-                    <mat-error *ngIf="loginForm.controls.email.errors?.required"
-                      >Email is required</mat-error
-                    >
+                    <input matInput placeholder="Email" formControlName="email" type="email" required />
+                    <mat-error *ngIf="loginForm.controls.email.errors?.required">Email is required</mat-error>
 
-                    <mat-error *ngIf="loginForm.controls.email.hasError('email')"
-                      >Email address is not valid!</mat-error
-                    >
+                    <mat-error *ngIf="loginForm.controls.email.hasError('email')">Email address is not valid!</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Password</mat-label>
-                    <input
-                      matInput
-                      placeholder="Password"
-                      formControlName="password"
-                      required
-                      [type]="hide ? 'password' : 'text'"
-                    />
-                    <mat-error *ngIf="loginForm.controls.password.errors?.required"
-                      >Password is required</mat-error
-                    >
+                    <input matInput placeholder="Password" formControlName="password" required [type]="hide ? 'password' : 'text'" />
+                    <mat-error *ngIf="loginForm.controls.password.errors?.required">Password is required</mat-error>
 
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      type="button"
-                      class="text-muted"
-                    >
+                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
                   <mat-error *ngIf="err" class="mt-2"> {{ err }} </mat-error>
-                  <mat-slide-toggle
-                    color="primary"
-                    formControlName="rememberMe"
-                    class="my-2 rememberme"
+                  <mat-slide-toggle color="primary" formControlName="rememberMe" class="my-2 rememberme"
                     >Keep me signed in</mat-slide-toggle
                   >
 
                   <div class="text-center mt-2">
-                    <button
-                      mat-raised-button
-                      color="accent"
-                      class="uppercase loginBtn"
-                      type="submit"
-                    >
-                      Sign In
-                    </button>
+                    <button mat-raised-button color="accent" class="uppercase loginBtn" type="submit">Sign In</button>
                   </div>
                   <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-3">
                     <div class="divider w-100"></div>
@@ -112,12 +76,7 @@ export class LoginComponent implements OnInit {
   err: string | null;
   checked: boolean = true;
 
-  constructor(
-    public fb: UntypedFormBuilder,
-    public router: Router,
-    public appSettings: AppSettings,
-    private authSrv: AuthService
-  ) {
+  constructor(public fb: UntypedFormBuilder, public router: Router, public appSettings: AppSettings, private authSrv: AuthService) {
     this.settings = this.appSettings.settings;
     this.err = "";
   }
@@ -145,7 +104,8 @@ export class LoginComponent implements OnInit {
             console.log("login success!");
             console.log(user);
 
-            alert("user successfully signed in");
+            // alert("user successfully signed in");
+            this.router.navigateByUrl("/mealplan/meals");
           } else {
             this.err = "Invalid email / password combination!";
           }

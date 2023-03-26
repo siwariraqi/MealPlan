@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Select a plan</h2>
+<mat-dialog-content>
+  <mat-list dense>
+    <mat-list-item (click)="selectPlan('Basic')">
+      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      <h3 mat-line>Basic</h3>
+    </mat-list-item>
+    <mat-list-item (click)="selectPlan('Premium')">
+      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      <h3 mat-line>Premium</h3>
+    </mat-list-item>
+    <mat-list-item (click)="selectPlan('Freemium')">
+      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      <h3 mat-line>Freemium</h3>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>

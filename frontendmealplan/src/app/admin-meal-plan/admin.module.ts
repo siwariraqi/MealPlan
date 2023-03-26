@@ -7,7 +7,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { FullScreenComponent } from './components/fullscreen/fullscreen.component'; 
 import { MessagesComponent } from './components/messages/messages.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component'; 
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { ChangePlanDialogComponent } from './components/change-plan-dialog/change-plan-dialog.component'; 
 
 export const routes = [ 
   { 
@@ -28,7 +29,8 @@ export const routes = [
     UserMenuComponent,
     FullScreenComponent,
     MessagesComponent,
-    BreadcrumbComponent 
+    BreadcrumbComponent,
+    ChangePlanDialogComponent 
   ],
   imports: [
     CommonModule,
