@@ -40,8 +40,8 @@ public class MealsController{
         return dietTypeValues;
     }
 
-    @GetMapping("/{mealTime}/{userId}")
-    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @PathVariable Long userId) {
+    @GetMapping("/{mealTime}")
+    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long userId) {
         try {
             List<DayMeal> meals = mealBL.getMealsByTime(mealTime, userId);
             return new ResponseEntity(meals,HttpStatus.OK);
