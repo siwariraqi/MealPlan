@@ -99,7 +99,7 @@ public class InitDataBL {
   }
 
   private void createPlans() {
-    freemuimPlan = insertPlan(PlanType.Freemium.name(), "0", 0, new ArrayList<>(), new ArrayList<>());
+    freemuimPlan = insertPlan(PlanType.Freemium.name(), "3", 0, new ArrayList<>(), new ArrayList<>());
     List<String> includes = new ArrayList<>();
     List<String> benefits = new ArrayList<>();
     includes.add("14 Breakfasts");
@@ -360,6 +360,7 @@ public class InitDataBL {
                 "https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg", instructions,
                 "10 min",
                 "180 min", tips);
+
         instructions = new ArrayList<>();
         instructions.add("Mix the grated carrot, mixed spice, cinnamon, and oats");
         instructions.add("Add 2⁄3 cup (X4) water and a pinch of salt");
@@ -676,7 +677,11 @@ public class InitDataBL {
     meal.setPrepareTime(prepareTime);
     meal.setCookTime(cookTime);
     meal.setTips("<ul>" + tips.stream().map(tip -> "<li>" + tip + "</li>").collect(Collectors.joining()) + "</ul>");
-    return mealBL.addMeal(meal);
+      try {
+          return mealBL.addMeal(meal);
+      } catch (Exception e) {
+          throw new RuntimeException(e);
+      }
   }
 
   private void createMealIngredients() {

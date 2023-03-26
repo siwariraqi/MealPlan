@@ -7,7 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +29,8 @@ public class User {
     @NotBlank
     private String password;
 
-    private Role userRole;
+    @NotNull
+    private Role userRole = Role.User;
 
     @NotBlank
     private String firstName;
@@ -48,6 +50,7 @@ public class User {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
+    private Date registerDate;
 
     @OneToMany (mappedBy = "user")
     private List<Payment> payments;

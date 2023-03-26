@@ -118,13 +118,13 @@ public class MealBL {
     }
 
 
-    public Meal addMeal(Meal meal) {
+    public Meal addMeal(Meal meal) throws Exception {
         //check if meal exists
-        Meal retunedMeal = this.mealsDAO.findByMealName(meal.getMealName());
-        if (retunedMeal==null) {
+        Meal returnedMeal = this.mealsDAO.findByMealName(meal.getMealName());
+        if (returnedMeal==null) {
             return this.mealsDAO.save(meal);
         }
-        return null;
+        throw new Exception("Meal with name "+ meal.getMealName() +" found");
     }
 
     public void addMealIngredients(MealIngredients mealIngredients) {

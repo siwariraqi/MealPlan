@@ -7,6 +7,7 @@ import org.backendmealplan.backendmealplan.beans.UserInfo;
 import org.backendmealplan.backendmealplan.dao.GoalsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.dao.UsersInfoDAO;
+import org.backendmealplan.backendmealplan.enums.Role;
 import org.backendmealplan.backendmealplan.exceptions.*;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.*;
@@ -37,6 +38,9 @@ public class UserBL {
 
   @Autowired
   GoalsDAO goalsDAO;
+
+  @Autowired
+  PlansDAO planDAO;
 
   @Autowired
   PlanBL planBL;
@@ -88,8 +92,9 @@ public class UserBL {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 
-        // Save the user to the database
+        user.setRegisterDate(new Date());
         try {
+
             return usersDAO.save(user);
         } catch (DataAccessException e) {
             throw new InvalidUserException("Failed to save user: " + e.getMessage());
@@ -297,7 +302,6 @@ public class UserBL {
       //TODO : remove grocerylist changes when ready team5 @Maha ?
       usersDAO.delete(user);
       usersInfoDAO.delete(userInfo);
-
     }
   }
 
@@ -368,5 +372,56 @@ public class UserBL {
       throw new userNotFoundException("User not found");
     }
   }
+
+  public void deleteUser(Long userId) throws userNotFoundException {
+    User user = this.usersDAO.findByUserId(userId);
+    if(user!=null){
+      UserInfo userInfo = user.getUserInfo();
+      feedbackBL.deleteFeedbacksByUser(user);
+      usersDAO.delete(user);
+      usersInfoDAO.delete(userInfo);}
+    else{
+      throw new userNotFoundException("User not found");
+    }
+  }
+
+  public void resetUser(Long userId) throws UNAUTHORIZEDException {
+    User user = usersDAO.findByUserId(userId);
+    if(user == null){
+      throw new UNAUTHORIZEDException("User NOT FOUND");
+    }
+    else{
+      feedbackBL.deleteFeedbacksByUser(user);
+      //TODO : remove grocery-list changes when ready team5 @Maha ?
+    }
+  }
+
+  public User updateUserRole(Long userId,Boolean isAdmin) throws UNAUTHORIZEDException {
+    User user = usersDAO.findByUserId(userId);
+    if (user == null) {
+      throw new UNAUTHORIZEDException("User NOT FOUND");
+    } else {
+      if (isAdmin) {
+        user.setUserRole(Role.Admin);
+      } else {
+        user.setUserRole(Role.User);
+      }
+      return usersDAO.save(user);
+    }
+  }
+
+  public User updateUserPlan(Long userId,String planName) throws PlanNotExistedException, UNAUTHORIZEDException {
+    Plan plan = planDAO.findByPlanName(planName);
+    if (plan==null) {
+      throw new PlanNotExistedException("PLAN NOT FOUND");
+    }
+    User user = usersDAO.findByUserId(userId);
+    if (user == null) {
+      throw new UNAUTHORIZEDException("User NOT FOUND");
+    }
+    user.setPlan(plan);
+    return usersDAO.save(user);
+  }
+
 
 }
