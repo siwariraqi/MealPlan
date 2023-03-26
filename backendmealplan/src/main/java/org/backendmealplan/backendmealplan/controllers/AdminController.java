@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity deleteUser(@RequestParam Long userId) {
+    public ResponseEntity deleteUser(@RequestParam Long adminId, @RequestParam Long userId) {
         try {
             userBL.deleteUser(userId);
             return ResponseEntity.ok().build();
@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     @PutMapping("/resetUser")
-    public ResponseEntity resetUser(@RequestParam Long userId) {
+    public ResponseEntity resetUser(@RequestParam Long adminId ,@RequestParam Long userId) {
         try {
             userBL.resetUser(userId);
             return ResponseEntity.ok().build();
@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateUserPlan(@RequestParam Long userId, @RequestParam String planName) {
+    public ResponseEntity updateUserPlan(@RequestParam Long adminId, @RequestParam Long userId, @RequestParam String planName) {
         try {
             User user = userBL.updateUserPlan(userId, planName);
             return (ResponseEntity) ResponseEntity.ok(user);
@@ -65,7 +65,7 @@ public class AdminController {
     }
 
     @PutMapping("/changeRole")
-    public ResponseEntity UpdateUserRole(@RequestParam Long userId, @RequestParam Boolean isAdmin) {
+    public ResponseEntity UpdateUserRole(@RequestParam Long adminId, @RequestParam Long userId, @RequestParam Boolean isAdmin) {
         try {
             userBL.updateUserRole(userId, isAdmin);
             return ResponseEntity.ok().build();
