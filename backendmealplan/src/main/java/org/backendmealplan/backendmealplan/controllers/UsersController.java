@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,6 +19,7 @@ import java.util.Map;
 public class UsersController {
     @Autowired
     private UserBL userBL;
+
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@Valid @RequestBody UserInfo userInfo){
         userInfo.setInfoId(null); // set infoId to null to ensure client cannot set it
@@ -29,9 +31,13 @@ public class UsersController {
     public ResponseEntity updateUserInfo(@Valid @RequestBody UserInfo userInfo){
         UserInfo updatedUserInfo = null;
         try {
-            updatedUserInfo = userBL.updateUserInfo(userInfo.getInfoId(), userInfo);
-        } catch (userInfoNotFound e) {
-            return (ResponseEntity) ResponseEntity.notFound();
+            if(userInfo != null){
+                long userInfoId = userInfo.getInfoId();
+                updatedUserInfo = userBL.updateUserInfo(userInfoId, userInfo);
+            }
+
+        } catch (UNAUTHORIZEDException e) {
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedUserInfo);
     }
@@ -60,30 +66,34 @@ public class UsersController {
     }
 
     @DeleteMapping("/deleteAccount")
-    public ResponseEntity deleteUser(@RequestParam Long userId) {
+    public ResponseEntity deleteAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
+        if (email == null || password==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         try {
-            this.userBL.deleteAccount(userId);
+            this.userBL.deleteAccount(email, password, userId);
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/checkAccount")
-    public ResponseEntity checkAccount(@RequestBody Map<String, String> credentials){
-        String email = credentials.get("email");
-        String password = credentials.get("password");
+    @PostMapping("/resetAccount")
+    public ResponseEntity resetAccount(@RequestParam String email,
+                                     @RequestParam String password,
+                                     @RequestParam Long userId) {
         if (email == null || password==null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
-            User user = this.userBL.checkAccount(email, password);
-            return ResponseEntity.ok(user.getUserId());
+            this.userBL.resetAccount(email, password, userId);
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+        return ResponseEntity.ok().build();
     }
-
 
 
     @PostMapping("/changePassword")
@@ -135,4 +145,17 @@ public class UsersController {
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+  @GetMapping("/getall")
+  public ResponseEntity <List<User>> getAll() {
+    try {
+      List<User> users = userBL.getAll();
+      for(User user: users) {
+        user.setPassword(null);
+      }
+      return ResponseEntity.ok(users);
+    } catch (userNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 }

@@ -80,6 +80,7 @@ const routes: Routes = [
     loadChildren: () => import("./pages/landing/landing.module").then((m) => m.LandingModule),
   },
   { path: "admin", loadChildren: () => import("./admin/admin.module").then((m) => m.AdminModule) },
+  { path: "adminside", loadChildren: () => import("./admin-meal-plan/admin.module").then((m) => m.AdminModule) },
   { path: "lock-screen", component: LockScreenComponent },
   { path: "**", component: NotFoundComponent },
 ];

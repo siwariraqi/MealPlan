@@ -1,5 +1,6 @@
 import { UserInfo } from "./UserInfo";
 import { UserFeedback } from "./UserFeedback";
+import { Plan } from "./Plan";
 
 export class User {
   constructor(
@@ -10,7 +11,7 @@ export class User {
     public lastName?: string,
     public phoneNumber?: string,
     public userInfo?: UserInfo,
-    public planId?: number,
+    public plan?: Plan,
     public paymentsIds?: number[],
     public ingredientsChangesId?: number[],
     public feedBackIds?: UserFeedback[]

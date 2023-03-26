@@ -34,13 +34,15 @@ export class AccountComponent implements OnInit {
   email:string;
   ngOnInit() {
     localStorage.setItem('userId','1');//to be removed after integration
-    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
-      data => {
-         this.user = data;
-         this.name=this.user.firstName+" "+this.user.lastName;
+    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe({
+      next: (data) => {
+        this.user = data;
+        this.name=this.user.firstName+" "+this.user.lastName;
       },
-      error => console.error('Error fetching user:', error)
-   );
+      error: (error) => {
+        console.error('Error fetching user:', error);
+      }
+    });
     if(window.innerWidth < 960){
       this.sidenavOpen = false;
     };

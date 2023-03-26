@@ -1,39 +1,39 @@
 .container {
-    margin-top: -2vh;
-    width: 90vw;
-    height: 65vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  
-  .textWrapper {
-    margin-top: -2vh;
-  }
-  
-  img {
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-  
-  .welcomeTitle {
-    color: white;
-    text-align: center;
-  }
-  
+  margin-top: -2vh;
+  width: 90vw;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.textWrapper {
+  margin-top: -2vh;
+}
+
+img {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.welcomeTitle {
+  color: white;
+  text-align: center;
+}
+
+.WelcomeText {
+  margin-top: 5px;
+  width: 36vw;
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  opacity: 0.7;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 600px) {
   .WelcomeText {
-    margin-top: 5px;
-    width: 30vw;
-    text-align: center;
-    color: white;
-    font-weight: 400;
-    opacity: 0.7;
+    width: 80vw;
   }
-  
-  @media screen and (max-width: 600px) {
-    .WelcomeText {
-      width: 80vw;
-    }
-  }
-  
+}

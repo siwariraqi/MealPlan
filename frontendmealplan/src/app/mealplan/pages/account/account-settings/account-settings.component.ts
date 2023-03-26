@@ -13,6 +13,7 @@ import { UserSearchPipe } from 'src/app/theme/pipes/user-search.pipe';
 export class AccountSettingsComponent implements OnInit {
 
   accountForm: FormGroup;
+  hideConfirm = true;
   
   constructor(private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
     this.accountForm = new FormGroup({
@@ -25,35 +26,22 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   public deleteAccount(): void {
-    console.log(this.accountForm.controls['username'].value);
-    console.log(this.accountForm.controls['password'].value);
+    const email = this.accountForm.controls['username'].value;
+    const password = this.accountForm.controls['password'].value;
+    const userId = Number(localStorage.getItem('userId'));
     
     if (this.accountForm.valid) {
-      this.userService.checkAccount(this.accountForm.controls['username'].value,
-      this.accountForm.controls['password'].value).subscribe(
-        (userId: number) => {
-          // Valid credentials, delete user account
-          this.userService.deleteAccount(userId).subscribe(
-            () => {
-              // Account deleted successfully
-              console.log("success :");
-              this.snackBar.open('Account deleted successfully', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
-            },
-            (error) => {
-              // Handle error
-              console.log("delete :"+error);
-              this.snackBar.open('Error deleting account. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-
-            }
-          );
+      this.userService.deleteAccount(email,password,userId).subscribe({
+        next: () => {
+          console.log('Account deleted successfully.');
+          this.snackBar.open('Your account deleted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+          // TODO: Redirect to login page or display success message.
         },
-        (error) => {
-          console.log("check :"+error.error);
-          // Invalid credentials, show error message
-          this.snackBar.open('Wrong information. Please fix it and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-
+        error: (error) => {
+          console.error(error);
+          this.snackBar.open('FAILED TO DELETE ACCOUNT : ' + error.error, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
         }
-      );
+    })
     }
     else{
       this.snackBar.open('Wrong information. Please fill the fields and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
@@ -61,7 +49,25 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   public resetAccount(): void {
-    console.log("Resetting...");
+    const email = this.accountForm.controls['username'].value;
+    const password = this.accountForm.controls['password'].value;
+    const userId = Number(localStorage.getItem('userId'));
+    
+    if (this.accountForm.valid) {
+      this.userService.resetAccount(email,password,userId).subscribe({
+        next: () => {
+          console.log('Account resetted successfully.');
+          this.snackBar.open('Your account resetted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+        },
+        error: (error) => {
+          console.error(error);
+          this.snackBar.open('FAILED TO RESET ACCOUNT : ' + error.error, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+        }
+    })
+    }
+    else{
+      this.snackBar.open('Wrong information. Please fill the fields and try again.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+    }
   }
 
 }
