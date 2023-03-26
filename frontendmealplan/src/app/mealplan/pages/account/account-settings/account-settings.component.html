@@ -21,11 +21,11 @@
 
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="end center" ngClass.xs="mb-3" style="margin-top: 20px;">
-        <button mat-raised-button type="button" color="primary" class="mx-1 custom-button" (click)="resetAccount()">
+        <button mat-raised-button type="button" color="primary" class="mx-1 custom-button" (click)="confirmResetAccount()">
             <mat-icon fxHide="false" fxHide.gt-xs="true">Reset</mat-icon>
             <span fxShow="false" fxShow.gt-xs="true">Reset Account</span>
         </button>
-        <button mat-raised-button type="button" color="warn" class="mx-1 custom-button" (click)="deleteAccount()"> 
+        <button mat-raised-button type="button" color="warn" class="mx-1 custom-button" (click)="confirmDeleteAccount()"> 
             <mat-icon fxHide="false" fxHide.gt-xs="true">delete</mat-icon>
             <span fxShow="false" fxShow.gt-xs="true">Delete Account</span>
         </button>

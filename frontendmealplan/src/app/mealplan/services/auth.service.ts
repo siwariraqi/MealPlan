@@ -19,11 +19,22 @@ export class AuthService {
     this.currUser = {};
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.httpClient.post<any>(this.BASE_URL + this.LOGIN_USER_API, {
-      email: email,
-      password: password,
-    });
+  login(email: string, password: string): Observable<User> {
+    return this.httpClient
+      .post<User>(this.BASE_URL + this.LOGIN_USER_API, {
+        email: email,
+        password: password,
+      })
+      .pipe(
+        tap((data) => {
+          if (data) {
+            if (data.email) {
+              this.currUser = data;
+              console.log("cur user=> ", this.currUser);
+            }
+          }
+        })
+      );
   }
 
   getUser() {

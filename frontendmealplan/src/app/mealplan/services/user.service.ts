@@ -18,6 +18,7 @@ export class UserService {
   CHANGEPASSWORD = 'users/changePassword';
   DELETEACCOUNT = 'users/deleteAccount';
   RESETACCOUNT = 'users/resetAccount';
+  LOGOUT = 'users/logout';
 
   constructor(private http:HttpClient, private apiService:ApiService) { }
 
@@ -69,6 +70,8 @@ export class UserService {
              +"&password="+`${password}` + "&userId=" + `${userId}` );
 }
 
-  
+  logout(){
+    return this.apiService.post<any>(this.LOGOUT);
+  }
 
 }
