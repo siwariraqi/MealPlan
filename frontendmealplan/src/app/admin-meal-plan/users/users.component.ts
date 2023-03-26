@@ -5,6 +5,8 @@ import { User } from '../../mealplan/models/User';
 import { UsersService } from './users.service';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
+import { Plan } from 'src/app/mealplan/models/Plan';
+import { ChangePlanDialogComponent } from '../components/change-plan-dialog/change-plan-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -18,31 +20,65 @@ export class UsersComponent implements OnInit {
 
     public users: User[] ;
     public searchText: string = '';
+    userId:number;
     // public page:any;
     // public settings: Settings;
     // public maxSize:number = 5;
     // public autoHide:boolean = true;
     constructor(
+                 public dialog: MatDialog,
                 public adminService:AdminService,
                 // public appSettings:AppSettings, 
-                public dialog: MatDialog,
                 // public usersService:UsersService
                 ){
         // this.settings = this.appSettings.settings; 
     }
+   
+
+    openDialog(userId:number) {
+      const dialogRef = this.dialog.open(ChangePlanDialogComponent, {
+        width: '250px',
+        data: { userId: userId }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.getUsers();
+      });
+    }
+  
+  
 
     ngOnInit() {
         this.getUsers();  
-        
-       
     }
 
 
     public getUsers() {
         this.adminService.getAllUsers().subscribe(users=>{
+
             this.users=users;            
            });  
     }
+
+    public deleteUser(userId:number){
+        this.adminService.deleteUser(userId).subscribe(users =>this.getUsers());
+    }
+
+    public resetUser(userId:number){
+        this.adminService.resetUser(userId).subscribe(users=>this.getUsers());
+    }
+    
+    public changePlan(userId:number,planName:string){
+        this.adminService.updateUserPlan(userId,planName).subscribe(users=>this.getUsers());
+    }
+
+    public changeUserRole (userId:number,isAdmin:boolean){
+        this.adminService.changeRole(userId,isAdmin).subscribe(users=>this.getUsers());
+        this.getUsers();
+    }
+
+    
 
     
     public addUser(user:User){
@@ -68,17 +104,17 @@ export class UsersComponent implements OnInit {
     //     // }
     // }
 
-    public openUserDialog(user:User | null){
-        let dialogRef = this.dialog.open(UserDialogComponent, {
-            data: user
-        });
+    // public openUserDialog(plan:Plan | null){
+    //     let dialogRef = this.dialog.open(UserDialogComponent, {
+    //         data: plan
+    //     });
 
-        dialogRef.afterClosed().subscribe(user => {
-            if(!user){
-                (user.id) ? this.updateUser(user) : this.addUser(user);
-            }
-        });
-    }
+    //     dialogRef.afterClosed().subscribe(plan => {
+    //         if(!plan){
+    //             (plan.id) ? this.updateUser(plan) : this.addUser(plan);
+    //         }
+    //     });
+    // }
 
 }
 

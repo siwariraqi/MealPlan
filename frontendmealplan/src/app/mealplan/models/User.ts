@@ -5,6 +5,8 @@ import { Plan } from "./Plan";
 export class User {
   constructor(
     public userId?: number,
+    public registerDate?:Date,
+    public userRole?:string,
     public email?: string,
     public password?: string,
     public firstName?: string,
