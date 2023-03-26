@@ -3,6 +3,7 @@ import { Goal } from "../../models/Goal";
 import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
 import { Onboarding7Component } from "../../components/questions/onboarding7/onboarding7.component";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-register",
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit {
   userGoals: Goal[];
   error: string;
 
-  constructor(private registerSrv: RegisterService) {
+  constructor(private registerSrv: RegisterService, private authSrv: AuthService) {
     this.currentPage = 0;
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
@@ -69,6 +70,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("user=> ", this.authSrv.getUser());
     this.backgroundColor = "#4b643d";
     this.btnBackgroundColor = "#ffffff";
     this.btnColor = "black";

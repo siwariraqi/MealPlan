@@ -3,38 +3,27 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <div>
-        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
-            {{sortings[0]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-        </a>
-        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
-            <span (mouseleave)="sortMenuTrigger.closeMenu()">
-                <button mat-menu-item *ngFor="let time of times" (click)="changeSorting(sort)">
-                    <span>{{time}}</span>
-                </button>
-            </span>
-        </mat-menu>
-        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
-            {{sortings[1]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-        </a>
-        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
-            <span (mouseleave)="sortMenuTrigger.closeMenu()">
-                <button mat-menu-item *ngFor="let type of types" (click)="changeSorting(sort)">
-                    <span>{{type}}</span>
-                </button>
-            </span>
-        </mat-menu>
-        <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
-            {{sortings[2]}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-        </a>
-        <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
-            <span (mouseleave)="sortMenuTrigger.closeMenu()">
-                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                    <span>{{sort}}</span>
-                </button>
-            </span>
-        </mat-menu>
+        <mat-form-field>
+            <mat-select placeholder="{{sortings[0]}}" [(value)]="selectedDuration" (selectionChange)="changeTime()">
+                <mat-option *ngFor="let time of times" [value]="time">{{time}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="{{sortings[1]}}" multiple [(ngModel)]="selectedDiets" (selectionChange)="changeDiets()">
+              <mat-option *ngFor="let type of recipesService.getDietTypes()" [value]="type">{{type}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" placeholder="Search by name" [(ngModel)]="searchQuery" (input)="onSearch()">
+        </mat-form-field>
+        
     </div>
-    <div fxShow="false" fxShow.gt-xs>
+    <div>
+        <button mat-icon-button (click)="resetFilters()">
+            <mat-icon>refresh</mat-icon>
+        </button>
         <button mat-icon-button (click)="changeViewType('list', 100)">
             <mat-icon>view_list</mat-icon>
         </button>

@@ -1,11 +1,9 @@
 package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.DayMeal;
 import org.backendmealplan.backendmealplan.beans.Meal;
-import org.backendmealplan.backendmealplan.beans.UserFeedback;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.enums.DietTypes;
 import org.backendmealplan.backendmealplan.enums.MealTime;
-import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +26,17 @@ public class MealsController{
     }
 
     @GetMapping("/diet-types")
-    public DietTypes[] getDietTypes() {
-        return DietTypes.values();
+    public String[] getDietTypes() {
+        DietTypes[] dietTypes = DietTypes.values();
+        String[] dietTypeValues = new String[dietTypes.length];
+        for (int i = 0; i < dietTypes.length; i++) {
+            dietTypeValues[i] = dietTypes[i].getValue();
+        }
+        return dietTypeValues;
     }
 
-    @GetMapping("/{mealTime}/{userId}")
-    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @PathVariable Long userId) {
+    @GetMapping("/{mealTime}")
+    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long userId) {
         try {
             List<DayMeal> meals = mealBL.getMealsByTime(mealTime, userId);
             return new ResponseEntity(meals,HttpStatus.OK);
@@ -41,6 +44,19 @@ public class MealsController{
             return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
+
+
+//    @PostMapping("")
+//    public ResponseEntity createMeal(@Valid @RequestBody Meal meal){
+//        try {
+//            Meal returnedMeal = this.mealBL.addMeal(meal);
+//            for(Ingredient mealIngredients: meal.getMealIngredients())
+//                this.mealBL.addMealIngredients(mealIngredients);
+//            return new ResponseEntity(returnedMeal,HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
   @GetMapping("/getall")
@@ -52,7 +68,5 @@ public class MealsController{
       return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
-
-
 
 }

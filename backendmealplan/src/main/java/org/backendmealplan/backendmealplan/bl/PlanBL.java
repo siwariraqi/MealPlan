@@ -50,8 +50,8 @@ public class PlanBL {
 
     public Plan addPlan(Plan plan) {
         //check if plan exists
-        List<Plan> plans = this.planDAO.findByPlanName(plan.getPlanName());
-        if (plans.isEmpty()) {
+        Plan returnedPlan = this.planDAO.findByPlanName(plan.getPlanName());
+        if (returnedPlan==null) {
             return this.planDAO.save(plan);
         }
         return null;

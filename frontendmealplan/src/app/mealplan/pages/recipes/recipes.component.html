@@ -4,7 +4,6 @@
 
 <div class="px-3">
     <div class="theme-container">
-
         <mat-sidenav-container class="all-menu-items mt-3">
             <mat-sidenav #sidenav [autoFocus]="false" [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
                 class="search-sidenav">
@@ -12,9 +11,9 @@
                     <button fxHide="false" fxHide.gt-xs mat-icon-button (click)="sidenav.toggle()">
                         <mat-icon color="accent">close</mat-icon>
                     </button>
-                    <!-- <div class="p-3">
+                    <div class="p-3">
                         <button mat-raised-button color="primary" class="uppercase w-100" (click)="selectCategory('Breakfast')">{{categories[0]}}</button>
-                    </div> -->
+                    </div>
                     <div *ngFor="let category of categories.slice(1)" class="p-3">
                         <button mat-raised-button color="primary" class="uppercase w-100"
                             (click)="selectCategory(category)">{{category}}</button>
@@ -24,28 +23,20 @@
             <mat-sidenav-content [class.distance]="sidenavOpen">
                 <div fxLayout="row wrap" class="all-menu-items-wrapper mt-0">
                     <div fxFlex="100" fxLayoutAlign="center center" fxShow="false" fxShow.gt-sm class="px-2 mb-3">
-                        <mat-button-toggle-group #group="matButtonToggleGroup" appearance="legacy" [value]="0"
-                            class="categories-toogle-group mt-2" (change)="onChangeCategory($event)">
+                        <mat-button-toggle-group #group="matButtonToggleGroup" appearance="legacy" [value]="0" class="categories-toogle-group mt-2"  (change)="onChangeCategory($event)">
+                            <!-- <mat-button-toggle [value]="0" class="letter">{{categories[0]}}</mat-button-toggle> -->
                             <mat-button-toggle *ngFor="let category of categories" [value]="category"
                                 class="letter">{{category}}</mat-button-toggle>
                         </mat-button-toggle-group>
                     </div>
                     <div fxFlex="100" class="px-2 pb-2 pt-0">
-                        <div fxLayout="row" fxLayoutAlign="center" class="p-2">
-                            <div fxLayout="row" fxLayoutAlign="center">
-                                <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
-                                </mat-button-toggle-group>
-                            </div>
-                            <form class="user-search" [class.show]="controls.value == 'search'">
-                                <mat-form-field class="user-search-input">
-                                    <input matInput placeholder="Search recipe by name..." [(ngModel)]="searchText"
-                                        name="search" (input)="searchMenuItems(searchText)">
-                                </mat-form-field>
-                            </form>
-                        </div>
                         <app-recipes-toolbar [showSidenavToggle]="showSidenavToggle"
-                            (onSidenavToggle)="sidenav.toggle()" (onChangeSorting)="changeSorting($event)"
-                            (onChangeViewType)="changeViewType($event)">
+                            (onSidenavToggle)="sidenav.toggle()" 
+                            (onDurationChange)="changeDuration($event)"
+                            (onDietChange)="changeDietTypes($event)"
+                            (onChangeViewType)="changeViewType($event)"
+                            (onSearchQuery)="searchMenuItems($event)"
+                            (onFiltersChanged)="applyFiltersToMeals($event)">
                         </app-recipes-toolbar>
                     </div>
 

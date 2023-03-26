@@ -22,10 +22,10 @@ public class FeedbackController {
     @Autowired
     private FeedbackBL feedbackBL;
 
-    @PostMapping("save/{userId}/{mealId}")
-    public ResponseEntity<Integer> saveFeedback(@RequestBody UserFeedback userFeedback, @PathVariable Long userId, @PathVariable Long mealId) {
+    @PostMapping("save/{mealId}")
+    public ResponseEntity<Integer> saveFeedback(@RequestBody UserFeedback userFeedback, @RequestParam Long loggedInUserId, @PathVariable Long mealId) {
         try {
-            Integer number = feedbackBL.saveFeedback(userFeedback, userId, mealId);
+            Integer number = feedbackBL.saveFeedback(userFeedback, loggedInUserId, mealId);
             return ResponseEntity.ok(number);
         } catch (userNotFoundException | MealNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

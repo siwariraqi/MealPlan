@@ -10,40 +10,33 @@ import { RecipesService } from 'src/app/mealplan/services/recipes.service';
 export class RecipesToolbarComponent implements OnInit {
   @Input() showSidenavToggle:boolean = false;
   @Output() onSidenavToggle: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onChangeCount: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onChangeSorting: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDurationChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDietChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() onChangeViewType: EventEmitter<any> = new EventEmitter<any>();
-  public selectedIngredients: string = '';
-  public selectedDiet: string = '';
-  public selectedDuration: string = '';
+  @Output() onSearchQuery: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onFiltersChanged: EventEmitter<any> = new EventEmitter<any>(); // new output event
 
+  public selectedDiets: string[];
+  public selectedDuration: string = '';
   public viewType: string = 'grid';
-  public types:DietType[] = this.recipesService.Data.dietTypesList;
   public viewCol: number = 25;
-  public counts = [8, 12, 16, 24, 36];
-  public count:any;
-  public sortings = ['Prepare & Cook time', 'Diets', 'Ingredients'];
-  public times = ['Under 30 min','Under 60 min','under 90 min','Overnight'];
-  public sort:any;
+
+  public searchQuery: string = '';
+  public types:DietType[];
+  public sortings = ['Prepare & Cook time', 'Diets'];
+  public times = ['Under 30 min','Under 60 min','Under 90 min','Overnight'];
 
   constructor(public recipesService:RecipesService) { }
 
   ngOnInit() {
-    this.count = this.counts[1];
-    this.sort = this.sortings[0];
-    this.types = this.recipesService.Data.dietTypesList;
-    for (let i = 0; i < this.types.length; i++) {
-        console.log(this.types[i]);
-      }
+    this.getDietTypes();
+    this.types = this.recipesService.getDietTypes();
   }
 
-  ngOnChanges(){
-    // console.log(' show toggle - ' ,this.showSidenavToggle)
-  }
-
-  public changeSorting(sort:string){
-    this.sort = sort;
-    this.onChangeSorting.emit(sort);
+  public getDietTypes(){
+    this.recipesService.getDietTypesApi().subscribe(types=>{
+      this.recipesService.setDietTypes(types);
+    })
   }
 
   public changeViewType(viewType:any, viewCol:any){
@@ -56,4 +49,33 @@ export class RecipesToolbarComponent implements OnInit {
     this.onSidenavToggle.emit();
   }
 
+  public changeTime(){
+    this.emitFiltersChanged(); 
+  }
+
+  public changeDiets(){
+    this.emitFiltersChanged(); 
+  }
+
+  public resetFilters() {
+    this.selectedDuration = '';
+    this.selectedDiets = [];
+    this.searchQuery = '';
+    this.onDurationChange.emit(this.selectedDuration);
+    this.onDietChange.emit(this.selectedDiets);
+    this.onSearchQuery.emit('');
+    this.emitFiltersChanged(); 
+  }
+
+  public onSearch() {
+    this.emitFiltersChanged(); 
+  }
+
+  private emitFiltersChanged() {
+    this.onFiltersChanged.emit({
+      selectedDiets: this.selectedDiets,
+      selectedDuration: this.selectedDuration,
+      searchQuery: this.searchQuery
+    });
+  }
 }

@@ -25,17 +25,19 @@ export class RecipesComponent implements OnInit {
   public menuItems: DayMeal[] = [];
   public filteredMenuItems: DayMeal[] = [];
   public categories:any[] = [];
+  public allCategories:any[] = [];
   public category:string;
+  public dietTypesList:string[];
   public viewType: string = 'grid';
   public searchText: string = '';
   public viewCol: number = 25;
   public count: number = 12;
-  public sort: string = '';
+  public time: string = '';
   public selectedCategoryId:number = 0;
   public message:string | null = '';
   public watcher: Subscription;
   public settings: Settings;
-
+  public initial:string='';
   constructor(public dayMealService:DayMealService,public appSettings:AppSettings, public recipesService:RecipesService, public mediaObserver: MediaObserver) {
     this.settings = this.appSettings.settings; 
     this.watcher = mediaObserver.asObservable()
@@ -67,6 +69,7 @@ export class RecipesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getDietTypes();
     this.getCategories();
     this.searchMenuItems('');
   }
@@ -78,34 +81,39 @@ export class RecipesComponent implements OnInit {
   
   public getDietTypes(){
     this.recipesService.getDietTypesApi().subscribe(types=>{
-      this.recipesService.Data.dietTypesList = types;
+      this.recipesService.setDietTypes(types);
     })
   }
 
   public getCategories(){
     this.recipesService.getMealsTime().subscribe(categories=>{
       this.categories = categories;
+      this.allCategories = categories;
+      this.initial = categories[0];
       this.recipesService.Data.categories = categories;
       this.getMenuItems(this.categories[0]);
       this.selectedCategoryId = 0;
-      this.getDietTypes();
     })
-  } 
+  }
+   
   public selectCategory(type:any){
-    // this.selectedCategoryId = this.categories.indexOf(type);
     this.menuItems.length = 0;
     this.category = type;
     this.getMenuItems(type);
     
     this.sidenav.close();
   }
+
   public onChangeCategory(event:any){ 
+    if(event.value==0){
+      this.selectCategory(this.initial)
+    }
     this.selectCategory(event.value);
 
   }
 
   public getMenuItems(category:string){
-    this.recipesService.getMealsByTime(category,1).subscribe(result => {
+    this.recipesService.getMealsByTime(category).subscribe(result => {
       if(result.length == 0){
         this.menuItems.length = 0;
         this.message = 'No Results Found'; 
@@ -120,36 +128,114 @@ export class RecipesComponent implements OnInit {
     })
   }  
 
-  // public filterData(data:any){
-  //   return this.recipesService.filterData(data, this.selectedCategoryId, this.sort, this.pagination.page, this.pagination.perPage);
-  // }
-
-  // public filterData(data){
-  //   return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
-  // }
-
-  public changeCount(count:number){
-    this.count = count;   
-    this.menuItems.length = 0;
-    // this.resetPagination();
-    // this.getMenuItems();
+  public applyFiltersToMeals(filter:any) {
+    console.log(filter)
+    this.time = filter.selectedDuration;
+    this.dietTypesList = filter.selectedDiets;
+  
+    // Filter by time
+    if(filter.selectedDuration == ""){
+      this.filteredMenuItems = this.menuItems;
+    }
+    if (filter.selectedDuration == "Overnight") {
+      this.filteredMenuItems = this.menuItems.filter(menuItem => {
+        return menuItem.id.meal.cookTime == "Overnight" || 
+          menuItem.id.meal.prepareTime == "Overnight";
+      });
+    } else {
+      const maxTimeInMinutes = filter.selectedDuration === "Under 30 min" ? 30 : 
+                               filter.selectedDuration === "Under 60 min" ? 60 : 
+                               filter.selectedDuration === "Under 90 min" ? 90 : null;
+      if (maxTimeInMinutes !== null) {
+        this.filteredMenuItems = this.menuItems.filter(menuItem => {
+          if (menuItem.id.meal.prepareTime !== "Overnight" && 
+              menuItem.id.meal.cookTime !== "Overnight") {
+            const prepareTimeInMinutes = menuItem.id.meal.prepareTime.match(/\d+/) ?
+                                          parseInt(menuItem.id.meal.prepareTime.match(/\d+/)[0]) : 0;
+            const cookTimeInMinutes = menuItem.id.meal.cookTime.match(/\d+/) ?
+                                       parseInt(menuItem.id.meal.cookTime.match(/\d+/)[0]) : 0;
+            return (prepareTimeInMinutes + cookTimeInMinutes) < maxTimeInMinutes;
+          }
+          return null;
+        });
+      } else {
+        console.log("Invalid time input:", filter.selectedDuration);
+      }
+    }
+  
+    // Filter by diet types
+    if (filter.selectedDiets==null) {
+      // Do nothing - don't filter by diet types
+    } else {
+      this.filteredMenuItems = this.filteredMenuItems.filter(menuItem => {
+        const mealDietTypes = menuItem.id.meal.dietTypes.map(dietType => dietType.text);
+        return filter.selectedDiets.every(dietType => mealDietTypes.includes(dietType));
+      });
+    }
+  
+    // Filter by search text
+    if (!filter.searchQuery) {
+      // Do nothing - don't filter by search text
+    } else {
+      this.filteredMenuItems = this.filteredMenuItems.filter(menuItem => {
+        return menuItem.id.meal.mealName.toLowerCase().includes(filter.searchQuery.toLowerCase());
+      });
+    }
+  //     Check if there are any results
+  if (this.filteredMenuItems.length === 0) {
+    this.message = 'No Results Found';
+  } else {
+    this.message = null;
   }
-  public changeSorting(sort:any){    
-    this.sort = sort; 
-    this.menuItems.length = 0;
-    // this.getMenuItems();
   }
+
+  public changeDuration(time:any){    
+    this.time = time; 
+    if(time == "Overnight"){
+      this.filteredMenuItems = this.menuItems.filter(menuItem => {
+        return menuItem.id.meal.cookTime == "Overnight" || 
+        menuItem.id.meal.prepareTime == "Overnight";
+      })
+    }else {
+      const maxTimeInMinutes = time === "Under 30 min" ? 30 : time === "Under 60 min" ? 60 : time === "Under 90 min" ? 90 : null;
+      if (maxTimeInMinutes !== null) {
+        this.filteredMenuItems = this.menuItems.filter(menuItem => {
+          if(menuItem.id.meal.prepareTime !=="Overnight" && menuItem.id.meal.cookTime !=="Overnight"){
+          const prepareTimeInMinutes = menuItem.id.meal.prepareTime.match(/\d+/) ?
+                                        parseInt(menuItem.id.meal.prepareTime.match(/\d+/)[0]) : 0;
+          const cookTimeInMinutes = menuItem.id.meal.cookTime.match(/\d+/) ?
+                                     parseInt(menuItem.id.meal.cookTime.match(/\d+/)[0]) : 0;
+            return (prepareTimeInMinutes + cookTimeInMinutes) < maxTimeInMinutes;
+          }
+          return null;
+          });
+      } else {
+        console.log("Invalid time input:", time);
+      }
+    }
+  }
+
+  public changeDietTypes(dietTypesList:string[]){    
+    this.dietTypesList = dietTypesList; 
+    if(dietTypesList.length==0){
+      this.filteredMenuItems = this.menuItems;
+      return;
+    }
+    else{
+      console.log(this.filteredMenuItems)
+      this.filteredMenuItems = this.menuItems.filter(menuItem => {
+      const mealDietTypes =menuItem.id.meal.dietTypes.map(dietType => dietType.text);
+      return dietTypesList.every(dietType => mealDietTypes.includes(dietType));
+    });
+  }
+}
+  
+
   public changeViewType(obj:any){ 
     this.viewType = obj.viewType;
     this.viewCol = obj.viewCol; 
   } 
 
-
-  public onPageChange(e:any){ 
-    // this.pagination.page = e.pageIndex + 1;
-    // this.getMenuItems();
-    window.scrollTo(0,0);  
-  }
 
 public searchMenuItems(searchText: string) {
   if (!searchText) {
