@@ -1,31 +1,37 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GroceryList } from "../models/GroceryList";
+import { ApiService } from "./api.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class GroceryListService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private apiService: ApiService) {}
 
-  SERVER_BASE_URL = "http://127.0.0.1:8080/grocerylist/";
+  SERVER_BASE_URL = "grocerylist/";
   GET_URL = this.SERVER_BASE_URL + "getIngredients/";
   DELETE_URL = this.SERVER_BASE_URL + "deleteIngredients/";
 
-  public getIngredients(week: number, userId: number) {
-    const url = this.GET_URL + week + "/" + userId;
-    let httpParams = new HttpParams().append("userId", userId);
+  public getIngredients(week: number) {
+    const url = this.GET_URL + week;
 
+    return this.apiService.get<GroceryList[]>(url);
+    /*
     return this.httpClient.get<GroceryList[]>(url, {
       withCredentials: false,
     });
+    */
   }
 
-  public DeleteIngredient(grocerylistID: number, userId: number) {
-    const url = this.DELETE_URL + grocerylistID + "/" + userId;
-
+  public DeleteIngredient(grocerylistID: number) {
+    const url = this.DELETE_URL + grocerylistID;
+    return this.apiService.post(url);
+    /*
+    const url = this.DELETE_URL + groceryListID + userId
     return this.httpClient.post(url, {
       withCredentials: false,
     });
+    */
   }
 }
