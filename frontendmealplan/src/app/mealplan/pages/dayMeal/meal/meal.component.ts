@@ -54,7 +54,7 @@ export class MealComponent implements OnInit {
       }
     
   public getPlan(){
-    this.dayMealService.getPlan(1).subscribe((plan)=>{
+    this.dayMealService.getPlan().subscribe((plan)=>{
       this.plan=plan;
       this.planLength=plan.length;
     })

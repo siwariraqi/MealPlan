@@ -986,6 +986,25 @@ public class InitDataBL {
     insertDayPlan(basicPlan, dayPlanIds[5], 6);
     insertDayPlan(basicPlan, dayPlanIds[6], 7);
 
+    insertDayPlan(freemuimPlan, dayPlanIds[0], 1);
+    insertDayPlan(freemuimPlan, dayPlanIds[1], 2);
+    insertDayPlan(freemuimPlan, dayPlanIds[2], 3);
+
+    insertDayPlan(premiumPlan, dayPlanIds[0], 1);
+    insertDayPlan(premiumPlan, dayPlanIds[1], 2);
+    insertDayPlan(premiumPlan, dayPlanIds[2], 3);
+    insertDayPlan(premiumPlan, dayPlanIds[3], 4);
+    insertDayPlan(premiumPlan, dayPlanIds[4], 5);
+    insertDayPlan(premiumPlan, dayPlanIds[5], 6);
+    insertDayPlan(premiumPlan, dayPlanIds[6], 7);
+    insertDayPlan(premiumPlan, dayPlanIds[0], 8);
+    insertDayPlan(premiumPlan, dayPlanIds[1], 9);
+    insertDayPlan(premiumPlan, dayPlanIds[2], 10);
+    insertDayPlan(premiumPlan, dayPlanIds[3], 11);
+    insertDayPlan(premiumPlan, dayPlanIds[4], 12);
+    insertDayPlan(premiumPlan, dayPlanIds[5], 13);
+    insertDayPlan(premiumPlan, dayPlanIds[6], 14);
+
   }
 
   private void insertDayPlan(Plan plan, DayPlanId dayPlanId, Integer dayNumber) {
