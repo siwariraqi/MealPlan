@@ -65,5 +65,4 @@ public class User {
     @JsonIgnore
     @OneToMany (mappedBy = "user")
     private List<UserFeedback> feedbacks;
-
 }

@@ -39,8 +39,8 @@ export class RecipesService {
   public getMealsTime() {
     return this.apiService.get<string[]>(this.GETMEALSTIME);
   }
-  public getMealsByTime(category:string,userId: number) {
-    return this.apiService.get<DayMeal[]>(this.GETMEALSBYTIME +`${category}` + '/'+ `${userId}`);
+  public getMealsByTime(category:string) {
+    return this.apiService.get<DayMeal[]>(this.GETMEALSBYTIME +`${category}`);
   }
   public getDietTypesApi() {
     return this.apiService.get<DietType[]>(this.GETDIETTYPES);

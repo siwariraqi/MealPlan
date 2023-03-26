@@ -1,20 +1,15 @@
 package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.DayMeal;
 import org.backendmealplan.backendmealplan.beans.Meal;
-import org.backendmealplan.backendmealplan.beans.UserFeedback;
-
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.enums.DietTypes;
 import org.backendmealplan.backendmealplan.enums.MealTime;
-import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,8 +35,8 @@ public class MealsController{
         return dietTypeValues;
     }
 
-    @GetMapping("/{mealTime}/{userId}")
-    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @PathVariable Long userId) {
+    @GetMapping("/{mealTime}")
+    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long userId) {
         try {
             List<DayMeal> meals = mealBL.getMealsByTime(mealTime, userId);
             return new ResponseEntity(meals,HttpStatus.OK);

@@ -87,6 +87,9 @@ public class UserBL {
         if (usersDAO.findByEmail(user.getEmail()) != null) {
             throw new userExistException("Email already in use!");
         }
+        //choose freemium plan for user
+        Plan plan = this.planBL.getPlanById(1L);
+        user.setPlan(plan);
 
         // Hash the password
         String hashedPassword = passwordEncoder.encode(user.getPassword());

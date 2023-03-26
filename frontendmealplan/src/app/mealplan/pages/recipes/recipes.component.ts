@@ -113,7 +113,7 @@ export class RecipesComponent implements OnInit {
   }
 
   public getMenuItems(category:string){
-    this.recipesService.getMealsByTime(category,1).subscribe(result => {
+    this.recipesService.getMealsByTime(category).subscribe(result => {
       if(result.length == 0){
         this.menuItems.length = 0;
         this.message = 'No Results Found'; 
