@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { element } from "protractor";
 import { MenuItem } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
@@ -19,7 +21,6 @@ export class GroceryListComponent implements OnInit {
   public weeksToDisplay = new Set(); //weeks the user clicked
   public groceries: GroceryList[] = []; //groceris we iterate over in html (final)
   public groceriesSet: Set<GroceryList> = new Set(); //all groceries to make sure we dont add duplicates
-  public userId = 1; //should be changed to getting current user
   public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
   public combinedGroceries: Map<String, Set<GroceryList>>;
@@ -32,18 +33,6 @@ export class GroceryListComponent implements OnInit {
     this.getGroceriesForWeek(week);
     this.weeksToDisplay.add(week);
     this.filterGroceriesAccordingToWeek();
-    //get the groceries for the week
-    /*
-    this.clicked[2] = true;
-    if (this.weeksToDisplay.has(week)) {
-      this.weeksToDisplay.delete(week);
-    } else {
-      // get the groceries for the week
-      this.getGroceriesForWeek(week);
-      this.weeksToDisplay.add(week);
-    }
-    this.filterGroceriesAccordingToWeek();
-    */
   }
   hideWeek(week: number) {
     this.weeksToDisplay.delete(week);
@@ -60,10 +49,30 @@ export class GroceryListComponent implements OnInit {
   }
 
   filterGroceriesAccordingToWeek() {
-    //this.groceries = [];
+    this.groceries = [];
+    this.combinedGroceries.forEach((mapElemnt, combinedString) => {
+      let newGroceryList: GroceryList = new GroceryList();
+      newGroceryList.amount = 0;
+      let first_time = true;
+      mapElemnt.forEach((grocery: GroceryList) => {
+        if (first_time) {
+          newGroceryList.ingredient = grocery.ingredient;
+          newGroceryList.unit = grocery.unit;
+          first_time = false;
+        }
+        if (this.weeksToDisplay.has(grocery.week)) {
+          newGroceryList.amount += grocery.amount;
+        }
+      });
+      if (newGroceryList.amount > 0) {
+        this.groceries.push(newGroceryList);
+      }
+    });
+    /*
     this.groceries = Array.from(this.groceriesSet).filter((groList) => {
       return this.weeksToDisplay.has(groList.week);
     });
+    */
   }
 
   ngOnInit(): void {
@@ -71,6 +80,7 @@ export class GroceryListComponent implements OnInit {
     for (var i = 0; i < this.allWeeks.length; i++) {
       this.hasWeekGrocery.push(false);
     }
+    this.combinedGroceries = new Map();
     this.initGroceries();
   }
 
@@ -90,37 +100,43 @@ export class GroceryListComponent implements OnInit {
     this.hasWeekGrocery[week - 1] = true;
   }
 
-  /*
-  getGroceriesForWeek(week: number) {
-    if (this.hasWeekGrocery[week - 1]) return;
-    if (this.weekGroceries[week - 1].length === 0) {
-      this.grocerListService
-        .getIngredients(week, this.userId)
-        .subscribe((groceriess) => {
-          this.weekGroceries[week - 1] = groceriess;
-          this.mergeWeekGroceries(week);
-        });
-    } else {
-      this.mergeWeekGroceries(week);
-    }
-  }
-  */
-
   mergeWeekGroceries(week: number) {
-    this.weekGroceries[week - 1].forEach((element) => {
+    this.weekGroceries[week - 1].forEach((element: GroceryList) => {
       this.groceriesSet.add(element);
+      //merging code
+      let combinedString: String =
+        element.ingredient.productName + "$" + element.unit;
+
+      if (this.combinedGroceries.has(combinedString)) {
+        let mapElement = this.combinedGroceries.get(combinedString);
+        mapElement.add(element);
+        this.combinedGroceries.set(combinedString, mapElement);
+      } else {
+        let mapElement = new Set();
+        mapElement.add(element);
+        this.combinedGroceries.set(combinedString, mapElement);
+      }
     });
-    this.groceries = Array.from(this.groceriesSet);
+    this.filterGroceriesAccordingToWeek();
   }
 
   hideIngredient(toRemove: GroceryList) {
     const index: number = this.groceries.indexOf(toRemove);
+    let combinedString: String =
+      toRemove.ingredient.productName + "$" + toRemove.unit;
+    let groceriesToDelete: Set<GroceryList> =
+      this.combinedGroceries.get(combinedString);
+
     if (index !== -1) {
-      this.grocerListService
-        .DeleteIngredient(toRemove.groceryId)
-        .subscribe((error) => {
-          alert("error in deleting");
-        });
+      groceriesToDelete.forEach((grocery) => {
+        if (this.weeksToDisplay.has(grocery.week)) {
+          this.grocerListService
+            .DeleteIngredient(grocery.groceryId)
+            .subscribe((error) => {
+              alert("error in deleting");
+            });
+        }
+      });
       this.groceries.splice(index, 1);
       this.groceriesSet.delete(toRemove);
     }

@@ -48,6 +48,7 @@ import { RecipesComponent } from './pages/recipes/recipes.component';
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
 import { DietTypeComponent } from './pages/dayMeal/diet-type/diet-type.component';
 import { EducationComponent } from './pages/education/education.component';
+import { ExportComponent } from './components/grocery-list/export/export.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { EducationComponent } from './pages/education/education.component';
     RecipesComponent,
     RecipesToolbarComponent,
     DietTypeComponent,
-    EducationComponent
+    EducationComponent,
+    ExportComponent
   ],
 
   imports: [
