@@ -6,6 +6,7 @@ import { User } from 'src/app/mealplan/models/User';
 import { UserInfo } from 'src/app/mealplan/models/UserInfo';
 import { UserService } from 'src/app/mealplan/services/user.service';
 import { catchError, of } from 'rxjs';
+import { AuthService } from 'src/app/mealplan/services/auth.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
   today: Date = new Date();
   userInfo:UserInfo={};
   
-  constructor(public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
+  constructor(private authService:AuthService, public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
   
   ngOnInit() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -33,7 +34,7 @@ export class ProfileComponent implements OnInit {
       FirstName: ['', Validators.compose([ Validators.minLength(3)])],
       LastName: ['', Validators.compose([ Validators.minLength(3)])],
       email: ['', Validators.compose([Validators.pattern(emailRegex)])],
-      phone: ['', Validators.pattern(/^\+(?:[0-9] ?){6,14}[0-9]$/)],
+      phone: ['', Validators.pattern('^[0-9]{9,16}$')],
       genderControl: this.genderFormControl,
       birthday: new FormControl('', [
         Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$'),
@@ -41,22 +42,13 @@ export class ProfileComponent implements OnInit {
       ]),
       image: null
     });
-    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe({
-      next: (data) => {
-        this.user = data;
-        // set the value of the form controls using the user object
-        this.infoForm.controls['FirstName'].setValue(this.user.firstName);
-        this.infoForm.controls['LastName'].setValue(this.user.lastName);
-        this.infoForm.controls['email'].setValue(this.user.email);
-        this.infoForm.controls['phone'].setValue(this.user.phoneNumber);
-        this.infoForm.controls['birthday'].setValue(this.user.userInfo.birthday);
-        this.infoForm.controls['genderControl'].setValue(this.user.userInfo.gender);
-      },
-      error: (error) => {
-        console.error('Error fetching user:', error);
-        this.snackBar.open('An error occurred while fetching your profile. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-      }
-    });
+    this.user = this.authService.getUser();
+    this.infoForm.controls['FirstName'].setValue(this.user.firstName);
+    this.infoForm.controls['LastName'].setValue(this.user.lastName);
+    this.infoForm.controls['email'].setValue(this.user.email);
+    this.infoForm.controls['phone'].setValue(this.user.phoneNumber);
+    this.infoForm.controls['birthday'].setValue(this.user.userInfo.birthday);
+    this.infoForm.controls['genderControl'].setValue(this.user.userInfo.gender);
   }
 
 
@@ -84,9 +76,10 @@ export class ProfileComponent implements OnInit {
         .subscribe(data => {
           if (data) {
             console.log('Profile updated successfully.');
+            this.authService.updateUserLocalStorage(this.user)
+            this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
           }
         });
-        this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
     }
     // If form is invalid, show error message
     else {
@@ -98,7 +91,7 @@ export class ProfileComponent implements OnInit {
     const formValue = this.infoForm.value;
     const userInfo = this.user.userInfo;
   
-    this.user.userId = Number(localStorage.getItem('userId'));
+    this.user.userId = this.user.userId;
     this.user.firstName = formValue.FirstName || this.user.firstName;
     this.user.lastName = formValue.LastName || this.user.lastName;
     this.user.email = formValue.email || this.user.email;
