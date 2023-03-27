@@ -60,7 +60,6 @@ const routes: Routes = [
       { path: "terms", component: TermsComponent },
     ],
   },
-  { path: "education", component: EducationComponent },
   {
     path: "groceryList",
     component: GroceryListComponent,
