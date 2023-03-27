@@ -17,7 +17,7 @@ import { User } from "../../models/User";
             <div fxLayout="column">
               <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" ngClass.gt-sm="px-5" ngClass.sm="px-3" ngClass.xs="px-3">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
-                  <h1 class="">Register</h1>
+                  <h2 class="">Register</h2>
                   <a mat-button routerLink="/mealplan/login" color="warn" class="w-100">Already have an account? Sign in!</a>
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
@@ -37,7 +37,7 @@ import { User } from "../../models/User";
                       <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')">Invalid Input</mat-error>
                     </mat-form-field>
                   </div>
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="email" required />
@@ -45,7 +45,7 @@ import { User } from "../../models/User";
                     <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
                     <mat-label>Phone Number</mat-label>
                     <input matInput placeholder="Phone Number" formControlName="phone" required />
@@ -55,7 +55,7 @@ import { User } from "../../models/User";
                     </mat-error>
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Password</mat-label>
                     <input
@@ -75,7 +75,7 @@ import { User } from "../../models/User";
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Confirm Password</mat-label>
                     <input
