@@ -23,17 +23,22 @@ export class AddComponent implements OnInit {
               {
                 this.formGroup = new FormGroup({
                   name: new FormControl('', Validators.required),
-                  weight: new FormControl('', Validators.required)
+                  weight: new FormControl('', Validators.required),
+                  unit:new FormControl('',Validators.required),
+                  category:new FormControl('',Validators.required)
                 });
 
                 this.ingredientName = '';
                 this.isChecked = false;
+               
                }
 
   ngOnInit(): void {  
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
       weight: ['', Validators.required],
+      unit: ['', Validators.required],
+      category: ['', Validators.required],
       // add other form controls here
     });
 
@@ -99,18 +104,29 @@ export class AddComponent implements OnInit {
   public onSubmit(){
     // console.log(this.form.value);
   }  
+  foodCategories = [  { value: 'Meat', label: 'Meat' },  { value: 'Dairy', label: 'Dairy' },  { value: 'Fruit', label: 'Fruit' },  { value: 'Vegetables', label: 'Vegetables' },  { value: 'Others', label: 'Others' },];
+  unitOptions = [  { value: 'oz', label: 'oz' },  { value: 'teaspoon', label: 'teaspoon' },  { value: 'cup', label: 'cup' },  { value: 'tablespoon', label: 'tablespoon' },  { value: 'slice', label: 'slice' },  { value: 'lb', label: 'lb' },  { value: 'handful', label: 'handful' },  { value: 'punnet', label: 'punnet' },];
+
 
   formGroup: FormGroup;
 
-  ingr: { name: string, weight: number }[] = [];
+  ingr: { name: string, weight: number,unit:string,category:string }[] = [];
+  selectedUnit: string;
+  selectedCategory: string;
 
   addIngredient(): void {
     const name = this.formGroup.get('name').value;
     const weight = this.formGroup.get('weight').value;
-    this.ingr.push({ name, weight });
+    const unit = this.selectedUnit;
+    const category = this.selectedCategory;
+    const ingredient = `${weight}-${name}-${unit} (${category})`; // format the ingredient string
+    this.ingr.push({ name, weight, unit, category });
     console.log(this.ingr);
     this.formGroup.reset(); // reset the form after adding the ingredient
-  }
+    this.ingredientName = ingredient; // set the formatted ingredient string
+    this.isChecked = false; // uncheck the checkbox (if any)
+}
+
 
   ingredientName: string;
   isChecked: boolean;

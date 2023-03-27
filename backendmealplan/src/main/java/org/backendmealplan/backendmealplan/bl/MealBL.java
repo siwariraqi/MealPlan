@@ -46,7 +46,7 @@ public class MealBL {
             List<DayMeal> dayMeals;
             if (dayNumber != 0) {
                 DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
+                dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId(), plan.getPlanId());
 
             } else {
                 Optional<Payment> payment = paymentDAO.findByUserUserId(userID);
@@ -59,7 +59,7 @@ public class MealBL {
                     long daysBetween = ChronoUnit.DAYS.between(paymentOfLocalDate, currentDate);
                     dayNumber = (int) daysBetween;
                     DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                    dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
+                    dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId(), plan.getPlanId());
                 } else {
                     throw new paymentNotFoundException("Payment not found");
                 }

@@ -1,7 +1,7 @@
 <div class="p-2">
     <mat-card>
         <mat-card-content>
-            <form  [formGroup]="formGroup"  (ngSubmit)="onSubmit()" autocomplete="off" fxLayout="row wrap">
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" autocomplete="off" fxLayout="row wrap">
                 <div fxFlex="40" class="px-2" *ngIf="showImage">
                     <app-image-upload [base64]="form.controls.image.value" [fileSize]="400"
                         [acceptTypes]="'image/png, image/jpeg, image/jpg'" (onFileChange)="fileChange($event)">
@@ -42,17 +42,18 @@
                                 <input matInput formControlName="discount" type="number"> 
                             </mat-form-field>
                         </div>  -->
-                      
+
                         <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
-                            <mat-checkbox [(ngModel)]="isChecked" matCheckbox formControlName="isVegetarian" color="primary">Overnight</mat-checkbox>
-                            <mat-form-field  appearance="outline">
+                            <mat-checkbox [(ngModel)]="isChecked" matCheckbox color="primary">Overnight</mat-checkbox>
+                            <mat-form-field appearance="outline">
                                 <mat-label>Prepare Time (min)</mat-label>
-                                <input matInput [(ngModel)]="ingredientName" [disabled]="isChecked" matInput formControlName="weight" type="number">
+                                <input matInput [(ngModel)]="ingredientName" [disabled]="isChecked" matInput
+                                    formControlName="weight" type="number">
                             </mat-form-field>
-                            
+
                         </div>
                         <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-3">
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">Overnight</mat-checkbox>
+                            <mat-checkbox matCheckbox color="primary">Overnight</mat-checkbox>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Cook Time (min)</mat-label>
                                 <input matInput formControlName="weight" type="number">
@@ -89,13 +90,13 @@
                             </mat-form-field>
                         </div>
                         <div fxFlex="100" fxFlex.gt-sm="200" class="p-3" fxLayout="column wrap">
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">GLUTEN
+                            <mat-checkbox matCheckbox color="primary">GLUTEN
                                 FREE</mat-checkbox>
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">DAIRY
+                            <mat-checkbox matCheckbox color="primary">DAIRY
                                 FREE</mat-checkbox>
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">KETO
+                            <mat-checkbox matCheckbox color="primary">KETO
                                 FRIENDLY</mat-checkbox>
-                            <mat-checkbox matCheckbox formControlName="isVegetarian" color="primary">VEGAN
+                            <mat-checkbox matCheckbox color="primary">VEGAN
                                 FRIENDLY</mat-checkbox>
                         </div>
 
@@ -116,52 +117,46 @@
 
                 <div fxFlex="200" class="px-2" *ngIf="showImage">
                     <div fxFlex="28" fxFlex.gt-sm="14" class="px-3">
-                        <h4 style="margin-top: 20px;">Add Ingredients:</h4>
+                      <h4 style="margin-top: 20px;">Add Ingredients:</h4>
                     </div>
                     <div fxFlex="50" fxFlex.gt-sm="20" class="px-3">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Product Name</mat-label>
-                            <input matInput formControlName="name" required>
-                        </mat-form-field>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput required>
+                      </mat-form-field>
                     </div>
                     <div fxFlex="50" fxFlex.gt-sm="20" class="px-3">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Amount</mat-label>
-                            <input matInput formControlName="weight" type="number">
-                        </mat-form-field>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Amount</mat-label>
+                        <input matInput type="number">
+                      </mat-form-field>
                     </div>
                     <div fxFlex="50" fxFlex.gt-sm="20" class="px-3">
-                        <mat-form-field>
-                            <mat-select>
-                                <mat-option>hi</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                      <mat-form-field>
+                        <mat-select placeholder="Select a unit" formControlName="selectedUnit">
+                          <mat-option *ngFor="let unit of unitOptions" [value]="unit.value">{{ unit.label }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
                     <div fxFlex="50" fxFlex.gt-sm="20" class="px-3">
-                        <mat-form-field>
-                            <mat-select>
-                                <mat-option>hi</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                      <mat-form-field>
+                        <mat-select placeholder="Select a category" formControlName="selectedCategory">
+                          <mat-option *ngFor="let category of foodCategories" [value]="category.value">{{ category.label }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
-                    <div fxFlex="100" class="px-3">
-                        <button mat-icon-button (click)="addIngredient()">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </div>
-                </div>
+                </div>    
 
-                <div fxFlex="500" class="mt-2 text-center w-100">
-                    <div *ngIf="ingr.length > 0">
-                      <h4>Ingredients:</h4>
-                      <ul>
-                        <li *ngFor="let ingredient of ingr; let i = index">
-                          {{ i + 1 }}. {{ ingredient.name }}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  
+                <div fxFlex="100" class="px-3">
+                    <button mat-icon-button (click)="addIngredient()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <mat-checkbox [(ngModel)]="isChecked">
+                        {{ ingredientName }}
+                    </mat-checkbox>
+                </div>
+                
+
 
                 <div fxFlex="500" class="mt-2 text-center w-100">
                     <button style="width: 100%;" mat-raised-button color="primary" type="submit"

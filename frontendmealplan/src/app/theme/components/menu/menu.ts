@@ -26,7 +26,7 @@ export const horizontalMenuItems = [
   //   new Menu(144, "NAV.MENU_ITEM", null, "/", "_blank", false, 140),
 
   //---Admin
-  new Menu(300, "NAV.ADMIN", "/admin", null, null, false, 0),
+  new Menu(300, "NAV.ADMIN", "/adminside", null, null, false, 0),
   //------
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
@@ -91,7 +91,7 @@ export const verticalMenuItems = [
   //   new Menu(144, "NAV.MENU_ITEM", null, "/", "_blank", false, 140),
 
   //---Admin
-  new Menu(300, "NAV.ADMIN", "/admin", null, null, false, 0),
+  new Menu(300, "NAV.ADMIN", "/adminside", null, null, false, 0),
   //------
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
