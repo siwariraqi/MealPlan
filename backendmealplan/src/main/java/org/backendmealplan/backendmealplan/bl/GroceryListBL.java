@@ -2,6 +2,7 @@ package org.backendmealplan.backendmealplan.bl;
 
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.GroceryListDAO;
+import org.backendmealplan.backendmealplan.dao.MealsDAO;
 import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +23,9 @@ public class GroceryListBL {
 
     @Autowired
     MealBL mealBL;
+
+    @Autowired
+    MealsDAO mealsDAO;
 
 
     public void hideIngredientsForUser(List<Long> ingredientIds, Long userId) throws UNAUTHORIZEDException {
@@ -48,9 +53,8 @@ public class GroceryListBL {
 
         return filteredList;
     }
-    /*
-    public void addMealIngredientsToGroceries(Plan plan, Meal currentMeal, Integer week) throws UNAUTHORIZEDException {
 
+    public void addMealIngredientsToGroceries(Plan plan, Meal currentMeal, Integer week){
         try {
             List<MealIngredients> ingredients = mealBL.getDayPlanMealIngredients(currentMeal.getMealId());
             for(MealIngredients ingredient : ingredients){
@@ -58,6 +62,7 @@ public class GroceryListBL {
                 if(list.size() == 1){
                     GroceryList found = list.get(0);
                     found.setAmount((int) (found.getAmount()+ingredient.getAmount()));
+                    groceryListDAO.save(found);
                 }
                 else if(list.size() == 0){
                     GroceryList newGroceryList = new GroceryList();
@@ -66,17 +71,11 @@ public class GroceryListBL {
                     newGroceryList.setAmount((int) ingredient.getAmount());
                     newGroceryList.setPlan(plan);
                     newGroceryList.setUnit(ingredient.getUnit());
+                    groceryListDAO.save(newGroceryList);
                 }
-                else{
-                    throw new UNAUTHORIZEDException("more than grocery list item for week, integer, unit");
-                }
-
             }
-
         } catch (MealNotFoundException e) {
             e.printStackTrace();
         }
-
     }
-     */
 }

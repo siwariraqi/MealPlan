@@ -31,6 +31,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String path = request.getServletPath();
         boolean isProtectedUrl = protectedUrls.stream().anyMatch(pattern -> matcher.match(pattern, path));
         if (isProtectedUrl) {
@@ -50,5 +51,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+
     }
 }

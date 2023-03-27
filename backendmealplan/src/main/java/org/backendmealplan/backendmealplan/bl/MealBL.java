@@ -47,7 +47,6 @@ public class MealBL {
             if (dayNumber != 0) {
                 DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
                 dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId());
-
             } else {
                 Optional<Payment> payment = paymentDAO.findByUserUserId(userID);
                 if (payment.isPresent()) {
