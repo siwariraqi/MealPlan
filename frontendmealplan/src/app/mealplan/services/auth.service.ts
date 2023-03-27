@@ -62,6 +62,10 @@ export class AuthService {
     localStorage.setItem("currUser", JSON.stringify(user));
   }
 
+  deleteUserLocalStorage(){
+    localStorage.removeItem("currUser");
+  }
+
   // logout() {
   //   this.currUser = { };
   //   this.router.navigate(['/']);

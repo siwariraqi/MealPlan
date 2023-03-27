@@ -70,6 +70,7 @@ public confirmResetAccount(): void {
         next: () => {
           console.log('Account deleted successfully.');
           this.snackBar.open('Your account deleted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+          this.authService.deleteUserLocalStorage();
           this.router.navigate(['/mealplan/login']);
         },
         error: (error) => {
