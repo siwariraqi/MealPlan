@@ -58,15 +58,4 @@ public class MealsController{
 //        }
 //    }
 
-
-  @GetMapping("/getall")
-  public ResponseEntity <List<Meal>> getAllMeals() {
-    try {
-      List<Meal> meals = mealBL.getAllMeals();
-      return  ResponseEntity.ok(meals);
-    } catch (MealNotFoundException e) {
-      return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-  }
-
 }

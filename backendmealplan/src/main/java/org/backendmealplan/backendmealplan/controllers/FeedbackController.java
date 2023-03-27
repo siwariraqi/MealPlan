@@ -33,14 +33,4 @@ public class FeedbackController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
     }
-
-  @GetMapping("/getall")
-  public ResponseEntity <List<UserFeedback>> getAllFeedbacks() {
-    try {
-      List<UserFeedback> feedbacks = feedbackBL.getAllFeedbacks();
-      return ResponseEntity.ok(feedbacks);
-    } catch (FeedbackNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-  }
 }

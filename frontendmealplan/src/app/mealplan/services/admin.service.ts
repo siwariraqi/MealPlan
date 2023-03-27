@@ -9,8 +9,8 @@ import { ApiService } from './api.service';
 })
 export class AdminService {
   GETALLUSERS_URL = "admin/getall/";
-  GETALLFEEDBACKS_URL = "feedback/getall/";
-  GETALLMEALS_URL="meals/getall/";
+  GETALLFEEDBACKS_URL = "admin/getFeedbacks/";
+  GETALLMEALS_URL="admin/getMeals/";
   DELETEUSER_URL="admin/delete";
   RESETUSER_URL="admin/resetUser";
   UPDATEUSERD_URL="admin/update";

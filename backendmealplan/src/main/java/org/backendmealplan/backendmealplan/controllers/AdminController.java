@@ -1,16 +1,16 @@
 package org.backendmealplan.backendmealplan.controllers;
+import org.backendmealplan.backendmealplan.beans.Meal;
 import org.backendmealplan.backendmealplan.beans.User;
+import org.backendmealplan.backendmealplan.beans.UserFeedback;
+import org.backendmealplan.backendmealplan.bl.FeedbackBL;
+import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.UserBL;
-import org.backendmealplan.backendmealplan.exceptions.PlanNotExistedException;
-import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
-import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
+import org.backendmealplan.backendmealplan.exceptions.*;
 import org.backendmealplan.backendmealplan.security.AuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +22,12 @@ public class AdminController {
 
     @Autowired
     private UserBL userBL;
+
+    @Autowired
+    private MealBL mealBL;
+
+    @Autowired
+    private FeedbackBL feedbackBL;
 
     @GetMapping("/getall")
     public ResponseEntity<List<User>> getAll() {
@@ -77,6 +83,26 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+  @GetMapping("/getFeedbacks")
+  public ResponseEntity <List<UserFeedback>> getAllFeedbacks() {
+    try {
+      List<UserFeedback> feedbacks = feedbackBL.getAllFeedbacks();
+      return ResponseEntity.ok(feedbacks);
+    } catch (FeedbackNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
+
+  @GetMapping("/getMeals")
+  public ResponseEntity <List<Meal>> getAllMeals() {
+    try {
+      List<Meal> meals = mealBL.getAllMeals();
+      return  ResponseEntity.ok(meals);
+    } catch (MealNotFoundException e) {
+      return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 
 //    @Autowired
 //    private AuthenticationFilter authenticationFilter;
