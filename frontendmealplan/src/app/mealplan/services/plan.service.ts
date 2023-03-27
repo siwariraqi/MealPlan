@@ -10,7 +10,7 @@ import { ApiService } from './api.service';
 
   export class PlanService {
     UPDATEPLAN = 'plans/getPlans';
-    GETPLAN = 'plans/';
+    GETPLAN = 'plans';
 
     constructor(private http:HttpClient, private apiService:ApiService) { }
     
@@ -18,8 +18,8 @@ import { ApiService } from './api.service';
         return this.apiService.get<Plan[]>(this.UPDATEPLAN);
     }
 
-    getPlanForUser(userId: number): Observable<Plan> {
-      const url = `${this.GETPLAN}${userId}`;
+    getPlanForUser(): Observable<Plan> {
+      const url = this.GETPLAN;
       return this.apiService.get<Plan>(url);
     }
 

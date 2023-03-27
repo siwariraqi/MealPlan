@@ -12,9 +12,9 @@ import { ApiService } from './api.service';
 export class UserService {
 
 
-  CHOOSEPLAN = 'users/choosePlan?userId=';
+  CHOOSEPLAN = 'users/choosePlan';
   UPDATEPROFILE = 'users/updateProfile';
-  GETUSER = 'users/getUser?userId=';
+  GETUSER = 'users/getUser';
   CHANGEPASSWORD = 'users/changePassword';
   DELETEACCOUNT = 'users/deleteAccount';
   RESETACCOUNT = 'users/resetAccount';
@@ -22,18 +22,17 @@ export class UserService {
 
   constructor(private http:HttpClient, private apiService:ApiService) { }
 
-  getUser(userId: number): Observable<User> {
-    const params = new HttpHeaders().set('userId', String(userId));
-    return this.apiService.get<User>(this.GETUSER+ `${userId}`)
-      .pipe(
-        catchError(error => {
-          if (error.status === 404) {
-            return throwError('User not found');
-          }
-          return throwError('Something went wrong');
-        })
-      );
-  }
+  // getUser(): Observable<User> {
+  //   return this.apiService.get<User>(this.GETUSER)
+  //     .pipe(
+  //       catchError(error => {
+  //         if (error.status === 404) {
+  //           return throwError('User not found');
+  //         }
+  //         return throwError('Something went wrong');
+  //       })
+  //     );
+  // }
 
   changePassword(request:ChangePasswordRequest):Observable<string>{
     return this.apiService.post<string>(this.CHANGEPASSWORD,request);
@@ -44,12 +43,9 @@ export class UserService {
     return this.apiService.post<User>(this.UPDATEPROFILE,user);
   }
 
-  choosePlan(userId: number, planId: number): Observable<string> {
-    const params = new HttpParams()
-      .set('userId', userId.toString())
-      .set('planId', planId.toString());
+  choosePlan(planId: number): Observable<string> {
 
-    return this.apiService.post<string>(this.CHOOSEPLAN+`${userId}` +"&planId="+`${planId}`  )
+    return this.apiService.post<string>(this.CHOOSEPLAN+"?planId="+`${planId}`  )
       .pipe(
         catchError(error => {
           if (error.status === 404) {
@@ -61,18 +57,15 @@ export class UserService {
   }
   
 
-  deleteAccount(email, password, userId) {
+  deleteAccount(email, password) {
     return this.apiService.delete<string>(this.DELETEACCOUNT+"?email="+`${email}` 
-               +"&password="+`${password}` + "&userId=" + `${userId}` );
+               +"&password="+`${password}`);
  }
 
- resetAccount(email, password, userId) {
+ resetAccount(email, password) {
   return this.apiService.post<string>(this.RESETACCOUNT+"?email="+`${email}` 
-             +"&password="+`${password}` + "&userId=" + `${userId}` );
+             +"&password="+`${password}`);
 }
 
-  logout(){
-    return this.apiService.post<any>(this.LOGOUT);
-  }
 
 }

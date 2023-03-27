@@ -8,6 +8,7 @@ import { catchError, of, throwError } from 'rxjs';
 import { ChangePasswordRequest } from 'src/app/mealplan/models/ChangePasswordRequest';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../DialogContentComponent/dialog-content.component';
+import { AuthService } from 'src/app/mealplan/services/auth.service';
 
 @Component({
   selector: 'app-password-change',
@@ -22,7 +23,7 @@ export class PasswordChangeComponent implements OnInit {
   hideNew = true;
   hideConfirm = true;
 
-  constructor(private dialog:MatDialog, public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
+  constructor(private authService:AuthService,private dialog:MatDialog, public formBuilder: UntypedFormBuilder, public snackBar: MatSnackBar,private userService:UserService) { }
   
   ngOnInit(): void {
     this.passwordForm = this.formBuilder.group({
@@ -51,12 +52,13 @@ export class PasswordChangeComponent implements OnInit {
 
     public onPasswordFormSubmit(): void {
       if (this.passwordForm.valid) {
-        this.userId = Number(localStorage.getItem('userId'));
+        this.user = this.authService.getUser();
+        this.userId = this.user.userId;
         const currentPassword = this.passwordForm.get('currentPassword').value;
         const newPassword = this.passwordForm.get('newPassword').value;
         const confirmPassword = this.passwordForm.get('confirmNewPassword').value;
         const request: ChangePasswordRequest = {
-          userId: Number(localStorage.getItem('userId')),
+          userId: this.userId,
           currentPassword: currentPassword,
           newPassword: newPassword,
           confirmPassword: confirmPassword
@@ -74,7 +76,7 @@ export class PasswordChangeComponent implements OnInit {
             () => {
              {
                 console.log('password updated successfully.');
-                this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+                this.snackBar.open('Password changed successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
               }
             }
           );

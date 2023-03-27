@@ -7,6 +7,7 @@ import { UserSearchPipe } from 'src/app/theme/pipes/user-search.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../DialogContentComponent/dialog-content.component';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/mealplan/services/auth.service';
 
 
 @Component({
@@ -18,15 +19,16 @@ export class AccountSettingsComponent implements OnInit {
 
   accountForm: FormGroup;
   hideConfirm = true;
+  userId:number;
   
-  constructor(private router:Router,private dialog:MatDialog,private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
+  constructor(private authService:AuthService,private router:Router,private dialog:MatDialog,private userService:UserService, private apiService:ApiService, private snackBar: MatSnackBar) { 
     this.accountForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
   }
   ngOnInit(): void {
-    
+    this.userId = this.authService.getUser().userId;
   }
 
   public confirmDeleteAccount(): void {
@@ -62,10 +64,9 @@ public confirmResetAccount(): void {
   public deleteAccount(): void {
     const email = this.accountForm.controls['username'].value;
     const password = this.accountForm.controls['password'].value;
-    const userId = Number(localStorage.getItem('userId'));
     
     if (this.accountForm.valid) {
-      this.userService.deleteAccount(email,password,userId).subscribe({
+      this.userService.deleteAccount(email,password).subscribe({
         next: () => {
           console.log('Account deleted successfully.');
           this.snackBar.open('Your account deleted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
@@ -85,10 +86,9 @@ public confirmResetAccount(): void {
   public resetAccount(): void {
     const email = this.accountForm.controls['username'].value;
     const password = this.accountForm.controls['password'].value;
-    const userId = Number(localStorage.getItem('userId'));
     
     if (this.accountForm.valid) {
-      this.userService.resetAccount(email,password,userId).subscribe({
+      this.userService.resetAccount(email,password).subscribe({
         next: () => {
           console.log('Account resetted successfully.');
           this.snackBar.open('Your account resetted successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
