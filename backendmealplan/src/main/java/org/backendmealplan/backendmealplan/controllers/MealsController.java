@@ -36,9 +36,9 @@ public class MealsController{
     }
 
     @GetMapping("/{mealTime}")
-    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long userId) {
+    public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long loggedInUserId) {
         try {
-            List<DayMeal> meals = mealBL.getMealsByTime(mealTime, userId);
+            List<DayMeal> meals = mealBL.getMealsByTime(mealTime, loggedInUserId);
             return new ResponseEntity(meals,HttpStatus.OK);
         } catch (userNotFoundException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
