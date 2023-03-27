@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
         .subscribe(data => {
           if (data) {
             console.log('Profile updated successfully.');
-            this.authService.updateUserLocalStorage(this.user)
+            this.userService.updateUserLocalStorage(this.user)
             this.snackBar.open('Your account information updated successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
           }
         });
