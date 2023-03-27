@@ -67,5 +67,12 @@ export class UserService {
              +"&password="+`${password}`);
 }
 
+updateUserLocalStorage(user:User): void {
+  localStorage.setItem("currUser", JSON.stringify(user));
+}
+
+deleteUserLocalStorage(){
+  localStorage.removeItem("currUser");
+}
 
 }
