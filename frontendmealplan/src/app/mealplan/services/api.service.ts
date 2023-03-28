@@ -29,6 +29,7 @@ export class ApiService {
       withCredentials: false
     };
     const url = this.getURLWithUserId(serviceName);
+    console.log(url);
     return this.httpClient.post<T>(url, body, options);
   }
 

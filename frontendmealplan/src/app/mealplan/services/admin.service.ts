@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Meal } from '../models/Meal';
+import { MealDTO } from '../models/MealDTO';
 import { User } from '../models/User';
 import { UserFeedback } from '../models/UserFeedback';
 import { ApiService } from './api.service';
@@ -15,6 +16,7 @@ export class AdminService {
   RESETUSER_URL="admin/resetUser";
   UPDATEUSERD_URL="admin/update";
   CHANGEPLAN_URL="admin/changeRole"
+  ADDMEAL_URL="admin/addMeal"
   constructor(private apiService: ApiService) { }
 
   getAllUsers() {
@@ -44,6 +46,11 @@ export class AdminService {
 
   changeRole(userId:number,isAdmin:boolean){
     return this.apiService.put<User>(this.CHANGEPLAN_URL+"?userId="+`${userId}`+"&isAdmin="+`${isAdmin}`)
+  }
+
+  
+  addMeal(mealDTO:MealDTO){
+    return this.apiService.post<MealDTO>(this.ADDMEAL_URL,mealDTO);
   }
 
 }

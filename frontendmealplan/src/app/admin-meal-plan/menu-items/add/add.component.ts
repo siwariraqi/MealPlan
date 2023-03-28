@@ -2,6 +2,7 @@ import { T } from '@angular/cdk/keycodes';
 import { Component,OnInit} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
+import { AdminService } from 'src/app/mealplan/services/admin.service';
 
 @Component({
   selector: 'app-add',
@@ -51,7 +52,7 @@ export class AddComponent implements OnInit {
   isOvernightPreparing:boolean=false
 
 
-  constructor() {}
+  constructor(private adminService:AdminService) {}
 
   ngOnInit(): void {   
   }
@@ -133,9 +134,6 @@ public fileChange(files:any){
   }
 } 
 
-
-
-
 OnSubmit() {
   this.TipsDB=this.TipsDB+'</ul>';
   this.instuctionsDB=this.instuctionsDB+'</ul>';
@@ -160,21 +158,22 @@ OnSubmit() {
   this.mealDTO.ingredients = this.ingredients; 
   this.mealDTO.imageUrl=this.imageUrl;
   this.mealDTO.dayMealDTO=this.dayPlanTypes;
-  console.log(this.mealDTO);
+  this.addMeal(this.mealDTO);
+  // console.log(this.mealDTO);
   this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
   this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
   this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];
   this.isOvernightCooking=false;this.isOvernightPreparing=false;
    this.Tip='';this.instruction='';
   this.fileChange('');
+  
   }
 }
 
-
-
-  
-
-
+addMeal(mealDTO:MealDTO){
+  console.log(mealDTO);
+this.adminService.addMeal(mealDTO);
+}
 
 } 
 
