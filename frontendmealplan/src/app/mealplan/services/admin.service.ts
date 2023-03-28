@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DayNumberDTO } from '../models/DayNumberDTO';
 import { Meal } from '../models/Meal';
 import { MealDTO } from '../models/MealDTO';
 import { User } from '../models/User';
@@ -15,8 +16,9 @@ export class AdminService {
   DELETEUSER_URL="admin/delete";
   RESETUSER_URL="admin/resetUser";
   UPDATEUSERD_URL="admin/update";
-  CHANGEPLAN_URL="admin/changeRole"
-  ADDMEAL_URL="admin/addMeal"
+  CHANGEPLAN_URL="admin/changeRole";
+  ADDMEAL_URL="admin/addMeal";
+  GETDAYNUMERS= "admin/getDayNumbers";
   constructor(private apiService: ApiService) { }
 
   getAllUsers() {
@@ -51,6 +53,10 @@ export class AdminService {
   
   addMeal(mealDTO:MealDTO){
     return this.apiService.post<MealDTO>(this.ADDMEAL_URL,mealDTO);
+  }
+
+  getDayNumbers(planName:string){
+    return this.apiService.get<DayNumberDTO[]>(this.GETDAYNUMERS+"?planName="+`${planName}`);
   }
 
 }

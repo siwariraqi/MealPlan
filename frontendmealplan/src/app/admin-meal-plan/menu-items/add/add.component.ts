@@ -1,6 +1,7 @@
 import { T } from '@angular/cdk/keycodes';
 import { Component,OnInit} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
 
@@ -16,7 +17,7 @@ export class AddComponent implements OnInit {
   dietTypes = ['GLUTEN FREE', 'DAIRY FREE', 'KETO FRIENDLY', 'VEGAN FRIENDLY'];
   plans=['Freemium','Basic','Premium'];
   types=['Breakfast','Lunch','Dinner','Snack']
-  dayNumbers=[8,9,10,11];
+  dayNumbers=[];
   selectedDietTypes: string[] = [];
   ingredients = [];
   dayPlanTypes=[];
@@ -27,7 +28,7 @@ export class AddComponent implements OnInit {
   category :string='';
 
   plan:string='';
-  dayNumber:number=null;
+  dayNumber:DayNumberDTO;
   type:string='';
 
   Tip:string='';
@@ -156,7 +157,7 @@ OnSubmit() {
   this.mealDTO.instructions = this.instuctionsDB;
   this.mealDTO.tips = this.TipsDB;
   this.mealDTO.ingredients = this.ingredients; 
-  this.mealDTO.imageUrl=this.imageUrl;
+  this.mealDTO.imageUrl="this.imageUrl";
   this.mealDTO.dayMealDTO=this.dayPlanTypes;
   this.addMeal(this.mealDTO);
   // console.log(this.mealDTO);
@@ -172,11 +173,19 @@ OnSubmit() {
 
 addMeal(mealDTO:MealDTO){
   console.log(mealDTO);
-this.adminService.addMeal(mealDTO);
-}
-
+  this.adminService.addMeal(mealDTO).subscribe(response => {console.log('meal saved successfully:', response);});
 } 
 
+planSelection(){
+  this.adminService.getDayNumbers(this.plan).subscribe(dayNumbers => {
+    this.dayNumbers = dayNumbers;
+    console.log(dayNumbers);
+  })
+}
 
+daySelection(){
+  this.types = this.dayNumber.mealTimeList;
+  console.log(this.types)
+  }
 
-
+}

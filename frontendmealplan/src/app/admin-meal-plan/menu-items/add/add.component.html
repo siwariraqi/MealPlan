@@ -168,7 +168,7 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select Plan" [(ngModel)]="plan"
-                                [ngModelOptions]="{ standalone: true }" required>
+                                [ngModelOptions]="{ standalone: true }" required (selectionChange)="planSelection()">
                                 <mat-option *ngFor="let plan of plans" [value]="plan">{{ plan }}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -177,9 +177,8 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select day" [(ngModel)]="dayNumber"
-                                [ngModelOptions]="{ standalone: true }" required>
-                                <mat-option *ngFor="let dayNumber of dayNumbers" [value]="dayNumber">{{ dayNumber
-                                    }}</mat-option>
+                                [ngModelOptions]="{ standalone: true }" required (selectionChange)="daySelection()">
+                                <mat-option *ngFor="let dayNumber of dayNumbers" [value]="dayNumber">{{ dayNumber.dayNumber}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -188,8 +187,7 @@
                         <mat-form-field>
                             <mat-select placeholder="Select Type" [(ngModel)]="type"
                                 [ngModelOptions]="{ standalone: true }" required>
-                                <mat-option *ngFor="let type of types" [value]="type">{{ type
-                                    }}</mat-option>
+                                <mat-option *ngFor="let type of types" [value]="type">{{ type}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
