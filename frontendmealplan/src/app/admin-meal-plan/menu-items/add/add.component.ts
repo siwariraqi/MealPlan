@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { AppService } from 'src/app/app.service';
-import { MenuItem } from 'src/app/app.models';
-import { ActivatedRoute } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { T } from '@angular/cdk/keycodes';
+import { Component,OnInit} from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 
 @Component({
   selector: 'app-add',
@@ -11,125 +9,175 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  public form!: UntypedFormGroup;
-  private sub: any;
-  public id:any;
-  public showImage:boolean = false;
+  mealDTO:MealDTO=new MealDTO();
+  units = ['oz', 'teaspoon', 'cup', 'tablespoon', 'slice', 'lb', 'handful', 'punnet'];
+  categories = ['Meat', 'Dairy', 'Fruit', 'Vegetables', 'Others']; 
+  dietTypes = ['GLUTEN FREE', 'DAIRY FREE', 'KETO FRIENDLY', 'VEGAN FRIENDLY'];
+  plans=['Freemium','Basic','Premium'];
+  types=['Breakfast','Lunch','Dinner','Snack']
+  dayNumbers=[8,9,10,11];
+  selectedDietTypes: string[] = [];
+  ingredients = [];
+  dayPlanTypes=[];
 
-  constructor(public appService:AppService, 
-              public formBuilder: UntypedFormBuilder, 
-              private activatedRoute: ActivatedRoute,
-              @Inject(PLATFORM_ID) private platformId: Object) 
-              {
-                this.formGroup = new FormGroup({
-                  name: new FormControl('', Validators.required),
-                  weight: new FormControl('', Validators.required),
-                  unit:new FormControl('',Validators.required),
-                  category:new FormControl('',Validators.required)
-                });
+  productName :string='';
+  amount:number=null;
+  unit :string=null;
+  category :string='';
 
-                this.ingredientName = '';
-                this.isChecked = false;
-               
-               }
+  plan:string='';
+  dayNumber:number=null;
+  type:string='';
 
-  ngOnInit(): void {  
-    this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      weight: ['', Validators.required],
-      unit: ['', Validators.required],
-      category: ['', Validators.required],
-      // add other form controls here
-    });
+  Tip:string='';
+  instruction:string='';
+  instructions=[];
+  Tips=[];
+  TipsDB:string='<ul>';
+  instuctionsDB:string='<ul>';
+  
+
+  MealName:string;
+  CookTime:string;
+  PrepareTime:string;
+  Calories:number;
+  Fat:number;
+  Protien:number;
+  Carbs:number;
+  Fibre:number;
+  imageUrl: string;
+
+  isOvernightCooking: boolean = false;
+  isOvernightPreparing:boolean=false
 
 
-    this.form = this.formBuilder.group({ 
-      "id": 0,
-      "name": [null, Validators.compose([Validators.required, Validators.minLength(4)])],
-      "description": null,
-      "price": [null, Validators.required ], 
-      "image": null, 
-      "discount": null, 
-      "availibilityCount": null, 
-      "weight": null,
-      "isVegetarian": false,
-      "categoryId": [null, Validators.required ]   
-    }); 
-    this.getCategories();
-    this.sub = this.activatedRoute.params.subscribe(params => {  
-      if(params['id']){
-        this.id = params['id'];
-        this.getMenuItemById(); 
-      } 
-      else{
-        this.showImage = true;
-      }
-    }); 
+  constructor() {}
+
+  ngOnInit(): void {   
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  } 
-
-  public getCategories(){
-    if(!this.appService.Data.categories.length){
-      this.appService.getCategories().subscribe(categories=>{ 
-        this.appService.Data.categories = categories;
-      });
-    } 
-  } 
- 
-  public getMenuItemById(){
-    this.appService.getMenuItemById(this.id).subscribe((menuItem:MenuItem)=>{ 
-      this.form.patchValue(menuItem); 
-      if (isPlatformBrowser(this.platformId)) {
-        this.appService.convertImgToBase64(menuItem.image.medium, (dataUrl:string) => { 
-          this.showImage = true;
-          this.form.controls.image.patchValue(dataUrl.toString());
-        }) 
-      }  
-    });
+  updateCookTime(){
+    this.CookTime='Overnight';
   }
 
-  public fileChange(files:any){ 
-    // console.log(files)
-    if(files.length){
-      this.form.controls.image.patchValue(files[0].content); 
-    } 
-    else{
-      this.form.controls.image.patchValue(null); 
-    }
-  } 
+  addIngredient() {
+    const ingredient = { productName: this.productName, amount: this.amount, unit: this.unit, category: this.category };
+    if(ingredient.productName!==''&&ingredient.category!=='')
+    this.ingredients.push(ingredient);
+    this.productName = '';
+    this.amount = null;
+    this.unit = '';
+    this.category = '';
+}
 
-  public onSubmit(){
-    // console.log(this.form.value);
-  }  
-  foodCategories = [  { value: 'Meat', label: 'Meat' },  { value: 'Dairy', label: 'Dairy' },  { value: 'Fruit', label: 'Fruit' },  { value: 'Vegetables', label: 'Vegetables' },  { value: 'Others', label: 'Others' },];
-  unitOptions = [  { value: 'oz', label: 'oz' },  { value: 'teaspoon', label: 'teaspoon' },  { value: 'cup', label: 'cup' },  { value: 'tablespoon', label: 'tablespoon' },  { value: 'slice', label: 'slice' },  { value: 'lb', label: 'lb' },  { value: 'handful', label: 'handful' },  { value: 'punnet', label: 'punnet' },];
-
-
-  formGroup: FormGroup;
-
-  ingr: { name: string, weight: number,unit:string,category:string }[] = [];
-  selectedUnit: string;
-  selectedCategory: string;
-
-  addIngredient(): void {
-    const name = this.formGroup.get('name').value;
-    const weight = this.formGroup.get('weight').value;
-    const unit = this.selectedUnit;
-    const category = this.selectedCategory;
-    const ingredient = `${weight}-${name}-${unit} (${category})`; // format the ingredient string
-    this.ingr.push({ name, weight, unit, category });
-    console.log(this.ingr);
-    this.formGroup.reset(); // reset the form after adding the ingredient
-    this.ingredientName = ingredient; // set the formatted ingredient string
-    this.isChecked = false; // uncheck the checkbox (if any)
+removeIngredient(index: number) {
+  this.ingredients.splice(index, 1);
 }
 
 
-  ingredientName: string;
-  isChecked: boolean;
+addDay() {
+  const dayPlanType={plan:this.plan,dayNumber:this.dayNumber,type:this.type}
+  if(dayPlanType.plan!==''&&dayPlanType.dayNumber!==null &&dayPlanType.type!=='')
+  this.dayPlanTypes.push(dayPlanType);
+  this.plan='';
+  this.dayNumber=null;
+  this.type='';
+}
+
+
+removeDay(index:number){
+ this.dayPlanTypes.splice(index,1)
+}
+
+
+addTips(){ 
+  if(this.Tip!=='')
+  {
+  this.Tips.push(this.Tip)
+  this.TipsDB=this.TipsDB+'<li>'+this.Tip+'</li>'
+  }
+}
+
+removeTips(index:number){
+ this.Tips.splice(index,1);
+}
+
+
+addInstruction(){
+if(this.instruction!=''){
+this.instructions.push(this.instruction);
+this.instuctionsDB=this.instuctionsDB+'<li>'+this.instruction+'</li>';
+}
+}
+
+removeInstruction(index:number){
+  this.instructions.splice(index,1)
+}
+
+
+
+onCheckboxChange(event: MatCheckboxChange, dietType: string) {
+  if (event.checked) {
+    this.selectedDietTypes.push(dietType);
+  } else {
+    this.selectedDietTypes = this.selectedDietTypes.filter((dt) => dt !== dietType);
+  }
+}
+
+public fileChange(files:any){ 
+  if(files.length){ 
+    this.imageUrl=files[0].content;
+  } 
+  else{
+    this.imageUrl=''; 
+  }
+} 
+
+
+
+
+OnSubmit() {
+  this.TipsDB=this.TipsDB+'</ul>';
+  this.instuctionsDB=this.instuctionsDB+'</ul>';
+
+  if(this.isOvernightCooking) 
+  this.CookTime='Overnight';
+  if(this.isOvernightPreparing)
+  this.PrepareTime='Overnight';
+
+  if (this.MealName && this.PrepareTime && this.CookTime && this.Calories && this.Fat && this.Protien && this.Carbs && this.Fibre && this.dietTypes?.length && this.instuctionsDB && this.ingredients?.length && this.TipsDB && this.imageUrl && this.dayPlanTypes?.length) {
+  this.mealDTO.mealName = this.MealName;
+  this.mealDTO.prepareTime = this.PrepareTime;
+  this.mealDTO.cookTime = this.CookTime;
+  this.mealDTO.calories = this.Calories;
+  this.mealDTO.fat = this.Fat;
+  this.mealDTO.protein = this.Protien;
+  this.mealDTO.carbs = this.Carbs;
+  this.mealDTO.fibre = this.Fibre;
+  this.mealDTO.dietTypes=this.selectedDietTypes;
+  this.mealDTO.instructions = this.instuctionsDB;
+  this.mealDTO.tips = this.TipsDB;
+  this.mealDTO.ingredients = this.ingredients; 
+  this.mealDTO.imageUrl=this.imageUrl;
+  this.mealDTO.dayMealDTO=this.dayPlanTypes;
+  console.log(this.mealDTO);
+  this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
+  this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
+  this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];
+  this.isOvernightCooking=false;this.isOvernightPreparing=false;
+   this.Tip='';this.instruction='';
+  this.fileChange('');
+  }
+}
+
+
+
+  
+
 
 
 } 
+
+
+
+
