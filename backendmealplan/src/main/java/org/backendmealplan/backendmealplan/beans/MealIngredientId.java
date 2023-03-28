@@ -18,7 +18,7 @@ public class MealIngredientId implements Serializable {
     @JoinColumn(name = "meal_id")
     private Meal meal;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 

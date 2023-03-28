@@ -17,7 +17,7 @@ public class IngredientBL {
         if (ingredients.isEmpty()) {
             return this.ingredientsDAO.save(ingredient);
         }
-        return null;
+        return ingredients.get(0);
     }
 
     public List<Ingredient> getIngredients(){
