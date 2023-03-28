@@ -1,6 +1,6 @@
-import { T } from '@angular/cdk/keycodes';
 import { Component,OnInit} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
@@ -21,6 +21,7 @@ export class AddComponent implements OnInit {
   selectedDietTypes: string[] = [];
   ingredients = [];
   dayPlanTypes=[];
+  returnDayNumber=[];
 
   productName :string='';
   amount:number=null;
@@ -53,7 +54,7 @@ export class AddComponent implements OnInit {
   isOvernightPreparing:boolean=false
 
 
-  constructor(private adminService:AdminService) {}
+  constructor(private adminService:AdminService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {   
   }
@@ -76,10 +77,10 @@ removeIngredient(index: number) {
   this.ingredients.splice(index, 1);
 }
 
-
 addDay() {
-  const dayPlanType={plan:this.plan,dayNumber:this.dayNumber,type:this.type}
+   const dayPlanType={plan:this.plan,dayNumber:this.dayNumber,type:this.type}
   if(dayPlanType.plan!==''&&dayPlanType.dayNumber!==null &&dayPlanType.type!=='')
+  this.returnDayNumber.push({plan:this.plan,dayNumber:this.dayNumber.dayNumber,type:this.type});
   this.dayPlanTypes.push(dayPlanType);
   this.plan='';
   this.dayNumber=null;
@@ -138,7 +139,6 @@ public fileChange(files:any){
 OnSubmit() {
   this.TipsDB=this.TipsDB+'</ul>';
   this.instuctionsDB=this.instuctionsDB+'</ul>';
-
   if(this.isOvernightCooking) 
   this.CookTime='Overnight';
   if(this.isOvernightPreparing)
@@ -157,35 +157,43 @@ OnSubmit() {
   this.mealDTO.instructions = this.instuctionsDB;
   this.mealDTO.tips = this.TipsDB;
   this.mealDTO.ingredients = this.ingredients; 
-  this.mealDTO.imageUrl="this.imageUrl";
-  this.mealDTO.dayMealDTO=this.dayPlanTypes;
+  this.mealDTO.imageUrl=this.imageUrl;
+  this.mealDTO.dayMealDTOList=this.returnDayNumber;
   this.addMeal(this.mealDTO);
-  // console.log(this.mealDTO);
+  this.snackBar.open("Meal Adedd successfully!", "×", {
+    panelClass: "success",
+    verticalPosition: "bottom",
+    duration: 3000,
+  });  
+  }else{
+    this.snackBar.open("Meal Not Adedd!", "×", {
+      panelClass: "success",
+      verticalPosition: "bottom",
+      duration: 3000,
+    });  
+  }
+  this.mealDTO=new MealDTO();
   this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
   this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
-  this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];
+  this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];this.returnDayNumber=[];
   this.isOvernightCooking=false;this.isOvernightPreparing=false;
-   this.Tip='';this.instruction='';
+   this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
   this.fileChange('');
-  
-  }
 }
 
 addMeal(mealDTO:MealDTO){
-  console.log(mealDTO);
-  this.adminService.addMeal(mealDTO).subscribe(response => {console.log('meal saved successfully:', response);});
+  console.log(this.mealDTO);
+  this.adminService.addMeal(mealDTO).subscribe(response => {console.log('meal saved successfully:');});
 } 
 
 planSelection(){
   this.adminService.getDayNumbers(this.plan).subscribe(dayNumbers => {
     this.dayNumbers = dayNumbers;
-    console.log(dayNumbers);
   })
 }
 
 daySelection(){
   this.types = this.dayNumber.mealTimeList;
-  console.log(this.types)
   }
 
 }

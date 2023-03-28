@@ -27,6 +27,7 @@ public class Meal {
     private String mealName;
 
     @NotBlank
+    @Lob
     private String imageUrl;
 
     @NotNull

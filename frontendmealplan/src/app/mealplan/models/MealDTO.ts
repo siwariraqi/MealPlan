@@ -16,7 +16,7 @@ export class MealDTO {
         public tips?: string,
         public dietTypes?: string[],
         public ingredients?: IngredientDTO[],
-        public dayMealDTO?: DayMealDTO[]
+        public dayMealDTOList?: DayMealDTO[]
     ) {}
 }
 

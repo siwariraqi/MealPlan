@@ -4,8 +4,8 @@
             <form autocomplete="off" fxLayout="row wrap">
 
                 <!-- *ngIf="showImage" -->
-                <div fxFlex="40" class="px-2">
-                    <app-image-upload [base64]="imageUrl" [fileSize]="400"
+                <div fxFlex="40" class="px-2" >
+                    <app-image-upload [base64]="imageUrl" [fileSize]="400" 
                         [acceptTypes]="'image/png, image/jpeg, image/jpg'" (onFileChange)="fileChange($event)">
                     </app-image-upload>
                 </div>
@@ -91,7 +91,7 @@
                 
                 <div fxFlex="100" class="px-2" style="margin-top: 40px;">
                     <div fxFlex="15" fxFlex.gt-sm="15" class="px-3" style="margin-top: 20px;">
-                        <h4>Insert Ingredient:</h4>
+                        <h4>Insert instructions:</h4>
                     </div>
 
                     <div fxFlex="55" class="px-3">
@@ -207,7 +207,7 @@
                                 <button mat-icon-button (click)="removeDay(i)">
                                     <mat-icon class="remove-icon">close</mat-icon>
                                 </button>
-                                {{ dayPlanType.plan }} {{'-'}} {{ dayPlanType.dayNumber }}{{'-'}} {{ dayPlanType.type
+                                {{ dayPlanType.plan }} {{'-'}} {{ dayPlanType.dayNumber.dayNumber }}{{'-'}} {{ dayPlanType.type
                                 }}
 
                             </li>

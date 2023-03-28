@@ -42,7 +42,6 @@ export class AdminService {
   }
 
   updateUserPlan(userId:number,planName:string){
-    console.log('hello'+userId+planName)
     return this.apiService.put<User>(this.UPDATEUSERD_URL+"?userId="+`${userId}`+"&planName="+`${planName}`)
   }
 
