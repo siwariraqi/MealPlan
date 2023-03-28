@@ -17,7 +17,7 @@ declare var google: any;
               <div class="py-5 formG">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
                   <h1 class="">Sign In</h1>
-                  <a mat-button routerLink="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
+                  <a mat-button href="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
                 </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
                   <mat-form-field appearance="outline" class="w-100 mt-4">

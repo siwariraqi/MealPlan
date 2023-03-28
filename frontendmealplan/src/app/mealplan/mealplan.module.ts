@@ -49,6 +49,7 @@ import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes
 import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
 import { EducationComponent } from "./pages/education/education.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { RegisterGoogleComponent } from './components/register-google/register-google.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { LandingPageComponent } from "./pages/landing-page/landing-page.componen
     DietTypeComponent,
     EducationComponent,
     LandingPageComponent,
+    RegisterGoogleComponent,
   ],
 
   imports: [

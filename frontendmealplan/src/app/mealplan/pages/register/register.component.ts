@@ -10,28 +10,30 @@ import { AuthService } from "../../services/auth.service";
   template: `
     <div class="registerContainer" [ngStyle]="{ 'background-color': backgroundColor, 'background-image': backgroundImage }">
       <app-welcome-screen *ngIf="screenState === 'welcome'" [currentPage]="currentPage"></app-welcome-screen>
-      <app-onboarding7 *ngIf="onBoardingStep === 7"></app-onboarding7>
-      <app-onboarding8 *ngIf="onBoardingStep === 8"></app-onboarding8>
-      <app-onboarding9 *ngIf="onBoardingStep === 9"></app-onboarding9>
-      <app-onboarding10 *ngIf="onBoardingStep === 10"></app-onboarding10>
-      <app-onboarding11 *ngIf="onBoardingStep === 11"></app-onboarding11>
-      <app-onboarding12 *ngIf="onBoardingStep === 12"></app-onboarding12>
-      <app-onboarding13 *ngIf="onBoardingStep === 13"></app-onboarding13>
-      <app-onboarding14 *ngIf="onBoardingStep === 14"></app-onboarding14>
-      <app-onboarding15 *ngIf="onBoardingStep === 15"></app-onboarding15>
-      <app-register-form *ngIf="onBoardingStep === 16"></app-register-form>
-      <div *ngIf="onBoardingStep >= 7 && onBoardingStep <= 14 && error !== ''" class="errorMsg">
+      <app-onboarding7 *ngIf="getOnboardingStep() === 7"></app-onboarding7>
+      <app-onboarding8 *ngIf="getOnboardingStep() === 8"></app-onboarding8>
+      <app-onboarding9 *ngIf="getOnboardingStep() === 9"></app-onboarding9>
+      <app-onboarding10 *ngIf="getOnboardingStep() === 10"></app-onboarding10>
+      <app-onboarding11 *ngIf="getOnboardingStep() === 11"></app-onboarding11>
+      <app-onboarding12 *ngIf="getOnboardingStep() === 12"></app-onboarding12>
+      <app-onboarding13 *ngIf="getOnboardingStep() === 13"></app-onboarding13>
+      <app-onboarding14 *ngIf="getOnboardingStep() === 14"></app-onboarding14>
+      <app-onboarding15 *ngIf="getOnboardingStep() === 15"></app-onboarding15>
+      <app-register-form *ngIf="getOnboardingStep() === 16"></app-register-form>
+      <app-register-google *ngIf="getOnboardingStep() === 17"></app-register-google>
+
+      <div *ngIf="getOnboardingStep() >= 7 && getOnboardingStep() <= 14 && error !== ''" class="errorMsg">
         <h4>{{ error }}</h4>
       </div>
       <button
-        *ngIf="onBoardingStep < 16"
+        *ngIf="getOnboardingStep() < 16"
         class="nextBtn"
         [ngStyle]="{ 'background-color': btnBackgroundColor, color: btnColor }"
         (click)="nextScreen()"
       >
-        {{ onBoardingStep === 15 ? "CONFIRM & CONTINUE" : "NEXT" }}
+        {{ getOnboardingStep() === 15 ? "CONFIRM & CONTINUE" : "NEXT" }}
       </button>
-      <div class="dots">
+      <div class="dots" *ngIf="getOnboardingStep() < 16">
         <div
           *ngFor="let page of pages; index as i"
           class="circle"
@@ -56,7 +58,6 @@ export class RegisterComponent implements OnInit {
   btnBackgroundColor: string;
   btnColor: string;
   screenState: string;
-  onBoardingStep: number;
   userGoals: Goal[];
   error: string;
 
@@ -65,7 +66,6 @@ export class RegisterComponent implements OnInit {
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
     this.screenState = "welcome";
-    this.onBoardingStep = 2;
     this.error = "";
   }
 
@@ -77,12 +77,16 @@ export class RegisterComponent implements OnInit {
     // this.registerSrv.getUserInfoLocalStorage();
   }
 
+  getOnboardingStep(): number {
+    return this.registerSrv.getOnBoardingStep();
+  }
+
   nextScreen() {
-    if (this.onBoardingStep > 5) {
+    if (this.getOnboardingStep() > 5) {
       this.btnBackgroundColor = "#dd9670c4";
       this.btnColor = "white";
-      if (this.onBoardingStep > 6) {
-        if (!this.screenValidation(this.onBoardingStep)) {
+      if (this.getOnboardingStep() > 6) {
+        if (!this.screenValidation(this.getOnboardingStep())) {
           return;
         } else {
           console.log("isValid YESS");
@@ -101,16 +105,16 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.currentPage !== 9) this.currentPage++;
-    this.onBoardingStep++;
+    this.registerSrv.incrementOnBoardingStep();
     if (this.screenState === "welcome") {
       if (this.currentPage == 5) {
-        this.pages = Array.from({ length: 10 }).fill(0);
+        this.pages = Array.from({ length: 9 }).fill(0);
         this.screenState = "questions";
         this.currentPage = 0;
       }
     }
 
-    switch (this.onBoardingStep) {
+    switch (this.getOnboardingStep()) {
       case 2:
         this.backgroundColor = "#4b643d";
         break;

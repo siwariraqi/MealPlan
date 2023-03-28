@@ -17,11 +17,13 @@ export class RegisterService {
   private GET_ALL_GOALS_API: string = "goals/all";
   private currUserInfo: UserInfo;
   private isCurrentScreenOnboardingValid: boolean;
-  http: any;
+  // http: any;
+  private onBoardingStep: number;
 
   constructor(private httpClient: HttpClient, private router: Router) {
     // this.currUserInfo = this.getUserInfoLocalStorage();
     this.isCurrentScreenOnboardingValid = false;
+    this.onBoardingStep = 2;
   }
 
   registerUser(user: User): Observable<User> {
@@ -88,4 +90,21 @@ export class RegisterService {
   setCurrOnBoardingValidation(bool: boolean) {
     this.isCurrentScreenOnboardingValid = bool;
   }
+
+  getOnBoardingStep(): number {
+    return this.onBoardingStep;
+  }
+
+  setOnBoardingStep(step: number): void {
+    this.onBoardingStep = step;
+  }
+
+  incrementOnBoardingStep(): void {
+    this.onBoardingStep++;
+  }
+  decrementOnBoardingStep(): void {
+    this.onBoardingStep--;
+  }
+
+  registerWithGoogle(response: any) {}
 }

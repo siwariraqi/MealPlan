@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -21,7 +21,7 @@ import { User } from "../../models/User";
                   <a mat-button routerLink="/mealplan/login" color="warn" class="w-100">Already have an account? Sign in!</a>
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
-                  <div class="first-last-name-wrapper gap-2">
+                  <div class="mt-2 first-last-name-wrapper gap-2">
                     <mat-form-field appearance="outline">
                       <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                       <mat-label>First Name</mat-label>
@@ -96,11 +96,15 @@ import { User } from "../../models/User";
                   </mat-form-field>
                   <div class="text-center mt-2">
                     <button mat-raised-button color="accent" class="uppercase signupBtn" type="submit">Create an Account</button>
+                    <div class="mt-3 orRegisterWithGoogle" (click)="goToRegisterWithGoogle()">
+                      <h5>Or Sign Up With Google Instead!</h5>
+                      <mat-icon>arrow_forward</mat-icon>
+                    </div>
                   </div>
                 </form>
-                <div class="divider mt-4"></div>
+                <div class="divider mt-3"></div>
                 <mat-card-actions fxLayoutAlign="center center" class="text-center">
-                  <small class="my-3"
+                  <small class="my-2"
                     >By clicking the "Create an Account" button you agree with our <br />
                     <a mat-button color="primary" class="" disabled="true">Terms and conditions</a>
                   </small>
@@ -173,5 +177,9 @@ export class RegisterFormComponent implements OnInit {
         }
       });
     }
+  }
+
+  public goToRegisterWithGoogle() {
+    this.registerSrv.incrementOnBoardingStep();
   }
 }
