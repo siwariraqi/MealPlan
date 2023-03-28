@@ -1,6 +1,5 @@
 package org.backendmealplan.backendmealplan.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;

@@ -2,12 +2,10 @@ package org.backendmealplan.backendmealplan.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.backendmealplan.backendmealplan.enums.Role;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;

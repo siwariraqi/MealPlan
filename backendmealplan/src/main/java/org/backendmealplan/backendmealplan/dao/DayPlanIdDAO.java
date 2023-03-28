@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DayPlanIdDAO extends JpaRepository<DayPlanId, Long> {
 
-    List<DayPlanId> findByDayPlanId(Long id);
+    DayPlanId findByDayPlanId(Long id);
 }

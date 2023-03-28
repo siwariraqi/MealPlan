@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -42,9 +40,9 @@ public class UsersController {
 
 
     @PostMapping("/choosePlan")
-    public ResponseEntity<Void> choosePlan(@RequestParam Long userId, @RequestParam Long planId) {
+    public ResponseEntity<Void> choosePlan(@RequestParam Long loggedInUserId , @RequestParam Long planId) {
         try {
-            User user = this.userBL.userSetPlan(userId, planId);// update the user's plan and save
+            User user = this.userBL.userSetPlan(loggedInUserId , planId);// update the user's plan and save
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -65,35 +63,27 @@ public class UsersController {
     @DeleteMapping("/deleteAccount")
     public ResponseEntity deleteAccount(@RequestParam String email,
                                         @RequestParam String password,
-                                        @RequestParam Long userId) {
+                                        @RequestParam Long loggedInUserId ) {
         if (email == null || password == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
-            this.userBL.deleteAccount(email, password, userId);
+            this.userBL.deleteAccount(email, password, loggedInUserId );
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-    }
-
     @PostMapping("/resetAccount")
     public ResponseEntity resetAccount(@RequestParam String email,
                                        @RequestParam String password,
-                                       @RequestParam Long userId) {
+                                       @RequestParam Long loggedInUserId ) {
         if (email == null || password == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
-            this.userBL.resetAccount(email, password, userId);
+            this.userBL.resetAccount(email, password, loggedInUserId );
         } catch (UNAUTHORIZEDException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -115,9 +105,9 @@ public class UsersController {
 
 
     @GetMapping("/getUser")
-    public ResponseEntity<User> getUser(@RequestParam long userId) {
+    public ResponseEntity<User> getUser(@RequestParam long loggedInUserId ) {
         try {
-            User user = userBL.getUser(userId);
+            User user = userBL.getUser(loggedInUserId );
             user.setPassword(null); // remove password field
             return ResponseEntity.ok(user);
         } catch (userNotFoundException e) {
