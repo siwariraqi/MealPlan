@@ -22,6 +22,7 @@ export class ChooseplanComponent implements OnInit {
         console.log(this.plans);
       },
       error: (error: any) => {
+        this.snackBar.open('Failed to load plans. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
         console.error(error);
       }
     });
