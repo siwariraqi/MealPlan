@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.controllers;
+
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.*;
 import org.backendmealplan.backendmealplan.dao.*;
@@ -58,38 +59,39 @@ public class AdminController {
     private DayMealsDAO dayMealsDAO;
 
     @GetMapping("/getDayNumbers")
-    public List<DayNumberDTO> getDayNumbers(@RequestParam String planName){
+    public List<DayNumberDTO> getDayNumbers(@RequestParam String planName) {
         List<DayNumberDTO> returnedList = new ArrayList<>();
         Plan plan = plansDAO.findByPlanName(planName);
         int planLength = Integer.parseInt(plan.getLength());
         List<DayPlan> dayPlanList = dayPlanDAO.getDayNumbers(plan.getPlanId());
         List<Integer> dayNumberList = dayPlanList.stream().mapToInt(DayPlan::getDayNumber).boxed().collect(Collectors.toList());
         for (int i = 1; i <= planLength; i++) {
-            if(!dayNumberList.contains(i)){
+            if (!dayNumberList.contains(i)) {
                 List<String> mealTimes = new ArrayList<>();
                 for (MealTime mealTime : MealTime.values()) {
                     mealTimes.add(mealTime.toString());
                 }
-                returnedList.add(new DayNumberDTO(i,mealTimes));
+                returnedList.add(new DayNumberDTO(i, mealTimes));
             }
         }
-        for(DayPlan dayPlan:dayPlanList){
+        for (DayPlan dayPlan : dayPlanList) {
             List<DayMeal> dayMealList = dayMealsDAO.findByIdPlanDayId(dayPlan.getDayPlanKey().getDayPlanId());
-            if(dayMealList.size()<5){
+            if (dayMealList.size() < 5) {
                 List<String> mealTimes = new ArrayList<>();
                 List<String> typeList = dayMealList.stream().map(DayMeal::getType).collect(Collectors.toList());
                 for (MealTime mealTime : MealTime.values()) {
-                    if(!typeList.contains(mealTime.toString()))
+                    if (!typeList.contains(mealTime.toString()))
                         mealTimes.add(mealTime.toString());
                 }
                 long count = typeList.stream().filter(str -> str.equals("Snacks")).count();
-                if (count==1)
+                if (count == 1)
                     mealTimes.add("Snacks");
-                returnedList.add(new DayNumberDTO(dayPlan.getDayNumber(),mealTimes));
+                returnedList.add(new DayNumberDTO(dayPlan.getDayNumber(), mealTimes));
             }
         }
         return returnedList;
     }
+
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -208,9 +210,9 @@ public class AdminController {
             for (DayMealDTO dayM : mealDTO.getDayMealDTOList()) {
                 Plan plan = plansDAO.findByPlanName(dayM.getPlan());
                 Optional<DayPlan> dayPlanOptional = dayPlanDAO.getDayNumber(plan.getPlanId(), dayM.getDayNumber());
-                if(dayPlanOptional.isEmpty()) {
+                if (dayPlanOptional.isEmpty()) {
                     DayPlanId dayPlanId1 = new DayPlanId();
-                    DayPlanId dayPlanId =  planBL.addDayPlanId(dayPlanId1);
+                    DayPlanId dayPlanId = planBL.addDayPlanId(dayPlanId1);
                     DayPlan dayPlan = new DayPlan();
                     dayPlan.setDayPlanKey(new DayPlanKey(plan, dayPlanId));
                     dayPlan.setDayNumber(dayM.getDayNumber());
