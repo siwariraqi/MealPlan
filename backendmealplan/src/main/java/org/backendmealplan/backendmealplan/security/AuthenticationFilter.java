@@ -42,8 +42,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                     return;
                 }
             }
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return;
         }
         filterChain.doFilter(request, response);
     }
