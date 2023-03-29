@@ -10,9 +10,9 @@ interface Keyable {
     <div class="container">
       <img src=" /assets/images/welcome/{{currScreenObj?.['img']}}" />
       <div class="textWrapper">
-        <h2 class="welcomeTitle">
+        <h1 class="welcomeTitle">
           {{ currScreenObj?.['title'] }}
-        </h2>
+        </h1>
         <p class="WelcomeText">
           {{ currScreenObj?.['text'] }}
         </p>

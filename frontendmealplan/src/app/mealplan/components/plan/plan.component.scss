@@ -1,0 +1,78 @@
+.planContainer {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Montserrat;
+    text-align: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 11px;
+    padding: 10px;
+    margin: 10px;
+    width: 350px;
+  }
+
+  .my-text {
+    font-size: 1.2rem; /* adjust the value as needed */
+    font-weight: bold;
+    text-decoration: underline;
+    font-family: 'Montserrat', sans-serif ;
+  }
+
+  .bigger-title{
+    font-size: 1.5rem; /* adjust the value as needed */
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif ;
+  }
+
+  .custom-button {
+    font-size: 1.2em; /* Adjust the value to your liking */
+  }
+  
+  .bullet {
+    font-weight: bold;
+    display: none;
+    width: 1em;
+    margin-left: -0.5em;
+    font-size: 1.5em;
+  }
+
+  .planContainer ul {
+    text-align: left;
+    margin-left: 30px;
+  }
+
+  .secondary-font {
+    font-family: 'Montserrat', sans-serif ;
+  }
+
+  ul {
+    list-style: none;
+    font-size: 1rem; /* adjust the value as needed */
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  
+  .bullet {
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+    font-size: 1.5em;
+  }
+
+.lenSpan{
+  color: grey;
+  font-size: medium;
+  font-weight: bold;
+}
+
+  .right-bottom {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+

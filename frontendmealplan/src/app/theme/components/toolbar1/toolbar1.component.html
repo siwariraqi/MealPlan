@@ -1,27 +1,37 @@
-<mat-toolbar id="top-toolbar" class="top-toolbar">
+<!-- <mat-toolbar id="top-toolbar" class="top-toolbar">
   <div class="theme-container" fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutAlign="start center"> 
-      <app-contacts fxLayout="row" fxLayoutAlign="start center"></app-contacts>         
+    <div fxLayout="row" fxLayoutAlign="start center">
+      Welcome User
+      <app-user-menu></app-user-menu>
+
+      <app-contacts fxLayout="row" fxLayoutAlign="start center"></app-contacts>
     </div>
     <app-social-icons fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-md></app-social-icons>
-    <div fxLayout="row" fxLayoutAlign="end center" class=""> 
+    <div fxLayout="row" fxLayoutAlign="end center" class="">
       <app-lang></app-lang>
       <app-user-menu></app-user-menu>
-    </div>    
-  </div>           
-</mat-toolbar>  
-<mat-toolbar id="main-toolbar" class="mat-elevation-z2"> 
+    </div>
+  </div>
+</mat-toolbar> -->
+<mat-toolbar id="main-toolbar" class="mat-elevation-z2">
   <div class="theme-container" fxLayout="row" fxLayoutAlign="space-between center">
-    <span fxHide="false" fxHide.gt-sm>
+    <!-- <div class="burgerLogoContainer"> -->
+    <span *ngIf="isLoggedIn" fxHide="false" fxHide.gt-sm>
       <button mat-icon-button (click)="sidenavToggle()">
         <mat-icon class="mat-icon-lg">menu</mat-icon>
-      </button> 
+      </button>
     </span>
-    <a class="logo" routerLink="/" ><app-logo></app-logo></a> 
-    <div fxShow="false" fxShow.gt-sm class="horizontal-menu">            
-        <app-horizontal-menu [menuParentId]="0"></app-horizontal-menu>
-    </div> 
-    <div fxLayout="row" fxLayoutAlign="start center">
+    <a class="logo" routerLink="/"><app-logo></app-logo></a>
+    <!-- </div> -->
+
+    <div *ngIf="isLoggedIn" fxShow="false" fxShow.gt-sm class="horizontal-menu">
+      <app-horizontal-menu [menuParentId]="0"></app-horizontal-menu>
+      <app-user-menu></app-user-menu>
+    </div>
+    <a *ngIf="!isLoggedIn" href="/mealplan/login" class="login">Login</a>
+    <h5 *ngIf="isLoggedIn" class="user">Welcome {{ currentUser.firstName }}</h5>
+
+    <!-- <div fxLayout="row" fxLayoutAlign="start center">
       <button (click)="reservation()" mat-icon-button [matTooltip]="'RESERVATION' | translate" fxShow="false" fxShow.gt-xs="true">
         <mat-icon>event</mat-icon>
       </button> 
@@ -37,6 +47,6 @@
                   matBadgeSize="small" 
                   matBadgeColor="warn">shopping_cart</mat-icon>
       </button>  
-    </div>   
-  </div>     
+    </div>    -->
+  </div>
 </mat-toolbar>

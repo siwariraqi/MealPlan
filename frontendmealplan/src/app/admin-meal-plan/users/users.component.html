@@ -1,0 +1,192 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" class="p-2">
+    <div fxLayout="row">
+        <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+            <mat-button-toggle value="search">
+                <mat-icon>search</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <form class="user-search" [class.show]="controls.value == 'search'">
+        <mat-form-field class="user-search-input">
+            <input matInput placeholder="Search user by name..." [(ngModel)]="searchText" name="search">
+        </mat-form-field>
+    </form>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-button-toggle-group #viewType="matButtonToggleGroup" appearance="legacy" value="grid">
+            <mat-button-toggle value="grid">
+                <mat-icon>view_module</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="list">
+                <mat-icon>view_list</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+</div>
+
+<div *ngIf="viewType.value == 'grid'" fxLayout="row wrap">
+    <div *ngFor="let user of users " fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" class="p-2">
+        <mat-card class="p-0">
+            <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+                <h3 class="user-name">{{user.firstName}} {{user.lastName}}</h3>
+
+                <h3 class="user-name">{{user.userRole}}</h3>
+                <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+            </div>
+            <mat-menu #menu="matMenu" xPosition="before" overlapTrigger="true">
+                <span (mouseleave)="menuTrigger.closeMenu()">
+                    <!-- (click)="openUserDialog(user)" -->
+                    <button mat-menu-item (click)="resetUser(user.userId)">
+                        <mat-icon>refresh</mat-icon>
+                        <span>Reset</span>
+                    </button>
+                    <!-- (click)="deleteUser(user);" -->
+                    <button mat-menu-item (click)="deleteUser(user.userId)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                    <button changePlan mat-menu-item (click)="openDialog(user.userId)">
+                        <mat-icon>mode_edit</mat-icon>
+                        <span>Change Plan</span>
+                      </button>
+                      <!--   [disabled]="user.userRole !== 'admin'" -->
+                      <button (click)="changeUserRole(user.userId,true)" mat-menu-item>
+                        <mat-icon>add</mat-icon>
+                        <span>Set Admin</span>
+                      </button>
+                      <!-- [disabled]="user.userRole === 'admin'" -->
+                      <button (click)="changeUserRole(user.userId,false)" mat-menu-item >
+                        <mat-icon>remove</mat-icon>
+                        <span>Unset Admin</span>
+                      </button>
+                      
+  
+                </span>
+            </mat-menu>
+            <div class="user-content">
+                <div fxFlex="70" fxLayout="column" class="user-details transition-2">
+                    <p fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="text-muted">mail_outline</mat-icon>
+                        <span>{{user.email}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="text-muted">call</mat-icon>
+                        <span>{{user.phoneNumber}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="text-muted">card_membership</mat-icon>
+                        <span>{{user.plan.planName+' '}}Plan</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="text-muted">date_range</mat-icon>
+                        <span>Registration {{user.registerDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span>
+                    </p>
+
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<div *ngIf="viewType.value == 'list'" fxLayout="row wrap">
+    <div *ngFor="let user of users " fxFlex="100" class="p-2">
+        <mat-card class="p-0">
+            <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+                <h3 class="user-name">{{user.firstName}} {{user.lastName}}</h3>
+                <!-- <h3  class="user-name">Admin</h3> -->
+                <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
+            <mat-menu #menu="matMenu" xPosition="before" overlapTrigger="true">
+                <span (mouseleave)="menuTrigger.closeMenu()">
+                    <!-- (click)="openUserDialog(user)" -->
+                    <button mat-menu-item>
+                        <mat-icon>refresh</mat-icon>
+                        <span>Reset</span>
+                    </button>
+                    <!-- (click)="deleteUser(user);" -->
+                    <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>mode_edit</mat-icon>
+                        <span>Change Plan</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>add</mat-icon>
+                        <span changeUserRole(user.userId,true)>Set Admin</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>remove</mat-icon>
+                        <span>Unset Admin</span>
+                    </button>
+                </span>
+            </mat-menu>
+            <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center">
+                    <!-- <div class="user-img">
+                        <img *ngIf="user.profile.image" [src]="user.profile.image" class="transition-2" [class.blocked]="user.settings.isDeleted"> 
+                        <img *ngIf="!user.profile.image" src="assets/img/users/default-user.jpg" class="transition-2" [class.blocked]="user.settings.isDeleted">  
+                        <mat-icon *ngIf="user.settings.isDeleted" color="warn">block</mat-icon>   
+                    </div>                                            
+                    <div class="user-social">
+                        <mat-slide-toggle color="primary" [checked]="user.settings.isDeleted" (change)="user.settings.isDeleted = !user.settings.isDeleted"></mat-slide-toggle>
+                    </div> -->
+                </div>
+                <div fxFlex="80" fxFlex.xs="70" fxLayout="row" fxLayout.xs="column" class="user-details transition-2">
+                    <div fxFlex="30" fxFlex.xs="100" fxLayout="column">
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">mail_outline</mat-icon>
+                            <span>{{user.email}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">call</mat-icon>
+                            <span>{{user.phoneNumber}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">date_range</mat-icon>
+                            <!-- <span>Joined {{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span> -->
+                        </p>
+                    </div>
+                    <div fxFlex="30" fxFlex.xs="100" fxLayout="column">
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">card_membership</mat-icon>
+                            <span>{{user.plan.planName+' '}}Plan</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">location_on</mat-icon>
+                            <!-- <span>{{user.contacts.address}}</span> -->
+                        </p>
+                    </div>
+                    <div fxFlex="50" fxFlex.xs="120" fxLayout="column">
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">event_available</mat-icon>
+                            <span>Registration {{user.registerDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="text-muted">date_range</mat-icon>
+                            <!-- <span>Joined {{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span> -->
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<!-- <div *ngIf="users.length" fxLayout="row wrap">
+    <div fxFlex="100" class="p-2"> 
+        <mat-card class="p-0 text-center">           
+            <pagination-controls class="theme-pagination" [autoHide]="autoHide" [maxSize]="maxSize" (pageChange)="onPageChanged($event)"></pagination-controls>
+        </mat-card>
+    </div>
+</div> -->
+
+<!-- <div *ngIf="!users.length" fxLayout="column" fxLayoutAlign="center center" class="user-spinner">   
+    <mat-spinner color="primary"></mat-spinner>    
+</div> -->

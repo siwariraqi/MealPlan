@@ -1,6 +1,14 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.backendmealplan.backendmealplan.enums.Role;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,25 +23,34 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String password;
-
-    private String phoneNumber;
-
-    private String userName;
-
+    @Email(message = "Invalid email format")
     private String email;
 
+    @NotBlank
+    private String password;
+
+    @NotNull
+    private Role userRole = Role.User;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
+
+    @NotBlank
+    private String phoneNumber;
+
+    @NotNull
     @OneToOne()
-    @JoinColumn(name="info_id")
+    @JoinColumn(name="info_id", unique=true)
     private UserInfo userInfo;
 
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
+
+    private Date registerDate;
 
     @OneToMany (mappedBy = "user")
     private List<Payment> payments;
@@ -45,7 +62,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "grocery_list_id"))
     Set<GroceryList> changes;
 
+    @JsonIgnore
     @OneToMany (mappedBy = "user")
     private List<UserFeedback> feedbacks;
-
 }

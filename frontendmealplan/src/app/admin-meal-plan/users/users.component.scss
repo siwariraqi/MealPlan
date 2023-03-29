@@ -1,0 +1,75 @@
+.user-name{
+    padding: 0 12px;
+    font-weight: 400;
+}
+.user-content{
+    padding: 10px;
+    .user-img{
+        position: relative;
+        img{
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            &.blocked{
+                opacity: 0.5;
+            }
+        }
+        .mat-icon{
+            position: absolute;
+            top: -8px;
+            left: -8px;            
+            font-size: 96px;
+            height: 96px;
+            width: 96px;            
+        }
+    }
+    .mat-slide-toggle{
+        margin-top: 15px;
+    }
+    .user-details{
+        p{
+            margin-bottom: 0;
+        }
+        span{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .mat-icon{
+            padding: 2px 10px;
+        } 
+        &.blocked{
+            opacity: 0.5;
+        }
+    }    
+}
+
+.user-search{
+    width: 0;
+    overflow: hidden;
+    transition: 0.3s;
+    .mat-form-field{
+        width: 100% !important;
+        text-align: center !important;
+        height: 36px;        
+    }
+    .mat-form-field-infix{
+        padding: 5px;
+    }
+    .mat-input-element{
+        text-align: center;
+    }
+    &.show{
+        width: 100%;
+        overflow: visible;
+    }
+}
+
+.user-spinner{
+    position: absolute;
+    top:0; right: 0; bottom: 0; left:0;
+}
+
+.mat-card{
+    overflow: hidden;
+}

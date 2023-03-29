@@ -1,0 +1,58 @@
+<form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()" autocomplete="off" fxLayout="row wrap">
+    <div fxFlex="100">
+        <h2 class="secondary-font text-center mb-3 bigger-title">Account Details</h2> 
+    </div>
+    <!-- <div fxFlex="100" fxFlex.gt-sm="40" class="px-3 mb-3">  
+        <app-image-upload [base64]="infoForm.controls.image.value"
+                        [fileSize]="400"    
+                        [acceptTypes]="'image/png, image/jpeg, image/jpg'"
+                        (onFileChange)="fileChange($event)">
+        </app-image-upload>  
+    </div>  -->
+    <div fxFlex="100" fxFlex.gt-sm="60" class="px-3 bigger-font" ngClass.sm="mt-2" ngClass.xs="mt-2"> 
+        
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="FirstName" formControlName="FirstName">
+            <mat-error *ngIf="infoForm.controls.FirstName.hasError('minlength')">Name isn't long enough, minimum of 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="LastName" formControlName="LastName">
+            <mat-error *ngIf="infoForm.controls.LastName.hasError('minlength')">Name isn't long enough, minimum of 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="infoForm.controls.email.hasError('pattern')">Invalid email address</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" formControlName="phone">
+            <mat-error *ngIf="infoForm.controls.phone.hasError('pattern')">Invalid phone number format</mat-error>
+        </mat-form-field>  
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Birthday</mat-label>
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date" max="{{today | date:'2005-01-01'}}">
+            <mat-error *ngIf="infoForm.get('birthday').hasError('invalidAge')">Ages should be 18-120</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Gender</mat-label>
+            <mat-select id="gender" name="gender" [formControl]="genderFormControl">
+              <mat-option value="" disabled>Please select</mat-option>
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div> 
+    
+    <div fxFlex="100" class="text-center mt-2">
+        <button mat-raised-button color="primary" type="submit" class="uppercase custom-button">Update profile</button>
+    </div>  
+</form> 

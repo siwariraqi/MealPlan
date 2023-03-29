@@ -1,0 +1,70 @@
+<button mat-icon-button [matMenuTriggerFor]="messagesMenu" (click)="openMessagesMenu()" #messagesMenuTrigger="matMenuTrigger">
+    <mat-icon>notifications</mat-icon>
+</button>
+<mat-menu #messagesMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu messages">
+    <span (mouseleave)="messagesMenuTrigger.closeMenu()">
+        <mat-tab-group backgroundColor="primary" (click)="stopClickPropagate($event)" [selectedIndex]="selectedTab">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>message</mat-icon>
+                </ng-template>
+                <mat-card class="content" [perfectScrollbar]="">
+                  <div fxLayout="column" fxLayoutAlign="none">
+                      <button mat-button *ngFor="let message of messages">
+                          <img src="{{ ( message.image || (message.name | profilePicture)) }}" width="50">   
+                          <div fxLayout="column" fxLayoutAlign="none" class="w-100">
+                              <div fxLayout="row" fxLayoutAlign="space-between start">
+                                  <span class="name">{{message.name}}</span>
+                                  <span class="info"><mat-icon>access_time</mat-icon> {{message.time}}</span>
+                              </div>
+                              <span class="text text-muted">{{message.text}}</span>
+                          </div>
+                      </button>
+                    </div>             
+                </mat-card>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>description</mat-icon>
+                </ng-template>
+                <mat-card class="content" [perfectScrollbar]="">
+                  <div fxLayout="column" fxLayoutAlign="none">
+                      <button mat-button *ngFor="let file of files">
+                          <div fxLayout="column" fxLayoutAlign="none" class="w-100">
+                              <div fxLayout="row" fxLayoutAlign="space-between start">
+                                  <span class="name">{{file.text}}</span>
+                                  <span class="info">{{file.size}}</span>
+                              </div>
+                              <mat-progress-bar
+                                  class="example-margin"
+                                  [color]="file.color"
+                                  mode="indeterminate"
+                                  [value]="file.value">
+                              </mat-progress-bar>
+                          </div>
+                      </button>
+                    </div>             
+                </mat-card>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>event</mat-icon>
+                </ng-template>
+                <mat-card class="content" [perfectScrollbar]="">
+                  <div fxLayout="column" fxLayoutAlign="none">
+                      <button mat-button *ngFor="let meeting of meetings">  
+                          <div fxLayout="column" fxLayoutAlign="center center" class="row-1">
+                              <span class="name">{{meeting.day}}</span>
+                              <span class="name">{{meeting.month}}</span>
+                          </div>
+                          <div fxLayout="column" fxLayoutAlign="none">
+                              <span class="name">{{meeting.title}}</span>
+                              <span class="text text-muted">{{meeting.text}}</span>
+                          </div>
+                      </button>
+                    </div>             
+                </mat-card>
+            </mat-tab>
+        </mat-tab-group>
+    </span>
+</mat-menu>

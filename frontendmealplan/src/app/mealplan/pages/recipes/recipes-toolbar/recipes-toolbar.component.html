@@ -1,0 +1,34 @@
+<mat-card fxLayout="row" fxLayoutAlign="space-between center" class="w-100 p-2 filter-row mat-elevation-z1 text-muted">
+    <button *ngIf="showSidenavToggle" mat-icon-button (click)="sidenavToggle()">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <div>
+        <mat-form-field>
+            <mat-select placeholder="{{sortings[0]}}" [(value)]="selectedDuration" (selectionChange)="changeTime()">
+                <mat-option *ngFor="let time of times" [value]="time">{{time}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="{{sortings[1]}}" multiple [(ngModel)]="selectedDiets" (selectionChange)="changeDiets()">
+              <mat-option *ngFor="let type of recipesService.getDietTypes()" [value]="type">{{type}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" placeholder="Search by name" [(ngModel)]="searchQuery" (input)="onSearch()">
+        </mat-form-field>
+        
+    </div>
+    <div>
+        <button mat-icon-button (click)="resetFilters()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button (click)="changeViewType('list', 100)">
+            <mat-icon>view_list</mat-icon>
+        </button>
+        <button fxShow="false" fxShow.gt-md mat-icon-button (click)="changeViewType('grid', 25)">
+            <mat-icon>view_comfy</mat-icon>
+        </button> 
+    </div>
+</mat-card>

@@ -24,7 +24,11 @@
     "MENU_ITEM": "Menu Item",
     "CONTACT": "Contact",
     "ABOUT_US": "About Us",
-    "ADMIN": "Admin"
+    "ADMIN": "Admin",
+    "DAILY_PLAN": "Daily Plan",
+    "RECIPES":"Recipes",
+    "EDUCATION": "Education",
+    "GROCERY_LIST": "Grocery List"
   },
   "ADMIN_NAV": {  
     "DASHBOARD": "Dashboard",  
