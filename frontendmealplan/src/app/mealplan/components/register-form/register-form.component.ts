@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -11,17 +11,17 @@ import { User } from "../../models/User";
   selector: "app-register-form",
   template: `
     <div class="container">
-      <div class="px-3 py-5 ">
+      <div class="px-3 py-4 ">
         <div class="theme-container ">
-          <mat-card class="p-0 o-hidden px-3 py-3 formContainer">
+          <mat-card class="o-hidden px-3 pt-3 formContainer">
             <div fxLayout="column">
-              <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" ngClass.gt-sm="px-5" ngClass.sm="px-3" ngClass.xs="px-3">
+              <div fxFlex="100" fxFlex.gt-sm="50" class="pt-1 pb-0" ngClass.gt-sm="px-4" ngClass.sm="px-3" ngClass.xs="px-3">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
-                  <h1 class="">Register</h1>
+                  <h2 class="">Register</h2>
                   <a mat-button routerLink="/mealplan/login" color="warn" class="w-100">Already have an account? Sign in!</a>
                 </div>
                 <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
-                  <div class="first-last-name-wrapper gap-2">
+                  <div class="mt-2 first-last-name-wrapper gap-2">
                     <mat-form-field appearance="outline">
                       <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                       <mat-label>First Name</mat-label>
@@ -37,7 +37,7 @@ import { User } from "../../models/User";
                       <mat-error *ngIf="registerForm.controls.lname.hasError('invalidLastName')">Invalid Input</mat-error>
                     </mat-form-field>
                   </div>
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="email" required />
@@ -45,7 +45,7 @@ import { User } from "../../models/User";
                     <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
                     <mat-label>Phone Number</mat-label>
                     <input matInput placeholder="Phone Number" formControlName="phone" required />
@@ -55,7 +55,7 @@ import { User } from "../../models/User";
                     </mat-error>
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Password</mat-label>
                     <input
@@ -75,7 +75,7 @@ import { User } from "../../models/User";
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
-                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-form-field appearance="outline" class="w-100 mt-0">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Confirm Password</mat-label>
                     <input
@@ -96,12 +96,16 @@ import { User } from "../../models/User";
                   </mat-form-field>
                   <div class="text-center mt-2">
                     <button mat-raised-button color="accent" class="uppercase signupBtn" type="submit">Create an Account</button>
+                    <div class="mt-3 orRegisterWithGoogle" (click)="goToRegisterWithGoogle()">
+                      <h5>Or Sign Up With Google Instead!</h5>
+                      <mat-icon>arrow_forward</mat-icon>
+                    </div>
                   </div>
                 </form>
-                <div class="divider mt-4"></div>
+                <div class="divider mt-3"></div>
                 <mat-card-actions fxLayoutAlign="center center" class="text-center">
-                  <small class="my-3"
-                    >By clicking the "Create an Account" button you agree with our <br />
+                  <small class="my-1"
+                    >By creating an Account you agree with our <br />
                     <a mat-button color="primary" class="" disabled="true">Terms and conditions</a>
                   </small>
                 </mat-card-actions>
@@ -165,13 +169,18 @@ export class RegisterFormComponent implements OnInit {
           this.snackBar.open("You registered successfully!", "×", {
             panelClass: "success",
             verticalPosition: "bottom",
-            duration: 3000,
+            duration: 2000,
           });
           this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+            this.registerSrv.clearUserInfoFromLocalStorage();
             this.router.navigateByUrl("/mealplan/login");
           });
         }
       });
     }
+  }
+
+  public goToRegisterWithGoogle() {
+    this.registerSrv.incrementOnBoardingStep();
   }
 }

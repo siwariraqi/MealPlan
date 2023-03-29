@@ -42,12 +42,15 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { AppSettings } from "../app.settings";
 import { AccountComponent } from "./pages/account/account.component";
 import { AccountModule } from "./pages/account/account.module";
-import { ShareComponent } from './pages/dayMeal/share/share.component';
-import { PrintComponent } from './pages/dayMeal/print/print.component';
-import { RecipesComponent } from './pages/recipes/recipes.component';
+import { ShareComponent } from "./pages/dayMeal/share/share.component";
+import { PrintComponent } from "./pages/dayMeal/print/print.component";
+import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
-import { DietTypeComponent } from './pages/dayMeal/diet-type/diet-type.component';
-import { EducationComponent } from './pages/education/education.component';
+import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
+import { EducationComponent } from "./pages/education/education.component";
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -78,7 +81,9 @@ import { EducationComponent } from './pages/education/education.component';
     RecipesComponent,
     RecipesToolbarComponent,
     DietTypeComponent,
-    EducationComponent
+    EducationComponent,
+    LandingPageComponent,
+    RegisterGoogleComponent,
   ],
 
   imports: [
@@ -100,6 +105,7 @@ import { EducationComponent } from './pages/education/education.component';
     MatRadioModule,
     MatDatepickerModule,
     AccountModule,
+    ReactiveFormsModule,
   ],
 })
 export class MealplanModule {}

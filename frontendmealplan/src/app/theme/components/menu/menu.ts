@@ -30,7 +30,7 @@ export const horizontalMenuItems = [
   //------
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
-  new Menu(303, "NAV.EDUCATION", "/mealplan/education", null, null, false, 0),
+  //   new Menu(303, "NAV.EDUCATION", "/mealplan/education", null, null, false, 0),
   new Menu(304, "NAV.GROCERY_LIST", "/mealplan/groceryList", null, null, false, 0),
   //------
   //   new Menu(305, "NAV.CONTACT", "/contact", null, null, false, 0),
@@ -95,7 +95,7 @@ export const verticalMenuItems = [
   //------
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
-  new Menu(303, "NAV.EDUCATION", "/mealplan/education", null, null, false, 0),
+  //   new Menu(303, "NAV.EDUCATION", "/mealplan/education", null, null, false, 0),
   new Menu(304, "NAV.GROCERY_LIST", "/mealplan/groceryList", null, null, false, 0),
   //------
   //   new Menu(305, "NAV.CONTACT", "/contact", null, null, false, 0),

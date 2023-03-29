@@ -1,7 +1,7 @@
 .container {
   margin-top: -2vh;
   width: 90vw;
-  height: 65vh;
+  height: 64vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +81,7 @@
   width: 10vw;
   height: 110px;
   margin: 20px;
-  padding: 30px;
+  padding: 30px 40px;
   background: #ffffff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
@@ -102,9 +102,22 @@
 
 @media screen and (max-width: 600px) {
   .container {
-    width: 95vw;
+    width: 98vw;
+    .content {
+      width: 90vw;
+    }
   }
   .box {
     height: 80px;
+    width: 16vw;
+    margin: 10px;
+    padding: 30px 20px;
+    img {
+      width: 70%;
+    }
+  }
+  .text {
+    width: 100%;
+    padding: 2px;
   }
 }
