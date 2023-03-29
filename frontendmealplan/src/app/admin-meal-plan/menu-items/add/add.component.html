@@ -4,8 +4,8 @@
             <form autocomplete="off" fxLayout="row wrap">
 
                 <!-- *ngIf="showImage" -->
-                <div fxFlex="40" class="px-2" >
-                    <app-image-upload [base64]="imageUrl" [fileSize]="400" 
+                <div fxFlex="40" class="px-2" required >
+                    <app-image-upload [base64]="imageUrl" [fileSize]="400" required
                         [acceptTypes]="'image/png, image/jpeg, image/jpg'" (onFileChange)="fileChange($event)">
                     </app-image-upload>
                 </div>
@@ -15,7 +15,7 @@
                         <div fxFlex="100" fxFlex.gt-sm="100" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Meal Name</mat-label>
-                                <input [(ngModel)]="MealName" [ngModelOptions]="{ standalone: true }" matInput required>
+                                <input  [(ngModel)]="MealName" [ngModelOptions]="{ standalone: true }" matInput [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
 
@@ -27,7 +27,7 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Cook Time (min)</mat-label>
                                 <input [(ngModel)]="CookTime" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" [disabled]="isOvernightCooking" required>
+                                    type="number" [disabled]="isOvernightCooking" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
 
@@ -39,7 +39,7 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Prepare Time (min)</mat-label>
                                 <input [(ngModel)]="PrepareTime" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" [disabled]="isOvernightPreparing" required>
+                                    type="number" [disabled]="isOvernightPreparing" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
 
@@ -47,35 +47,35 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Calories (Kcal) </mat-label>
                                 <input [(ngModel)]="Calories" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" required>
+                                    type="number" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
                         <div fxFlex="50" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Fat (gr)</mat-label>
                                 <input [(ngModel)]="Fat" [ngModelOptions]="{ standalone: true }" matInput type="number"
-                                    required>
+                                [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
                         <div fxFlex="50" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Protien (gr)</mat-label>
                                 <input [(ngModel)]="Protien" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" required>
+                                    type="number" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
                         <div fxFlex="50" fxFlex.gt-sm="50" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Carbs (gr)</mat-label>
                                 <input [(ngModel)]="Carbs" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" required>
+                                    type="number" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
                         <div fxFlex="100" fxFlex.gt-sm="50" class="px-3" fxLayout="column wrap">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Fibre (gr)</mat-label>
                                 <input [(ngModel)]="Fibre" [ngModelOptions]="{ standalone: true }" matInput
-                                    type="number" required>
+                                    type="number" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
 
@@ -94,11 +94,11 @@
                         <h4>Insert instructions:</h4>
                     </div>
 
-                    <div fxFlex="55" class="px-3">
+                    <div fxFlex="58.5" class="px-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Instructions</mat-label>
                             <textarea [(ngModel)]="instruction" [ngModelOptions]="{ standalone: true }" matInput
-                                rows="1" required></textarea>
+                                rows="1" [required]="!isSubmitted1"></textarea>
                         </mat-form-field>
                     </div>
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
@@ -126,11 +126,11 @@
                     <div fxFlex="15" fxFlex.gt-sm="15" class="px-3" style="margin-top: 20px;">
                         <h4>Insert Tips:</h4>
                     </div>
-                    <div fxFlex="55" class="px-3">
+                    <div fxFlex="58.5" class="px-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Tips</mat-label>
                             <textarea [(ngModel)]="Tip" [ngModelOptions]="{ standalone: true }" matInput rows="1"
-                                required></textarea>
+                            [required]="!isSubmitted2"></textarea>
                         </mat-form-field>
                     </div>
                     <div fxFlex="10" fxFlex.gt-sm="10" class="px-3">
@@ -157,18 +157,18 @@
 
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
-                <div fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
+                <div  *ngIf="!isEdit" fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
 
 
-                <div fxFlex="100" class="px-2">
+                <div *ngIf="!isEdit" fxFlex="100" class="px-2">
                     <div fxFlex="15" fxFlex.gt-sm="15" class="px-3">
-                        <h4>Insert meal to day plan:</h4>
+                        <h4>Insert meal<br> to day plan:</h4>
                     </div>
 
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select Plan" [(ngModel)]="plan"
-                                [ngModelOptions]="{ standalone: true }" required (selectionChange)="planSelection()">
+                                [ngModelOptions]="{ standalone: true }" [required]="!isSubmitted4" (selectionChange)="planSelection()">
                                 <mat-option *ngFor="let plan of plans" [value]="plan">{{ plan }}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -177,7 +177,7 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select day" [(ngModel)]="dayNumber"
-                                [ngModelOptions]="{ standalone: true }" required (selectionChange)="daySelection()">
+                                [ngModelOptions]="{ standalone: true }" [required]="!isSubmitted4" (selectionChange)="daySelection()">
                                 <mat-option *ngFor="let dayNumber of dayNumbers" [value]="dayNumber">{{ dayNumber.dayNumber}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -186,7 +186,7 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select Type" [(ngModel)]="type"
-                                [ngModelOptions]="{ standalone: true }" required>
+                                [ngModelOptions]="{ standalone: true }" [required]="!isSubmitted4">
                                 <mat-option *ngFor="let type of types" [value]="type">{{ type}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -225,14 +225,14 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Product Name</mat-label>
-                            <input matInput [(ngModel)]="productName" [ngModelOptions]="{ standalone: true }" required>
+                            <input matInput [(ngModel)]="productName" [ngModelOptions]="{ standalone: true }" [required]="!isSubmitted3">
                         </mat-form-field>
                     </div>
 
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Amount</mat-label>
-                            <input matInput type="number" [(ngModel)]="amount" [ngModelOptions]="{ standalone: true }">
+                            <input (click)="isSubmitted=false;  " matInput type="number" [(ngModel)]="amount" [ngModelOptions]="{ standalone: true }">
                         </mat-form-field>
                     </div>
 
@@ -248,7 +248,7 @@
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
                         <mat-form-field>
                             <mat-select placeholder="Select Category" [(ngModel)]="category"
-                                [ngModelOptions]="{ standalone: true }" required>
+                                [ngModelOptions]="{ standalone: true }" [required]="!isSubmitted3">
                                 <mat-option *ngFor="let category of categories" [value]="category">{{ category
                                     }}</mat-option>
                             </mat-select>
@@ -278,7 +278,7 @@
                 </div>
 
                 <div fxFlex="500" class="mt-2 text-center w-100">
-                    <button (click)="OnSubmit()" style="width: 100%;" mat-raised-button color="primary" type="submit"
+                    <button (click)="OnSubmit() " style="width: 100%;" mat-raised-button color="primary" type="submit"
                         class="uppercase">Submit</button>
                 </div>
 

@@ -1,4 +1,4 @@
-import { Component,OnInit} from '@angular/core';
+import { Component,ElementRef,OnInit, ViewChild} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
@@ -11,6 +11,8 @@ import { AdminService } from 'src/app/mealplan/services/admin.service';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+  @ViewChild('mealNameInput') 
+  mealNameInput: ElementRef;
   mealDTO:MealDTO=new MealDTO();
   units = ['oz', 'teaspoon', 'cup', 'tablespoon', 'slice', 'lb', 'handful', 'punnet'];
   categories = ['Meat', 'Dairy', 'Fruit', 'Vegetables', 'Others']; 
@@ -53,38 +55,56 @@ export class AddComponent implements OnInit {
   isOvernightCooking: boolean = false;
   isOvernightPreparing:boolean=false
 
+  isSubmitted=false;
 
+  isEdit=false;
   constructor(private adminService:AdminService, public snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
+    this.editMealInformation();
+    this.isEdit=true;  
   }
 
   updateCookTime(){
+    
     this.CookTime='Overnight';
   }
-
+  
+  isSubmitted3=true
   addIngredient() {
+    this.isSubmitted=true; 
     const ingredient = { productName: this.productName, amount: this.amount, unit: this.unit, category: this.category };
-    if(ingredient.productName!==''&&ingredient.category!=='')
+    if(ingredient.productName!==''&&ingredient.category!==''){
     this.ingredients.push(ingredient);
+    this.isSubmitted3=true
+  }else{
+    this.isSubmitted3=false;
+  }
     this.productName = '';
     this.amount = null;
     this.unit = '';
     this.category = '';
+
 }
 
 removeIngredient(index: number) {
   this.ingredients.splice(index, 1);
 }
-
+isSubmitted4=true
 addDay() {
+  this.isSubmitted=true; 
    const dayPlanType={plan:this.plan,dayNumber:this.dayNumber,type:this.type}
-  if(dayPlanType.plan!==''&&dayPlanType.dayNumber!==null &&dayPlanType.type!=='')
+  if(dayPlanType.plan!==''&&dayPlanType.dayNumber!==null &&dayPlanType.type!==''){
   this.returnDayNumber.push({plan:this.plan,dayNumber:this.dayNumber.dayNumber,type:this.type});
   this.dayPlanTypes.push(dayPlanType);
+  this.isSubmitted4=true
+}else{
+  this.isSubmitted4=false;
+}
   this.plan='';
   this.dayNumber=null;
   this.type='';
+
 }
 
 
@@ -92,25 +112,38 @@ removeDay(index:number){
  this.dayPlanTypes.splice(index,1)
 }
 
-
+isSubmitted2=true
 addTips(){ 
+   this.isSubmitted=true; 
   if(this.Tip!=='')
   {
   this.Tips.push(this.Tip)
   this.TipsDB=this.TipsDB+'<li>'+this.Tip+'</li>'
-  }
+  this.isSubmitted2=true
+}else{
+  this.isSubmitted2=false;
+}
+  this.Tip='';
+
 }
 
 removeTips(index:number){
+  
  this.Tips.splice(index,1);
 }
 
-
-addInstruction(){
+isSubmitted1=true;
+addInstruction(){ 
+this.isSubmitted=true; 
 if(this.instruction!=''){
 this.instructions.push(this.instruction);
 this.instuctionsDB=this.instuctionsDB+'<li>'+this.instruction+'</li>';
+this.isSubmitted1=true
+}else{
+  this.isSubmitted1=false;
 }
+this.instruction='';
+
 }
 
 removeInstruction(index:number){
@@ -136,6 +169,7 @@ public fileChange(files:any){
   }
 } 
 
+
 OnSubmit() {
   this.TipsDB=this.TipsDB+'</ul>';
   this.instuctionsDB=this.instuctionsDB+'</ul>';
@@ -144,7 +178,9 @@ OnSubmit() {
   if(this.isOvernightPreparing)
   this.PrepareTime='Overnight';
 
-  if (this.MealName && this.PrepareTime && this.CookTime && this.Calories && this.Fat && this.Protien && this.Carbs && this.Fibre && this.dietTypes?.length && this.instuctionsDB && this.ingredients?.length && this.TipsDB && this.imageUrl && this.dayPlanTypes?.length) {
+  if (this.MealName && this.PrepareTime && this.CookTime && this.Calories && this.Fat && this.Protien && 
+    this.Carbs && this.Fibre && this.selectedDietTypes?.length  && this.ingredients?.length && this.TipsDB 
+    && this.imageUrl && this.returnDayNumber?.length) {
   this.mealDTO.mealName = this.MealName;
   this.mealDTO.prepareTime = this.PrepareTime;
   this.mealDTO.cookTime = this.CookTime;
@@ -160,30 +196,34 @@ OnSubmit() {
   this.mealDTO.imageUrl=this.imageUrl;
   this.mealDTO.dayMealDTOList=this.returnDayNumber;
   this.addMeal(this.mealDTO);
-  this.snackBar.open("Meal Adedd successfully!", "×", {
-    panelClass: "success",
-    verticalPosition: "bottom",
-    duration: 3000,
-  });  
+  this.isSubmitted=true; 
   }else{
-    this.snackBar.open("Meal Not Adedd!", "×", {
-      panelClass: "success",
+    this.isSubmitted=false; this.isSubmitted1=false; this.isSubmitted2=false;this.isSubmitted3=false;this.isSubmitted4=false;
+    this.snackBar.open("Insert all needed information!", "×", {
+      panelClass: "error",
       verticalPosition: "bottom",
-      duration: 3000,
+      duration: 5000,
     });  
   }
-  this.mealDTO=new MealDTO();
-  this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
-  this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
-  this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];this.returnDayNumber=[];
-  this.isOvernightCooking=false;this.isOvernightPreparing=false;
-   this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
-  this.fileChange('');
 }
 
 addMeal(mealDTO:MealDTO){
   console.log(this.mealDTO);
-  this.adminService.addMeal(mealDTO).subscribe(response => {console.log('meal saved successfully:');});
+  this.adminService.addMeal(mealDTO).subscribe(response => {
+    this.resetAll();
+    this.snackBar.open("Meal Added successfully!", "×", {
+      panelClass: "success",
+      verticalPosition: "bottom",
+      duration: 5000,
+    }); 
+  }, error => {
+    console.log('meal save error:', error);
+    this.snackBar.open(error.error, "×", {
+      panelClass: "error",
+      verticalPosition: "bottom",
+      duration: 3000,
+    }); 
+  });
 } 
 
 planSelection(){
@@ -194,6 +234,49 @@ planSelection(){
 
 daySelection(){
   this.types = this.dayNumber.mealTimeList;
+  }
+
+  resetAll(){
+    this.mealDTO=new MealDTO();
+    this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
+    this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
+    this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];this.returnDayNumber=[];
+    this.isOvernightCooking=false;this.isOvernightPreparing=false;
+     this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
+    this.fileChange('');
+  }
+
+
+  editMealInformation(){
+   this.MealName='muhammedamjad';
+   this.CookTime='Overnight';
+   this.PrepareTime='22'
+   this.Calories=3;
+   this.Fat=4;
+   this.Protien=5;
+   this.Carbs=6;
+   this.Fibre=7;
+   this.instruction='8';
+   this.Tip='9';
+   this.plan='Basic';
+   this.type='Breakfast';
+   this.productName='milk';
+   this.amount=10;
+   this.unit='slice';
+   this.imageUrl='https://www.throughthefibrofog.com/wp-content/uploads/2022/04/berry-porridge-3.jpg'
+
+   //Lists:
+  //  this.categories=
+  //  this.dietTypes=
+    
+   this.checkOverNight();
+  }
+
+  checkOverNight(){
+    if(this.CookTime==='Overnight')
+    this.isOvernightCooking=true;
+    if(this.PrepareTime=='Overnight')
+    this.isOvernightPreparing==true;
   }
 
 }

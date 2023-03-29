@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" *ngIf="router.url != '/admin'">
     <div fxFlex="100" class="p-2">
         <mat-card fxLayout="row" class="breadcrumb">
-            <a *ngIf="router.url != '/admin'" routerLink="/admin" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
+            <a *ngIf="router.url != '/adminside'" routerLink="/adminside" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
                 <mat-icon>dashboard</mat-icon>
                 <span class="breadcrumb-title">Dashboard</span>
             </a>
