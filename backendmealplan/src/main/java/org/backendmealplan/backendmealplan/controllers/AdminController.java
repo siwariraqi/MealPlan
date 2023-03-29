@@ -287,5 +287,10 @@ public class AdminController {
         }
     }
 
+    @GetMapping("")
+    public ResponseEntity getMealDTOByName(@RequestParam String mealName){
+        MealDTO mealDTO = mealBL.getMealDTOByName(mealName);
+        return new ResponseEntity(mealDTO,HttpStatus.OK);
+    }
 
 }

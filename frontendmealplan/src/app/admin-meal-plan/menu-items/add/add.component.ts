@@ -2,6 +2,7 @@ import { Component,ElementRef,OnInit, ViewChild} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
+import { Meal } from 'src/app/mealplan/models/Meal';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
 
@@ -246,36 +247,38 @@ daySelection(){
     this.fileChange('');
   }
 
-
   editMealInformation(){
-   this.MealName='muhammedamjad';
-   this.CookTime='Overnight';
-   this.PrepareTime='22'
-   this.Calories=3;
-   this.Fat=4;
-   this.Protien=5;
-   this.Carbs=6;
-   this.Fibre=7;
-   this.instruction='8';
-   this.Tip='9';
-   this.plan='Basic';
-   this.type='Breakfast';
-   this.productName='milk';
-   this.amount=10;
-   this.unit='slice';
-   this.imageUrl='https://www.throughthefibrofog.com/wp-content/uploads/2022/04/berry-porridge-3.jpg'
+    this.adminService.getMealDTO("Carrot cake overnight oats").subscribe(meal => {
+   this.MealName=meal.mealName;
+   this.CookTime=meal.cookTime;
+   this.PrepareTime=meal.prepareTime;
+   this.Calories=meal.calories;
+   this.Fat=meal.fat;
+   this.Protien=meal.protein;
+   this.Carbs=meal.carbs;
+   this.Fibre=meal.fibre;
+   this.instruction=meal.instructions;
+   this.Tip=meal.tips;
+
+  //  this.plan=;
+  //  this.type=;
+  //  this.productName=;
+  //  this.amount=;
+   //this.unit=;
+   this.imageUrl=meal.imageUrl;
 
    //Lists:
   //  this.categories=
   //  this.dietTypes=
     
-   this.checkOverNight();
+   this.checkOverNight(meal);
+    });
   }
 
-  checkOverNight(){
-    if(this.CookTime==='Overnight')
+  checkOverNight(meal){
+    if(meal.cookTime==='Overnight')
     this.isOvernightCooking=true;
-    if(this.PrepareTime=='Overnight')
+    if(meal.prepareTime=='Overnight')
     this.isOvernightPreparing==true;
   }
 

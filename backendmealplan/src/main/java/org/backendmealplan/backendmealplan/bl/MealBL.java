@@ -1,11 +1,14 @@
 package org.backendmealplan.backendmealplan.bl;
 
+import org.backendmealplan.backendmealplan.enums.DietTypes;
 import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.*;
+import org.backendmealplan.backendmealplan.other.IngredientDTO;
+import org.backendmealplan.backendmealplan.other.MealDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,21 +68,21 @@ public class MealBL {
                 }
 
             }
-            Collections.sort(dayMeals,new Comparator<DayMeal>() {
+            Collections.sort(dayMeals, new Comparator<DayMeal>() {
                 @Override
                 public int compare(DayMeal o1, DayMeal o2) {
-                    String[] order = {"Breakfast", "Snacks","Snacks", "Lunch","Dinner"};
+                    String[] order = {"Breakfast", "Snacks", "Snacks", "Lunch", "Dinner"};
                     List<String> ord = new ArrayList<>();
-                    for(String type:order){
+                    for (String type : order) {
                         ord.add(type);
                     }
                     return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
                 }
             });
-            if(dayMeals.size() == 5){
+            if (dayMeals.size() == 5) {
                 DayMeal snack = dayMeals.get(2);
                 dayMeals.remove(2);
-                dayMeals.add(3,snack);
+                dayMeals.add(3, snack);
             }
             return dayMeals;
         } else {
@@ -87,9 +90,9 @@ public class MealBL {
         }
     }
 
-  public List<MealIngredients> getDayPlanMealIngredients(Long mealId) throws MealNotFoundException {
-    return mealIngredientsDAO.getMealIngredients(mealId);
-  }
+    public List<MealIngredients> getDayPlanMealIngredients(Long mealId) throws MealNotFoundException {
+        return mealIngredientsDAO.getMealIngredients(mealId);
+    }
 
     public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
         List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
@@ -122,10 +125,10 @@ public class MealBL {
     public Meal addMeal(Meal meal) throws Exception {
         //check if meal exists
         Meal returnedMeal = this.mealsDAO.findByMealName(meal.getMealName());
-        if (returnedMeal==null) {
+        if (returnedMeal == null) {
             return this.mealsDAO.save(meal);
         }
-        throw new Exception("Meal with name "+ meal.getMealName() +" found");
+        throw new Exception("Meal with name " + meal.getMealName() + " found");
     }
 
     public void addMealIngredients(MealIngredients mealIngredients) {
@@ -160,20 +163,53 @@ public class MealBL {
     public void addDietType(DietType dietType) {
         //check if dietType exists
         DietType dietTypes = this.dietTypesDAO.findByText(dietType.getText());
-        if (dietTypes==null) {
+        if (dietTypes == null) {
             this.dietTypesDAO.save(dietType);
         }
     }
 
-  public List<Meal> getAllMeals() throws MealNotFoundException {
+    public List<Meal> getAllMeals() throws MealNotFoundException {
 
-    List<Meal> meals = this.mealsDAO.findAll();
-    if (meals != null) {
-      return meals;
-    } else {
-      throw new MealNotFoundException("Meal Not Found");
+        List<Meal> meals = this.mealsDAO.findAll();
+        if (meals != null) {
+            return meals;
+        } else {
+            throw new MealNotFoundException("Meal Not Found");
+        }
     }
-  }
+
+    public MealDTO getMealDTOByName(String mealName) {
+        Meal meal = this.mealsDAO.findByMealName(mealName);
+        MealDTO returnedMeal = new MealDTO();
+        returnedMeal.setMealName(meal.getMealName());
+        returnedMeal.setImageUrl(meal.getImageUrl());
+        returnedMeal.setCalories(meal.getCalories());
+        returnedMeal.setInstructions(meal.getInstructions());
+        returnedMeal.setCookTime(meal.getCookTime());
+        returnedMeal.setPrepareTime(meal.getPrepareTime());
+        returnedMeal.setFat(meal.getFat());
+        returnedMeal.setFibre(meal.getFibre());
+        returnedMeal.setCarbs(meal.getCarbs());
+        returnedMeal.setProtein(meal.getProtein());
+        returnedMeal.setTips(meal.getTips());
+
+        List<String> mealsTypesList = new ArrayList<>();
+        for(DietType dietType: meal.getDietTypes()){
+                mealsTypesList.add(dietType.getText());
+        }
+        returnedMeal.setDietTypes(mealsTypesList);
+
+        List<MealIngredients> mealIngredientsList = mealIngredientsDAO.getMealIngredients(meal.getMealId());
+        for(MealIngredients mealIngredient:mealIngredientsList){
+            IngredientDTO ingredientDTO = new IngredientDTO(
+                    mealIngredient.getId().getIngredient().getCategory(),
+                    mealIngredient.getId().getIngredient().getProductName(),
+                    mealIngredient.getAmount(),mealIngredient.getUnit());
+            List<IngredientDTO>  returnedMealIngredient= returnedMeal.getIngredients();
+            returnedMealIngredient.add(ingredientDTO);
+        }
+        return returnedMeal;
+    }
 }
 
 

@@ -86,7 +86,6 @@ public class InitDataBL {
 
     private void insertMealTypes(Meal meal, DietType dietType) {
         Meal savedMeal = this.mealsDAO.findByMealName(meal.getMealName());
-//    System.out.println(savedMeal.getDietTypes() + "ssssssss");
         DietType savedDiet = this.dietTypesDAO.findByText(dietType.getText());
         Set<DietType> dietTypeSet = savedMeal.getDietTypes();
         dietTypeSet.add(savedDiet);

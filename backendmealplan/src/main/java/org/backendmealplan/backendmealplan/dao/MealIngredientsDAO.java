@@ -19,5 +19,4 @@ public interface MealIngredientsDAO extends JpaRepository<MealIngredients, Long>
           countQuery = "SELECT COUNT(*) FROM mealplan.meal_ingredients WHERE meal_id =:mealId")
   void deleteByMealId(Long mealId);
 
-
 }
