@@ -118,20 +118,15 @@ export class RegisterService {
     this.setOnBoardingStep(this.onBoardingStep);
   }
 
-  // getOnBoardingStepLocalStorage():number{
-  //   const step = localStorage.getItem("onboardingstep");
-  //   if (step) {
-  //     this.onBoardingStep = JSON.parse(step);
-  //   } else {
-  //     this.onBoardingStep = 2;
-  //     localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
-  //   }
-  //   return this.onBoardingStep;
-  // }
+  clearUserInfoFromLocalStorage(): void {
+    this.currUserInfo = new UserInfo(null);
+    localStorage.setItem("userInfo", JSON.stringify(this.currUserInfo));
+    localStorage.removeItem("userInfo");
 
-  // setOnBoardingStepLocalStorage(){
-  //   localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
-  // }
+    this.onBoardingStep = 2;
+    localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+    localStorage.removeItem("onboardingstep");
+  }
 
   registerWithGoogle(response: any) {}
 }

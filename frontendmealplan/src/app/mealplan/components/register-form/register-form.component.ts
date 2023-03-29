@@ -169,9 +169,10 @@ export class RegisterFormComponent implements OnInit {
           this.snackBar.open("You registered successfully!", "×", {
             panelClass: "success",
             verticalPosition: "bottom",
-            duration: 3000,
+            duration: 2000,
           });
           this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+            this.registerSrv.clearUserInfoFromLocalStorage();
             this.router.navigateByUrl("/mealplan/login");
           });
         }
