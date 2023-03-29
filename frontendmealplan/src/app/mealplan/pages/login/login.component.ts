@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AppSettings, Settings } from "src/app/app.settings";
 import { AuthService } from "../../services/auth.service";
+
+declare var google: any;
 
 @Component({
   selector: "app-login",
@@ -15,7 +17,7 @@ import { AuthService } from "../../services/auth.service";
               <div class="py-5 formG">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
                   <h1 class="">Sign In</h1>
-                  <a mat-button routerLink="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
+                  <a mat-button href="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
                 </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
                   <mat-form-field appearance="outline" class="w-100 mt-4">
@@ -49,8 +51,10 @@ import { AuthService } from "../../services/auth.service";
                     <h3 class="text-muted ws-nowrap fw-500 p-2">or Sign in with one click</h3>
                     <div class="divider w-100"></div>
                   </div>
-                  <div class="text-center py-3">
-                    <button class="google" type="button">Google</button>
+                  <div class="googleBtnWrapper">
+                    <div class="text-center py-3" id="googleButtonDiv">
+                      <!-- <button class="google" type="button">Google</button> -->
+                    </div>
                   </div>
                 </form>
                 <div fxLayout="row" fxLayoutAlign="end center">
@@ -68,7 +72,7 @@ import { AuthService } from "../../services/auth.service";
   `,
   styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   public loginForm!: UntypedFormGroup;
   public hide = true;
   public settings: Settings;
@@ -88,6 +92,17 @@ export class LoginComponent implements OnInit {
       rememberMe: false,
     });
     this.loginForm.controls["rememberMe"].setValue(!this.loginForm.controls["rememberMe"].value);
+  }
+
+  ngAfterViewInit(): void {
+    google.accounts.id.initialize({
+      client_id: "844075060169-ld1damjvp1h93mb8p5v8leiu7a6aaod5.apps.googleusercontent.com",
+      callback: (response: any) => this.handleGoogleSignIn(response),
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("googleButtonDiv"),
+      { locale: "en" } // customization attributes
+    );
   }
 
   public onLoginFormSubmit(): void {
@@ -112,5 +127,25 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+  }
+
+  public handleGoogleSignIn(response: any) {
+    // console.log(response.credential);
+
+    //decode returned token to object
+    let base64Url = response.credential.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    console.log(JSON.parse(jsonPayload));
+
+    //verify token in server
+    this.authSrv.loginWithGoogle(response);
   }
 }

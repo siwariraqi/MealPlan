@@ -13,14 +13,16 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div class="img">
           <img src=" /assets/images/questions_icons/{{ ['Active.png'] }}" />
         </div>
-
         <div class="range">
           <input type="range" [value]="activityValue" class="slider" (change)="updateVal($event.target)" />
           <div class="text">
-            <p class="Sedentary">Sedentary</p>
-            <p class="Extra">Extra Active</p>
+            <h5 class="sedentary">Sedentary</h5>
+            <h5 class="extra">Extra Active</h5>
           </div>
         </div>
+      </div>
+      <div class="value">
+        <h3 id="sliderVal">{{ activityValue }}%</h3>
       </div>
     </div>
   `,
@@ -33,8 +35,11 @@ export class Onboarding10Component implements OnInit {
     this.activityValue = 50;
   }
   ngOnInit(): void {
-    if (this.registerSrv.getUserInfo().activity) {
-      this.activityValue = this.registerSrv.getUserInfo().activity;
+    const userInfo = this.registerSrv.getUserInfo();
+    if (userInfo && userInfo.infoId) {
+      if (userInfo.activity) {
+        this.activityValue = userInfo.activity;
+      }
     }
   }
 

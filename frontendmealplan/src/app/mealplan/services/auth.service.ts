@@ -38,6 +38,8 @@ export class AuthService {
       );
   }
 
+  loginWithGoogle(token: any) {}
+
   getUser() {
     this.getUserLocalStorage();
     return this.currUser;

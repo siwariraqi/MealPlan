@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
@@ -14,15 +14,24 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div class="img">
           <img src=" /assets/images/questions_icons/{{ ['group2.png'] }}" />
         </div>
-        <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Name" name="name" [formControl]="heightControl" required #inputValue />
+        <div [formGroup]="formInfo" class="form__group field inputWrapper">
+          <input
+            type="input"
+            class="form__field"
+            placeholder="Name"
+            name="name"
+            type="number"
+            formControlName="heightControl"
+            required
+            #inputValue
+          />
           <p class="val">{{ chosenUnit === "metric" ? "CM" : "FT/IN" }}</p>
           <p></p>
         </div>
 
         <div class="box">
-          <div class="innerbox" [ngClass]="{ orange: isImperial, white: !isImperial }">FT IN</div>
           <div class="innerbox" [ngClass]="{ orange: isMetric, white: !isMetric }">CM</div>
+          <div class="innerbox" [ngClass]="{ orange: isImperial, white: !isImperial }">FT IN</div>
         </div>
       </div>
     </div>
@@ -31,14 +40,16 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding14Component implements OnInit {
   chosenUnit: string;
-  heightControl: FormControl;
-
+  formInfo!: UntypedFormGroup;
   isMetric: boolean;
   isImperial: boolean;
+  height: string;
 
-  constructor(private registerSrv: RegisterService) {
+  constructor(private formBuilder: UntypedFormBuilder, private registerSrv: RegisterService) {
     this.chosenUnit = this.registerSrv.getUserInfo().unit;
-    this.heightControl = new FormControl();
+    this.formInfo = this.formBuilder.group({
+      heightControl: [null, Validators.required],
+    });
   }
 
   ngOnInit(): void {
@@ -49,7 +60,16 @@ export class Onboarding14Component implements OnInit {
       this.isMetric = false;
       this.isImperial = true;
     }
-    this.heightControl.valueChanges.subscribe((value) => {
+
+    const userInfo = this.registerSrv.getUserInfo();
+    if (userInfo && userInfo.infoId) {
+      if (userInfo.height && userInfo.height !== "") {
+        this.height = userInfo.height;
+        this.formInfo.controls["heightControl"].setValue(parseFloat(this.height));
+      }
+    }
+
+    this.formInfo.controls["heightControl"].valueChanges.subscribe((value) => {
       console.log(value);
       this.registerSrv.getUserInfo().height = value;
       // this.registerSrv.getUserInfo().height = value + ` ${this.chosenUnit === "metric" ? "CM" : "FT"}`;

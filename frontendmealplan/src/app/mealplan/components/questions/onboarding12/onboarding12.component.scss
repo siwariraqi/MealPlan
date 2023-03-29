@@ -1,7 +1,7 @@
 .container {
-  margin-top: 10vh;
+  // margin-top: 10vh;
   width: 90vw;
-  height: 55vh;
+  height: 62vh;
   display: flex;
   // align-items: center;
   // justify-content: center;
@@ -11,7 +11,7 @@
 .top {
   justify-content: center;
   align-items: center;
-  height: 13vh;
+  // height: 10vh;
   // position: absolute;
   // top: 9%;
   font-family: "Montserrat";
@@ -41,8 +41,12 @@
   margin: auto;
 }
 
+.selectedDate {
+  margin-top: 2vh;
+}
+
 .dateContainer {
-  margin-top: 4vh;
+  margin-top: 2vh;
   mat-form-field {
     margin: 20px;
     width: 90vw;
@@ -53,7 +57,7 @@
 .calendar-card {
   text-align: center;
   margin: auto;
-  margin-top: 6vh;
+  margin-top: 4vh;
   width: 300px;
   font-size: large;
   font-weight: 500;
