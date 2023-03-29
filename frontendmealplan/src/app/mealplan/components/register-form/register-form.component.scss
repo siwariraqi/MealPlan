@@ -76,7 +76,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  // .container {
-  //   width: 85vw;
-  // }
+  ::ng-deep .mat-form-field {
+    font-size: 12px; // decreasing input height for material input only by changing font size
+  }
 }

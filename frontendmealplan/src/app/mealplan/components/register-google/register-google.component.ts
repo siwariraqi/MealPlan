@@ -15,9 +15,9 @@ declare var google: any;
     <div class="container">
       <div class="px-3 py-5 ">
         <div class="theme-container ">
-          <mat-card class="p-0 o-hidden px-3 py-3 formContainer">
+          <mat-card class="o-hidden px-2 py-3 formContainer">
             <div fxLayout="column">
-              <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" ngClass.gt-sm="px-5" ngClass.sm="px-3" ngClass.xs="px-3">
+              <div fxFlex="100" fxFlex.gt-sm="50" class="py-3" ngClass.gt-sm="px-4" ngClass.sm="px-3" ngClass.xs="px-3">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
                   <h3 class="">Register With Google!</h3>
                   <a mat-button href="/mealplan/login" color="warn" class="w-100">Already have an account? Sign in!</a>

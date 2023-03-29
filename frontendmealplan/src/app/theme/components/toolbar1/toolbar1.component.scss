@@ -5,9 +5,9 @@
 }
 
 .login {
-  font-size: small;
+  font-size: smaller;
   cursor: pointer;
-  background-color: rgba(105, 126, 75, 0.514);
+  background-color: rgba(121, 180, 86, 0.692);
   border-radius: 10px;
   color: white;
   opacity: 0.8;
@@ -27,11 +27,15 @@
   .logo {
     justify-content: center;
     text-align: center;
-    margin-left: 6.8vw;
+    // margin-left: 1vw;
   }
 
   .user {
     font-size: small;
     margin-right: -1.5vw;
+  }
+
+  .login {
+    font-size: small;
   }
 }
