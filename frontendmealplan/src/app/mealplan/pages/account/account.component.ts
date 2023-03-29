@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { User } from '../../models/User';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -27,22 +28,15 @@ export class AccountComponent implements OnInit {
     { name: 'Terms & Conditions', href: 'terms', icon: 'note' },
     { name: 'Logout', href: '/login', icon: 'power_settings_new' }
   ]; 
-  constructor(public router:Router,private userService:UserService) { }
+  constructor(private authService:AuthService,public router:Router,private userService:UserService) { }
   user:User ={};
   name:string;
   firstName:string;
   email:string;
   ngOnInit() {
-    localStorage.setItem('userId','1');//to be removed after integration
-    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe({
-      next: (data) => {
-        this.user = data;
-        this.name=this.user.firstName+" "+this.user.lastName;
-      },
-      error: (error) => {
-        console.error('Error fetching user:', error);
-      }
-    });
+    this.user = this.authService.getUser();
+    this.name=this.user.firstName+" "+this.user.lastName;
+
     if(window.innerWidth < 960){
       this.sidenavOpen = false;
     };
