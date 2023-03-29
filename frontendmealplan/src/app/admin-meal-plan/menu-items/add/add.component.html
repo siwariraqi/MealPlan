@@ -4,8 +4,8 @@
             <form autocomplete="off" fxLayout="row wrap">
 
                 <!-- *ngIf="showImage" -->
-                <div fxFlex="40" class="px-2" required >
-                    <app-image-upload [base64]="imageUrl" [fileSize]="400" required
+                <div fxFlex="40" class="px-2"  >
+                    <app-image-upload [base64]="imageUrl" [fileSize]="400" 
                         [acceptTypes]="'image/png, image/jpeg, image/jpg'" (onFileChange)="fileChange($event)">
                     </app-image-upload>
                 </div>
@@ -78,13 +78,13 @@
                                     type="number" [required]="!isSubmitted">
                             </mat-form-field>
                         </div>
-
                         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" fxLayout="column wrap">
                             <mat-checkbox matCheckbox color="primary" *ngFor="let dietType of dietTypes"
-                                (change)="onCheckboxChange($event, dietType)">
-                                {{dietType}}
+                                          (change)="onCheckboxChange($event, dietType)"
+                                          [checked]="selectedDietTypes.includes(dietType)">
+                              {{dietType}}
                             </mat-checkbox>
-                        </div>
+                          </div>  
                     </div>
                 </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -98,7 +98,7 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Instructions</mat-label>
                             <textarea [(ngModel)]="instruction" [ngModelOptions]="{ standalone: true }" matInput
-                                rows="1" [required]="!isSubmitted1"></textarea>
+                                rows="1" ></textarea>
                         </mat-form-field>
                     </div>
                     <div fxFlex="20" fxFlex.gt-sm="20" class="px-3">
@@ -130,7 +130,7 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Tips</mat-label>
                             <textarea [(ngModel)]="Tip" [ngModelOptions]="{ standalone: true }" matInput rows="1"
-                            [required]="!isSubmitted2"></textarea>
+                            ></textarea>
                         </mat-form-field>
                     </div>
                     <div fxFlex="10" fxFlex.gt-sm="10" class="px-3">
@@ -157,10 +157,10 @@
 
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
-                <div  *ngIf="!isEdit" fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
+                <div   fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
+<!-- *ngIf="!isEdit" -->
 
-
-                <div *ngIf="!isEdit" fxFlex="100" class="px-2">
+                <div  fxFlex="100" class="px-2">
                     <div fxFlex="15" fxFlex.gt-sm="15" class="px-3">
                         <h4>Insert meal<br> to day plan:</h4>
                     </div>

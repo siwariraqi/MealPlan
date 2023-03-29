@@ -42,7 +42,7 @@ export class AddComponent implements OnInit {
   TipsDB:string='<ul>';
   instuctionsDB:string='<ul>';
   
-
+  
   MealName:string;
   CookTime:string;
   PrepareTime:string;
@@ -62,13 +62,8 @@ export class AddComponent implements OnInit {
   constructor(private adminService:AdminService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.editMealInformation();
-    this.isEdit=true;  
-  }
-
-  updateCookTime(){
-    
-    this.CookTime='Overnight';
+    this.isEdit=true; 
+    this.getMealForEdit(); 
   }
   
   isSubmitted3=true
@@ -163,9 +158,11 @@ onCheckboxChange(event: MatCheckboxChange, dietType: string) {
 
 public fileChange(files:any){ 
   if(files.length){ 
+    console.log("false")
     this.imageUrl=files[0].content;
   } 
   else{
+    console.log("true")
     this.imageUrl=''; 
   }
 } 
@@ -178,10 +175,13 @@ OnSubmit() {
   this.CookTime='Overnight';
   if(this.isOvernightPreparing)
   this.PrepareTime='Overnight';
-
+  else{
+    this.CookTime+' min';
+    this.PrepareTime+ ' min';
+  }
   if (this.MealName && this.PrepareTime && this.CookTime && this.Calories && this.Fat && this.Protien && 
     this.Carbs && this.Fibre && this.selectedDietTypes?.length  && this.ingredients?.length && this.TipsDB 
-    && this.imageUrl && this.returnDayNumber?.length) {
+    && this.imageUrl ) {
   this.mealDTO.mealName = this.MealName;
   this.mealDTO.prepareTime = this.PrepareTime;
   this.mealDTO.cookTime = this.CookTime;
@@ -225,6 +225,7 @@ addMeal(mealDTO:MealDTO){
       duration: 3000,
     }); 
   });
+  console.log(this.mealDTO)
 } 
 
 planSelection(){
@@ -247,39 +248,77 @@ daySelection(){
     this.fileChange('');
   }
 
-  editMealInformation(){
+   meal:MealDTO
+  getMealForEdit(){
     this.adminService.getMealDTO("Carrot cake overnight oats").subscribe(meal => {
-   this.MealName=meal.mealName;
-   this.CookTime=meal.cookTime;
-   this.PrepareTime=meal.prepareTime;
-   this.Calories=meal.calories;
-   this.Fat=meal.fat;
-   this.Protien=meal.protein;
-   this.Carbs=meal.carbs;
-   this.Fibre=meal.fibre;
-   this.instruction=meal.instructions;
-   this.Tip=meal.tips;
+      this.meal=meal;
+      this.editMealInformation();
+    });
+    // console.log(this.imageUrl)
+    // this.imageUrl=this.meal.imageUrl;
+    // 'https://nutritionstarringyou.com/wp-content/uploads/2017/04/carrot-cake-overnight-oats-blurred-1.jpg'
+  }
 
+  editMealInformation(){
+  
+   this.MealName=this.meal.mealName;
+   this.CookTime=this.meal.cookTime;
+   this.PrepareTime=this.meal.prepareTime;
+   this.PrepareTime = this.meal.prepareTime.replace(' min', '');
+   this.CookTime = this.meal.cookTime.replace(' min', '');
+   this.Calories=this.meal.calories;
+   this.Fat=this.meal.fat;
+   this.Protien=this.meal.protein;
+   this.Carbs=this.meal.carbs;
+   this.Fibre=this.meal.fibre;
+   this.instructions=this.extractListItems(this.meal.instructions);
+   this.Tips=this.extractListItems(this.meal.tips);
+  //  this.imageUrl='https://nutritionstarringyou.com/wp-content/uploads/2017/04/carrot-cake-overnight-oats-blurred-1.jpg';
+  //  console.log(this.imageUrl)
+   this.selectedDietTypes=this.meal.dietTypes
+   this.ingredients=this.meal.ingredients;
+  
+   this.checkOverNight();
+   this.addInstruction();
+   this.addTips();
+   console.log(this.meal)
+   console.log(this.PrepareTime)
   //  this.plan=;
   //  this.type=;
   //  this.productName=;
   //  this.amount=;
    //this.unit=;
-   this.imageUrl=meal.imageUrl;
+  
 
    //Lists:
   //  this.categories=
   //  this.dietTypes=
     
-   this.checkOverNight(meal);
-    });
+    
   }
 
-  checkOverNight(meal){
-    if(meal.cookTime==='Overnight')
+  checkOverNight(){
+    if(this.CookTime==='Overnight')
     this.isOvernightCooking=true;
-    if(meal.prepareTime=='Overnight')
+    if(this.PrepareTime=='Overnight')
     this.isOvernightPreparing==true;
   }
+
+   extractListItems(html: string) {
+    const regex = /<li>(.*?)<\/li>/g;
+    const matches = html.match(regex);
+    if (!matches) {
+      // Check for empty <ul></ul> tag
+      if (/<ul>\s*<\/ul>/.test(html)) {
+        return [];
+      } else {
+        throw new Error('Invalid HTML: <ul> tag does not contain any <li> tags');
+      }
+    }
+    return matches.map((match) => match.replace(/<\/?li>/g, ''));
+  }
+  
+
+  
 
 }

@@ -72,7 +72,7 @@ public class PlanBL {
         if (dayPlanList==null) {
             return this.dayPlanDAO.save(dayPlan);
         }
-        return null;
+        return dayPlanList;
     }
 
     public List<DayMeal> getAllDayMeals() {
