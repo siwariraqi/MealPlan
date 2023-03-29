@@ -14,7 +14,6 @@ public class BackendmealplanApplication implements CommandLineRunner {
 	InitDataBL InitDataBL;
 	public static void main(String[] args){
 		SpringApplication.run(BackendmealplanApplication.class, args);
-
 	}
 	@Override
 	public void run(String... args) {
