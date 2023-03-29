@@ -9,7 +9,14 @@ import { AuthService } from "../../services/auth.service";
   selector: "app-register",
   template: `
     <div class="registerContainer" [ngStyle]="{ 'background-color': backgroundColor, 'background-image': backgroundImage }">
-      <app-welcome-screen *ngIf="screenState === 'welcome'" [currentPage]="currentPage"></app-welcome-screen>
+      <div
+        class="backBtn"
+        *ngIf="getOnboardingStep() > 2 && getOnboardingStep() < 16"
+        [ngStyle]="{ color: getOnboardingStep() < 7 ? 'white' : 'black' }"
+      >
+        <div (click)="prevScreen()"><mat-icon>arrow_back</mat-icon></div>
+      </div>
+      <app-welcome-screen *ngIf="getOnboardingStep() < 7" [currentPage]="getOnboardingStep() - 2"></app-welcome-screen>
       <app-onboarding7 *ngIf="getOnboardingStep() === 7"></app-onboarding7>
       <app-onboarding8 *ngIf="getOnboardingStep() === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="getOnboardingStep() === 9"></app-onboarding9>
@@ -38,11 +45,11 @@ import { AuthService } from "../../services/auth.service";
           *ngFor="let page of pages; index as i"
           class="circle"
           [ngClass]="{
-            'black-dot': i <= currentPage && screenState === 'welcome',
-            'current-page': i <= currentPage && screenState === 'questions'
+            'black-dot': i <= getOnboardingStep() - 2 && getOnboardingStep() < 7,
+            'current-page': i <= getOnboardingStep() - 7 && getOnboardingStep() >= 7
           }"
         >
-          {{ screenState === "questions" ? i + 1 : "" }}
+          {{ getOnboardingStep() >= 7 ? i + 1 : "" }}
         </div>
       </div>
     </div>
@@ -51,30 +58,33 @@ import { AuthService } from "../../services/auth.service";
   animations: [],
 })
 export class RegisterComponent implements OnInit {
-  pages = Array.from({ length: 5 }).fill(0);
-  currentPage: number;
+  pages: any[];
+  // currentPage: number;
   backgroundColor: string;
   backgroundImage: string;
   btnBackgroundColor: string;
   btnColor: string;
-  screenState: string;
+  // screenState: string;
   userGoals: Goal[];
   error: string;
 
   constructor(private registerSrv: RegisterService, private authSrv: AuthService) {
-    this.currentPage = 0;
+    // this.currentPage = 0;
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
-    this.screenState = "welcome";
+    // this.screenState = "welcome";
     this.error = "";
   }
 
   ngOnInit(): void {
     console.log("user=> ", this.authSrv.getUser());
-    this.backgroundColor = "#4b643d";
-    this.btnBackgroundColor = "#ffffff";
-    this.btnColor = "black";
+    // this.backgroundColor = "#4b643d";
+    this.changeBgColor();
+    // this.btnBackgroundColor = "#ffffff";
+    // this.btnColor = "black";
+    this.changeBtnColors();
     // this.registerSrv.getUserInfoLocalStorage();
+    this.setPages();
   }
 
   getOnboardingStep(): number {
@@ -82,38 +92,58 @@ export class RegisterComponent implements OnInit {
   }
 
   nextScreen() {
-    if (this.getOnboardingStep() > 5) {
-      this.btnBackgroundColor = "#dd9670c4";
-      this.btnColor = "white";
-      if (this.getOnboardingStep() > 6) {
-        if (!this.screenValidation(this.getOnboardingStep())) {
-          return;
-        } else {
-          console.log("isValid YESS");
-          this.error = "";
-          //if valid save in db
-          this.registerSrv.updateUserInfo().subscribe({
-            next: (updatedUserInfo) => {
-              console.log(updatedUserInfo);
-              this.registerSrv.setUserInfo(updatedUserInfo);
-            },
-            error: (e) => console.error(e),
-            complete: () => console.info("complete"),
-          });
-        }
-      }
-    }
+    console.log("onboarding=> ", this.getOnboardingStep());
+    // console.log("page=> ", this.currentPage);
 
-    if (this.currentPage !== 9) this.currentPage++;
-    this.registerSrv.incrementOnBoardingStep();
-    if (this.screenState === "welcome") {
-      if (this.currentPage == 5) {
-        this.pages = Array.from({ length: 9 }).fill(0);
-        this.screenState = "questions";
-        this.currentPage = 0;
-      }
+    if (this.saveUserInfo()) {
+      this.registerSrv.incrementOnBoardingStep();
+      this.setPages();
+      this.changeBgColor();
+      this.changeBtnColors();
     }
+  }
 
+  prevScreen() {
+    if (this.saveUserInfo()) {
+      this.registerSrv.decrementOnBoardingStep();
+      this.setPages();
+      this.changeBgColor();
+      this.changeBtnColors();
+    }
+  }
+
+  saveUserInfo(): boolean {
+    if (this.getOnboardingStep() >= 7) {
+      if (!this.screenValidation(this.getOnboardingStep())) {
+        return false;
+      } else {
+        console.log("isValid YESS");
+        this.error = "";
+        //if valid save in db
+        this.registerSrv.updateUserInfo().subscribe({
+          next: (updatedUserInfo) => {
+            console.log(updatedUserInfo);
+            this.registerSrv.setUserInfo(updatedUserInfo);
+          },
+          error: (e) => console.error(e),
+          complete: () => console.info("complete"),
+        });
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  setPages(): void {
+    if (this.getOnboardingStep() < 7) {
+      this.pages = Array.from({ length: 5 }).fill(0);
+    } else {
+      this.pages = Array.from({ length: 9 }).fill(0);
+    }
+  }
+
+  changeBgColor(): string {
     switch (this.getOnboardingStep()) {
       case 2:
         this.backgroundColor = "#4b643d";
@@ -142,9 +172,18 @@ export class RegisterComponent implements OnInit {
       default:
         this.backgroundColor = "#fff";
     }
+    return this.backgroundColor;
   }
 
-  prevScreen() {}
+  changeBtnColors(): void {
+    if (this.getOnboardingStep() >= 7) {
+      this.btnBackgroundColor = "#dd9670c4";
+      this.btnColor = "white";
+    } else {
+      this.btnBackgroundColor = "#ffffff";
+      this.btnColor = "black";
+    }
+  }
 
   screenValidation(stepNum: number): boolean {
     let isValid: boolean = true;
@@ -197,7 +236,7 @@ export class RegisterComponent implements OnInit {
       case 14: //height
         if (!this.validateHeight()) {
           this.error = `Invalid height input! height must be between ${
-            this.registerSrv.getUserInfo().unit === "metric" ? "100 and 220 cm" : "3'28'' and 7'21'' ft"
+            this.registerSrv.getUserInfo().unit === "metric" ? "100 and 220 cm" : "3.31 (3'31'') and 7.29 (7'29'') ft"
           }`;
           isValid = false;
           this.registerSrv.getUserInfo().height = null;

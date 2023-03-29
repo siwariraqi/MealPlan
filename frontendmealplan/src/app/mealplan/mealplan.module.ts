@@ -49,7 +49,8 @@ import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes
 import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
 import { EducationComponent } from "./pages/education/education.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
-import { RegisterGoogleComponent } from './components/register-google/register-google.component';
+import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { RegisterGoogleComponent } from './components/register-google/register-g
     MatRadioModule,
     MatDatepickerModule,
     AccountModule,
+    ReactiveFormsModule,
   ],
 })
 export class MealplanModule {}

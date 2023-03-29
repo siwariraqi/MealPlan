@@ -9,16 +9,13 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
       <div class="top">
         <p class="question">when were you born?</p>
         <p class="line"></p>
+        <div class="selectedDate">
+          <h4 *ngIf="birthDate">{{ birthDate.toUTCString().split(":")[0].slice(0, -2) }}</h4>
+        </div>
         <div class="dateContainer">
           <mat-card class="calendar-card">
-            <mat-calendar
-              [(selected)]="selected"
-              (selectedChange)="validateInputsAndSave()"
-            ></mat-calendar>
+            <mat-calendar [startAt]="startAt" [(selected)]="selected" (selectedChange)="validateInputsAndSave()"></mat-calendar>
           </mat-card>
-          <div class="displayError">
-            {{ errorMsg }}
-          </div>
         </div>
       </div>
     </div>
@@ -28,36 +25,32 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 export class Onboarding12Component implements OnInit {
   selected: Date | null;
   birthDate: Date;
-  errorMsg: string;
-  valid: boolean;
+  startAt: Date;
 
   constructor(private registerSrv: RegisterService) {
     this.birthDate = null;
-    this.errorMsg = null;
-    this.valid = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userInfo = this.registerSrv.getUserInfo();
+    if (userInfo && userInfo.infoId) {
+      if (userInfo.birthday) {
+        this.birthDate = userInfo.birthday;
+
+        const date: Date = new Date(this.birthDate);
+        this.birthDate = date;
+
+        this.startAt = this.birthDate;
+        this.selected = this.birthDate;
+      }
+    } else {
+      this.startAt = new Date(Date.now());
+    }
+  }
 
   validateInputsAndSave() {
-    this.birthDate = this.selected;
-    this.registerSrv.getUserInfo().birthday = this.birthDate;
-
-    // this.errorMsg = "";
-    // const currentDate = new Date(Date.now());
-    // if (currentDate.getFullYear() - this.selected.getFullYear() < 12) {
-    //   this.errorMsg = "You must be at least 12 years old to register";
-    //   this.valid = false;
-    // }
-
-    // //save
-    // if (this.errorMsg === null || this.errorMsg === "") {
-    //   this.birthDate = this.selected.toDateString();
-    //   this.valid = true;
-    //   // console.log(this.birthDate);
-    //   this.registerSrv.getUserInfo().birthday = this.birthDate;
-    //   console.log(this.registerSrv.getUserInfo().birthday);
-
-    // }
+    let fixedDate: Date = new Date(this.selected);
+    fixedDate.setMinutes(fixedDate.getMinutes() - fixedDate.getTimezoneOffset());
+    this.registerSrv.getUserInfo().birthday = fixedDate;
   }
 }

@@ -17,7 +17,6 @@ export class RegisterService {
   private GET_ALL_GOALS_API: string = "goals/all";
   private currUserInfo: UserInfo;
   private isCurrentScreenOnboardingValid: boolean;
-  // http: any;
   private onBoardingStep: number;
 
   constructor(private httpClient: HttpClient, private router: Router) {
@@ -31,7 +30,7 @@ export class RegisterService {
   }
 
   addUserInfo(): Observable<UserInfo> {
-    this.currUserInfo = this.getUserInfoLocalStorage();
+    this.currUserInfo = this.getUserInfo();
     if (!this.currUserInfo || !this.currUserInfo?.infoId) {
       this.currUserInfo = new UserInfo(null);
     }
@@ -57,6 +56,9 @@ export class RegisterService {
   }
 
   getUserInfo(): UserInfo {
+    if (!this.currUserInfo) {
+      this.currUserInfo = this.getUserInfoLocalStorage();
+    }
     return this.currUserInfo;
   }
 
@@ -92,19 +94,44 @@ export class RegisterService {
   }
 
   getOnBoardingStep(): number {
+    const step = localStorage.getItem("onboardingstep");
+    if (step) {
+      this.onBoardingStep = JSON.parse(step);
+    } else {
+      this.onBoardingStep = 2;
+      localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+    }
     return this.onBoardingStep;
   }
 
   setOnBoardingStep(step: number): void {
     this.onBoardingStep = step;
+    localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
   }
 
   incrementOnBoardingStep(): void {
     this.onBoardingStep++;
+    this.setOnBoardingStep(this.onBoardingStep);
   }
   decrementOnBoardingStep(): void {
     this.onBoardingStep--;
+    this.setOnBoardingStep(this.onBoardingStep);
   }
+
+  // getOnBoardingStepLocalStorage():number{
+  //   const step = localStorage.getItem("onboardingstep");
+  //   if (step) {
+  //     this.onBoardingStep = JSON.parse(step);
+  //   } else {
+  //     this.onBoardingStep = 2;
+  //     localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+  //   }
+  //   return this.onBoardingStep;
+  // }
+
+  // setOnBoardingStepLocalStorage(){
+  //   localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+  // }
 
   registerWithGoogle(response: any) {}
 }
