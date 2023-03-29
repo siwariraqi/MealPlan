@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -7,7 +8,9 @@ import { MenuItem } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
 import { GroceryList } from "../../models/GroceryList";
 import { Plan } from "../../models/Plan";
+import { DayMealService } from "../../services/day-meal.service";
 import { GroceryListService } from "../../services/grocery-list.service";
+import { UpdatepopupComponent } from "./updatepopup/updatepopup.component";
 
 @Component({
   selector: "app-grocery-list",
@@ -24,12 +27,43 @@ export class GroceryListComponent implements OnInit {
   public weekGroceries = [[], [], [], []]; //weekGroceries[week] = groceries of week
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
   public combinedGroceries: Map<String, Set<GroceryList>>;
+  public plan: Plan;
 
   clicked: boolean[];
 
-  constructor(private grocerListService: GroceryListService) {}
+  constructor(
+    private dayMealService: DayMealService,
+    private dialog: MatDialog,
+    private grocerListService: GroceryListService
+  ) {}
+
+  public popup(): void {
+    const dialogRef = this.dialog.open(UpdatepopupComponent, {
+      data: { message: "update your plan to acces this week." },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "confirm") {
+        // user confirmed deletion
+        console.log("UPDATE");
+      } else {
+        console.log("CANCEL");
+      }
+    });
+  }
+  validweek(week: number) {
+    if (this.plan.length === "14" && (week == 3 || week == 4)) {
+      //new component that require to update plan
+      this.popup();
+    } else {
+      this.displayWeek(week);
+    }
+  }
 
   displayWeek(week: number) {
+    if (this.plan.length === "14" && (week == 3 || week == 4)) {
+      //new component that require to update plan
+      this.popup();
+    }
     this.getGroceriesForWeek(week);
     this.weeksToDisplay.add(week);
     this.filterGroceriesAccordingToWeek();
@@ -74,8 +108,14 @@ export class GroceryListComponent implements OnInit {
     });
     */
   }
+  public getPlan() {
+    this.dayMealService.getPlan(1).subscribe((plan) => {
+      this.plan = plan;
+    });
+  }
 
   ngOnInit(): void {
+    this.getPlan();
     this.clicked = [false, false, false, false];
     for (var i = 0; i < this.allWeeks.length; i++) {
       this.hasWeekGrocery.push(false);

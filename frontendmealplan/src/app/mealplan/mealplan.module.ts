@@ -42,13 +42,16 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { AppSettings } from "../app.settings";
 import { AccountComponent } from "./pages/account/account.component";
 import { AccountModule } from "./pages/account/account.module";
-import { ShareComponent } from './pages/dayMeal/share/share.component';
-import { PrintComponent } from './pages/dayMeal/print/print.component';
-import { RecipesComponent } from './pages/recipes/recipes.component';
+import { ShareComponent } from "./pages/dayMeal/share/share.component";
+import { PrintComponent } from "./pages/dayMeal/print/print.component";
+import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
-import { DietTypeComponent } from './pages/dayMeal/diet-type/diet-type.component';
-import { EducationComponent } from './pages/education/education.component';
-import { ExportComponent } from './components/grocery-list/export/export.component';
+import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
+import { EducationComponent } from "./pages/education/education.component";
+import { ExportComponent } from "./components/grocery-list/export/export.component";
+import { UpdatepopupComponent } from "./components/grocery-list/updatepopup/updatepopup.component";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -80,7 +83,8 @@ import { ExportComponent } from './components/grocery-list/export/export.compone
     RecipesToolbarComponent,
     DietTypeComponent,
     EducationComponent,
-    ExportComponent
+    ExportComponent,
+    UpdatepopupComponent,
   ],
 
   imports: [
@@ -102,6 +106,9 @@ import { ExportComponent } from './components/grocery-list/export/export.compone
     MatRadioModule,
     MatDatepickerModule,
     AccountModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })
 export class MealplanModule {}

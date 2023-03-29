@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.beans;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -26,6 +27,7 @@ public class UserInfo {
 //    @Past(message = "Birthday must be valid")
 //    @Max(value = MAX_BIRTHDAY, message = "Birthday cannot be after 2004-01-01")
 //    @Min(value = MIN_BIRTHDAY, message = "Birthday cannot be before 1922-01-01")
+    @JsonIgnore
     private LocalDate birthday;
 
     private Integer activity;

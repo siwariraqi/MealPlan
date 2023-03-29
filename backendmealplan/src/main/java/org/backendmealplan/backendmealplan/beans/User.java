@@ -63,6 +63,7 @@ public class User {
     Set<GroceryList> changes;
 
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany (mappedBy = "user")
     private List<UserFeedback> feedbacks;
 }

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 
 import { User } from "../models/User";
+import { TokenStorageService } from "./token-storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -15,31 +16,53 @@ export class AuthService {
 
   private currUser: User;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private tokenStroageService: TokenStorageService
+  ) {
     this.currUser = {};
   }
 
-  login(email: string, password: string): Observable<User> {
-    return this.httpClient
-      .post<User>(this.BASE_URL + this.LOGIN_USER_API, {
+  login(email: string, password: string): Observable<string> {
+    return this.httpClient.post(
+      this.BASE_URL + this.LOGIN_USER_API,
+      {
         email: email,
         password: password,
-      })
+      },
+      { responseType: "text" }
+    );
+    /*
       .pipe(
         tap((data) => {
+          debugger;
           if (data) {
+            console.log(data);
+            this.tokenStroageService.saveToken(data);
+            //console.log(data);
+            
             if (data.email) {
               this.currUser = data;
               console.log("cur user=> ", this.currUser);
               this.setUserLocalStorage();
             }
+            
           }
         })
       );
+      */
   }
 
   getUser() {
-    this.getUserLocalStorage();
+    this.currUser = this.getUserLocalStorage();
+
+    return this.currUser;
+  }
+
+  getUserFromSessionStorage() {
+    this.currUser = this.tokenStroageService.getUser();
+    console.log(this.tokenStroageService.getUser().userId);
     return this.currUser;
   }
 

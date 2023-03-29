@@ -20,11 +20,10 @@ public class GroceryListController {
     //TODO:change parameters to body or header
     @PostMapping("deleteIngredients/{groceryListId}")
     public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @RequestParam Long loggedInUserId){
-        Long userId = 1L;
         List<Long> groceryListIds = new ArrayList<>();
         groceryListIds.add(Long.valueOf(groceryListId));
         try{
-            this.groceryListBL.hideIngredientsForUser(groceryListIds, userId);
+            this.groceryListBL.hideIngredientsForUser(groceryListIds, loggedInUserId);
             return (ResponseEntity) ResponseEntity.ok("okay");
         } catch (UNAUTHORIZEDException e){
             return (ResponseEntity) ResponseEntity.ok("okay");//(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -37,10 +36,9 @@ public class GroceryListController {
     @GetMapping("getIngredients/{week}")
     public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long loggedInUserId){
         //ResponseEntity<List<GroceryList>>
-        Long user_id = 1L;
         List<GroceryList> userGroceries = new ArrayList<>();
         try {
-            userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, user_id);
+            userGroceries = this.groceryListBL.getIngredientsByWeekAndPlanForUser(week, loggedInUserId);
             return userGroceries;
         } catch (UNAUTHORIZEDException e) {
             return userGroceries;

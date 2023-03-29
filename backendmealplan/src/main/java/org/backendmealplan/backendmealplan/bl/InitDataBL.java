@@ -65,7 +65,7 @@ public class InitDataBL {
     createDays();
     createDayMeals();
     createDayPlan();
-    initGroceriesPrimitive();
+    //initGroceriesPrimitive();
   }
 
   private void createMealTypes() {
@@ -995,37 +995,43 @@ public class InitDataBL {
     insertDayPlan(basicPlan, dayPlanIds[4], 5);
     insertDayPlan(basicPlan, dayPlanIds[5], 6);
     insertDayPlan(basicPlan, dayPlanIds[6], 7);
-
   }
 
   private void insertDayPlan(Plan plan, DayPlanId dayPlanId, Integer dayNumber) {
     DayPlan dayPlan = new DayPlan();
     dayPlan.setDayPlanKey(new DayPlanKey(plan, dayPlanId));
     dayPlan.setDayNumber(dayNumber);
-    planBL.addDayPlan(dayPlan);
+    DayPlan saved = planBL.addDayPlan(dayPlan);
     plan.getDayPlanIdList().add(dayPlanId);
   }
-  private void initGroceriesPrimitive(){
-      /*
+
+    private void addIngredientsOfDayPlan(Plan plan, DayPlan dayPlan, Integer dayNumber) {
+      int week = (dayNumber%7==0)? dayNumber/7: dayNumber/7+1;
+      DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
+      List<Meal> meals = dayPlanId.getMeals();
+      for(int i=0; i<meals.size(); i++){
+          groceryListBl.addMealIngredientsToGroceries(plan, meals.get(i), week);
+      }
+    }
+    /*
+    private void initGroceries(){
       List<Plan> allPlans = planBL.getAllPlans();
       for(int i=0; i<allPlans.size(); i++){
           Plan currPlan = allPlans.get(i);
-          List<DayPlanId> dayPlanIds = currPlan.getDayPlanIdList();
-          for(int dayPlanIdx=0; )
-
+          List<DayPlanId> dayPlanIds =  currPlan.getDayPlanIdList();
+          for(int j=0)
       }
-      */
 
+    }
+     */
+
+
+    private void initGroceriesPrimitive(){
       List<Meal> allMeals = mealsDAO.findAll();
       for(int i=0; i<allMeals.size(); i++) {
           Meal currMeal = allMeals.get(i);
-          if (i == allMeals.size() - 1) {
-              groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 2);
-              groceryListBl.addMealIngredientsToGroceries(premiumPlan, currMeal, 2);
-          } else {
               groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 1);
               groceryListBl.addMealIngredientsToGroceries(premiumPlan, currMeal, 1);
           }
       }
   }
-}
