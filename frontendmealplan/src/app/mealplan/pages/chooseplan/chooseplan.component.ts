@@ -19,7 +19,6 @@ export class ChooseplanComponent implements OnInit {
     this.planService.getPlans().subscribe({
       next: (data: any[]) => {
         this.plans = data;
-        console.log(this.plans);
       },
       error: (error: any) => {
         this.snackBar.open('Failed to load plans. Please try again later.', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });

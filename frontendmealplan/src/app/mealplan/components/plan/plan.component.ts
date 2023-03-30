@@ -27,12 +27,17 @@ export class PlanComponent implements OnInit {
 
   choosePlan(){
     this.userId = this.authService.getUser().userId;
-    this.userService.choosePlan(this.planId).subscribe(
-      data => {console.log('Plan updated successfully.');
-      this.snackBar.open('Plan updated successfully.', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });},
-      error => {console.error('Error updating plan:', error);
-      this.snackBar.open('Error updating plan. Try again Later!', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });}
-    )
+    this.userService.choosePlan(this.planId).subscribe({
+      next: (data) => {
+        console.log('Plan updated successfully.');
+        this.snackBar.open('Plan updated successfully.', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
+      },
+      error: (err) => {
+        console.error('Error updating plan:', err);
+        this.snackBar.open('Error updating plan. Try again Later!', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
+      }
+    });
   }
+  
 
 }
