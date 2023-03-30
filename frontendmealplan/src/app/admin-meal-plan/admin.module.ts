@@ -14,9 +14,10 @@ export const routes = [
   { 
     path: '', 
     component: AdminComponent, children: [
+      { path: '', loadChildren: () => import('./menu-items/menu-items.module').then(m => m.MenuItemsModule) },
       { path: 'meal-items', loadChildren: () => import('./menu-items/menu-items.module').then(m => m.MenuItemsModule) },
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), data: { breadcrumb: 'Users' } },
-      { path: 'reviews', loadChildren: () => import('./reviews/reviews.module').then(m => m.ReviewsModule), data: { breadcrumb: 'Reviews' } }  
+      { path: 'reviews', loadChildren: () => import('./reviews/reviews.module').then(m => m.ReviewsModule), data: { breadcrumb: 'Feedbacks' } }  
     ]
   } 
 ];

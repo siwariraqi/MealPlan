@@ -1,8 +1,9 @@
 import { Component,ElementRef,OnInit, ViewChild} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
-import { Meal } from 'src/app/mealplan/models/Meal';
+import { IngredientDTO } from 'src/app/mealplan/models/IngredientDTO';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
 
@@ -22,13 +23,13 @@ export class AddComponent implements OnInit {
   types=['Breakfast','Lunch','Dinner','Snack']
   dayNumbers=[];
   selectedDietTypes: string[] = [];
-  ingredients = [];
+  ingredients :IngredientDTO[]=[];
   dayPlanTypes=[];
   returnDayNumber=[];
 
   productName :string='';
   amount:number=null;
-  unit :string=null;
+  unit :string='';
   category :string='';
 
   plan:string='';
@@ -59,13 +60,10 @@ export class AddComponent implements OnInit {
   isSubmitted=false;
 
   isEdit=false;
-  constructor(private adminService:AdminService, public snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {
-    this.isEdit=true; 
-    this.getMealForEdit(); 
-  }
-  
+  mealId:number;
+  constructor(private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar) {}
+
   isSubmitted3=true
   addIngredient() {
     this.isSubmitted=true; 
@@ -158,17 +156,19 @@ onCheckboxChange(event: MatCheckboxChange, dietType: string) {
 
 public fileChange(files:any){ 
   if(files.length){ 
-    console.log("false")
     this.imageUrl=files[0].content;
   } 
   else{
-    console.log("true")
     this.imageUrl=''; 
   }
 } 
 
 
 OnSubmit() {
+  if(this.isEdit){
+    this.editMealFromDB(this.mealId);
+  }
+  else{
   this.TipsDB=this.TipsDB+'</ul>';
   this.instuctionsDB=this.instuctionsDB+'</ul>';
   if(this.isOvernightCooking) 
@@ -207,9 +207,9 @@ OnSubmit() {
     });  
   }
 }
+}
 
 addMeal(mealDTO:MealDTO){
-  console.log(this.mealDTO);
   this.adminService.addMeal(mealDTO).subscribe(response => {
     this.resetAll();
     this.snackBar.open("Meal Added successfully!", "×", {
@@ -218,14 +218,12 @@ addMeal(mealDTO:MealDTO){
       duration: 5000,
     }); 
   }, error => {
-    console.log('meal save error:', error);
     this.snackBar.open(error.error, "×", {
       panelClass: "error",
       verticalPosition: "bottom",
       duration: 3000,
     }); 
   });
-  console.log(this.mealDTO)
 } 
 
 planSelection(){
@@ -242,60 +240,15 @@ daySelection(){
     this.mealDTO=new MealDTO();
     this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
     this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
-    this.ingredients=[];this.imageUrl='';this.dayPlanTypes=[];this.returnDayNumber=[];
+    this.ingredients=[];this.dayPlanTypes=[];this.returnDayNumber=[];
     this.isOvernightCooking=false;this.isOvernightPreparing=false;
      this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
     this.fileChange('');
   }
 
-   meal:MealDTO
-  getMealForEdit(){
-    this.adminService.getMealDTO("Carrot cake overnight oats").subscribe(meal => {
-      this.meal=meal;
-      this.editMealInformation();
-    });
-    // console.log(this.imageUrl)
-    // this.imageUrl=this.meal.imageUrl;
-    // 'https://nutritionstarringyou.com/wp-content/uploads/2017/04/carrot-cake-overnight-oats-blurred-1.jpg'
-  }
 
-  editMealInformation(){
-  
-   this.MealName=this.meal.mealName;
-   this.CookTime=this.meal.cookTime;
-   this.PrepareTime=this.meal.prepareTime;
-   this.PrepareTime = this.meal.prepareTime.replace(' min', '');
-   this.CookTime = this.meal.cookTime.replace(' min', '');
-   this.Calories=this.meal.calories;
-   this.Fat=this.meal.fat;
-   this.Protien=this.meal.protein;
-   this.Carbs=this.meal.carbs;
-   this.Fibre=this.meal.fibre;
-   this.instructions=this.extractListItems(this.meal.instructions);
-   this.Tips=this.extractListItems(this.meal.tips);
-  //  this.imageUrl='https://nutritionstarringyou.com/wp-content/uploads/2017/04/carrot-cake-overnight-oats-blurred-1.jpg';
-  //  console.log(this.imageUrl)
-   this.selectedDietTypes=this.meal.dietTypes
-   this.ingredients=this.meal.ingredients;
-  
-   this.checkOverNight();
-   this.addInstruction();
-   this.addTips();
-   console.log(this.meal)
-   console.log(this.PrepareTime)
-  //  this.plan=;
-  //  this.type=;
-  //  this.productName=;
-  //  this.amount=;
-   //this.unit=;
-  
 
-   //Lists:
-  //  this.categories=
-  //  this.dietTypes=
-    
-    
-  }
+
 
   checkOverNight(){
     if(this.CookTime==='Overnight')
@@ -317,8 +270,83 @@ daySelection(){
     }
     return matches.map((match) => match.replace(/<\/?li>/g, ''));
   }
-  
 
   
+  ngOnInit(): void {
+    this.getEditMealId();
+  }
+  
+  getEditMealId(){
+    this.route.paramMap.subscribe(params => {
+      this.mealId =Number(params.get('id'));
+      if(this.mealId !== 0){
+        this.isEdit=true; 
+        this.getMealForEdit(this.mealId); 
+        }
+    });
+   
+  }
+
+
+  meal:MealDTO
+  getMealForEdit(mealId:number){
+    this.adminService.getMealDTO(mealId).subscribe(meal => {
+      this.meal=meal;
+       this.editMealInformation();
+    });
+    }
+
+  editMealInformation(){
+    this.MealName=this.meal.mealName;
+    this.CookTime=this.meal.cookTime;
+    this.PrepareTime=this.meal.prepareTime;
+    this.PrepareTime = this.meal.prepareTime.replace(' min', '');
+    this.CookTime = this.meal.cookTime.replace(' min', '');
+    this.Calories=this.meal.calories;
+    this.Fat=this.meal.fat;
+    this.Protien=this.meal.protein;
+    this.Carbs=this.meal.carbs;
+    this.Fibre=this.meal.fibre;
+    this.instructions=this.extractListItems(this.meal.instructions);
+    this.Tips=this.extractListItems(this.meal.tips);
+    this.selectedDietTypes=this.meal.dietTypes
+    this.ingredients=this.meal.ingredients;
+    this.checkOverNight();
+    this.addInstruction();
+    this.addTips();
+   }
+
+
+   editMealFromDB(mealId:number){
+    this.mealDTO.mealName = this.MealName;
+    this.mealDTO.prepareTime = this.PrepareTime;
+    this.mealDTO.cookTime = this.CookTime;
+    this.mealDTO.calories = this.Calories;
+    this.mealDTO.fat = this.Fat;
+    this.mealDTO.protein = this.Protien;
+    this.mealDTO.carbs = this.Carbs;
+    this.mealDTO.fibre = this.Fibre;
+    this.mealDTO.dietTypes=this.selectedDietTypes;
+    this.mealDTO.instructions = this.instuctionsDB;
+    this.mealDTO.tips = this.TipsDB;
+    this.mealDTO.ingredients = this.ingredients; 
+    this.mealDTO.imageUrl="https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg";
+    this.mealDTO.dayMealDTOList=this.returnDayNumber;
+    this.adminService.editMealDTO(this.mealDTO,mealId).subscribe(response => {
+
+      this.resetAll();
+      this.snackBar.open("Meal Edited successfully!", "×", {
+        panelClass: "success",
+        verticalPosition: "bottom",
+        duration: 5000,
+      }); 
+    }, error => {
+      this.snackBar.open(error.error, "×", {
+        panelClass: "error",
+        verticalPosition: "bottom",
+        duration: 3000,
+      }); 
+    });
+  }
 
 }

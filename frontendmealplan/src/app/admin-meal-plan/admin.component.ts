@@ -3,6 +3,8 @@ import { AppSettings, Settings } from '../app.settings';
 import { Router, NavigationEnd } from '@angular/router'; 
 import { MenuService } from './components/menu/menu.service';
 import { Menu } from './components/menu/menu.model';
+import { AuthService } from '../mealplan/services/auth.service';
+import { User } from '../mealplan/models/User';
 
 @Component({
   selector: 'app-admin',
@@ -15,13 +17,20 @@ export class AdminComponent implements OnInit {
   public settings:Settings;
   public menuItems:Array<Menu> = [];
   public toggleSearchBar:boolean = false;
-  constructor(public appSettings:AppSettings, 
+  constructor(public auth:AuthService,
+              public appSettings:AppSettings, 
               public router:Router,
               private menuService: MenuService){        
     this.settings = this.appSettings.settings;
   }
 
+  admin:User;
+  getLoginAdmin(){
+    this.admin=this.auth.getUserLocalStorage();
+  }
+
   ngOnInit() {  
+    this.getLoginAdmin();
     if(window.innerWidth <= 960){ 
       this.settings.adminSidenavIsOpened = false;
       this.settings.adminSidenavIsPinned = false;

@@ -4,6 +4,7 @@ import org.backendmealplan.backendmealplan.beans.MealIngredients;
 import org.backendmealplan.backendmealplan.beans.Plan;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.bl.PlanBL;
+import org.backendmealplan.backendmealplan.exceptions.DayNumberNotInYourPlanException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
@@ -37,6 +38,8 @@ public class PlanController {
             return ResponseEntity.ok(meals);
         } catch (userNotFoundException | paymentNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (DayNumberNotInYourPlanException e) {
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
@@ -47,6 +50,8 @@ public class PlanController {
             return ResponseEntity.ok(nutritions);
         } catch (userNotFoundException | paymentNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (DayNumberNotInYourPlanException e) {
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 

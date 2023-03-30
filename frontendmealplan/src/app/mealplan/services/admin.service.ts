@@ -19,7 +19,8 @@ export class AdminService {
   CHANGEPLAN_URL="admin/changeRole";
   ADDMEAL_URL="admin/addMeal";
   GETDAYNUMERS= "admin/getDayNumbers";
-  GETMEALDTO= "admin"
+  GETMEALDTO= "admin/meals/";
+  EDITMEAL_URL="admin/editMeal/"
   constructor(private apiService: ApiService) { }
 
   getAllUsers() {
@@ -59,7 +60,12 @@ export class AdminService {
     return this.apiService.get<DayNumberDTO[]>(this.GETDAYNUMERS+"?planName="+`${planName}`);
   }
 
-  getMealDTO(mealName:string){
-    return this.apiService.get<MealDTO>(this.GETMEALDTO+"?mealName="+`${mealName}`);
+  getMealDTO(mealId:number){
+    return this.apiService.get<MealDTO>(this.GETMEALDTO+`${mealId}`);
   }
+
+  editMealDTO(mealDTO:MealDTO,meaId:number){
+    return this.apiService.put<MealDTO>(this.EDITMEAL_URL+`${meaId}`,mealDTO)
+  }
+  
 }

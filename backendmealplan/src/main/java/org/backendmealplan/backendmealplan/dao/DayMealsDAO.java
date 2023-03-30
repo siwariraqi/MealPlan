@@ -19,4 +19,8 @@ public interface DayMealsDAO extends JpaRepository<DayMeal, DayMealKey> {
 
     @Query(value="SELECT * FROM mealplan.day_meals where day_plan_id=:dayPlanId", nativeQuery = true)
     List<DayMeal> findByIdPlanDayId(DayPlanId dayPlanId);
+
+  @Query(value = "SELECT * FROM mealplan.day_meals join mealplan.day_plan using (day_plan_id)" +
+    "where day_plan_id=:dayplanid AND day_number=:dayNumber And plan_id=:planId", nativeQuery = true)
+  List<DayMeal> getMealsOfDayAndDayPlanId(Integer dayNumber , Long dayplanid,Long planId);
 }
