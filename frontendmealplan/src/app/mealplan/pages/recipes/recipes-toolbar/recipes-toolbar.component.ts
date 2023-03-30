@@ -24,7 +24,7 @@ export class RecipesToolbarComponent implements OnInit {
   public searchQuery: string = '';
   public types:DietType[];
   public sortings = ['Prepare & Cook time', 'Diets'];
-  public times = ['Under 30 min','Under 60 min','Under 90 min','Overnight'];
+  public times = ['Under 30 min','Under 60 min','Under 90 min','Over 90 min','Overnight'];
 
   constructor(public recipesService:RecipesService) { }
 

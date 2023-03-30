@@ -1,7 +1,4 @@
 package org.backendmealplan.backendmealplan.bl;
-
-import org.backendmealplan.backendmealplan.enums.DietTypes;
-import org.backendmealplan.backendmealplan.exceptions.FeedbackNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
@@ -178,37 +175,41 @@ public class MealBL {
         }
     }
 
-    public MealDTO getMealDTOByName(String mealName) {
-        Meal meal = this.mealsDAO.findByMealName(mealName);
-        MealDTO returnedMeal = new MealDTO();
-        returnedMeal.setMealName(meal.getMealName());
-        returnedMeal.setImageUrl(meal.getImageUrl());
-        returnedMeal.setCalories(meal.getCalories());
-        returnedMeal.setInstructions(meal.getInstructions());
-        returnedMeal.setCookTime(meal.getCookTime());
-        returnedMeal.setPrepareTime(meal.getPrepareTime());
-        returnedMeal.setFat(meal.getFat());
-        returnedMeal.setFibre(meal.getFibre());
-        returnedMeal.setCarbs(meal.getCarbs());
-        returnedMeal.setProtein(meal.getProtein());
-        returnedMeal.setTips(meal.getTips());
+    public MealDTO getMealDTOByName(Long mealId) throws MealNotFoundException {
+        Optional<Meal> meal = this.mealsDAO.findByMealId(mealId);
+        if (meal.isPresent()) {
+            Meal mealo = meal.get();
+            MealDTO returnedMeal = new MealDTO();
+            returnedMeal.setMealName(mealo.getMealName());
+            returnedMeal.setImageUrl(mealo.getImageUrl());
+            returnedMeal.setCalories(mealo.getCalories());
+            returnedMeal.setInstructions(mealo.getInstructions());
+            returnedMeal.setCookTime(mealo.getCookTime());
+            returnedMeal.setPrepareTime(mealo.getPrepareTime());
+            returnedMeal.setFat(mealo.getFat());
+            returnedMeal.setFibre(mealo.getFibre());
+            returnedMeal.setCarbs(mealo.getCarbs());
+            returnedMeal.setProtein(mealo.getProtein());
+            returnedMeal.setTips(mealo.getTips());
 
-        List<String> mealsTypesList = new ArrayList<>();
-        for(DietType dietType: meal.getDietTypes()){
+            List<String> mealsTypesList = new ArrayList<>();
+            for (DietType dietType : mealo.getDietTypes()) {
                 mealsTypesList.add(dietType.getText());
-        }
-        returnedMeal.setDietTypes(mealsTypesList);
+            }
+            returnedMeal.setDietTypes(mealsTypesList);
 
-        List<MealIngredients> mealIngredientsList = mealIngredientsDAO.getMealIngredients(meal.getMealId());
-        for(MealIngredients mealIngredient:mealIngredientsList){
-            IngredientDTO ingredientDTO = new IngredientDTO(
-                    mealIngredient.getId().getIngredient().getCategory(),
-                    mealIngredient.getId().getIngredient().getProductName(),
-                    mealIngredient.getAmount(),mealIngredient.getUnit());
-            List<IngredientDTO>  returnedMealIngredient= returnedMeal.getIngredients();
-            returnedMealIngredient.add(ingredientDTO);
+            List<MealIngredients> mealIngredientsList = mealIngredientsDAO.getMealIngredients(mealo.getMealId());
+            for (MealIngredients mealIngredient : mealIngredientsList) {
+                IngredientDTO ingredientDTO = new IngredientDTO(
+                        mealIngredient.getId().getIngredient().getCategory(),
+                        mealIngredient.getId().getIngredient().getProductName(),
+                        mealIngredient.getAmount(), mealIngredient.getUnit());
+                List<IngredientDTO> returnedMealIngredient = returnedMeal.getIngredients();
+                returnedMealIngredient.add(ingredientDTO);
+            }
+            return returnedMeal;
         }
-        return returnedMeal;
+        throw new MealNotFoundException("Meal Not Found");
     }
 }
 
