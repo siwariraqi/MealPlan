@@ -1,48 +1,59 @@
 .container {
-  min-height: 88vh;
-  margin-top: -2vh;
-  height: 65vh;
+  zoom: 105%;
+  margin-top: -6vh;
+  width: 98vw;
+  max-width: 800px;
+  // height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  text-align: center;
+  margin-bottom: 3vh;
+  // box-shadow: 0 4px 12px rgb(7, 7, 7, 0.25) !important;
 }
 
 .formContainer {
   background-color: rgba(116, 116, 116, 0.918) !important;
   background-color: #bdc3c7 !important;
   background-image: linear-gradient(to right, #ffffff, #ffffffd2) !important;
-  box-shadow: 1px 1px 15px rgba(4, 4, 26, 0.15) !important;
+  box-shadow: 1px 0px 15px rgba(4, 4, 26, 0.15) !important;
+  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25) !important;
   opacity: 0.96 !important;
-  width: 40vw;
+  padding: 4px;
+  width: 85vw;
+  max-width: 700px;
 }
 
-.formWrapper {
-  width: 35vw;
-  background-color: red !important;
+.first-last-name-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  mat-form-field:first-child {
+    flex: auto;
+    margin-right: 5px;
+    width: 40%;
+  }
+  mat-form-field:last-child {
+    flex: auto;
+    margin-left: 5px;
+    width: 40%;
+  }
 }
 
-.formG {
-  text-align: center;
-  margin: auto;
-  width: 35vw;
-}
-
-.loginBtn {
+.signupBtn {
   background-color: #dd9670c4 !important;
   box-shadow: 1px 1px 5px rgba(5, 5, 34, 0.15);
   border: none;
   border-radius: 18.5px;
-  width: 220px;
+  width: 250px;
   height: 40px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 2vh;
 }
 
-.loginBtn:hover {
+.signupBtn:hover {
   background-color: #85ac53c4 !important;
   color: white;
   transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -51,60 +62,30 @@
 .googleBtnWrapper {
   text-align: center;
   margin: auto;
-  width: 30%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.google {
+.orRegisterWithEmailPassword {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  padding: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: larger;
   cursor: pointer;
-  width: 120px;
-  font-size: 16px;
-  letter-spacing: 0.6px;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  height: 35px;
-  box-shadow: 1px 1px 5px rgba(5, 5, 34, 0.15);
-  background-color: rgb(219, 219, 219);
 }
 
-.google:hover {
-  background-color: #85ac53c4;
-  color: white;
+.orRegisterWithEmailPassword:hover {
+  color: gray;
+  font-weight: 600;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-@media screen and (max-width: 1400px) {
-  .formContainer {
-    width: 60vw;
-  }
-
-  .formWrapper {
-    width: 55vw;
-  }
-
-  .formG {
-    width: 50vw;
-  }
-}
-
 @media screen and (max-width: 600px) {
-  .formContainer {
-    width: 85vw;
-  }
-
-  .formWrapper {
-    width: 85vw;
-  }
-
-  .formG {
-    width: 78vw;
-  }
+  // .container {
+  //   width: 85vw;
+  // }
 }

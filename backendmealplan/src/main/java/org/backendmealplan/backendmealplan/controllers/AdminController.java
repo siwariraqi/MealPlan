@@ -238,59 +238,73 @@ public class AdminController {
     }
 
     @Transactional
-    @PutMapping("/editMeal")
-    public ResponseEntity editMeal(@Valid @RequestBody MealDTO mealDTO) {
+    @PutMapping("/editMeal/{mealId}")
+    public ResponseEntity editMeal(@Valid @RequestBody MealDTO mealDTO, @PathVariable Long mealId) {
         Meal savedMeal = null;
         try {
-            Meal meal = mealsDAO.findByMealName(mealDTO.getMealName());
-            meal.setMealName(mealDTO.getMealName());
-            meal.setFat(mealDTO.getFat());
-            meal.setFibre(mealDTO.getFibre());
-            meal.setProtein(mealDTO.getProtein());
-            meal.setCarbs(mealDTO.getCarbs());
-            meal.setMealName(mealDTO.getMealName());
-            meal.setImageUrl(mealDTO.getImageUrl());
-            meal.setPrepareTime(mealDTO.getPrepareTime());
-            meal.setCookTime(mealDTO.getCookTime());
-            meal.setInstructions(mealDTO.getInstructions());
-            meal.setTips(mealDTO.getTips());
-            meal.setCalories(mealDTO.getCalories());
-            Meal returnedMeal = mealsDAO.save(meal);
+            Optional<Meal> meal = mealsDAO.findById(mealId);
+            if(meal.isEmpty())
+                return new ResponseEntity("Meal Not Existed!", HttpStatus.NOT_FOUND);
+            Meal checkMealName = mealsDAO.findByMealName(mealDTO.getMealName());
+            System.out.println(checkMealName);
+            if (checkMealName != null && meal.isPresent() && !Objects.equals(checkMealName.getMealName(), meal.get().getMealName())) {
+                return new ResponseEntity("Can't change to existed Meal name!", HttpStatus.BAD_REQUEST);
+            } else {
+                Meal mealo = meal.get();
+                mealo.setMealName(mealDTO.getMealName());
+                mealo.setFat(mealDTO.getFat());
+                mealo.setFibre(mealDTO.getFibre());
+                mealo.setProtein(mealDTO.getProtein());
+                mealo.setCarbs(mealDTO.getCarbs());
+                mealo.setMealName(mealDTO.getMealName());
+                mealo.setImageUrl(mealDTO.getImageUrl());
+                mealo.setPrepareTime(mealDTO.getPrepareTime());
+                mealo.setCookTime(mealDTO.getCookTime());
+                mealo.setInstructions(mealDTO.getInstructions());
+                mealo.setTips(mealDTO.getTips());
+                mealo.setCalories(mealDTO.getCalories());
+                Meal returnedMeal = this.mealsDAO.save(mealo);
 
-            Set<DietType> dietTypeSet = new HashSet<>();
-            for (String dietType : mealDTO.getDietTypes()) {
-                savedMeal = mealsDAO.findByMealName(returnedMeal.getMealName());
-                DietType savedDiet = dietTypesDAO.findByText(dietType);
-                dietTypeSet.add(savedDiet);
+                Set<DietType> dietTypeSet = new HashSet<>();
+                for (String dietType : mealDTO.getDietTypes()) {
+                    savedMeal = mealsDAO.findByMealName(returnedMeal.getMealName());
+                    DietType savedDiet = dietTypesDAO.findByText(dietType);
+                    dietTypeSet.add(savedDiet);
+                }
+                savedMeal.setDietTypes(dietTypeSet);
+                savedMeal = mealsDAO.save(savedMeal);
+
+                mealIngredientsDAO.deleteByMealId(savedMeal.getMealId());
+
+                for (IngredientDTO mealIngredient : mealDTO.getIngredients()) {
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setProductName(mealIngredient.getProductName());
+                    ingredient.setCategory(mealIngredient.getCategory());
+                    Ingredient returnedIngredient = ingredientBL.addIngredient(ingredient);
+
+                    MealIngredients mealIngredients = new MealIngredients();
+                    mealIngredients.setAmount(mealIngredient.getAmount());
+                    mealIngredients.setUnit(Unit.valueOf(mealIngredient.getUnit()).name());
+                    mealIngredients.setId(new MealIngredientId(returnedMeal, returnedIngredient));
+                    mealBL.addMealIngredients(mealIngredients);
+
+                }
+                return new ResponseEntity(returnedMeal, HttpStatus.OK);
             }
-            savedMeal.setDietTypes(dietTypeSet);
-            savedMeal = mealsDAO.save(savedMeal);
-
-            mealIngredientsDAO.deleteByMealId(savedMeal.getMealId());
-
-            for (IngredientDTO mealIngredient : mealDTO.getIngredients()) {
-                Ingredient ingredient = new Ingredient();
-                ingredient.setProductName(mealIngredient.getProductName());
-                ingredient.setCategory(mealIngredient.getCategory());
-                Ingredient returnedIngredient = ingredientBL.addIngredient(ingredient);
-
-                MealIngredients mealIngredients = new MealIngredients();
-                mealIngredients.setAmount(mealIngredient.getAmount());
-                mealIngredients.setUnit(Unit.valueOf(mealIngredient.getUnit()).name());
-                mealIngredients.setId(new MealIngredientId(returnedMeal, returnedIngredient));
-                mealBL.addMealIngredients(mealIngredients);
-
-            }
-            return new ResponseEntity(returnedMeal, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity getMealDTOByName(@RequestParam String mealName){
-        MealDTO mealDTO = mealBL.getMealDTOByName(mealName);
-        return new ResponseEntity(mealDTO,HttpStatus.OK);
+    @GetMapping("meals/{mealId}")
+    public ResponseEntity getMealDTOByName(@PathVariable Long mealId) {
+        MealDTO mealDTO = null;
+        try {
+            mealDTO = mealBL.getMealDTOByName(mealId);
+        } catch (MealNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return new ResponseEntity(mealDTO, HttpStatus.OK);
     }
 
 }

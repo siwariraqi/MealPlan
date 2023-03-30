@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
 @Component({
@@ -14,8 +14,18 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
         <div class="img">
           <img src=" /assets/images/questions_icons/{{ ['weight2.png'] }}" />
         </div>
-        <div class="form__group field">
-          <input type="input" class="form__field" name="name" type="number" [formControl]="weightControl" required #inputValue />
+
+        <div [formGroup]="formInfo" class="form__group field inputWrapper">
+          <input
+            type="input"
+            class="form__field"
+            name="name"
+            type="number"
+            placeholder="weight"
+            formControlName="weightControl"
+            required
+            #inputValue
+          />
           <p class="val">{{ chosenUnit === "metric" ? "KG" : "LB" }}</p>
           <p></p>
         </div>
@@ -31,19 +41,44 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
 })
 export class Onboarding13Component implements OnInit {
   chosenUnit: string;
-  weightControl: FormControl;
+  formInfo!: UntypedFormGroup;
   toggle1 = true;
   toggle2 = false;
+  weight: string;
 
-  constructor(private registerSrv: RegisterService) {
-    this.weightControl = new FormControl();
+  constructor(private formBuilder: UntypedFormBuilder, private registerSrv: RegisterService) {
     this.chosenUnit = null;
+    this.formInfo = this.formBuilder.group({
+      weightControl: [null, Validators.required],
+    });
   }
 
   ngOnInit(): void {
     this.chosenUnit = "metric";
-    this.registerSrv.getUserInfo().unit = this.chosenUnit;
-    this.weightControl.valueChanges.subscribe((value) => {
+    const userInfo = this.registerSrv.getUserInfo();
+    if (userInfo && userInfo.infoId) {
+      if (userInfo && userInfo.unit && userInfo.unit !== "") {
+        this.chosenUnit = userInfo.unit;
+        switch (this.chosenUnit) {
+          case "metric":
+            this.toggle1 = true;
+            this.toggle2 = false;
+            break;
+          case "imperial":
+            this.toggle2 = true;
+            this.toggle1 = false;
+            break;
+        }
+      } else {
+        this.registerSrv.getUserInfo().unit = this.chosenUnit;
+      }
+      if (userInfo.weight && userInfo.weight !== "") {
+        this.weight = userInfo.weight;
+        this.formInfo.controls["weightControl"].setValue(parseInt(this.weight));
+      }
+    }
+
+    this.formInfo.controls["weightControl"].valueChanges.subscribe((value) => {
       console.log(value);
       this.registerSrv.getUserInfo().weight = value;
       // this.registerSrv.getUserInfo().weight = value + ` ${this.chosenUnit === "metric" ? "KG" : "LB"}`;

@@ -1,8 +1,9 @@
 .container {
-  margin-top: -2vh;
-  width: 85vw;
+  zoom: 94%;
+  margin-top: -6vh;
+  width: 98vw;
   max-width: 800px;
-  height: 66vh;
+  // height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,8 +59,24 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+.orRegisterWithGoogle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: larger;
+  cursor: pointer;
+}
+
+.orRegisterWithGoogle:hover {
+  color: gray;
+  font-weight: 600;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
 @media screen and (max-width: 600px) {
-  // .container {
-  //   width: 85vw;
-  // }
+  ::ng-deep .mat-form-field {
+    font-size: 12px; // decreasing input height for material input only by changing font size
+  }
 }

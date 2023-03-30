@@ -145,7 +145,8 @@ export class RecipesComponent implements OnInit {
     } else {
       const maxTimeInMinutes = filter.selectedDuration === "Under 30 min" ? 30 : 
                                filter.selectedDuration === "Under 60 min" ? 60 : 
-                               filter.selectedDuration === "Under 90 min" ? 90 : null;
+                               filter.selectedDuration === "Under 90 min" ? 90 : 
+                               filter.selectedDuration === "Over 90 min" ?  91 : null;
       if (maxTimeInMinutes !== null) {
         this.filteredMenuItems = this.menuItems.filter(menuItem => {
           if (menuItem.id.meal.prepareTime !== "Overnight" && 
@@ -154,6 +155,9 @@ export class RecipesComponent implements OnInit {
                                           parseInt(menuItem.id.meal.prepareTime.match(/\d+/)[0]) : 0;
             const cookTimeInMinutes = menuItem.id.meal.cookTime.match(/\d+/) ?
                                        parseInt(menuItem.id.meal.cookTime.match(/\d+/)[0]) : 0;
+              if(maxTimeInMinutes==91){
+                  return(prepareTimeInMinutes+cookTimeInMinutes) >= maxTimeInMinutes-1;
+              }
             return (prepareTimeInMinutes + cookTimeInMinutes) < maxTimeInMinutes;
           }
           return null;
