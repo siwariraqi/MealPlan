@@ -194,10 +194,14 @@ public class MealBL {
 
             List<MealIngredients> mealIngredientsList = mealIngredientsDAO.getMealIngredients(mealo.getMealId());
             for (MealIngredients mealIngredient : mealIngredientsList) {
+                Double amount = mealIngredient.getAmount();
+                String unit = mealIngredient.getUnit();
                 IngredientDTO ingredientDTO = new IngredientDTO(
                         mealIngredient.getId().getIngredient().getCategory(),
                         mealIngredient.getId().getIngredient().getProductName(),
-                        Optional.of(mealIngredient.getAmount()), Optional.of(mealIngredient.getUnit()));
+                        amount,
+                        unit
+                );
                 List<IngredientDTO> returnedMealIngredient = returnedMeal.getIngredients();
                 returnedMealIngredient.add(ingredientDTO);
             }
