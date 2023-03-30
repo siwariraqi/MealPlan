@@ -172,7 +172,9 @@ export class GroceryListComponent implements OnInit {
 
     if (index !== -1) {
       groceriesToDelete.forEach((grocery) => {
+        this.removeItCorrectly(grocery);
         if (this.weeksToDisplay.has(grocery.week)) {
+          this.combinedGroceries.get(combinedString).delete(grocery);
           this.grocerListService
             .DeleteIngredient(grocery.groceryId)
             .subscribe((error) => {
@@ -183,6 +185,12 @@ export class GroceryListComponent implements OnInit {
       this.groceries.splice(index, 1);
       this.groceriesSet.delete(toRemove);
     }
+  }
+  removeItCorrectly(grocery: GroceryList) {
+    let arr = this.weekGroceries[grocery.week - 1];
+    let index = arr.indexOf(grocery);
+    arr.splice(index, 1);
+    this.weekGroceries[grocery.week - 1] = arr;
   }
 
   selectAll() {

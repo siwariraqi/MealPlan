@@ -58,7 +58,7 @@ public class GroceryListBL {
         try {
             List<MealIngredients> ingredients = mealBL.getDayPlanMealIngredients(currentMeal.getMealId());
             for(MealIngredients ingredient : ingredients){
-                List<GroceryList> list = groceryListDAO.findByWeekAndIngredientAndUnit(week, ingredient.getId().getIngredient(), ingredient.getUnit());
+                List<GroceryList> list = groceryListDAO.findByWeekAndIngredientAndUnitAndPlanPlanId(week, ingredient.getId().getIngredient(), ingredient.getUnit(), plan.getPlanId());
                 if(list.size() == 1){
                     GroceryList found = list.get(0);
                     found.setAmount((int) (found.getAmount()+ingredient.getAmount()));

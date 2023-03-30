@@ -1,10 +1,7 @@
 package org.backendmealplan.backendmealplan.bl;
-import org.backendmealplan.backendmealplan.dao.DayPlanIdDAO;
-import org.backendmealplan.backendmealplan.dao.DietTypesDAO;
-import org.backendmealplan.backendmealplan.dao.MealsDAO;
+import org.backendmealplan.backendmealplan.dao.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
-import org.backendmealplan.backendmealplan.dao.PlansDAO;
 import org.backendmealplan.backendmealplan.beans.DietType;
 import org.backendmealplan.backendmealplan.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class InitDataBL {
+    @Autowired
+    DayPlanDAO dayPlanDAO;
+    @Autowired
+    DayMealsDAO dayMealsDAO;
+
     @Autowired
     UserBL userBL;
 
@@ -62,7 +64,7 @@ public class InitDataBL {
         createDays();
         createDayMeals();
         createDayPlan();
-        initGroceriesPrimitive();
+        initGroceries();
     }
 
     private void createMealTypes() {
@@ -1035,6 +1037,34 @@ public class InitDataBL {
 
        */
     }
+
+    private void initGroceries(){
+        List<Plan> allPlans = planBL.getAllPlans();
+        for(int plan_idx=0; plan_idx<allPlans.size(); plan_idx++){
+            Plan currPlan = allPlans.get(plan_idx);
+            if(currPlan.getPlanName().equals("Freemium")){
+                continue;
+            }
+            List<DayPlanId> dayPlanIds = currPlan.getDayPlanIdList();
+            int numberOfDays = Integer.parseInt(currPlan.getLength());
+            for(int day=1; day<=numberOfDays; day++){
+                int week = (day%7==0)? day/7 : day/7+1;
+                Optional<DayPlan> OptionaldayPlan = dayPlanDAO.getDayNumber(currPlan.getPlanId(), day);
+                if(OptionaldayPlan.isPresent()){
+                    DayPlan dayPlan = OptionaldayPlan.get();
+                    DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
+                    List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(day, dayPlanId.getDayPlanId(),currPlan.getPlanId());
+                    if(dayMeals!=null) {
+                        for (int mealIdx = 0; mealIdx < dayMeals.size(); mealIdx++) {
+                            this.groceryListBl.addMealIngredientsToGroceries(currPlan, dayMeals.get(mealIdx).getId().getMeal(), week);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }
 
