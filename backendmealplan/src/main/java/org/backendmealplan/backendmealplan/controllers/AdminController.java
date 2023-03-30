@@ -201,8 +201,10 @@ public class AdminController {
                 Ingredient returnedIngredient = ingredientBL.addIngredient(ingredient);
 
                 MealIngredients mealIngredients = new MealIngredients();
-                mealIngredients.setAmount(mealIngredient.getAmount());
-                mealIngredients.setUnit(Unit.valueOf(mealIngredient.getUnit()).name());
+                if (mealIngredient.getAmount().isPresent())
+                    mealIngredients.setAmount(mealIngredient.getAmount().get());
+                if (mealIngredient.getUnit().isPresent())
+                    mealIngredients.setUnit(mealIngredient.getUnit().get());
                 mealIngredients.setId(new MealIngredientId(returnedMeal, returnedIngredient));
                 mealBL.addMealIngredients(mealIngredients);
 
@@ -267,7 +269,6 @@ public class AdminController {
 
                 Set<DietType> dietTypeSet = new HashSet<>();
                 for (String dietType : mealDTO.getDietTypes()) {
-                    savedMeal = mealsDAO.findByMealName(returnedMeal.getMealName());
                     DietType savedDiet = dietTypesDAO.findByText(dietType);
                     dietTypeSet.add(savedDiet);
                 }
@@ -283,8 +284,10 @@ public class AdminController {
                     Ingredient returnedIngredient = ingredientBL.addIngredient(ingredient);
 
                     MealIngredients mealIngredients = new MealIngredients();
-                    mealIngredients.setAmount(mealIngredient.getAmount());
-                    mealIngredients.setUnit(Unit.valueOf(mealIngredient.getUnit()).name());
+                    if (mealIngredient.getAmount().isPresent())
+                        mealIngredients.setAmount(mealIngredient.getAmount().get());
+                    if (mealIngredient.getUnit().isPresent())
+                        mealIngredients.setUnit(mealIngredient.getUnit().get());
                     mealIngredients.setId(new MealIngredientId(returnedMeal, returnedIngredient));
                     mealBL.addMealIngredients(mealIngredients);
 
