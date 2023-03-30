@@ -271,8 +271,8 @@ public class AdminController {
                     DietType savedDiet = dietTypesDAO.findByText(dietType);
                     dietTypeSet.add(savedDiet);
                 }
-                savedMeal.setDietTypes(dietTypeSet);
-                savedMeal = mealsDAO.save(savedMeal);
+                returnedMeal.setDietTypes(dietTypeSet);
+                savedMeal = mealsDAO.save(returnedMeal);
 
                 mealIngredientsDAO.deleteByMealId(savedMeal.getMealId());
 
