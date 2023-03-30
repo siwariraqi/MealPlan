@@ -14,4 +14,11 @@ public class IngredientDTO {
     private String productName;
     private Optional<Double> amount;
     private Optional<String> unit;
+
+    public IngredientDTO(String category, String productName, Double amount, String unit) {
+        this.category = category;
+        this.productName = productName;
+        this.amount = Optional.ofNullable(amount);
+        this.unit = Optional.ofNullable(unit);
+    }
 }
