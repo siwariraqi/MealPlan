@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class InitDataBL {
-  @Autowired
-  UserBL userBL;
 
   @Autowired
   PlanBL planBL;
@@ -65,7 +63,7 @@ public class InitDataBL {
     createDays();
     createDayMeals();
     createDayPlan();
-    //initGroceriesPrimitive();
+    initGroceriesPrimitive();
   }
 
   private void createMealTypes() {
@@ -1028,10 +1026,16 @@ public class InitDataBL {
 
     private void initGroceriesPrimitive(){
       List<Meal> allMeals = mealsDAO.findAll();
+      Meal currMeal = allMeals.get(0);
+        groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 1);
+        groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 2);
+      /*
       for(int i=0; i<allMeals.size(); i++) {
           Meal currMeal = allMeals.get(i);
               groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 1);
               groceryListBl.addMealIngredientsToGroceries(premiumPlan, currMeal, 1);
           }
+
+       */
       }
   }

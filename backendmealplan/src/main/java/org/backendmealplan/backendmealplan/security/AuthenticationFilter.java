@@ -1,5 +1,6 @@
 package org.backendmealplan.backendmealplan.security;
 
+/*
 import java.util.List;
 
 import org.backendmealplan.backendmealplan.beans.User;
@@ -21,11 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@Component
-public class AuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter {
 
-    @Autowired
-    UserBL userBL;
+    extends OncePerRequestFilter
+    @Component
 
     @Autowired
     private JwtUtils jwtUtils;
@@ -89,8 +89,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         return null;
     }
+
 }
-/*
 package org.backendmealplan.backendmealplan.security;
 import java.util.List;
 

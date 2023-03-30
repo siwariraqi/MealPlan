@@ -28,6 +28,7 @@ export class GroceryListComponent implements OnInit {
   public hasWeekGrocery = []; //an array to tell us whether a week is already brought or not
   public combinedGroceries: Map<String, Set<GroceryList>>;
   public plan: Plan;
+  public planLength;
 
   clicked: boolean[];
 
@@ -60,12 +61,13 @@ export class GroceryListComponent implements OnInit {
   }
 
   displayWeek(week: number) {
-    if (this.plan.length === "14" && (week == 3 || week == 4)) {
+    if (this.planLength === "14" && (week == 3 || week == 4)) {
       //new component that require to update plan
+      this.clicked[week - 1] = false;
       this.popup();
     }
-    this.getGroceriesForWeek(week);
     this.weeksToDisplay.add(week);
+    this.getGroceriesForWeek(week);
     this.filterGroceriesAccordingToWeek();
   }
   hideWeek(week: number) {
@@ -74,11 +76,11 @@ export class GroceryListComponent implements OnInit {
   }
   weekClicked(week: number) {
     if (this.clicked[week - 1]) {
-      this.hideWeek(week);
       this.clicked[week - 1] = false;
+      this.hideWeek(week);
     } else {
-      this.displayWeek(week);
       this.clicked[week - 1] = true;
+      this.displayWeek(week);
     }
   }
 
@@ -111,6 +113,7 @@ export class GroceryListComponent implements OnInit {
   public getPlan() {
     this.dayMealService.getPlan(1).subscribe((plan) => {
       this.plan = plan;
+      this.planLength = this.plan.length;
     });
   }
 
