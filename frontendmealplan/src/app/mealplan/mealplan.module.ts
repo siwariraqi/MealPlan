@@ -52,6 +52,7 @@ import { LandingPageComponent } from "./pages/landing-page/landing-page.componen
 import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
 import { ReactiveFormsModule } from "@angular/forms";
 
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -84,6 +85,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     EducationComponent,
     LandingPageComponent,
     RegisterGoogleComponent,
+   
   ],
 
   imports: [

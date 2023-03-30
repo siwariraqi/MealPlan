@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
 
@@ -34,7 +36,14 @@ public class UserBL {
   UsersInfoDAO usersInfoDAO;
 
   @Autowired
+  private PasswordResetTokenDAO passwordResetTokenDAO;
+
+  @Autowired
   FeedbackBL feedbackBL;
+
+  @Autowired
+  private EmailBL emailBL;
+
 
   @Autowired
   GoalsDAO goalsDAO;
@@ -114,6 +123,88 @@ public class UserBL {
         // Phone number must only include numbers 0-9. minimum 9 and maximum 16
         return phoneNum.matches("^[0-9]{9,16}$");
     }
+
+
+
+  public boolean isTokenExpired(PasswordResetToken token) {
+    LocalDateTime expirationDate = token.getExpirationDate();
+    return expirationDate != null && expirationDate.isAfter(LocalDateTime.now());
+  }
+
+
+
+
+  /**
+   * Initiates the password reset process for a user with the given email address.
+   * Sends an email with a password reset token to the user if the email address exists in the database.
+   * @param email the email address of the user
+   * @throws userNotFoundException if the user with the given email address does not exist
+   * @throws InvalidTokenException if the password reset token is invalid or null
+   * @throws TokenExpiredException if the password reset token has expired
+   */
+  public void forgotPassword(String email) throws userNotFoundException, InvalidTokenException , TokenExpiredException {
+
+    User user = this.usersDAO.findByEmail(email);
+    if(user == null){
+
+      throw new userNotFoundException("user not found with email "+ email);
+
+    }
+
+    PasswordResetToken token = new PasswordResetToken();
+    if(token == null){
+      throw new InvalidTokenException("invalid token.");
+    } else if (isTokenExpired(token)) {
+      token =null;
+      throw new TokenExpiredException("Token has expired!");
+    }
+
+    token.setUser(user);
+    token.setToken(UUID.randomUUID().toString());
+    token.setExpirationDate(LocalDateTime.now().plusMinutes(10));
+    passwordResetTokenDAO.save(token);
+
+
+    Mail mail = new Mail();
+    mail.setFrom("mealplan03.email@gmail.com","Meal Plan");
+    mail.setTo(user.getEmail());
+    mail.setSubject("Your Password reset code (valid for 10 min)");
+
+    Map<String, Object> mailModel = new HashMap<>();
+
+    mailModel.put("token", token);
+    mailModel.put("user", user);
+    mailModel.put("subscriptionDate", LocalDateTime.now().toString());
+    String url = "https://localhost:4200";
+    String resetUrl = url + "/reset-password?token=" + token.getToken();
+    mailModel.put("resetUrl", resetUrl);
+    // model.addAttribute("firstName",user.getFirstName());
+
+    mail.setModel(mailModel);
+    System.out.println(mailModel);
+
+    emailBL.send(mail);
+  }
+
+  public PasswordResetToken getResetPasswordToken(String token) throws InvalidTokenException, TokenExpiredException {
+    PasswordResetToken passwordResetToken = this.passwordResetTokenDAO.findByToken(token);
+    if (passwordResetToken == null) {
+      throw new InvalidTokenException("Invalid token!");
+    } else if (isTokenExpired(passwordResetToken)) {
+      throw new TokenExpiredException("Token has expired!");
+    }
+    return passwordResetToken;
+  }
+
+  public void resetPassword(String token, String newPassword) throws InvalidTokenException, TokenExpiredException {
+    PasswordResetToken passwordResetToken = getResetPasswordToken(token);
+    User user = passwordResetToken.getUser();
+    user.setPassword(newPassword);
+    usersDAO.save(user);
+    passwordResetTokenDAO.delete(passwordResetToken);
+  }
+
+
 
 
     /*

@@ -5,6 +5,7 @@ import org.backendmealplan.backendmealplan.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -105,6 +106,49 @@ public class UsersController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/forget-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+
+        try {
+            userBL.forgotPassword(email);
+
+            return ResponseEntity.ok().build();
+        } catch (userNotFoundException e) {
+            System.out.println(e);
+            return ResponseEntity.notFound().build();
+        } catch (TokenExpiredException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (InvalidTokenException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("reset-password")
+    public ResponseEntity showResetPasswordForm(@RequestParam String token) {
+        try {
+            PasswordResetToken passwordResetToken = this.userBL.getResetPasswordToken(token);
+            // If the token is valid, return an appropriate response
+            return ResponseEntity.ok().build();
+        } catch (TokenExpiredException e) {
+            // Handle the exception and return an appropriate response
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }  catch (InvalidTokenException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@Valid @RequestParam ResetPassword passwordReset) {
+        String newPassword = passwordReset.getPassword();
+        String token = passwordReset.getToken();
+
+        try {
+            userBL.resetPassword(token, newPassword);
+            return ResponseEntity.ok("Password reset successful!");
+        } catch (TokenExpiredException | InvalidTokenException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @GetMapping("/getUser")
     public ResponseEntity<User> getUser(@RequestParam long loggedInUserId ) {

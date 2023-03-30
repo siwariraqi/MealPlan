@@ -1,0 +1,25 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mealplan03.email@gmail.com
+    password: hynhejnupnsrmbum
+    protocol: smtp
+    default-encoding: UTF-8
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          ssl:
+            trust: smtp.gmail.com
