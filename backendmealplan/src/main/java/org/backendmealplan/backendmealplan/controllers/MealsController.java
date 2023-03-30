@@ -2,7 +2,9 @@ package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.DayMeal;
 import org.backendmealplan.backendmealplan.bl.MealBL;
 import org.backendmealplan.backendmealplan.enums.DietTypes;
+import org.backendmealplan.backendmealplan.enums.FoodCategories;
 import org.backendmealplan.backendmealplan.enums.MealTime;
+import org.backendmealplan.backendmealplan.enums.Unit;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,26 @@ public class MealsController{
             dietTypeValues[i] = dietTypes[i].getValue();
         }
         return dietTypeValues;
+    }
+
+    @GetMapping("/units")
+    public String[] getUnits() {
+        Unit[] unit = Unit.values();
+        String[] unitList = new String[unit.length];
+        for (int i = 0; i < unitList.length; i++) {
+            unitList[i] = unit[i].name();
+        }
+        return unitList;
+    }
+
+    @GetMapping("/categories")
+    public String[] getFoodCategory() {
+        FoodCategories[] foodCategories = FoodCategories.values();
+        String[] foodList = new String[foodCategories.length];
+        for (int i = 0; i < foodList.length; i++) {
+            foodList[i] = foodCategories[i].name();
+        }
+        return foodList;
     }
 
     @GetMapping("/{mealTime}")
