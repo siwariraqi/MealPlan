@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { IngredientDTO } from 'src/app/mealplan/models/IngredientDTO';
-import { Meal } from 'src/app/mealplan/models/Meal';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
 
@@ -24,7 +23,7 @@ export class AddComponent implements OnInit {
   types=['Breakfast','Lunch','Dinner','Snack']
   dayNumbers=[];
   selectedDietTypes: string[] = [];
-  ingredients :IngredientDTO[];
+  ingredients :IngredientDTO[]=[];
   dayPlanTypes=[];
   returnDayNumber=[];
 
@@ -211,7 +210,6 @@ OnSubmit() {
 }
 
 addMeal(mealDTO:MealDTO){
-  // console.log(this.mealDTO);
   this.adminService.addMeal(mealDTO).subscribe(response => {
     this.resetAll();
     this.snackBar.open("Meal Added successfully!", "×", {
@@ -220,7 +218,6 @@ addMeal(mealDTO:MealDTO){
       duration: 5000,
     }); 
   }, error => {
-    console.log('meal save error:', error);
     this.snackBar.open(error.error, "×", {
       panelClass: "error",
       verticalPosition: "bottom",
@@ -333,9 +330,8 @@ daySelection(){
     this.mealDTO.instructions = this.instuctionsDB;
     this.mealDTO.tips = this.TipsDB;
     this.mealDTO.ingredients = this.ingredients; 
-    this.mealDTO.imageUrl="this.imageUrl";
+    this.mealDTO.imageUrl="https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg";
     this.mealDTO.dayMealDTOList=this.returnDayNumber;
-    console.log(this.mealDTO)
     this.adminService.editMealDTO(this.mealDTO,mealId).subscribe(response => {
 
       this.resetAll();
@@ -345,7 +341,6 @@ daySelection(){
         duration: 5000,
       }); 
     }, error => {
-      console.log('meal edit error:', error);
       this.snackBar.open(error.error, "×", {
         panelClass: "error",
         verticalPosition: "bottom",

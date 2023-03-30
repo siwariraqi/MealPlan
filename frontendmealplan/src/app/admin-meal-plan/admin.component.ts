@@ -27,7 +27,6 @@ export class AdminComponent implements OnInit {
   admin:User;
   getLoginAdmin(){
     this.admin=this.auth.getUserLocalStorage();
-  console.log(this.admin)
   }
 
   ngOnInit() {  
