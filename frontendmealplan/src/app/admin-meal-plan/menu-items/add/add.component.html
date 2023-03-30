@@ -157,10 +157,10 @@
 
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
-                <div   fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
-<!-- *ngIf="!isEdit" -->
+                <div *ngIf="!isEdit"  fxFlex="100" class="px-2" style="margin-top: 40px;"></div>
+<!-- " -->
 
-                <div  fxFlex="100" class="px-2">
+                <div *ngIf="!isEdit" fxFlex="100" class="px-2">
                     <div fxFlex="15" fxFlex.gt-sm="15" class="px-3">
                         <h4>Insert meal<br> to day plan:</h4>
                     </div>
