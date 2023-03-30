@@ -32,20 +32,15 @@ export class ListComponent implements OnInit {
     this.adminService.getAllMeals().subscribe(meals => {
       this.meals = meals;
       this.initDataSource(this.meals);
-      console.log(this.meals[0].dietTypes)
 
     })
   }
 
   onMealClick(mealId: number) {
-    console.log(mealId);
     for (let i = 0; i < this.meals.length; i++) {
       if (this.meals[i].mealId === mealId) {
         this.meal = this.meals[i];
-        this.dayMealService.setSelectedMeal(this.meal);
-        console.log(this.meal);
-        
-
+        this.dayMealService.setSelectedMeal(this.meal);        
       }
     }
   }
