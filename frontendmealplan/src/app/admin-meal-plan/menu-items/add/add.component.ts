@@ -243,9 +243,9 @@ daySelection(){
     this.mealDTO=new MealDTO();
     this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
     this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
-    this.ingredients= new IngredientDTO[''];this.dayPlanTypes=[];this.returnDayNumber=[];
+    this.ingredients=[];this.dayPlanTypes=[];this.returnDayNumber=[];
     this.isOvernightCooking=false;this.isOvernightPreparing=false;
-     this.Tip='';this.instruction='';this.Tips=[];this.instructions=[];
+     this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
     this.fileChange('');
   }
 
