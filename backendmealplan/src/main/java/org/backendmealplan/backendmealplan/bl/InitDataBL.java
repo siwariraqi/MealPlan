@@ -18,9 +18,6 @@ public class InitDataBL {
     DayMealsDAO dayMealsDAO;
 
     @Autowired
-    UserBL userBL;
-
-    @Autowired
     PlanBL planBL;
 
     @Autowired
