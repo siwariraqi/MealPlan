@@ -18,6 +18,7 @@ export class ShareComponent implements OnInit {
         .share({
           title: 'Iam sharing my recipe ingredients with you, Have Fun :)',
           url: 'http://localhost:4200/',
+          // '' + this.document.location.href
         })
         .then(() => {
           console.log('Thanks For Sharing!');

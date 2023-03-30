@@ -1,4 +1,5 @@
 package org.backendmealplan.backendmealplan.bl;
+import org.backendmealplan.backendmealplan.exceptions.DayNumberNotInYourPlanException;
 import org.backendmealplan.backendmealplan.exceptions.MealNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.paymentNotFoundException;
 import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
@@ -36,62 +37,55 @@ public class MealBL {
     @Autowired
     DayMealsDAO dayMealsDAO;
 
+    @Autowired
+    DayPlanDAO dayPlanDAO;
 
-    public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
-        Optional<User> users = this.usersDAO.findById(userID);
-        if (users.isPresent()) {
-            User user = users.get();
-            Plan plan = user.getPlan();
-            List<DayPlanId> dayPlanIds = plan.getDayPlanIdList();
-            List<DayMeal> dayMeals;
-            if (dayNumber != 0) {
-                DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId(), plan.getPlanId());
 
-            } else {
-                Optional<Payment> payment = paymentDAO.findByUserUserId(userID);
-                if (payment.isPresent()) {
-                    Date paymentOfDate = payment.get().getPaymentOfDate();
-                    LocalDate paymentOfLocalDate = paymentOfDate.toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate();
-                    LocalDate currentDate = LocalDate.now();
-                    long daysBetween = ChronoUnit.DAYS.between(paymentOfLocalDate, currentDate);
-                    dayNumber = (int) daysBetween;
-                    DayPlanId dayPlanId = dayPlanIds.get(dayNumber - 1);
-                    dayMeals = dayMealsDAO.getMealsOfDay(dayPlanId.getDayPlanId(), plan.getPlanId());
-                } else {
-                    throw new paymentNotFoundException("Payment not found");
-                }
+    public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException, DayNumberNotInYourPlanException {
+      Optional<User> users = this.usersDAO.findById(userID);
+      if (users.isPresent()) {
+        User user = users.get();
+        Plan plan = user.getPlan();
 
+        Optional<DayPlan> OptionaldayPlan = dayPlanDAO.getDayNumber(plan.getPlanId(), dayNumber);
+
+        if (OptionaldayPlan.isPresent()) {
+          DayPlan dayPlan = OptionaldayPlan.get();
+          DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
+          List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(dayNumber, dayPlanId.getDayPlanId(),plan.getPlanId());
+          Collections.sort(dayMeals,new Comparator<DayMeal>() {
+            @Override
+            public int compare(DayMeal o1, DayMeal o2) {
+              String[] order = {"Breakfast", "Snacks","Snacks", "Lunch","Dinner"};
+              List<String> ord = new ArrayList<>();
+              for(String type:order){
+                ord.add(type);
+              }
+              return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
             }
-            Collections.sort(dayMeals, new Comparator<DayMeal>() {
-                @Override
-                public int compare(DayMeal o1, DayMeal o2) {
-                    String[] order = {"Breakfast", "Snacks", "Snacks", "Lunch", "Dinner"};
-                    List<String> ord = new ArrayList<>();
-                    for (String type : order) {
-                        ord.add(type);
-                    }
-                    return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
-                }
-            });
-            if (dayMeals.size() == 5) {
-                DayMeal snack = dayMeals.get(2);
-                dayMeals.remove(2);
-                dayMeals.add(3, snack);
-            }
-            return dayMeals;
-        } else {
-            throw new userNotFoundException("User not found");
+          });
+          if(dayMeals.size() == 5){
+            DayMeal snack = dayMeals.get(2);
+            dayMeals.remove(2);
+            dayMeals.add(3,snack);
+          }
+          return dayMeals;
         }
+        else {
+          throw new DayNumberNotInYourPlanException();
+        }
+
+      }
+      else {
+        throw new userNotFoundException("User not found");
+      }
     }
 
     public List<MealIngredients> getDayPlanMealIngredients(Long mealId) throws MealNotFoundException {
         return mealIngredientsDAO.getMealIngredients(mealId);
     }
 
-    public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException {
+    public List<String> getTotalDayNutrition(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException, DayNumberNotInYourPlanException {
         List<DayMeal> dayMeals = getDayPlanMeals(dayNumber, userID);
         List<String> TotalNutrition = new ArrayList<>();
         Double totalCalories = 0.0;
