@@ -203,7 +203,7 @@ public class MealBL {
                 IngredientDTO ingredientDTO = new IngredientDTO(
                         mealIngredient.getId().getIngredient().getCategory(),
                         mealIngredient.getId().getIngredient().getProductName(),
-                        mealIngredient.getAmount(), mealIngredient.getUnit());
+                        Optional.of(mealIngredient.getAmount()), Optional.of(mealIngredient.getUnit()));
                 List<IngredientDTO> returnedMealIngredient = returnedMeal.getIngredients();
                 returnedMealIngredient.add(ingredientDTO);
             }
