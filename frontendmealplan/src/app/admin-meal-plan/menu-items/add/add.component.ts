@@ -274,6 +274,8 @@ daySelection(){
   
   ngOnInit(): void {
     this.getEditMealId();
+    this.imageUrl="https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg";
+
   }
   
   getEditMealId(){
@@ -332,8 +334,8 @@ daySelection(){
     this.mealDTO.ingredients = this.ingredients; 
     this.mealDTO.imageUrl="https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg";
     this.mealDTO.dayMealDTOList=this.returnDayNumber;
+    console.log(this.mealDTO)
     this.adminService.editMealDTO(this.mealDTO,mealId).subscribe(response => {
-
       this.resetAll();
       this.snackBar.open("Meal Edited successfully!", "×", {
         panelClass: "success",
