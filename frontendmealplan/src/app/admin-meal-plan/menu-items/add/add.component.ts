@@ -1,6 +1,7 @@
 import { Component,ElementRef,OnInit, ViewChild} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { Meal } from 'src/app/mealplan/models/Meal';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
@@ -59,13 +60,27 @@ export class AddComponent implements OnInit {
   isSubmitted=false;
 
   isEdit=false;
-  constructor(private adminService:AdminService, public snackBar: MatSnackBar) {}
+
+  mealId:number;
+  constructor(private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.isEdit=true; 
-    this.getMealForEdit(); 
+  this.getEditMealId();
+  
+   
   }
   
+  getEditMealId(){
+    this.route.paramMap.subscribe(params => {
+      this.mealId =Number(params.get('id'));
+      console.log(this.mealId)
+      if(this.mealId !== 0){
+        this.isEdit=true; 
+        this.getMealForEdit(); 
+        }
+    });
+   
+  }
   isSubmitted3=true
   addIngredient() {
     this.isSubmitted=true; 
@@ -158,11 +173,9 @@ onCheckboxChange(event: MatCheckboxChange, dietType: string) {
 
 public fileChange(files:any){ 
   if(files.length){ 
-    console.log("false")
     this.imageUrl=files[0].content;
   } 
   else{
-    console.log("true")
     this.imageUrl=''; 
   }
 } 
@@ -225,7 +238,6 @@ addMeal(mealDTO:MealDTO){
       duration: 3000,
     }); 
   });
-  console.log(this.mealDTO)
 } 
 
 planSelection(){
@@ -260,7 +272,6 @@ daySelection(){
   }
 
   editMealInformation(){
-  
    this.MealName=this.meal.mealName;
    this.CookTime=this.meal.cookTime;
    this.PrepareTime=this.meal.prepareTime;
@@ -281,8 +292,6 @@ daySelection(){
    this.checkOverNight();
    this.addInstruction();
    this.addTips();
-   console.log(this.meal)
-   console.log(this.PrepareTime)
   //  this.plan=;
   //  this.type=;
   //  this.productName=;

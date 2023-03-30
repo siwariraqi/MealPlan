@@ -25,12 +25,14 @@ export class ListComponent implements OnInit {
   
   ngOnInit(): void {
     this.getAllMeals();
+  
   }
 
   public getAllMeals() {
     this.adminService.getAllMeals().subscribe(meals => {
       this.meals = meals;
       this.initDataSource(this.meals);
+      console.log(this.meals[0].dietTypes)
 
     })
   }
@@ -42,6 +44,7 @@ export class ListComponent implements OnInit {
         this.meal = this.meals[i];
         this.dayMealService.setSelectedMeal(this.meal);
         console.log(this.meal);
+        
 
       }
     }
@@ -51,6 +54,7 @@ export class ListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
 
