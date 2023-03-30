@@ -34,10 +34,12 @@ public class Plan {
 
 //  @ToString.Exclude
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "plan")
     private List<User> users = new ArrayList<>();
 
     @JsonIgnore
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "dayPlan",

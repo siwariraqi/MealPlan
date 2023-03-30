@@ -1,8 +1,13 @@
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from "@angular/forms";
 import { AfterViewInit, Component, OnInit } from "@angular/core";
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AppSettings, Settings } from "src/app/app.settings";
 import { AuthService } from "../../services/auth.service";
+import { TokenStorageService } from "../../services/token-storage.service";
 
 declare var google: any;
 
@@ -15,40 +20,96 @@ declare var google: any;
           <mat-card class="p-0 o-hidden formContainer">
             <div fxLayout="row wrap ">
               <div class="py-5 formG">
-                <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
+                <div
+                  fxLayout="column"
+                  fxLayoutAlign="center center"
+                  class="text-center"
+                >
                   <h1 class="">Sign In</h1>
-                  <a mat-button href="/mealplan/register" color="warn" class="w-100">Don't have an account? Sign up now!</a>
+                  <a
+                    mat-button
+                    href="/mealplan/register"
+                    color="warn"
+                    class="w-100"
+                    >Don't have an account? Sign up now!</a
+                  >
                 </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
                   <mat-form-field appearance="outline" class="w-100 mt-4">
-                    <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                    <mat-icon matPrefix class="mr-1 text-muted"
+                      >person</mat-icon
+                    >
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" formControlName="email" type="email" required />
-                    <mat-error *ngIf="loginForm.controls.email.errors?.required">Email is required</mat-error>
+                    <input
+                      matInput
+                      placeholder="Email"
+                      formControlName="email"
+                      type="email"
+                      required
+                    />
+                    <mat-error *ngIf="loginForm.controls.email.errors?.required"
+                      >Email is required</mat-error
+                    >
 
-                    <mat-error *ngIf="loginForm.controls.email.hasError('email')">Email address is not valid!</mat-error>
+                    <mat-error
+                      *ngIf="loginForm.controls.email.hasError('email')"
+                      >Email address is not valid!</mat-error
+                    >
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
                     <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password" formControlName="password" required [type]="hide ? 'password' : 'text'" />
-                    <mat-error *ngIf="loginForm.controls.password.errors?.required">Password is required</mat-error>
+                    <input
+                      matInput
+                      placeholder="Password"
+                      formControlName="password"
+                      required
+                      [type]="hide ? 'password' : 'text'"
+                    />
+                    <mat-error
+                      *ngIf="loginForm.controls.password.errors?.required"
+                      >Password is required</mat-error
+                    >
 
-                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
-                      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      type="button"
+                      class="text-muted"
+                    >
+                      <mat-icon>{{
+                        hide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
                     </button>
                   </mat-form-field>
                   <mat-error *ngIf="err" class="mt-2"> {{ err }} </mat-error>
-                  <mat-slide-toggle color="primary" formControlName="rememberMe" class="my-2 rememberme"
+                  <mat-slide-toggle
+                    color="primary"
+                    formControlName="rememberMe"
+                    class="my-2 rememberme"
                     >Keep me signed in</mat-slide-toggle
                   >
 
                   <div class="text-center mt-2">
-                    <button mat-raised-button color="accent" class="uppercase loginBtn" type="submit">Sign In</button>
+                    <button
+                      mat-raised-button
+                      color="accent"
+                      class="uppercase loginBtn"
+                      type="submit"
+                    >
+                      Sign In
+                    </button>
                   </div>
-                  <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-3">
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="space-between center"
+                    class="mt-3"
+                  >
                     <div class="divider w-100"></div>
-                    <h3 class="text-muted ws-nowrap fw-500 p-2">or Sign in with one click</h3>
+                    <h3 class="text-muted ws-nowrap fw-500 p-2">
+                      or Sign in with one click
+                    </h3>
                     <div class="divider w-100"></div>
                   </div>
                   <div class="googleBtnWrapper">
@@ -80,23 +141,35 @@ export class LoginComponent implements OnInit, AfterViewInit {
   err: string | null;
   checked: boolean = true;
 
-  constructor(public fb: UntypedFormBuilder, public router: Router, public appSettings: AppSettings, private authSrv: AuthService) {
+  constructor(
+    public fb: UntypedFormBuilder,
+    public router: Router,
+    public appSettings: AppSettings,
+    private authSrv: AuthService,
+    private tokenStroageService: TokenStorageService
+  ) {
     this.settings = this.appSettings.settings;
     this.err = "";
   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: [null, Validators.compose([Validators.required, Validators.email])],
+      email: [
+        null,
+        Validators.compose([Validators.required, Validators.email]),
+      ],
       password: [null, Validators.compose([Validators.required])],
       rememberMe: false,
     });
-    this.loginForm.controls["rememberMe"].setValue(!this.loginForm.controls["rememberMe"].value);
+    this.loginForm.controls["rememberMe"].setValue(
+      !this.loginForm.controls["rememberMe"].value
+    );
   }
 
   ngAfterViewInit(): void {
     google.accounts.id.initialize({
-      client_id: "844075060169-ld1damjvp1h93mb8p5v8leiu7a6aaod5.apps.googleusercontent.com",
+      client_id:
+        "844075060169-ld1damjvp1h93mb8p5v8leiu7a6aaod5.apps.googleusercontent.com",
       callback: (response: any) => this.handleGoogleSignIn(response),
     });
     google.accounts.id.renderButton(
@@ -109,8 +182,24 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginForm.valid) {
       const email = this.loginForm.controls["email"].value;
       const password = this.loginForm.controls["password"].value;
-      this.authSrv.login(email, password).subscribe((user) => {
-        //validate login API
+
+      this.authSrv.login(email, password).subscribe(
+        (data) => {
+          console.log("****************");
+          console.log(data);
+          this.tokenStroageService.saveToken(data);
+          this.router.navigateByUrl("/mealplan/meals");
+        },
+        (error) => {
+          console.log("$$$$$$$$");
+          alert(error);
+          console.log(error);
+        }
+      );
+
+      //validate login API
+      /*
+        .subscribe((user) => {
         if (user) {
           if (user.email) {
             console.log(user.email);
@@ -125,7 +214,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.err = "Invalid email / password combination!";
           }
         }
-      });
+              });
+        */
     }
   }
 

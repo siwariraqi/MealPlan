@@ -42,43 +42,43 @@ public class MealBL {
 
 
     public List<DayMeal> getDayPlanMeals(Integer dayNumber, Long userID) throws userNotFoundException, paymentNotFoundException, DayNumberNotInYourPlanException {
-      Optional<User> users = this.usersDAO.findById(userID);
-      if (users.isPresent()) {
-        User user = users.get();
-        Plan plan = user.getPlan();
+        Optional<User> users = this.usersDAO.findById(userID);
+        if (users.isPresent()) {
+            User user = users.get();
+            Plan plan = user.getPlan();
 
-        Optional<DayPlan> OptionaldayPlan = dayPlanDAO.getDayNumber(plan.getPlanId(), dayNumber);
+            Optional<DayPlan> OptionaldayPlan = dayPlanDAO.getDayNumber(plan.getPlanId(), dayNumber);
 
-        if (OptionaldayPlan.isPresent()) {
-          DayPlan dayPlan = OptionaldayPlan.get();
-          DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
-          List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(dayNumber, dayPlanId.getDayPlanId(),plan.getPlanId());
-          Collections.sort(dayMeals,new Comparator<DayMeal>() {
-            @Override
-            public int compare(DayMeal o1, DayMeal o2) {
-              String[] order = {"Breakfast", "Snacks","Snacks", "Lunch","Dinner"};
-              List<String> ord = new ArrayList<>();
-              for(String type:order){
-                ord.add(type);
-              }
-              return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
+            if (OptionaldayPlan.isPresent()) {
+                DayPlan dayPlan = OptionaldayPlan.get();
+                DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
+                List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(dayNumber, dayPlanId.getDayPlanId(),plan.getPlanId());
+                Collections.sort(dayMeals,new Comparator<DayMeal>() {
+                    @Override
+                    public int compare(DayMeal o1, DayMeal o2) {
+                        String[] order = {"Breakfast", "Snacks","Snacks", "Lunch","Dinner"};
+                        List<String> ord = new ArrayList<>();
+                        for(String type:order){
+                            ord.add(type);
+                        }
+                        return ord.indexOf(o1.getType()) - ord.indexOf(o2.getType());
+                    }
+                });
+                if(dayMeals.size() == 5){
+                    DayMeal snack = dayMeals.get(2);
+                    dayMeals.remove(2);
+                    dayMeals.add(3,snack);
+                }
+                return dayMeals;
             }
-          });
-          if(dayMeals.size() == 5){
-            DayMeal snack = dayMeals.get(2);
-            dayMeals.remove(2);
-            dayMeals.add(3,snack);
-          }
-          return dayMeals;
+            else {
+                throw new DayNumberNotInYourPlanException();
+            }
+
         }
         else {
-          throw new DayNumberNotInYourPlanException();
+            throw new userNotFoundException("User not found");
         }
-
-      }
-      else {
-        throw new userNotFoundException("User not found");
-      }
     }
 
     public List<MealIngredients> getDayPlanMealIngredients(Long mealId) throws MealNotFoundException {
@@ -210,5 +210,4 @@ public class MealBL {
         throw new MealNotFoundException("Meal Not Found");
     }
 }
-
 

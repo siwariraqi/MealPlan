@@ -2,12 +2,20 @@ package org.backendmealplan.backendmealplan.controllers;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.bl.UserBL;
 import org.backendmealplan.backendmealplan.exceptions.*;
+import org.backendmealplan.backendmealplan.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -16,6 +24,12 @@ public class UsersController {
     @Autowired
     private UserBL userBL;
 
+    //@Autowired
+    //AuthenticationManager authenticationManager;
+//
+    @Autowired
+    JwtUtils jwtUtils;
+//
     @PostMapping("addUserInfo")
     public ResponseEntity addUserInfo(@Valid @RequestBody UserInfo userInfo) {
         userInfo.setInfoId(null); // set infoId to null to ensure client cannot set it
@@ -121,10 +135,24 @@ public class UsersController {
         try {
             User u = userBL.authentication(user.getEmail(), user.getPassword());
             u.setPassword(null);
-            return new ResponseEntity(u, HttpStatus.OK);
+            String jwt = jwtUtils.generateJwtToken(u);
+
+            return new ResponseEntity(jwt, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
+        //try {
+        //    User u = userBL.authentication(user.getEmail(), user.getPassword());
+        //    Authentication authentication = authenticationManager.authenticate(
+        //            new UsernamePasswordAuthenticationToken(u.getUserId(), u.getPassword()));
+//
+        //    SecurityContextHolder.getContext().setAuthentication(authentication);
+        //    String jwt = jwtUtils.generateJwtToken(authentication);
+//
+        //    return ResponseEntity.ok(jwt);
+        //} catch (Exception e) {
+        //    return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        //}
     }
 
     @Transactional

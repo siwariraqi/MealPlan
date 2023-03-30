@@ -68,6 +68,7 @@ public class Meal {
     private List<UserFeedback> feedbacks = new ArrayList<>();
 
     @JsonIgnore
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "meal_ingredients",

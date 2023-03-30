@@ -34,15 +34,18 @@ export class RegisterService {
     if (!this.currUserInfo || !this.currUserInfo?.infoId) {
       this.currUserInfo = new UserInfo(null);
     }
-    return this.httpClient.post<UserInfo>(this.BASE_URL + this.ADD_USER_INFO_API, this.currUserInfo).pipe(
-      tap((response) => {
-        // console.log(response);
-        this.setUserInfo(response);
-      })
-    );
+    return this.httpClient
+      .post<UserInfo>(this.BASE_URL + this.ADD_USER_INFO_API, this.currUserInfo)
+      .pipe(
+        tap((response) => {
+          // console.log(response);
+          this.setUserInfo(response);
+        })
+      );
   }
 
   updateUserInfo(): Observable<UserInfo> {
+    console.log("55555555");
     console.log(this.currUserInfo);
 
     const httpOptions = {
@@ -52,7 +55,11 @@ export class RegisterService {
 
     console.log(userInfoJson);
 
-    return this.httpClient.put<UserInfo>(this.BASE_URL + this.UPDATE_USER_INFO_API, userInfoJson, httpOptions);
+    return this.httpClient.put<UserInfo>(
+      this.BASE_URL + this.UPDATE_USER_INFO_API,
+      userInfoJson,
+      httpOptions
+    );
   }
 
   getUserInfo(): UserInfo {

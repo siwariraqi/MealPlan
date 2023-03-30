@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 import { Goal } from "../../models/Goal";
 import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
@@ -8,7 +15,13 @@ import { AuthService } from "../../services/auth.service";
 @Component({
   selector: "app-register",
   template: `
-    <div class="registerContainer" [ngStyle]="{ 'background-color': backgroundColor, 'background-image': backgroundImage }">
+    <div
+      class="registerContainer"
+      [ngStyle]="{
+        'background-color': backgroundColor,
+        'background-image': backgroundImage
+      }"
+    >
       <div
         class="backBtn"
         *ngIf="getOnboardingStep() > 2 && getOnboardingStep() < 16"
@@ -16,7 +29,10 @@ import { AuthService } from "../../services/auth.service";
       >
         <div (click)="prevScreen()"><mat-icon>arrow_back</mat-icon></div>
       </div>
-      <app-welcome-screen *ngIf="getOnboardingStep() < 7" [currentPage]="getOnboardingStep() - 2"></app-welcome-screen>
+      <app-welcome-screen
+        *ngIf="getOnboardingStep() < 7"
+        [currentPage]="getOnboardingStep() - 2"
+      ></app-welcome-screen>
       <app-onboarding7 *ngIf="getOnboardingStep() === 7"></app-onboarding7>
       <app-onboarding8 *ngIf="getOnboardingStep() === 8"></app-onboarding8>
       <app-onboarding9 *ngIf="getOnboardingStep() === 9"></app-onboarding9>
@@ -27,9 +43,16 @@ import { AuthService } from "../../services/auth.service";
       <app-onboarding14 *ngIf="getOnboardingStep() === 14"></app-onboarding14>
       <app-onboarding15 *ngIf="getOnboardingStep() === 15"></app-onboarding15>
       <app-register-form *ngIf="getOnboardingStep() === 16"></app-register-form>
-      <app-register-google *ngIf="getOnboardingStep() === 17"></app-register-google>
+      <app-register-google
+        *ngIf="getOnboardingStep() === 17"
+      ></app-register-google>
 
-      <div *ngIf="getOnboardingStep() >= 7 && getOnboardingStep() <= 14 && error !== ''" class="errorMsg">
+      <div
+        *ngIf="
+          getOnboardingStep() >= 7 && getOnboardingStep() <= 14 && error !== ''
+        "
+        class="errorMsg"
+      >
         <h4>{{ error }}</h4>
       </div>
       <button
@@ -45,8 +68,10 @@ import { AuthService } from "../../services/auth.service";
           *ngFor="let page of pages; index as i"
           class="circle"
           [ngClass]="{
-            'black-dot': i <= getOnboardingStep() - 2 && getOnboardingStep() < 7,
-            'current-page': i <= getOnboardingStep() - 7 && getOnboardingStep() >= 7
+            'black-dot':
+              i <= getOnboardingStep() - 2 && getOnboardingStep() < 7,
+            'current-page':
+              i <= getOnboardingStep() - 7 && getOnboardingStep() >= 7
           }"
         >
           {{ getOnboardingStep() >= 7 ? i + 1 : "" }}
@@ -68,7 +93,10 @@ export class RegisterComponent implements OnInit {
   userGoals: Goal[];
   error: string;
 
-  constructor(private registerSrv: RegisterService, private authSrv: AuthService) {
+  constructor(
+    private registerSrv: RegisterService,
+    private authSrv: AuthService
+  ) {
     // this.currentPage = 0;
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
@@ -166,7 +194,8 @@ export class RegisterComponent implements OnInit {
 
       case 16:
         this.backgroundColor = "#bdc3c7";
-        this.backgroundImage = " linear-gradient(to right, #ffffff, #ffffffd2) ";
+        this.backgroundImage =
+          " linear-gradient(to right, #ffffff, #ffffffd2) ";
         break;
 
       default:
@@ -189,7 +218,10 @@ export class RegisterComponent implements OnInit {
     let isValid: boolean = true;
     switch (stepNum) {
       case 7: //goals
-        if (!this.registerSrv.getUserInfo().goals || !this.registerSrv.getUserInfo().goals.length) {
+        if (
+          !this.registerSrv.getUserInfo().goals ||
+          !this.registerSrv.getUserInfo().goals.length
+        ) {
           this.error = "You must select at least one goal!";
           isValid = false;
         }
@@ -198,7 +230,10 @@ export class RegisterComponent implements OnInit {
         isValid = true;
         break;
       case 9: //isReceiveTreatment
-        if (this.registerSrv.getUserInfo().isReceiveTreatment === null || this.registerSrv.getUserInfo().isReceiveTreatment === undefined) {
+        if (
+          this.registerSrv.getUserInfo().isReceiveTreatment === null ||
+          this.registerSrv.getUserInfo().isReceiveTreatment === undefined
+        ) {
           this.error = "You must select an answer first";
           isValid = false;
         }
@@ -217,7 +252,8 @@ export class RegisterComponent implements OnInit {
         break;
       case 12: //birthday
         if (!this.validateBirthday()) {
-          this.error = "Invalid birthdate! dates accepted between 1/1/1922 and 1/1/2004";
+          this.error =
+            "Invalid birthdate! dates accepted between 1/1/1922 and 1/1/2004";
           isValid = false;
           this.registerSrv.getUserInfo().birthday = null;
         }
@@ -227,7 +263,9 @@ export class RegisterComponent implements OnInit {
           console.log("unit is: ", this.registerSrv.getUserInfo().unit);
 
           this.error = `Invalid weight input! Weight must be between ${
-            this.registerSrv.getUserInfo().unit === "metric" ? "30 and 300 kg" : "66 and 661 lb"
+            this.registerSrv.getUserInfo().unit === "metric"
+              ? "30 and 300 kg"
+              : "66 and 661 lb"
           }`;
           isValid = false;
           this.registerSrv.getUserInfo().weight = null;
@@ -236,7 +274,9 @@ export class RegisterComponent implements OnInit {
       case 14: //height
         if (!this.validateHeight()) {
           this.error = `Invalid height input! height must be between ${
-            this.registerSrv.getUserInfo().unit === "metric" ? "100 and 220 cm" : "3.31 (3'31'') and 7.29 (7'29'') ft"
+            this.registerSrv.getUserInfo().unit === "metric"
+              ? "100 and 220 cm"
+              : "3.31 (3'31'') and 7.29 (7'29'') ft"
           }`;
           isValid = false;
           this.registerSrv.getUserInfo().height = null;
@@ -281,7 +321,12 @@ export class RegisterComponent implements OnInit {
       }
     } else {
       //imperial
-      if (!(userWeightNum > minWeightKg * imperialFactor && userWeightNum < maxWeightKg * imperialFactor)) {
+      if (
+        !(
+          userWeightNum > minWeightKg * imperialFactor &&
+          userWeightNum < maxWeightKg * imperialFactor
+        )
+      ) {
         return false;
       }
     }
@@ -304,7 +349,12 @@ export class RegisterComponent implements OnInit {
       }
     } else {
       //imperial
-      if (!(userheightNum > this.convertToFeet(minHeightCm) && userheightNum < this.convertToFeet(maxHeightCm))) {
+      if (
+        !(
+          userheightNum > this.convertToFeet(minHeightCm) &&
+          userheightNum < this.convertToFeet(maxHeightCm)
+        )
+      ) {
         return false;
       }
     }

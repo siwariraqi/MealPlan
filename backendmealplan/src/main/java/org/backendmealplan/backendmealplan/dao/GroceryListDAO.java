@@ -10,6 +10,6 @@ import java.util.List;
 public interface GroceryListDAO extends JpaRepository<GroceryList, Long> {
     List<GroceryList> findByGroceryIdIn(List<Long> groceryIdList);
     List<GroceryList> findByWeekAndPlan(Integer week, Plan plan);
-    List<GroceryList> findByWeekAndIngredientAndUnit(Integer week, Ingredient ingredient, String unit);
+    List<GroceryList> findByWeekAndIngredientAndUnitAndPlanPlanId(Integer week, Ingredient ingredient, String unit, Long planId);
 }
 

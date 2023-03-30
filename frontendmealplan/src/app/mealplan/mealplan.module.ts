@@ -48,6 +48,10 @@ import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
 import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
 import { EducationComponent } from "./pages/education/education.component";
+import { ExportComponent } from "./components/grocery-list/export/export.component";
+import { UpdatepopupComponent } from "./components/grocery-list/updatepopup/updatepopup.component";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -82,6 +86,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     RecipesToolbarComponent,
     DietTypeComponent,
     EducationComponent,
+    ExportComponent,
+    UpdatepopupComponent,
     LandingPageComponent,
     RegisterGoogleComponent,
   ],
@@ -106,6 +112,9 @@ import { ReactiveFormsModule } from "@angular/forms";
     MatDatepickerModule,
     AccountModule,
     ReactiveFormsModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })
 export class MealplanModule {}
