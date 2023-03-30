@@ -1,7 +1,7 @@
 .container {
   margin-top: -2vh;
   width: 90vw;
-  height: 65vh;
+  height: 64vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,7 @@
   align-items: center;
   height: 13vh;
   position: absolute;
-  top: 11%;
+  top: 16%;
   font-family: "Montserrat";
 
   // border: 1vh solid black;
@@ -33,14 +33,16 @@
   line-height: 37px;
 }
 .line {
-  position: absolute;
-  left: 0%;
-  right: 0%;
+  // position: absolute;
+  // left: 0%;
+  // right: 0%;
   border: 3px solid #4b643d;
+  width: 80vw;
+  max-width: 280px;
 }
 .content {
   position: absolute;
-  top: 20%;
+  top: 26%;
   width: 70vw;
   margin-left: auto;
   margin-right: auto;
@@ -50,7 +52,12 @@
 .loading {
   margin: auto;
   text-align: center;
-  // margin-top: -1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    margin: auto;
+  }
 }
 
 @media screen and (max-width: 600px) {

@@ -54,6 +54,8 @@ export class AuthService {
       */
   }
 
+  loginWithGoogle(token: any) {}
+
   getUser() {
     this.currUser = this.getUserLocalStorage();
 
@@ -80,6 +82,7 @@ export class AuthService {
   setUserLocalStorage() {
     localStorage.setItem("currUser", JSON.stringify(this.currUser));
   }
+
 
   // logout() {
   //   this.currUser = { };

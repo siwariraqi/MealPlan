@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Settings } from "src/app/app.settings";
 import { DayMeal } from "src/app/mealplan/models/DayMeal";
 import { Plan } from "src/app/mealplan/models/Plan";
@@ -19,7 +20,7 @@ export class MealComponent implements OnInit {
   public dayMeals: Array<DayMeal> = [];
 
   public settings: Settings;
-  constructor(private dayMealService: DayMealService) {}
+  constructor(private dayMealService: DayMealService, private router: Router) {}
   choosenDay = 1;
   ngOnInit(): void {
     this.getPlan();
@@ -31,7 +32,7 @@ export class MealComponent implements OnInit {
     if (this.choosenDay < this.planLength) {
       this.choosenDay++;
     } else {
-      this.choosenDay = 1;
+      this.router.navigate(["/mealplan/chooseplan"]);
     }
     this.getDayPlanMeals(this.choosenDay, 1);
     this.getTotalDayNutrition(this.choosenDay, 1);
@@ -48,11 +49,9 @@ export class MealComponent implements OnInit {
   }
 
   public getPlan() {
-    this.dayMealService.getPlan(1).subscribe((plan) => {
+    this.dayMealService.getPlan().subscribe((plan) => {
       this.plan = plan;
       this.planLength = plan.length;
-      console.log("@@@@@");
-      console.log(plan);
     });
   }
   public getDayPlanMeals(dayNumber: number, userid: number) {

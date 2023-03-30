@@ -1,0 +1,41 @@
+.burgerLogoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  font-size: smaller;
+  cursor: pointer;
+  background-color: rgba(121, 180, 86, 0.692);
+  border-radius: 10px;
+  color: white;
+  opacity: 0.8;
+  padding: 3px 20px;
+}
+
+.login:hover {
+  background-color: rgba(105, 126, 75, 0.714);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.user {
+  font-size: smaller;
+}
+
+@media screen and (max-width: 960px) {
+  .logo {
+    justify-content: center;
+    text-align: center;
+    // margin-left: 1vw;
+  }
+
+  .user {
+    font-size: small;
+    margin-right: -1.5vw;
+  }
+
+  .login {
+    font-size: small;
+  }
+}

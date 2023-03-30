@@ -59,20 +59,20 @@ public class PlanBL {
 
     public DayPlanId addDayPlanId(DayPlanId dayPlanId) {
         //check if dayPlanId exists
-        List<DayPlanId> dayPlanIds = this.dayPlanIdDAO.findByDayPlanId(dayPlanId.getDayPlanId());
-        if (dayPlanIds.isEmpty()) {
+        DayPlanId dayPlanIds = this.dayPlanIdDAO.findByDayPlanId(dayPlanId.getDayPlanId());
+        if (dayPlanIds==null) {
             return this.dayPlanIdDAO.save(dayPlanId);
         }
-        return null;
+        return dayPlanIds;
     }
 
     public DayPlan addDayPlan(DayPlan dayPlan) {
         //check if dayPlan exists
-        List<DayPlan> dayPlanList = this.dayPlanDAO.findByDayPlanKey(dayPlan.getDayPlanKey());
-        if (dayPlanList.isEmpty()) {
+        DayPlan dayPlanList = this.dayPlanDAO.findByDayPlanKey(dayPlan.getDayPlanKey());
+        if (dayPlanList==null) {
             return this.dayPlanDAO.save(dayPlan);
         }
-        return null;
+        return dayPlanList;
     }
 
     public List<DayMeal> getAllDayMeals() {

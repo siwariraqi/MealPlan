@@ -52,6 +52,9 @@ import { ExportComponent } from "./components/grocery-list/export/export.compone
 import { UpdatepopupComponent } from "./components/grocery-list/updatepopup/updatepopup.component";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -85,6 +88,8 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     EducationComponent,
     ExportComponent,
     UpdatepopupComponent,
+    LandingPageComponent,
+    RegisterGoogleComponent,
   ],
 
   imports: [
@@ -106,6 +111,7 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     MatRadioModule,
     MatDatepickerModule,
     AccountModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

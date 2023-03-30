@@ -16,7 +16,7 @@ import { DayMealService } from 'src/app/mealplan/services/day-meal.service';
 export class ListComponent implements OnInit {
   meals: Meal[];
   meal: Meal
-  displayedColumns: string[] = ['id', 'image', 'name', 'Calories', 'actions'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'diet','Calories', 'actions'];
   dataSource!: MatTableDataSource<Meal>;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   
   ngOnInit(): void {
     this.getAllMeals();
+  
   }
 
   public getAllMeals() {
@@ -36,13 +37,10 @@ export class ListComponent implements OnInit {
   }
 
   onMealClick(mealId: number) {
-    console.log(mealId);
     for (let i = 0; i < this.meals.length; i++) {
       if (this.meals[i].mealId === mealId) {
         this.meal = this.meals[i];
-        this.dayMealService.setSelectedMeal(this.meal);
-        console.log(this.meal);
-
+        this.dayMealService.setSelectedMeal(this.meal);        
       }
     }
   }
@@ -51,6 +49,7 @@ export class ListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
 

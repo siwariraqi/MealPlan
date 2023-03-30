@@ -7,5 +7,6 @@ import java.util.List;
 public interface DietTypesDAO extends JpaRepository<DietType, Long> {
 
     DietType findByText(String text);
+    DietType findByDietTypeId(Long id);
 
 }

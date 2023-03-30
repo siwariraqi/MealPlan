@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { DayNumberDTO } from '../models/DayNumberDTO';
 import { Meal } from '../models/Meal';
+import { MealDTO } from '../models/MealDTO';
 import { User } from '../models/User';
 import { UserFeedback } from '../models/UserFeedback';
 import { ApiService } from './api.service';
@@ -8,13 +10,17 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class AdminService {
-  GETALLUSERS_URL = "admin/getall/";
-  GETALLFEEDBACKS_URL = "feedback/getall/";
-  GETALLMEALS_URL="meals/getall/";
+  GETALLUSERS_URL = "admin/getAllUsers";
+  GETALLFEEDBACKS_URL = "admin/getFeedbacks";
+  GETALLMEALS_URL="admin/getMeals";
   DELETEUSER_URL="admin/delete";
   RESETUSER_URL="admin/resetUser";
   UPDATEUSERD_URL="admin/update";
-  CHANGEPLAN_URL="admin/changeRole"
+  CHANGEPLAN_URL="admin/changeRole";
+  ADDMEAL_URL="admin/addMeal";
+  GETDAYNUMERS= "admin/getDayNumbers";
+  GETMEALDTO= "admin/meals/";
+  EDITMEAL_URL="admin/editMeal/"
   constructor(private apiService: ApiService) { }
 
   getAllUsers() {
@@ -38,7 +44,6 @@ export class AdminService {
   }
 
   updateUserPlan(userId:number,planName:string){
-    console.log('hello'+userId+planName)
     return this.apiService.put<User>(this.UPDATEUSERD_URL+"?userId="+`${userId}`+"&planName="+`${planName}`)
   }
 
@@ -46,4 +51,21 @@ export class AdminService {
     return this.apiService.put<User>(this.CHANGEPLAN_URL+"?userId="+`${userId}`+"&isAdmin="+`${isAdmin}`)
   }
 
+  
+  addMeal(mealDTO:MealDTO){
+    return this.apiService.post<MealDTO>(this.ADDMEAL_URL,mealDTO);
+  }
+
+  getDayNumbers(planName:string){
+    return this.apiService.get<DayNumberDTO[]>(this.GETDAYNUMERS+"?planName="+`${planName}`);
+  }
+
+  getMealDTO(mealId:number){
+    return this.apiService.get<MealDTO>(this.GETMEALDTO+`${mealId}`);
+  }
+
+  editMealDTO(mealDTO:MealDTO,meaId:number){
+    return this.apiService.put<MealDTO>(this.EDITMEAL_URL+`${meaId}`,mealDTO)
+  }
+  
 }

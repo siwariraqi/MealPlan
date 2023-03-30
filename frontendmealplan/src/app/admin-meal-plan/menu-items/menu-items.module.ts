@@ -9,11 +9,11 @@ import { AddComponent } from './add/add.component';
 
 export const routes: Routes = [ 
   { path: '', redirectTo: 'list', pathMatch: 'full'},
-  { path: 'list', component: ListComponent, data: { breadcrumb: 'Menu Items' } },
-  { path: 'detail', component: DetailComponent, data: { breadcrumb: 'Menu Item Detail' } },
-  { path: 'detail/:id', component: DetailComponent, data: { breadcrumb: 'Menu Item Detail' } }, 
-  { path: 'add', component: AddComponent, data: { breadcrumb: 'Add Menu Item' } },
-  { path: 'add/:id', component: AddComponent, data: { breadcrumb: 'Edit Menu Item' } }, 
+  { path: 'list', component: ListComponent, data: { breadcrumb: 'Meal Items' } },
+  { path: 'detail', component: DetailComponent, data: { breadcrumb: 'Meal Item Detail' } },
+  { path: 'detail/:id', component: DetailComponent, data: { breadcrumb: 'Meal Item Detail' } }, 
+  { path: 'add', component: AddComponent, data: { breadcrumb: 'Add Meal Item' } },
+  { path: 'add/:id', component: AddComponent, data: { breadcrumb: 'Edit Meal Item' } }, 
 ];
 
 @NgModule({

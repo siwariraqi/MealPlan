@@ -17,11 +17,12 @@ export class RegisterService {
   private GET_ALL_GOALS_API: string = "goals/all";
   private currUserInfo: UserInfo;
   private isCurrentScreenOnboardingValid: boolean;
-  http: any;
+  private onBoardingStep: number;
 
   constructor(private httpClient: HttpClient, private router: Router) {
     // this.currUserInfo = this.getUserInfoLocalStorage();
     this.isCurrentScreenOnboardingValid = false;
+    this.onBoardingStep = 2;
   }
 
   registerUser(user: User): Observable<User> {
@@ -29,7 +30,7 @@ export class RegisterService {
   }
 
   addUserInfo(): Observable<UserInfo> {
-    this.currUserInfo = this.getUserInfoLocalStorage();
+    this.currUserInfo = this.getUserInfo();
     if (!this.currUserInfo || !this.currUserInfo?.infoId) {
       this.currUserInfo = new UserInfo(null);
     }
@@ -62,6 +63,9 @@ export class RegisterService {
   }
 
   getUserInfo(): UserInfo {
+    if (!this.currUserInfo) {
+      this.currUserInfo = this.getUserInfoLocalStorage();
+    }
     return this.currUserInfo;
   }
 
@@ -95,4 +99,41 @@ export class RegisterService {
   setCurrOnBoardingValidation(bool: boolean) {
     this.isCurrentScreenOnboardingValid = bool;
   }
+
+  getOnBoardingStep(): number {
+    const step = localStorage.getItem("onboardingstep");
+    if (step) {
+      this.onBoardingStep = JSON.parse(step);
+    } else {
+      this.onBoardingStep = 2;
+      localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+    }
+    return this.onBoardingStep;
+  }
+
+  setOnBoardingStep(step: number): void {
+    this.onBoardingStep = step;
+    localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+  }
+
+  incrementOnBoardingStep(): void {
+    this.onBoardingStep++;
+    this.setOnBoardingStep(this.onBoardingStep);
+  }
+  decrementOnBoardingStep(): void {
+    this.onBoardingStep--;
+    this.setOnBoardingStep(this.onBoardingStep);
+  }
+
+  clearUserInfoFromLocalStorage(): void {
+    this.currUserInfo = new UserInfo(null);
+    localStorage.setItem("userInfo", JSON.stringify(this.currUserInfo));
+    localStorage.removeItem("userInfo");
+
+    this.onBoardingStep = 2;
+    localStorage.setItem("onboardingstep", JSON.stringify(this.onBoardingStep));
+    localStorage.removeItem("onboardingstep");
+  }
+
+  registerWithGoogle(response: any) {}
 }

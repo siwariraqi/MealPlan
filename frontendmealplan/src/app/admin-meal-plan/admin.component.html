@@ -19,20 +19,20 @@
             <button mat-icon-button (click)="settings.rtl = !settings.rtl" matTooltip="LTR / RTL">
                 <mat-icon>swap_horiz</mat-icon>
             </button> 
-            <a mat-icon-button routerLink="/"><mat-icon>home</mat-icon></a>                 
+            <a mat-icon-button routerLink="/mealplan/meals"><mat-icon>home</mat-icon></a>                 
         </div>            
         <div fxLayout="row" fxLayoutAlign="end center">   
-            <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
                 <form method="get">
                     <input type="text" placeholder="Type to search..." class="mat-elevation-z3"  [class.show]="toggleSearchBar">
                     <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
                         <mat-icon>search</mat-icon>
                     </button> 
                 </form>
-            </div>
-            <app-lang></app-lang>
+            </div> -->
+            <!-- <app-lang></app-lang> -->
             <app-fullscreen></app-fullscreen>  
-            <app-messages fxShow="false" fxShow.gt-xs></app-messages>
+            <!-- <app-messages fxShow="false" fxShow.gt-xs></app-messages> -->
             <app-user-menu></app-user-menu> 
         </div>
     </div>
@@ -42,16 +42,16 @@
         <perfect-scrollbar>
             <div fxLayout="column" fxLayoutAlign="center center" class="user-block transition-2" [class.show]="settings.adminSidenavUserBlock"> 
                 <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info-wrapper">
-                    <img [src]="userImage" alt="user-image">
+                    <img src="https://www.shutterstock.com/image-vector/user-icon-vector-260nw-393536320.jpg" alt="user-image">
                     <div class="user-info">
-                        <p class="name">Emilio Verdines</p>
-                        <p class="position">General Manager <br> <small class="muted-text">Member since May. 2016</small></p>
+                        <p class="name">{{admin.firstName| titlecase}} {{''}}  {{admin.lastName| titlecase}}  </p>
+                        <p class="position">{{admin.userRole}} <br> <small class="muted-text">Member since {{admin.registerDate | date:'MMM. yyyy'}}</small></p>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
                     <button mat-icon-button><mat-icon>person_outline</mat-icon></button>
                     <button mat-icon-button><mat-icon>mail_outline</mat-icon></button> 
-                    <a mat-icon-button routerLink="/login">
+                    <a mat-icon-button routerLink="/mealplan/login">
                         <mat-icon>power_settings_new</mat-icon>
                     </a>
                 </div>

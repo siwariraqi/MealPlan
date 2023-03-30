@@ -1,0 +1,12 @@
+td {
+    white-space: pre-line;
+  }
+  
+  td.mat-cell {
+    word-wrap: break-word;
+  }
+  
+  td.mat-cell:not(:empty):not(:has(> *)):not(:has(> img)) {
+    max-width: 125px; /* optional, set the maximum width of the cell */
+  }
+  

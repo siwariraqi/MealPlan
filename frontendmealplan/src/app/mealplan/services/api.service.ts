@@ -35,8 +35,6 @@ export class ApiService {
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    console.log("httpHeaders: ");
-    console.log(httpHeaders);
     return this.httpClient.post<T>(url, body, options);
   }
 

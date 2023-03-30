@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { Goal } from "src/app/mealplan/models/Goal";
 import { RegisterService } from "src/app/mealplan/services/register.service";
 
@@ -93,7 +93,7 @@ export class Onboarding7Component implements OnInit {
     this.registerSrv.getAllGoals().subscribe((goals) => {
       this.allGoals = goals;
     });
-    const userInfo = this.registerSrv.getUserInfoLocalStorage();
+    const userInfo = this.registerSrv.getUserInfo();
     console.log("current userinfo id " + userInfo?.infoId);
     if (!userInfo || !userInfo?.infoId) {
       this.registerSrv.addUserInfo().subscribe((userInfo) => {
@@ -101,7 +101,7 @@ export class Onboarding7Component implements OnInit {
         this.registerSrv.setUserInfo(userInfo);
       });
     } else {
-      if (userInfo && userInfo.goals.length > 0) {
+      if (userInfo && userInfo.goals?.length > 0) {
         userInfo.goals.map((goal) => {
           switch (goal.goalId) {
             case 1:

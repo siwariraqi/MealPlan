@@ -1,109 +1,112 @@
-<mat-drawer-container class="landing-page">  
-    <div class="p-3 header-section" id="top">
-        <div class="theme-container">
-            <div fxLayout="row wrap" class="content">
-                <div fxFlex="100" class="mb-5 py-3"> 
-                    <app-logo></app-logo>
-                </div>
-                <div fxFlex="100" class="py-5"> 
-                    <h1 class="secondary-font">Angular Material Design Restaurant eCommerce Template</h1>
-                    <h4 class="mt-3">Mox implements the official Angular Material Design components and built with Angular CLI. No Bootstrap!, No jQuery! and Only TypeScript! Start creating your app with Mox template, 6 layouts, 7 color styles, 20+ pages</h4>
-                    <div class="py-5">
-                        <button mat-raised-button color="primary" class="uppercase mx-2" (click)="scrollToDemos()">View demos</button>
-                        <a mat-raised-button color="accent" href="http://themeseason.com/" target="_blank" class="uppercase mx-2">Purchase now</a> 
-                    </div>
-                </div>
+<mat-drawer-container class="landing-page">
+  <div class="p-3 header-section" id="top">
+    <div class="theme-container">
+      <div fxLayout="row wrap" class="content">
+        <div fxFlex="100" class="mb-5 py-3">
+          <app-logo></app-logo>
+        </div>
+        <div fxFlex="100" class="py-5">
+          <h1 class="secondary-font">Angular Material Design Restaurant eCommerce Template</h1>
+          <h4 class="mt-3">
+            Mox implements the official Angular Material Design components and built with Angular CLI. No Bootstrap!, No jQuery! and Only
+            TypeScript! Start creating your app with Mox template, 6 layouts, 7 color styles, 20+ pages
+          </h4>
+          <div class="py-5">
+            <button mat-raised-button color="primary" class="uppercase mx-2" (click)="scrollToDemos()">View demos</button>
+            <a mat-raised-button color="accent" href="http://themeseason.com/" target="_blank" class="uppercase mx-2">Purchase now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-3">
+    <div class="theme-container">
+      <div fxLayout="row wrap" fxLayoutAlign="center" id="demos">
+        <div fxFlex="100" class="text-center py-4">
+          <h1 class="secondary-font">Check out our demo styles</h1>
+          <p>Fully responsive, organized folder structure, clean & customizable code, easy to use and much more...</p>
+        </div>
+        <div fxFlex="100" class="main-wrapper">
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/header-default.jpg)'"></mat-card>
+              <h2>Header default</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(1)">View demo</button>
             </div>
-        </div>
-    </div>  
-    <div class="p-3">
-        <div class="theme-container"> 
-            <div fxLayout="row wrap" fxLayoutAlign="center" id="demos">
-                <div fxFlex="100" class="text-center py-4"> 
-                    <h1 class="secondary-font">Check out our demo styles</h1>
-                    <p>Fully responsive, organized folder structure, clean & customizable code, easy to use and much more...</p>
-                </div>
-                <div fxFlex="100" class="main-wrapper">
-                    <div fxLayout="row wrap">
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/header-default.jpg)'"></mat-card>
-                            <h2>Header default</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(1)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/header-image.jpg)'"></mat-card>
-                            <h2>Header image</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(2)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/header-carousel.jpg)'"></mat-card>
-                            <h2>Header carousel</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(3)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/header-video.jpg)'"></mat-card>
-                            <h2>Header video</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(4)">View demo</button>
-                        </div> 
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/dark.jpg)'"></mat-card>
-                            <h2>Dark version</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(5)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/rtl.jpg)'"></mat-card>
-                            <h2>RTL</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(6)">View demo</button>
-                        </div> 
-                        <div fxFlex="100" class="mt-5">                               
-                            <h1 class="text-center">Skins</h1> 
-                        </div> 
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/red.jpg)'"></mat-card>
-                            <h2>Red</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(1)">View demo</button>
-                        </div> 
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/blue.jpg)'"></mat-card>
-                            <h2>Blue</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(2)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/green.jpg)'"></mat-card>
-                            <h2>Green</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(3)">View demo</button>
-                        </div> 
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/pink.jpg)'"></mat-card>
-                            <h2>Pink</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(4)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/purple.jpg)'"></mat-card>
-                            <h2>Purple</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(5)">View demo</button>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
-                            <mat-card [style.background-image]="'url(assets/images/demos/grey.jpg)'"></mat-card>
-                            <h2>Grey</h2>
-                            <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(6)">View demo</button>
-                        </div> 
-                        <div fxFlex="100" class="py-4 px-3 text-right">
-                            <button mat-mini-fab (click)="goToTop()">
-                                <mat-icon>keyboard_arrow_up</mat-icon>
-                            </button>
-                        </div> 
-                    </div> 
-                </div> 
-            </div>  
-        </div>
-    </div> 
-    <mat-toolbar class="copyright">
-        <div class="theme-container"> 
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
-                <p ngClass.xs="mt-1">Copyright © 2020 All Rights Reserved</p> 
-                <p>Designed & Developed by <a mat-button href="http://themeseason.com/" target="_blank">ThemeSeason</a></p> 
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/header-image.jpg)'"></mat-card>
+              <h2>Header image</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(2)">View demo</button>
             </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/header-carousel.jpg)'"></mat-card>
+              <h2>Header carousel</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(3)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/header-video.jpg)'"></mat-card>
+              <h2>Header video</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(4)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/dark.jpg)'"></mat-card>
+              <h2>Dark version</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(5)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/rtl.jpg)'"></mat-card>
+              <h2>RTL</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getDemo(6)">View demo</button>
+            </div>
+            <div fxFlex="100" class="mt-5">
+              <h1 class="text-center">Skins</h1>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/red.jpg)'"></mat-card>
+              <h2>Red</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(1)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/blue.jpg)'"></mat-card>
+              <h2>Blue</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(2)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/green.jpg)'"></mat-card>
+              <h2>Green</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(3)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/pink.jpg)'"></mat-card>
+              <h2>Pink</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(4)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/purple.jpg)'"></mat-card>
+              <h2>Purple</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(5)">View demo</button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="box">
+              <mat-card [style.background-image]="'url(assets/images/demos/grey.jpg)'"></mat-card>
+              <h2>Grey</h2>
+              <button mat-raised-button color="primary" type="submit" class="uppercase" (click)="getSkin(6)">View demo</button>
+            </div>
+            <div fxFlex="100" class="py-4 px-3 text-right">
+              <button mat-mini-fab (click)="goToTop()">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
-    </mat-toolbar>  
+      </div>
+    </div>
+  </div>
+  <mat-toolbar class="copyright">
+    <div class="theme-container">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+        <p ngClass.xs="mt-1">Copyright © 2020 All Rights Reserved</p>
+        <p>Designed & Developed by <a mat-button href="http://themeseason.com/" target="_blank">ThemeSeason</a></p>
+      </div>
+    </div>
+  </mat-toolbar>
 </mat-drawer-container>

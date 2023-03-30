@@ -55,6 +55,7 @@ export class Onboarding8Component implements OnInit {
   @Output() sendData = new EventEmitter<boolean>();
 
   allAnswers: Answer[];
+
   userAnswers: Answer[] = [];
 
   constructor(private registerSrv: RegisterService) {
@@ -74,7 +75,39 @@ export class Onboarding8Component implements OnInit {
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userInfo = this.registerSrv.getUserInfo();
+    if (userInfo && userInfo.infoId) {
+      if (userInfo.medicalRisk && userInfo.medicalRisk != "") {
+        let arr: string[] = userInfo.medicalRisk.split(",");
+        arr.map((answerString) => {
+          const idx = this.allAnswers.findIndex((item) => item.text === answerString);
+          const answer: Answer = this.allAnswers[idx];
+          this.userAnswers.push(answer);
+          console.log("answrs => , ", this.userAnswers);
+          switch (idx) {
+            case 0:
+              this.enableDisableRule1(answer);
+              break;
+            case 1:
+              this.enableDisableRule2(answer);
+              break;
+            case 2:
+              this.enableDisableRule3(answer);
+              break;
+            case 3:
+              this.enableDisableRule4(answer);
+              break;
+            case 4:
+              this.enableDisableRule5(answer);
+              break;
+          }
+        });
+      }
+    } else {
+      this.registerSrv.setOnBoardingStep(2); //if userinfo doesn't exist. redirect to main welcome screen
+    }
+  }
 
   enableDisableRule1(value: Answer) {
     this.toggle1 = !this.toggle1;
@@ -103,7 +136,9 @@ export class Onboarding8Component implements OnInit {
     }
 
     if (isSelected) {
-      this.userAnswers.push(answer);
+      if (!this.userAnswers.includes(answer)) {
+        this.userAnswers.push(answer);
+      }
     } else {
       const idx = answer.index;
       this.userAnswers = this.userAnswers.filter((obj) => obj.index !== idx); //remove from array
