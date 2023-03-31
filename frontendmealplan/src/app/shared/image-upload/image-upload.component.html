@@ -2,7 +2,7 @@
     <div *ngFor="let file of files" class="w-100"> 
         <img [src]="file.content" alt="image" class="d-block w-100 mat-elevation-z2">
     </div> 
-    <img *ngIf="!files.length" src="assets/images/others/noimage.png" class="d-block mw-100 mat-elevation-z2">
+    <img *ngIf="!files.length" [src]="imageUrl" class="d-block mw-100 mat-elevation-z2">
 </div>
 <div class="file-upload mb-2">  
     <input *ngIf="!files.length" id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange(input)" #input/> 
