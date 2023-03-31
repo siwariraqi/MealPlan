@@ -20,8 +20,6 @@ export class TokenStorageService {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
     const decodedToken: DecodedToken = jwt_decode(token);
-    alert("?????");
-    alert(decodedToken);
     const user = decodedToken.user;
     //console.log(decodedToken);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
