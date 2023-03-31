@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { PlanService } from '../../services/plan.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-chooseplan',
@@ -12,10 +15,15 @@ export class ChooseplanComponent implements OnInit {
 
   plans: any[] = [];
   length:number;
+  previousUrl: string;
+  @Input() needToBack:boolean = false;
 
-  constructor(private planService: PlanService, public snackBar: MatSnackBar) {}
+  constructor(private _location: Location,private router: Router, private route: ActivatedRoute,private planService: PlanService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+
+
+
     this.planService.getPlans().subscribe({
       next: (data: any[]) => {
         this.plans = data;
@@ -25,6 +33,10 @@ export class ChooseplanComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+
+  back(){
+    this._location.back();
   }
 
   

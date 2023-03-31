@@ -1,4 +1,9 @@
 <div class="Container">
+
+    <div>
+        <button class="button-25" (click)="back()">Back to your page</button>
+    </div>
+
     <div class="Container">
         <app-plan class="app-plan" *ngFor="let plan of plans.slice(1)"
                   [planId]="plan.planId"
@@ -9,4 +14,5 @@
                   [benefits]="plan.benefits">
         </app-plan>
     </div>
+    
 </div>
