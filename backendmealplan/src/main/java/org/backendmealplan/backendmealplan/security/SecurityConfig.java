@@ -1,3 +1,4 @@
+/*
 package org.backendmealplan.backendmealplan.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-public class SecurityConfig  {
-    /*
-    extends WebSecurityConfigurerAdapter
+public class SecurityConfig  extends WebSecurityConfigurerAdapter{
+
+
     @Bean
     public ObjectPostProcessor objectPostProcessor() {
         return new ObjectPostProcessor() {
@@ -27,12 +28,12 @@ public class SecurityConfig  {
     public AuthenticationConfiguration authenticationConfiguration() {
         return new AuthenticationConfiguration();
     }
-     */
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-/*
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -43,10 +44,9 @@ public class SecurityConfig  {
         http.cors();
     }
 
- */
 
 }
-/*
+ */
 package org.backendmealplan.backendmealplan.security;
 import org.backendmealplan.backendmealplan.bl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,42 +72,43 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    //@Autowired
+    //private AuthEntryPointJwt unauthorizedHandler;
+//
+    //@Autowired
+    //private UserDetailsServiceImpl userDetailsService;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationFilter authenticationJwtTokenFilter() {
-        return new AuthenticationFilter();
-    }
+    //@Bean
+    //public AuthenticationFilter authenticationJwtTokenFilter() {
+    //    return new AuthenticationFilter();
+    //}
+//
+//
+    //@Override
+    //public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    //    authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    //}
 
-
-    @Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+    //@Bean
+    //@Override
+    //public AuthenticationManager authenticationManagerBean() throws Exception {
+    //    return super.authenticationManagerBean();
+    //}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/users/login","/users/addUserInfo","/users/updateUserInfo", "/users/adduser").permitAll()
-                .anyRequest().authenticated();
+        http.headers().cacheControl();
+        http.csrf().disable();
+                //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                //.authorizeRequests().antMatchers("/users/login","/users/addUserInfo","/users/updateUserInfo", "/users/adduser").permitAll()
+                //.anyRequest().authenticated();
+        http.cors();
 
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
- */

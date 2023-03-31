@@ -185,14 +185,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       this.authSrv.login(email, password).subscribe(
         (data) => {
-          console.log("****************");
-          console.log(data);
           this.tokenStroageService.saveToken(data);
           this.router.navigateByUrl("/mealplan/meals");
         },
         (error) => {
           console.log("$$$$$$$$");
-          alert(error);
           console.log(error);
         }
       );

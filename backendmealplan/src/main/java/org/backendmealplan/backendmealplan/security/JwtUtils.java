@@ -2,6 +2,7 @@ package org.backendmealplan.backendmealplan.security;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -59,9 +60,36 @@ public class JwtUtils {
                 .parseClaimsJws(jwtToken)
                 .getBody();
 
-        User user = claims.get("user", User.class);
+        //User user = claims.get("user", User.class);
+        User user = null;
+        Object userClaim = claims.get("user");
+        if (userClaim instanceof LinkedHashMap) {
+            LinkedHashMap<String, Object> userMap = (LinkedHashMap<String, Object>) userClaim;
+            ObjectMapper mapper = new ObjectMapper();
+            user = mapper.convertValue(userMap, User.class);
+        }
+
         return user;
     }
+/*
+    public User getUserFromJwtToken(String token) {
+        Jws<Claims> jws = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token);
+        Claims claims = jws.getBody();
+
+        User user = null;
+        Object userClaim = claims.get("user");
+        if (userClaim instanceof LinkedHashMap) {
+            LinkedHashMap<String, Object> userMap = (LinkedHashMap<String, Object>) userClaim;
+            ObjectMapper mapper = new ObjectMapper();
+            user = mapper.convertValue(userMap, User.class);
+        }
+
+        return user;
+    }
+ */
+
 
 
 
