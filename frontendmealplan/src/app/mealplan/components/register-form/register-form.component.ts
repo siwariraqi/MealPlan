@@ -94,6 +94,9 @@ import { User } from "../../models/User";
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
                   </mat-form-field>
+
+                  <mat-error *ngIf="err" class="mt-2"> {{ err }} </mat-error>
+
                   <div class="text-center mt-2">
                     <button mat-raised-button color="accent" class="uppercase signupBtn" type="submit">Create an Account</button>
                     <div class="mt-3 orRegisterWithGoogle" (click)="goToRegisterWithGoogle()">
@@ -122,6 +125,7 @@ export class RegisterFormComponent implements OnInit {
   public registerForm!: UntypedFormGroup;
   public hide = true;
   public bgImage: any;
+  err: string | null;
 
   PHONE_PATTERN = "^[0-9]{9,16}$";
   PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$";
@@ -164,8 +168,11 @@ export class RegisterFormComponent implements OnInit {
       user.lastName = this.capitalizeFirstLetter(formObj.lname);
       user.phoneNumber = formObj.phone;
       user.userInfo = this.registerSrv.getUserInfo();
-      this.registerSrv.registerUser(user).subscribe((user) => {
-        if (user) {
+
+      this.registerSrv.registerUser(user).subscribe({
+        next: (user) => {
+          //register success
+          this.err = null;
           this.snackBar.open("You registered successfully!", "×", {
             panelClass: "success",
             verticalPosition: "bottom",
@@ -175,7 +182,12 @@ export class RegisterFormComponent implements OnInit {
             this.registerSrv.clearUserInfoFromLocalStorage();
             this.router.navigateByUrl("/mealplan/login");
           });
-        }
+        },
+        error: (e) => {
+          console.log("error => ", e.error);
+          this.err = e.error.toUpperCase();
+        },
+        complete: () => console.info("complete"),
       });
     }
   }

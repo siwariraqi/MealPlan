@@ -10,6 +10,7 @@ export class ImageUploadComponent implements OnInit {
   @Input('base64') base64:string = ''; 
   @Input('fileSize') fileSize = 500;  
   @Input('acceptTypes') acceptTypes:any; 
+  @Input('imageUrl') imageUrl:string; 
   @Output() onFileChange: EventEmitter<any> = new EventEmitter(); 
   @Output() onFileUploadClick: EventEmitter<any> = new EventEmitter();
   public files:any[] = [];  

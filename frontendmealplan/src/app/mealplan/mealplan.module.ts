@@ -47,7 +47,7 @@ import { PrintComponent } from "./pages/dayMeal/print/print.component";
 import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
 import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
-import { EducationComponent } from "./pages/education/education.component";
+// import { EducationComponent } from "./pages/education/education.component";
 import { ExportComponent } from "./components/grocery-list/export/export.component";
 import { UpdatepopupComponent } from "./components/grocery-list/updatepopup/updatepopup.component";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -55,6 +55,8 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { ForgetPasswordFormComponent } from "./pages/resetpassword/forget-password-form/forget-password-form.component";
+import { ResetPasswordFormComponent } from "./pages/resetpassword/reset-password-form/reset-password-form.component";
 
 @NgModule({
   declarations: [
@@ -85,11 +87,13 @@ import { ReactiveFormsModule } from "@angular/forms";
     RecipesComponent,
     RecipesToolbarComponent,
     DietTypeComponent,
-    EducationComponent,
+    // EducationComponent,
     ExportComponent,
     UpdatepopupComponent,
     LandingPageComponent,
     RegisterGoogleComponent,
+    ForgetPasswordFormComponent,
+    ResetPasswordFormComponent,
   ],
 
   imports: [

@@ -83,6 +83,8 @@ export class AuthService {
     localStorage.setItem("currUser", JSON.stringify(this.currUser));
   }
 
+  forgetPassword(email: string) {}
+
   // logout() {
   //   this.currUser = { };
   //   this.router.navigate(['/']);

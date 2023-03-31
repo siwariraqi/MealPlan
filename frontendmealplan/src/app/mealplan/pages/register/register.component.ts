@@ -84,12 +84,10 @@ import { AuthService } from "../../services/auth.service";
 })
 export class RegisterComponent implements OnInit {
   pages: any[];
-  // currentPage: number;
   backgroundColor: string;
   backgroundImage: string;
   btnBackgroundColor: string;
   btnColor: string;
-  // screenState: string;
   userGoals: Goal[];
   error: string;
 
@@ -106,12 +104,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("user=> ", this.authSrv.getUser());
-    // this.backgroundColor = "#4b643d";
     this.changeBgColor();
-    // this.btnBackgroundColor = "#ffffff";
-    // this.btnColor = "black";
     this.changeBtnColors();
-    // this.registerSrv.getUserInfoLocalStorage();
     this.setPages();
   }
 
@@ -121,8 +115,6 @@ export class RegisterComponent implements OnInit {
 
   nextScreen() {
     console.log("onboarding=> ", this.getOnboardingStep());
-    // console.log("page=> ", this.currentPage);
-
     if (this.saveUserInfo()) {
       this.registerSrv.incrementOnBoardingStep();
       this.setPages();

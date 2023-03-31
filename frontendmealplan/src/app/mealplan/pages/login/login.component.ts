@@ -84,20 +84,13 @@ declare var google: any;
                     </button>
                   </mat-form-field>
                   <mat-error *ngIf="err" class="mt-2"> {{ err }} </mat-error>
-                  <mat-slide-toggle
-                    color="primary"
-                    formControlName="rememberMe"
-                    class="my-2 rememberme"
-                    >Keep me signed in</mat-slide-toggle
-                  >
-
+                  <mat-slide-toggle color="primary" formControlName="rememberMe" class="my-2 rememberme">Remember Me</mat-slide-toggle>
                   <div class="text-center mt-2">
                     <button
                       mat-raised-button
                       color="accent"
                       class="uppercase loginBtn"
-                      type="submit"
-                    >
+                      type="submit">
                       Sign In
                     </button>
                   </div>
@@ -119,7 +112,7 @@ declare var google: any;
                   </div>
                 </form>
                 <div fxLayout="row" fxLayoutAlign="end center">
-                  <button mat-button>
+                  <button mat-button (click)="navigateToResetPasswordPage()">
                     <mat-icon class="text-muted">vpn_key</mat-icon>
                     <span class="mx-1">Reset Password</span>
                   </button>
@@ -204,7 +197,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.err = null;
             console.log("login success!");
             console.log(user);
-
             // alert("user successfully signed in");
             this.router.navigateByUrl("/mealplan/meals");
           } else {
@@ -234,5 +226,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     //verify token in server
     this.authSrv.loginWithGoogle(response);
+  }
+
+  navigateToResetPasswordPage(): void {
+    this.router.navigateByUrl("/mealplan/forgetpassword");
   }
 }

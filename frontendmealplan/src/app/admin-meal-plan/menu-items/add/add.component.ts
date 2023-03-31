@@ -1,7 +1,8 @@
 import { Component,ElementRef,OnInit, ViewChild} from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs';
 import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { IngredientDTO } from 'src/app/mealplan/models/IngredientDTO';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
@@ -52,7 +53,7 @@ export class AddComponent implements OnInit {
   Protien:number;
   Carbs:number;
   Fibre:number;
-  imageUrl: string;
+  imageUrl: string='';
 
   isOvernightCooking: boolean = false;
   isOvernightPreparing:boolean=false
@@ -62,7 +63,14 @@ export class AddComponent implements OnInit {
   isEdit=false;
 
   mealId:number;
-  constructor(private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar) {}
+  constructor(private router: Router,private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar) {}
+
+
+  ngOnInit(): void {
+    this.getEditMealId();
+    // this.imageUrl='assets/images/others/noimage.png'
+  }
+
 
   isSubmitted3=true
   addIngredient() {
@@ -78,7 +86,6 @@ export class AddComponent implements OnInit {
     this.amount = null;
     this.unit = '';
     this.category = '';
-
 }
 
 removeIngredient(index: number) {
@@ -215,15 +222,17 @@ addMeal(mealDTO:MealDTO){
     this.snackBar.open("Meal Added successfully!", "×", {
       panelClass: "success",
       verticalPosition: "bottom",
-      duration: 5000,
+      duration: 7000,
     }); 
   }, error => {
     this.snackBar.open(error.error, "×", {
       panelClass: "error",
       verticalPosition: "bottom",
-      duration: 3000,
+      duration: 5000,
     }); 
-  });
+  }
+  
+  );
 } 
 
 planSelection(){
@@ -251,10 +260,16 @@ daySelection(){
 
 
   checkOverNight(){
-    if(this.CookTime==='Overnight')
+    if(this.CookTime == 'Overnight')
+    {
     this.isOvernightCooking=true;
-    if(this.PrepareTime=='Overnight')
-    this.isOvernightPreparing==true;
+    }
+   else{this.CookTime = this.meal.cookTime.replace(' min', '');}
+   
+   if(this.PrepareTime == 'Overnight'){
+    this.isOvernightPreparing = true;
+   }else{this.PrepareTime = this.meal.prepareTime.replace(' min', '');}
+   
   }
 
    extractListItems(html: string) {
@@ -272,9 +287,7 @@ daySelection(){
   }
 
   
-  ngOnInit(): void {
-    this.getEditMealId();
-  }
+
   
   getEditMealId(){
     this.route.paramMap.subscribe(params => {
@@ -297,56 +310,82 @@ daySelection(){
     }
 
   editMealInformation(){
+    this.imageUrl=this.meal.imageUrl;
+    console.log(this.imageUrl)
     this.MealName=this.meal.mealName;
     this.CookTime=this.meal.cookTime;
     this.PrepareTime=this.meal.prepareTime;
-    this.PrepareTime = this.meal.prepareTime.replace(' min', '');
-    this.CookTime = this.meal.cookTime.replace(' min', '');
+    this.checkOverNight();
     this.Calories=this.meal.calories;
     this.Fat=this.meal.fat;
     this.Protien=this.meal.protein;
     this.Carbs=this.meal.carbs;
     this.Fibre=this.meal.fibre;
-    this.instructions=this.extractListItems(this.meal.instructions);
-    this.Tips=this.extractListItems(this.meal.tips);
     this.selectedDietTypes=this.meal.dietTypes
+    this.instructions=this.extractListItems(this.meal.instructions);
+    // this.addInstruction();
+
+    this.Tips=this.extractListItems(this.meal.tips);
     this.ingredients=this.meal.ingredients;
-    this.checkOverNight();
-    this.addInstruction();
-    this.addTips();
+    
+    // this.addTips();
    }
 
 
    editMealFromDB(mealId:number){
-    this.mealDTO.mealName = this.MealName;
+    this.mealDTO.imageUrl=this.imageUrl;
+    console.log(this.mealDTO.imageUrl)
     this.mealDTO.prepareTime = this.PrepareTime;
-    this.mealDTO.cookTime = this.CookTime;
+    this.mealDTO.cookTime = this.CookTime ;
+    if(this.mealDTO.cookTime !=='Overnight'){
+      this.mealDTO.cookTime =this.mealDTO.cookTime+' min';}
+    if(this.mealDTO.prepareTime !=='Overnight'){
+    this.mealDTO.prepareTime = this.mealDTO.prepareTime + ' min'}
+    if(this.isOvernightCooking)
+    {this.mealDTO.cookTime='Overnight';}
+    if(this.isOvernightPreparing)
+    {this.mealDTO.prepareTime='Overnight';}
+    this.mealDTO.mealName = this.MealName;
     this.mealDTO.calories = this.Calories;
     this.mealDTO.fat = this.Fat;
     this.mealDTO.protein = this.Protien;
     this.mealDTO.carbs = this.Carbs;
     this.mealDTO.fibre = this.Fibre;
     this.mealDTO.dietTypes=this.selectedDietTypes;
-    this.mealDTO.instructions = this.instuctionsDB;
-    this.mealDTO.tips = this.TipsDB;
+    this.mealDTO.instructions = this.createListItems(this.instructions);
+    this.mealDTO.tips =this.createListItems(this.Tips);
     this.mealDTO.ingredients = this.ingredients; 
-    this.mealDTO.imageUrl="https://www.justwhatweeat.com/wp-content/uploads/2019/06/Chocolate-Peanut-Butter-Banana-Chia-Pudding-Gluten-Free-Vegan-Dairy-Free-2C.jpg";
     this.mealDTO.dayMealDTOList=this.returnDayNumber;
+    console.log(this.mealDTO)
     this.adminService.editMealDTO(this.mealDTO,mealId).subscribe(response => {
-
       this.resetAll();
-      this.snackBar.open("Meal Edited successfully!", "×", {
+      let snackBarRef = this.snackBar.open("Meal Edited successfully!", "×", {
         panelClass: "success",
         verticalPosition: "bottom",
-        duration: 5000,
-      }); 
+        duration: 7000,
+      });
+      snackBarRef.afterOpened().pipe(
+        delay(2000)
+      ).subscribe(() => {
+        this.router.navigate(['/adminside/meal-items/list'])
+      });
     }, error => {
       this.snackBar.open(error.error, "×", {
         panelClass: "error",
         verticalPosition: "bottom",
         duration: 3000,
       }); 
-    });
+    }
+    
+    );
+    
   }
+
+   createListItems(instructions: any[]) {
+    const listItems = instructions.map((instruction) => `<li>${instruction}</li>`);
+    const list = `<ul>${listItems.join('')}</ul>`;
+    return list;
+  }
+  
 
 }
