@@ -1,5 +1,6 @@
 import { Component, OnInit , Input, ViewEncapsulation} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -18,18 +19,15 @@ export class PlanComponent implements OnInit {
   userId:number;
   @Input()planId:number;
 
-  constructor(private userService:UserService, public snackBar: MatSnackBar) { }
+  constructor(private authService:AuthService,private userService:UserService, public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    
-
-
-    localStorage.setItem('userId','1');// to be handled after adding global user
+    console.log("choose");
   }
 
   choosePlan(){
-    this.userId = Number(localStorage.getItem('userId'));
-    this.userService.choosePlan(this.userId, this.planId).subscribe(
+    this.userId = this.authService.getUser().userId;
+    this.userService.choosePlan(this.planId).subscribe(
       data => {console.log('Plan updated successfully.');
       this.snackBar.open('Plan updated successfully.', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });},
       error => {console.error('Error updating plan:', error);

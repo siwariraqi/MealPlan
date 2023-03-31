@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Plan } from 'src/app/mealplan/models/Plan';
 import { User } from 'src/app/mealplan/models/User';
+import { AuthService } from 'src/app/mealplan/services/auth.service';
 import { PlanService } from 'src/app/mealplan/services/plan.service';
 import { UserService } from 'src/app/mealplan/services/user.service';
 
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/mealplan/services/user.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private userService:UserService,private planService:PlanService) { }
+  constructor(private authService:AuthService, private userService:UserService,private planService:PlanService) { }
   user:User ={};
   name:string;
   firstName:string;
@@ -19,13 +20,11 @@ export class DashboardComponent implements OnInit {
   email:string;
 
   ngOnInit(): void {
-    this.userService.getUser(Number(localStorage.getItem('userId'))).subscribe(
-      data => {
-         this.user = data;
-         this.firstName=this.user.firstName;
-         this.name=this.user.firstName+" "+this.user.lastName;
-         this.email=this.user.email;
-         this.planService.getPlanForUser(this.user.userId).subscribe(//get the plan
+    this.user = this.authService.getUser();
+    this.firstName=this.user.firstName;
+    this.name=this.user.firstName+" "+this.user.lastName;
+    this.email=this.user.email;
+    this.planService.getPlanForUser().subscribe(//get the plan
             plan => {
               this.planName=plan.planName;
             },
@@ -33,11 +32,6 @@ export class DashboardComponent implements OnInit {
               console.error('Error fetching plan:', error);
             }
          );
-      },
-      error => console.error('Error fetching user:', error)
-   );
-    
-    
 
   }
 
