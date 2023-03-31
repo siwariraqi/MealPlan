@@ -47,10 +47,11 @@ import { PrintComponent } from "./pages/dayMeal/print/print.component";
 import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { RecipesToolbarComponent } from "./pages/recipes/recipes-toolbar/recipes-toolbar.component";
 import { DietTypeComponent } from "./pages/dayMeal/diet-type/diet-type.component";
-import { EducationComponent } from "./pages/education/education.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { RegisterGoogleComponent } from "./components/register-google/register-google.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { ForgetPasswordFormComponent } from "./pages/resetpassword/forget-password-form/forget-password-form.component";
+import { ResetPasswordFormComponent } from "./pages/resetpassword/reset-password-form/reset-password-form.component";
 
 @NgModule({
   declarations: [
@@ -81,9 +82,10 @@ import { ReactiveFormsModule } from "@angular/forms";
     RecipesComponent,
     RecipesToolbarComponent,
     DietTypeComponent,
-    EducationComponent,
     LandingPageComponent,
     RegisterGoogleComponent,
+    ForgetPasswordFormComponent,
+    ResetPasswordFormComponent,
   ],
 
   imports: [

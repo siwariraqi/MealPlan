@@ -17,7 +17,7 @@ import { AboutComponent } from "./pages/account/about/about.component";
 import { PrivacyComponent } from "./pages/account/privacy/privacy.component";
 import { TermsComponent } from "./pages/account/terms/terms.component";
 import { RecipesComponent } from "./pages/recipes/recipes.component";
-import { EducationComponent } from "./pages/education/education.component";
+import { ForgetPasswordFormComponent } from "./pages/resetpassword/forget-password-form/forget-password-form.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "register", pathMatch: "full" },
@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: "register",
     component: RegisterComponent,
+  },
+  {
+    path: "forgetpassword",
+    component: ForgetPasswordFormComponent,
   },
   {
     path: "chooseplan",
