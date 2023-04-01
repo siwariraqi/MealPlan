@@ -12,8 +12,8 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
     </style>
     <div class="container">
       <div class="top">
-        <p class="question">What are your goals?</p>
-        <p class="textTitle">Select which apply to you</p>
+        <h2 class="question">What are your goals?</h2>
+        <h5 class="textTitle">Select which apply to you</h5>
         <p class="line"></p>
       </div>
       <div class="content">

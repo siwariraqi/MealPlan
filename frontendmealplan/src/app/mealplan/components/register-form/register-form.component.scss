@@ -1,16 +1,11 @@
 .container {
-  zoom: 94%;
-  margin-top: -6vh;
+  // margin-top: -6vh;
   width: 98vw;
-  max-width: 800px;
-  // height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 3vh;
-  // box-shadow: 0 4px 12px rgb(7, 7, 7, 0.25) !important;
 }
 
 .formContainer {
@@ -18,7 +13,6 @@
   background-color: #bdc3c7 !important;
   background-image: linear-gradient(to right, #ffffff, #ffffffd2) !important;
   box-shadow: 1px 0px 15px rgba(4, 4, 26, 0.15) !important;
-  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25) !important;
   opacity: 0.96 !important;
   padding: 4px;
   width: 85vw;
@@ -46,11 +40,12 @@
   box-shadow: 1px 1px 5px rgba(5, 5, 34, 0.15);
   border: none;
   border-radius: 18.5px;
-  width: 250px;
-  height: 40px;
+  width: 230px;
+  height: 34px;
   font-weight: 600;
+  font-size: smaller;
   cursor: pointer;
-  margin-top: 2vh;
+  margin-top: 1vh;
 }
 
 .signupBtn:hover {
@@ -75,8 +70,12 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+::ng-deep .mat-form-field {
+  font-size: 10.5px; // decreasing input height for material input only by changing font size
+}
+
 @media screen and (max-width: 600px) {
   ::ng-deep .mat-form-field {
-    font-size: 12px; // decreasing input height for material input only by changing font size
+    font-size: 12px;
   }
 }

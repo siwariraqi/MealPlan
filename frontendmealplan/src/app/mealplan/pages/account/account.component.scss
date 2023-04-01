@@ -1,19 +1,21 @@
+.account {
+  min-height: calc(100vh - 100px);
+}
 
+.secondary-font {
+  font-family: "Montserrat", sans-serif;
+}
 
-  .secondary-font{
-    font-family: 'Montserrat', sans-serif ;
-  }
+.bigger-font {
+  font-size: 1rem; /* adjust the value as needed */
+  font-weight: bold;
+}
 
-  .bigger-font {
-    font-size: 1.0rem; /* adjust the value as needed */
-    font-weight: bold;
-  }
+.bigger-title {
+  font-size: 1.3rem; /* adjust the value as needed */
+  font-weight: bold;
+}
 
-  .bigger-title{
-    font-size: 1.3rem; /* adjust the value as needed */
-    font-weight: bold;
-  }
-
-  .custom-button {
-    font-size: 1.2em; /* Adjust the value to your liking */
-  }
+.custom-button {
+  font-size: 1.2em; /* Adjust the value to your liking */
+}
