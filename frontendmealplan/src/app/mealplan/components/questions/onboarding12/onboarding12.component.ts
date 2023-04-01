@@ -7,7 +7,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
   template: `
     <div class="container">
       <div class="top">
-        <p class="question">when were you born?</p>
+        <p class="question">When were you born?</p>
         <p class="line"></p>
         <div class="selectedDate">
           <h4 *ngIf="birthDate">{{ birthDate.toUTCString().split(":")[0].slice(0, -2) }}</h4>

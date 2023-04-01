@@ -1,16 +1,13 @@
 .container {
-  zoom: 105%;
   margin-top: -6vh;
   width: 98vw;
   max-width: 800px;
-  // height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
   margin-bottom: 3vh;
-  // box-shadow: 0 4px 12px rgb(7, 7, 7, 0.25) !important;
 }
 
 .formContainer {
@@ -18,7 +15,6 @@
   background-color: #bdc3c7 !important;
   background-image: linear-gradient(to right, #ffffff, #ffffffd2) !important;
   box-shadow: 1px 0px 15px rgba(4, 4, 26, 0.15) !important;
-  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25) !important;
   opacity: 0.96 !important;
   padding: 4px;
   width: 85vw;
@@ -85,7 +81,4 @@
 }
 
 @media screen and (max-width: 600px) {
-  // .container {
-  //   width: 85vw;
-  // }
 }

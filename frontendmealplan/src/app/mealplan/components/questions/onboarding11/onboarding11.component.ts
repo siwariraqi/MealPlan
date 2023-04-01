@@ -11,7 +11,7 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
     </style>
     <div class="container">
       <div class="top">
-        <p class="question">what's your gender?</p>
+        <p class="question">What's your gender?</p>
         <p class="line"></p>
       </div>
       <div class="content">

@@ -1,6 +1,6 @@
 .registerContainer {
-  zoom: 95%;
-  min-height: 98vh;
+  min-height: calc(100vh - 100px);
+  // width: 98.5vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,17 +10,28 @@
   text-align: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
 }
 
 .backBtn {
-  position: absolute;
-  top: 50px;
-  left: 90px;
+  // margin-top: -12vh;
+  margin-left: 6vw;
+  align-self: flex-start;
   font-size: large;
   cursor: pointer;
   padding: 10px;
   color: color;
+  z-index: 99;
+}
+
+.onboarding-question {
+  // margin-top: -6vh;
+  width: 90vw;
+  height: 62vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  // overflow: hidden;
 }
 
 .errorMsg {
@@ -108,9 +119,16 @@
   .dots {
     width: 95vw;
     scale: 0.9;
+    margin-top: 1vh;
   }
   .errorMsg {
-    height: 50px;
-    margin-top: -2vh;
+    height: 40px;
+    margin-top: -4vh;
+  }
+
+  .nextBtn {
+    width: 230px;
+    height: 30px;
+    margin-top: 1vh;
   }
 }
