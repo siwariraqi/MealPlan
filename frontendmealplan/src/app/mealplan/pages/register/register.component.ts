@@ -11,6 +11,7 @@ import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
 import { Onboarding7Component } from "../../components/questions/onboarding7/onboarding7.component";
 import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -29,19 +30,20 @@ import { AuthService } from "../../services/auth.service";
       >
         <div (click)="prevScreen()"><mat-icon>arrow_back</mat-icon></div>
       </div>
-      <app-welcome-screen
-        *ngIf="getOnboardingStep() < 7"
-        [currentPage]="getOnboardingStep() - 2"
-      ></app-welcome-screen>
-      <app-onboarding7 *ngIf="getOnboardingStep() === 7"></app-onboarding7>
-      <app-onboarding8 *ngIf="getOnboardingStep() === 8"></app-onboarding8>
-      <app-onboarding9 *ngIf="getOnboardingStep() === 9"></app-onboarding9>
-      <app-onboarding10 *ngIf="getOnboardingStep() === 10"></app-onboarding10>
-      <app-onboarding11 *ngIf="getOnboardingStep() === 11"></app-onboarding11>
-      <app-onboarding12 *ngIf="getOnboardingStep() === 12"></app-onboarding12>
-      <app-onboarding13 *ngIf="getOnboardingStep() === 13"></app-onboarding13>
-      <app-onboarding14 *ngIf="getOnboardingStep() === 14"></app-onboarding14>
-      <app-onboarding15 *ngIf="getOnboardingStep() === 15"></app-onboarding15>
+
+      <div *ngIf="getOnboardingStep() < 16" class="onboarding-question">
+        <app-welcome-screen *ngIf="getOnboardingStep() < 7" [currentPage]="getOnboardingStep() - 2"></app-welcome-screen>
+        <app-onboarding7 *ngIf="getOnboardingStep() === 7"></app-onboarding7>
+        <app-onboarding8 *ngIf="getOnboardingStep() === 8"></app-onboarding8>
+        <app-onboarding9 *ngIf="getOnboardingStep() === 9"></app-onboarding9>
+        <app-onboarding10 *ngIf="getOnboardingStep() === 10"></app-onboarding10>
+        <app-onboarding11 *ngIf="getOnboardingStep() === 11"></app-onboarding11>
+        <app-onboarding12 *ngIf="getOnboardingStep() === 12"></app-onboarding12>
+        <app-onboarding13 *ngIf="getOnboardingStep() === 13"></app-onboarding13>
+        <app-onboarding14 *ngIf="getOnboardingStep() === 14"></app-onboarding14>
+        <app-onboarding15 *ngIf="getOnboardingStep() === 15"></app-onboarding15>
+      </div>
+
       <app-register-form *ngIf="getOnboardingStep() === 16"></app-register-form>
       <app-register-google
         *ngIf="getOnboardingStep() === 17"
@@ -91,11 +93,7 @@ export class RegisterComponent implements OnInit {
   userGoals: Goal[];
   error: string;
 
-  constructor(
-    private registerSrv: RegisterService,
-    private authSrv: AuthService
-  ) {
-    // this.currentPage = 0;
+  constructor(private registerSrv: RegisterService, private authSrv: AuthService, private router: Router) {
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
     // this.screenState = "welcome";
@@ -103,7 +101,11 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("user=> ", this.authSrv.getUser());
+    const user = this.authSrv.getUser();
+    console.log("user=> ", user);
+    if (user && user.email) {
+      this.router.navigateByUrl("/mealplan/meals");
+    }
     this.changeBgColor();
     this.changeBtnColors();
     this.setPages();

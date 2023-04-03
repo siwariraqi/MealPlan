@@ -18,16 +18,17 @@ import { PrivacyComponent } from "./pages/account/privacy/privacy.component";
 import { TermsComponent } from "./pages/account/terms/terms.component";
 import { RecipesComponent } from "./pages/recipes/recipes.component";
 import { ForgetPasswordFormComponent } from "./pages/resetpassword/forget-password-form/forget-password-form.component";
+import { LogoutComponent } from "./pages/logout/logout.component";
 
 const routes: Routes = [
+  {
+    path: "register",
+    component: RegisterComponent,
+  },
   { path: "", redirectTo: "register", pathMatch: "full" },
   {
     path: "login",
     component: LoginComponent,
-  },
-  {
-    path: "register",
-    component: RegisterComponent,
   },
   {
     path: "forgetpassword",
@@ -67,6 +68,10 @@ const routes: Routes = [
   {
     path: "groceryList",
     component: GroceryListComponent,
+  },
+  {
+    path: "logout",
+    component: LogoutComponent,
   },
 ];
 

@@ -57,6 +57,7 @@ import { RegisterGoogleComponent } from "./components/register-google/register-g
 import { ReactiveFormsModule } from "@angular/forms";
 import { ForgetPasswordFormComponent } from "./pages/resetpassword/forget-password-form/forget-password-form.component";
 import { ResetPasswordFormComponent } from "./pages/resetpassword/reset-password-form/reset-password-form.component";
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { ResetPasswordFormComponent } from "./pages/resetpassword/reset-password
     RegisterGoogleComponent,
     ForgetPasswordFormComponent,
     ResetPasswordFormComponent,
+    LogoutComponent,
   ],
 
   imports: [

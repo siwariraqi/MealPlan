@@ -1,7 +1,7 @@
 .container {
-  margin-top: -2vh;
+  margin-top: -12vh;
   width: 90vw;
-  height: 64vh;
+  height: 62vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +14,8 @@
 }
 
 img {
+  margin-top: -2vh;
+  height: 300px;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -24,7 +26,7 @@ img {
 
 .WelcomeText {
   margin-top: 5px;
-  width: 46vw;
+  width: 60vw;
   text-align: center;
   color: white;
   font-weight: 400;
@@ -34,7 +36,7 @@ img {
 
 @media screen and (max-width: 600px) {
   .WelcomeText {
-    width: 90vw;
+    width: 94vw;
     font-size: 16px;
   }
 }

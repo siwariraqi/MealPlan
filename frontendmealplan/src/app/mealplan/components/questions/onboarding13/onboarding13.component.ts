@@ -27,7 +27,6 @@ import { RegisterService } from "src/app/mealplan/services/register.service";
             #inputValue
           />
           <p class="val">{{ chosenUnit === "metric" ? "KG" : "LB" }}</p>
-          <p></p>
         </div>
 
         <div class="box">

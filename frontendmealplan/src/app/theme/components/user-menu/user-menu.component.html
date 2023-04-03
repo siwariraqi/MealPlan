@@ -6,10 +6,12 @@
 <mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-menu-panel user-menu">
   <span (mouseleave)="userMenuTrigger.closeMenu()">
     <div fxLayout="row" fxLayoutAlign="start center" class="user-info">
-      <img src="assets/images/others/user.jpg" alt="user-image" width="50" />
+      <!-- <img src="assets/images/others/user.jpg" alt="user-image" width="50" /> -->
       <p class="m-0">
-        Emilio Verdines <br />
-        <small><i>emilio_v</i></small>
+        {{ currentUser?.firstName + " " + currentUser?.lastName }} <br />
+        <small
+          ><i>{{ currentUser?.email }}</i></small
+        >
       </p>
     </div>
     <div class="divider"></div>
@@ -21,7 +23,7 @@
             <mat-icon class="mat-icon-sm">home</mat-icon>
             <span>My Properties</span> 
         </a> -->
-    <a mat-menu-item routerLink="/account/favorites">
+    <!-- <a mat-menu-item routerLink="/mealplan/account/favorites">
       <mat-icon class="mat-icon-sm">favorite_border</mat-icon>
       <span
         [matBadge]="appService.Data.favorites.length"
@@ -31,7 +33,7 @@
         matBadgeOverlap="false"
         >Favorites</span
       >
-    </a>
+    </a> -->
     <!-- <a mat-menu-item routerLink="/compare"> 
             <mat-icon class="mat-icon-sm">compare_arrows</mat-icon> 
             <span [matBadge]="appService.Data.compareList.length" 
@@ -44,22 +46,24 @@
             <mat-icon class="mat-icon-sm">search</mat-icon>
             <span>Saved Searches</span> 
         </a> -->
-    <a mat-menu-item routerLink="/account/profile">
+    <!-- <a mat-menu-item routerLink="/account/profile">
       <mat-icon class="mat-icon-sm">edit</mat-icon>
       <span>Edit Profile</span>
-    </a>
+    </a> -->
     <!-- <a mat-menu-item routerLink="/lock-screen"> 
             <mat-icon class="mat-icon-sm">lock</mat-icon>
             <span>Lock screen</span> 
         </a> -->
-    <a mat-menu-item routerLink="/faq">
+    <a mat-menu-item routerLink="/mealplan/account/help-support">
       <mat-icon class="mat-icon-sm">help</mat-icon>
       <span>Help</span>
     </a>
     <div class="divider"></div>
-    <a mat-menu-item routerLink="/login">
-      <mat-icon class="mat-icon-sm">power_settings_new</mat-icon>
-      <span>Sign Out</span>
-    </a>
+    <div (click)="logout()">
+      <a mat-menu-item routerLink="">
+        <mat-icon class="mat-icon-sm">power_settings_new</mat-icon>
+        <span>Sign Out</span>
+      </a>
+    </div>
   </span>
 </mat-menu>

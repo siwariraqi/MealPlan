@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -11,9 +11,9 @@ import { User } from "../../models/User";
   selector: "app-register-form",
   template: `
     <div class="container">
-      <div class="px-3 py-4 ">
+      <div class="px-3 py-2 pb-1 ">
         <div class="theme-container ">
-          <mat-card class="o-hidden px-3 pt-3 formContainer">
+          <mat-card class="o-hidden px-3 pt-2 formContainer">
             <div fxLayout="column">
               <div fxFlex="100" fxFlex.gt-sm="50" class="pt-1 pb-0" ngClass.gt-sm="px-4" ngClass.sm="px-3" ngClass.xs="px-3">
                 <div fxLayout="column" fxLayoutAlign="center center" class="text-center ">
@@ -29,7 +29,7 @@ import { User } from "../../models/User";
                       <mat-error *ngIf="registerForm.controls.fname.errors?.required">First Name is required</mat-error>
                       <mat-error *ngIf="registerForm.controls.fname.hasError('invalidFirstName')">Invalid Input</mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="outline" class="py-0 my-0">
                       <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                       <mat-label>Last Name</mat-label>
                       <input matInput placeholder="Last Name" formControlName="lname" required />
@@ -120,6 +120,7 @@ import { User } from "../../models/User";
     </div>
   `,
   styleUrls: ["./register-form.component.scss"],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class RegisterFormComponent implements OnInit {
   public registerForm!: UntypedFormGroup;
@@ -185,7 +186,8 @@ export class RegisterFormComponent implements OnInit {
         },
         error: (e) => {
           console.log("error => ", e.error);
-          this.err = e.error.toUpperCase();
+          this.err = "ERROR";
+          this.err = e?.error?.toUpperCase();
         },
         complete: () => console.info("complete"),
       });

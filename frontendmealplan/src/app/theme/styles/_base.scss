@@ -409,6 +409,7 @@ main.content-offset-to-top {
 /******* APP *******/
 .app {
   height: 100%;
+  overflow-x: hidden;
   &.main-toolbar-fixed {
     #main-toolbar {
       position: fixed;
@@ -656,14 +657,14 @@ main.content-offset-to-top {
 
 /******* Footer *******/
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
+  position: relative;
+  // bottom: 0;
+  // width: 99vw;
   overflow: hidden;
-  background: rgba(33, 33, 33, 0.93);
+  background: rgba(33, 33, 33, 0.98);
   color: #fff;
   z-index: 99;
-
+  // margin-top: 10px;
   &:before {
     content: "";
     position: absolute;
@@ -1248,5 +1249,12 @@ button.swipe-arrow {
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .ps {
     overflow: auto !important;
+  }
+
+  @media screen and (max-width: 600px) {
+    footer {
+      display: flex;
+      font-size: 8px;
+    }
   }
 }
