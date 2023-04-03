@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   getUserLocalStorage(): User {
-    const user = localStorage.getItem("currUser");
+    const user = sessionStorage.getItem("user");
     if (user) {
       this.currUser = JSON.parse(user);
       if (this.currUser.email) {
@@ -82,7 +82,7 @@ export class AuthService {
       }
     } else {
       this.currUser = new User(null);
-      localStorage.setItem("currUser", JSON.stringify(this.currUser));
+      sessionStorage.setItem("user", JSON.stringify(this.currUser));
       this.isLoggedInSubject.next(false);
       this.currUserSubject.next(null);
     }
@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   setUserLocalStorage() {
-    localStorage.setItem("currUser", JSON.stringify(this.currUser));
+    sessionStorage.setItem("user", JSON.stringify(this.currUser));
   }
 
   forgetPassword(email: string) {}
@@ -105,7 +105,7 @@ export class AuthService {
 
   logout() {
     this.currUser = {};
-    localStorage.removeItem("currUser");
+    sessionStorage.removeItem("user");
     this.isLoggedInSubject.next(false);
     this.currUserSubject.next(null);
     this.router.navigate(["/mealplan/login"]);
