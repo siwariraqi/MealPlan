@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
 import { AppService } from "src/app/app.service";
 import { User } from "src/app/mealplan/models/User";
 import { AuthService } from "src/app/mealplan/services/auth.service";
@@ -12,30 +12,26 @@ import { ReservationDialogComponent } from "src/app/shared/reservation-dialog/re
 })
 export class Toolbar1Component implements OnInit {
   @Output() onMenuIconClick: EventEmitter<any> = new EventEmitter<any>();
-  // isBurgerMenu: boolean;
   isLoggedIn: boolean;
   currentUser: User;
-  constructor(public appService: AppService, private authSrv: AuthService) {
-    // this.isBurgerMenu = false;
-  }
+  constructor(public appService: AppService, private authSrv: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (this.authSrv.getUser() && this.authSrv.getUser().email) {
-      this.isLoggedIn = true;
-      this.currentUser = this.authSrv.getUser();
-    } else {
-      this.isLoggedIn = false;
-    }
+    this.authSrv.getUser$().subscribe((user) => {
+      this.currentUser = user;
+      this.cdr.detectChanges();
+    });
+    this.authSrv.isLoggedIn$().subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+      this.cdr.detectChanges();
+    });
   }
 
   public sidenavToggle() {
     this.onMenuIconClick.emit();
-    // console.log(this.onMenuIconClick);
   }
-  // public openCart(){
-  //   this.appService.openCart(CartOverviewComponent)
-  // }
-  // public reservation(){
-  //   this.appService.makeReservation(ReservationDialogComponent, null, true);
-  // }
+
+  public getUser() {
+    return this.authSrv.getUser();
+  }
 }

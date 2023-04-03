@@ -186,7 +186,8 @@ export class RegisterFormComponent implements OnInit {
         },
         error: (e) => {
           console.log("error => ", e.error);
-          this.err = e.error.toUpperCase();
+          this.err = "ERROR";
+          this.err = e?.error?.toUpperCase();
         },
         complete: () => console.info("complete"),
       });

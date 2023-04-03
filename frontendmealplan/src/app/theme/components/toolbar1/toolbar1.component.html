@@ -29,7 +29,7 @@
       <app-user-menu></app-user-menu>
     </div>
     <a *ngIf="!isLoggedIn" href="/mealplan/login" class="login">Login</a>
-    <h5 *ngIf="isLoggedIn" class="user">Welcome {{ currentUser.firstName }}</h5>
+    <h5 *ngIf="isLoggedIn" class="user">Welcome {{ currentUser?.firstName }}</h5>
 
     <!-- <div fxLayout="row" fxLayoutAlign="start center">
       <button (click)="reservation()" mat-icon-button [matTooltip]="'RESERVATION' | translate" fxShow="false" fxShow.gt-xs="true">
