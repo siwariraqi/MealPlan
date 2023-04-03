@@ -4,6 +4,7 @@ import { UserInfo } from "../../models/UserInfo";
 import { RegisterService } from "../../services/register.service";
 import { Onboarding7Component } from "../../components/questions/onboarding7/onboarding7.component";
 import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -70,14 +71,18 @@ export class RegisterComponent implements OnInit {
   userGoals: Goal[];
   error: string;
 
-  constructor(private registerSrv: RegisterService, private authSrv: AuthService) {
+  constructor(private registerSrv: RegisterService, private authSrv: AuthService, private router: Router) {
     this.backgroundColor = "#fff";
     this.backgroundImage = "";
     this.error = "";
   }
 
   ngOnInit(): void {
-    console.log("user=> ", this.authSrv.getUser());
+    const user = this.authSrv.getUser();
+    console.log("user=> ", user);
+    if (user && user.email) {
+      this.router.navigateByUrl("/mealplan/meals");
+    }
     this.changeBgColor();
     this.changeBtnColors();
     this.setPages();

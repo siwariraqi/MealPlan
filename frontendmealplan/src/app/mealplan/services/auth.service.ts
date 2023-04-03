@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 
 import { User } from "../models/User";
@@ -14,6 +14,8 @@ export class AuthService {
   private LOGIN_USER_API: string = "users/login";
 
   private currUser: User;
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private currUserSubject = new BehaviorSubject<User>(null);
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.currUser = {};
@@ -32,6 +34,8 @@ export class AuthService {
               this.currUser = data;
               console.log("cur user=> ", this.currUser);
               this.setUserLocalStorage();
+              this.isLoggedInSubject.next(true);
+              this.currUserSubject.next(this.currUser);
             }
           }
         })
@@ -46,12 +50,18 @@ export class AuthService {
   }
 
   getUserLocalStorage(): User {
-    const userInfo = localStorage.getItem("currUser");
-    if (userInfo) {
-      this.currUser = JSON.parse(userInfo);
+    const user = localStorage.getItem("currUser");
+    if (user) {
+      this.currUser = JSON.parse(user);
+      if (this.currUser.email) {
+        this.isLoggedInSubject.next(true);
+        this.currUserSubject.next(this.currUser);
+      }
     } else {
       this.currUser = new User(null);
       localStorage.setItem("currUser", JSON.stringify(this.currUser));
+      this.isLoggedInSubject.next(false);
+      this.currUserSubject.next(null);
     }
     return this.currUser;
   }
@@ -62,8 +72,19 @@ export class AuthService {
 
   forgetPassword(email: string) {}
 
-  // logout() {
-  //   this.currUser = { };
-  //   this.router.navigate(['/']);
-  // }
+  isLoggedIn$(): Observable<boolean> {
+    return this.isLoggedInSubject.asObservable();
+  }
+
+  getUser$(): Observable<User> {
+    return this.currUserSubject.asObservable();
+  }
+
+  logout() {
+    this.currUser = {};
+    localStorage.removeItem("currUser");
+    this.isLoggedInSubject.next(false);
+    this.currUserSubject.next(null);
+    this.router.navigate(["/mealplan/login"]);
+  }
 }

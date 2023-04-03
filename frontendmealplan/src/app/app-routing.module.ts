@@ -17,7 +17,9 @@ const routes: Routes = [
       },
       {
         path: "",
-        loadChildren: () => import("./pages/home/home.module").then((m) => m.HomeModule),
+        // loadChildren: () => import("./pages/home/home.module").then((m) => m.HomeModule),
+        redirectTo: "mealplan",
+        pathMatch: "full",
       },
       {
         path: "about",
@@ -37,8 +39,7 @@ const routes: Routes = [
       },
       {
         path: "reservation",
-        loadChildren: () =>
-          import("./pages/reservation/reservation.module").then((m) => m.ReservationModule),
+        loadChildren: () => import("./pages/reservation/reservation.module").then((m) => m.ReservationModule),
       },
       {
         path: "account",
@@ -50,8 +51,7 @@ const routes: Routes = [
       },
       {
         path: "checkout",
-        loadChildren: () =>
-          import("./pages/checkout/checkout.module").then((m) => m.CheckoutModule),
+        loadChildren: () => import("./pages/checkout/checkout.module").then((m) => m.CheckoutModule),
       },
       {
         path: "login",
@@ -59,8 +59,7 @@ const routes: Routes = [
       },
       {
         path: "register",
-        loadChildren: () =>
-          import("./pages/register/register.module").then((m) => m.RegisterModule),
+        loadChildren: () => import("./pages/register/register.module").then((m) => m.RegisterModule),
       },
       {
         path: "faq",
@@ -68,10 +67,7 @@ const routes: Routes = [
       },
       {
         path: "terms-conditions",
-        loadChildren: () =>
-          import("./pages/terms-conditions/terms-conditions.module").then(
-            (m) => m.TermsConditionsModule
-          ),
+        loadChildren: () => import("./pages/terms-conditions/terms-conditions.module").then((m) => m.TermsConditionsModule),
       },
     ],
   },
