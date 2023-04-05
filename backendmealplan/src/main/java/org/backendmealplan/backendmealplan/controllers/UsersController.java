@@ -6,6 +6,7 @@ import org.backendmealplan.backendmealplan.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -133,26 +134,12 @@ public class UsersController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user) {
         try {
-            User u = userBL.authentication(user.getEmail(), user.getPassword());
-            u.setPassword(null);
-            String jwt = jwtUtils.generateJwtToken(u);
-
-            return new ResponseEntity(jwt, HttpStatus.OK);
+            String jwt = userBL.authentication(user.getEmail(), user.getPassword());
+            return ResponseEntity.ok(jwt);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
-        //try {
-        //    User u = userBL.authentication(user.getEmail(), user.getPassword());
-        //    Authentication authentication = authenticationManager.authenticate(
-        //            new UsernamePasswordAuthenticationToken(u.getUserId(), u.getPassword()));
-//
-        //    SecurityContextHolder.getContext().setAuthentication(authentication);
-        //    String jwt = jwtUtils.generateJwtToken(authentication);
-//
-        //    return ResponseEntity.ok(jwt);
-        //} catch (Exception e) {
-        //    return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        //}
     }
 
     @Transactional

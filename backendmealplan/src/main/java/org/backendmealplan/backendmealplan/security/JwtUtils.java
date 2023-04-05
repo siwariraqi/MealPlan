@@ -7,11 +7,17 @@ import java.util.LinkedHashMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.backendmealplan.backendmealplan.beans.User;
+import org.backendmealplan.backendmealplan.security.service.UserDetailsImpl;
+import org.backendmealplan.backendmealplan.security.service.UserDetailsServiceImpl;
+import org.backendmealplan.backendmealplan.dao.UsersDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
@@ -24,36 +30,29 @@ public class JwtUtils {
     private String jwtSecret = "helloHackerrr";
 
     private int expirationAfterOneHour = 3600000;
-/*
+
+    @Autowired
+    UsersDAO userDAO;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     public String generateJwtToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        User u = userDAO.findByEmail(userPrincipal.getUsername());
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + expirationAfterOneHour))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .claim("user", userPrincipal)
+                .claim("user",u)
                 .compact();
     }
- */
 
-    public String generateJwtToken(User user) {
-
-            return Jwts.builder()
-                    .setSubject((user.getEmail()))
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date((new Date()).getTime() + expirationAfterOneHour))
-                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                    .claim("user",user )
-                    .compact();
-
-
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
-    public  String convertObjectToJson(Object object) throws IOException {
-        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = objectWriter.writeValueAsString(object); //error on this line
-        return json;
-    }
+
     public User getUserFromJwtToken(String jwtToken) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -70,31 +69,6 @@ public class JwtUtils {
         }
 
         return user;
-    }
-/*
-    public User getUserFromJwtToken(String token) {
-        Jws<Claims> jws = Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token);
-        Claims claims = jws.getBody();
-
-        User user = null;
-        Object userClaim = claims.get("user");
-        if (userClaim instanceof LinkedHashMap) {
-            LinkedHashMap<String, Object> userMap = (LinkedHashMap<String, Object>) userClaim;
-            ObjectMapper mapper = new ObjectMapper();
-            user = mapper.convertValue(userMap, User.class);
-        }
-
-        return user;
-    }
- */
-
-
-
-
-    public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {

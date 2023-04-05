@@ -13,6 +13,7 @@ import org.backendmealplan.backendmealplan.other.MealDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -59,6 +60,7 @@ public class AdminController {
     private DayMealsDAO dayMealsDAO;
 
     @GetMapping("/getDayNumbers")
+    @PreAuthorize("hasAuthority('Admin')")
     public List<DayNumberDTO> getDayNumbers(@RequestParam String planName) {
         List<DayNumberDTO> returnedList = new ArrayList<>();
         Plan plan = plansDAO.findByPlanName(planName);
@@ -93,6 +95,7 @@ public class AdminController {
     }
 
     @GetMapping("/getAllUsers")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = userBL.getAll();
@@ -106,6 +109,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity deleteUser(@RequestParam Long userId) {
         try {
             userBL.deleteUser(userId);
@@ -116,6 +120,7 @@ public class AdminController {
     }
 
     @PutMapping("/reset")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity resetUser(@RequestParam Long userId) {
         try {
             userBL.resetUser(userId);
@@ -126,6 +131,7 @@ public class AdminController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity updateUserPlan(@RequestParam Long userId, @RequestParam String planName) {
         try {
             User user = userBL.updateUserPlan(userId, planName);
@@ -138,6 +144,7 @@ public class AdminController {
     }
 
     @PutMapping("/changeRole")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity UpdateUserRole(@RequestParam Long userId, @RequestParam Boolean isAdmin) {
         try {
             userBL.updateUserRole(userId, isAdmin);
@@ -148,6 +155,7 @@ public class AdminController {
     }
 
     @GetMapping("/getFeedbacks")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<UserFeedback>> getAllFeedbacks() {
         try {
             List<UserFeedback> feedbacks = feedbackBL.getAllFeedbacks();
@@ -158,6 +166,7 @@ public class AdminController {
     }
 
     @GetMapping("/getMeals")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<Meal>> getAllMeals() {
         try {
             List<Meal> meals = mealBL.getAllMeals();
@@ -168,6 +177,7 @@ public class AdminController {
     }
 
     @PostMapping("/addMeal")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity createMeal(@Valid @RequestBody MealDTO mealDTO) {
         Meal savedMeal = null;
         try {
@@ -241,6 +251,7 @@ public class AdminController {
 
     @Transactional
     @PutMapping("/editMeal/{mealId}")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity editMeal(@Valid @RequestBody MealDTO mealDTO, @PathVariable Long mealId) {
         Meal savedMeal = null;
         try {
@@ -300,6 +311,7 @@ public class AdminController {
     }
 
     @GetMapping("meals/{mealId}")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity getMealDTOByName(@PathVariable Long mealId) {
         MealDTO mealDTO = null;
         try {

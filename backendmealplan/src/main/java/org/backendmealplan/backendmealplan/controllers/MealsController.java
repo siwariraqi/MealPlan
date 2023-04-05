@@ -7,6 +7,7 @@ import org.backendmealplan.backendmealplan.exceptions.userNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,13 @@ public class MealsController{
     MealBL mealBL;
 
     @GetMapping("/meal-times")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public MealTime[] getMealTimes() {
         return MealTime.values();
     }
 
     @GetMapping("/diet-types")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public String[] getDietTypes() {
         DietTypes[] dietTypes = DietTypes.values();
         String[] dietTypeValues = new String[dietTypes.length];
@@ -35,6 +38,7 @@ public class MealsController{
     }
 
     @GetMapping("/{mealTime}")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity getMealsByMealTime(@PathVariable String mealTime, @RequestParam Long loggedInUserId) {
         try {
             List<DayMeal> meals = mealBL.getMealsByTime(mealTime, loggedInUserId);

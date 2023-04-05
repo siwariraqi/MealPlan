@@ -6,6 +6,7 @@ import org.backendmealplan.backendmealplan.exceptions.UNAUTHORIZEDException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class GroceryListController {
     private GroceryListBL groceryListBL;
     //TODO:change parameters to body or header
     @PostMapping("deleteIngredients/{groceryListId}")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity hideIngredientForUser(@PathVariable Long groceryListId, @RequestParam Long loggedInUserId){
         List<Long> groceryListIds = new ArrayList<>();
         groceryListIds.add(Long.valueOf(groceryListId));
@@ -34,6 +36,7 @@ public class GroceryListController {
     }
     //TODO:change user_id to body or header
     @GetMapping("getIngredients/{week}")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public List<GroceryList> getIngredientsByWeek(@PathVariable Integer week, @RequestParam Long loggedInUserId){
         //ResponseEntity<List<GroceryList>>
         List<GroceryList> userGroceries = new ArrayList<>();

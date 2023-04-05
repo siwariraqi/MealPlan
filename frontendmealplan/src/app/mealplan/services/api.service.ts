@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "./auth.service";
 import { TokenStorageService } from "./token-storage.service";
+import { catchError, tap } from "rxjs";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -12,26 +14,20 @@ export class ApiService {
   constructor(
     private httpClient: HttpClient,
     private auth: AuthService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService, 
+    private router: Router
   ) {}
 
   get<T>(serviceName: string, httpHeaders?: HttpHeaders, body?: any) {
-    //httpHeaders = this.appendToknToHeaders(httpHeaders);
     const options = {
-      //headers: httpHeaders,
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    console.log("httpHeaders: *******");
-    console.log(options);
-    return this.httpClient.get<T>(url, options);
+    return this.httpClient.get<T>(url, options)
   }
 
   post<T>(serviceName: string, body?: any, httpHeaders?: HttpHeaders) {
-    //httpHeaders = this.appendToknToHeaders(httpHeaders);
-
     const options = {
-      //headers: httpHeaders,
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
@@ -39,29 +35,18 @@ export class ApiService {
   }
 
   delete<T>(serviceName: string, httpHeaders?: HttpHeaders) {
-    //httpHeaders = this.appendToknToHeaders(httpHeaders);
-
     const options = {
-      //headers: httpHeaders,
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    console.log("httpHeaders: ");
-    console.log(httpHeaders);
     return this.httpClient.delete<T>(url, options);
   }
 
   put<T>(serviceName: string, body?: any, httpHeaders?: HttpHeaders) {
-    //httpHeaders = this.appendToknToHeaders(httpHeaders);
-
     const options = {
-      //headers: httpHeaders,
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    console.log("httpHeaders: ");
-    console.log(httpHeaders);
-
     return this.httpClient.put<T>(url, body, options);
   }
 
@@ -79,17 +64,9 @@ export class ApiService {
   }
 
   appendToknToHeaders(httpHeaders?: HttpHeaders): HttpHeaders {
-    /*if (httpHeaders == null) {
-      httpHeaders = new HttpHeaders();
-    }*/
-
     const token = this.tokenStorage.getToken();
     if (token != null) {
     }
-    /*httpHeaders.set("Authorization", "Bearer " + token);
-    console.log("header:$$$");
-    console.log(httpHeaders);
-*/
     return new HttpHeaders().set("Authorization", "Bearer " + token);
   }
 }

@@ -12,8 +12,13 @@ import org.backendmealplan.backendmealplan.exceptions.*;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.dao.*;
 
+import org.backendmealplan.backendmealplan.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,18 +50,27 @@ public class UserBL {
   PlanBL planBL;
 
   @Autowired
+  AuthenticationManager authenticationManager;
+
+  @Autowired
+  JwtUtils jwtUtils;
+
+  @Autowired
   public UserBL(BCryptPasswordEncoder passwordEncoder) {
     this.passwordEncoder = passwordEncoder;
   }
 
-  public User authentication(String email, String password) throws Exception {
-    User user = usersDAO.findByEmail(email);
-    if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-      return user; // Passwords match
+  public String authentication(String email, String password) throws Exception {
+    Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email, password));
+
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = jwtUtils.generateJwtToken(authentication);
+    if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+      return jwt;
     } else {
       throw new UNAUTHORIZEDException("wrong email or password");
     }
-
   }
 
   public void changePassword(long userID, String currentPassword, String newPassword, String confirmPassword) throws UNAUTHORIZEDException {
