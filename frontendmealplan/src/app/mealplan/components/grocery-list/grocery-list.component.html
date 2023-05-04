@@ -1,33 +1,20 @@
+
 <div class="container">
-    <div class="Weekbuttons1">
-        <div *ngFor="let week of allWeeks" class="p-3" >
-            <button class="weeks1" [ngClass]="{'orange': clicked[week-1] == true , 'white':clicked[week-1]==false}" (click)="weekClicked(week)"  
-            >Week {{week}}</button>
-            <!--[ngClass]="{'toggleColor': toggleColor,'orange': val1.value==current_product_size}" -->
+    <!-- [perfectScrollbar]="psConfig"-->
+    <mat-card class="weeks-container" >
+        <div class="week-buttons">
+            <div *ngFor="let week of allWeeks" class="week p-3">
+                <button mat-raised-button [ngClass]="{'green': clicked[week-1] == true , 'white':clicked[week-1]==false}" class="w-100"
+                    (click)="weekClicked(week)">Week {{week}}</button>
+            </div>
         </div>
-        <div class="position">
+        <div class="button-container">
             <app-export></app-export>
             <app-share></app-share>
         </div>
-        
-        <!-- mat-raised-button [ngClass]="{ orange: clicked[week] , white: !clicked[week] }"  -->
-    </div>
+    </mat-card>
     <div id="printPdf">
-        <div class="mat-table theme-table cart-table">
-            <!-- <div class="line"> </div> -->
-            <div class="mat-header-row">
-                <div class="mat-header-cell">productName</div>
-                <div class="mat-header-cell quantity">Amount</div>
-                <div class="mat-header-cell price"> unit</div>
-                <div class="mat-header-cell actions text-center">
-                    <div class="px-1" (click)="selectAll()">
-                        <!--Delete All-->
-                        <!--<button mat-raised-button color="warn" >Delete All</button>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div *ngFor="let catagoryy of AllCatagories" class="catagories">
+        <mat-card *ngFor="let catagoryy of AllCatagories" class="catagories">
             <div class="catagoriesTitle">{{catagoryy}}</div>
             <div class="mat-table theme-table cart-table">
                 <div *ngFor="let grocery of groceries">
@@ -52,7 +39,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </mat-card>
     </div>
     
 </div>

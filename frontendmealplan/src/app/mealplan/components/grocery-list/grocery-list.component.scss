@@ -1,4 +1,31 @@
+
+.week-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .week {
+    flex: 1 0 15%;
+    margin: 5px;
+  }
+
+  
+  
+  .button-container {
+float: inline-end; 
+   display: flex;
+    margin-top: 10px;
+
+  }
+
+  .selected {
+    background-color: 'primary';
+    color: white;
+  }
+  
+  
 .container {
+    font-size: larger;
     width: 95vw;
     max-width: 1200px;
     margin: auto;
@@ -23,61 +50,41 @@
     background-color: white;
 
 }
-.position{
-    position: absolute;
-    // margin-left: 10px;
-    // padding: 10vh;
-    padding-right: 10vw;
-    top: 12%;
-    right: 14%;
-    padding-right: 7vw;
-    margin-top: 3vh;
-    // padding-right: 7vw;
-    // padding-left: 17vw;
 
-}
-
-.Weekbuttons1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // padding: 5%;
-    
-}
-.weeks1{
-    background-color: white;
-    //border-radius: 50%;
-    border-color: #E09167;
-    padding: 15%;
-    width: 6vw;
-}
-.weeks1:hover{
-    background-color: #E09167;
-    border-color: white;
-}
 
 
 .line {
     border: 0.04px solid #99B182;
     margin-top: 3%;
+}
 
+.catagories{
+    margin-top: 20px;
+    width: 95vw;
+    max-width: 1200px;
+    align-self: center;
+}
+
+#printPdf{
+    width: 95vw;
+    max-width: 1200px;
 }
 
 .catagoriesTitle {
     margin: 1%;
-    --swiper-navigation-size: 44px;
+    //--swiper-navigation-size: 44px;
     line-height: 1.7;
     font-family: Montserrat;
-    word-wrap: break-word;
+   //word-wrap: break-word;
     font-weight: 500;
-    color: rgba(0, 0, 0, 0.87);
-    font-size: 16px;
+    color: white;
+    font-size: 20px;
     margin: 0;
     padding: 10px;
-    width: 20vw;
+    
     background-color: #E09167;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    //border-top-right-radius: 50px;
+    //border-bottom-right-radius: 50px;
 }
 
 .orange {

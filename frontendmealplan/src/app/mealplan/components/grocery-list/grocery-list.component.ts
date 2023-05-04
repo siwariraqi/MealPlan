@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import html2canvas from "html2canvas";
@@ -11,6 +11,8 @@ import { Plan } from "../../models/Plan";
 import { DayMealService } from "../../services/day-meal.service";
 import { GroceryListService } from "../../services/grocery-list.service";
 import { UpdatepopupComponent } from "./updatepopup/updatepopup.component";
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
   selector: "app-grocery-list",
@@ -18,6 +20,13 @@ import { UpdatepopupComponent } from "./updatepopup/updatepopup.component";
   styleUrls: ["./grocery-list.component.scss"],
 })
 export class GroceryListComponent implements OnInit {
+  @ViewChild("sidenav") sidenav: any;
+  public sidenavOpen: boolean = false;
+  public showSidenavToggle: boolean = false;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public psConfig: PerfectScrollbarConfigInterface = {
+    wheelPropagation: true,
+  };
   //Code We added START
   public AllCatagories = ["Dairy", "Meat", "Fruit", "Vegetables", "Others"];
   public allWeeks = [1, 2, 3, 4];

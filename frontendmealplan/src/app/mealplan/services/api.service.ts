@@ -1,8 +1,12 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from "@angular/common/http";
 import { AuthService } from "./auth.service";
 import { TokenStorageService } from "./token-storage.service";
-import { catchError, tap } from "rxjs";
+import { catchError, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -14,7 +18,7 @@ export class ApiService {
   constructor(
     private httpClient: HttpClient,
     private auth: AuthService,
-    private tokenStorage: TokenStorageService, 
+    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
@@ -23,7 +27,29 @@ export class ApiService {
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    return this.httpClient.get<T>(url, options)
+    const result = this.httpClient.get<T>(url, options);
+
+    const checkedResult = result.pipe(
+      tap((result) => {
+        // Check the result here
+        if (result === null || result === undefined) {
+          throw new Error("Invalid result");
+        }
+        return result;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Handle HTTP error here
+        if (error.status === 401) {
+          // Redirect to login page if the error is unauthorized access
+          //this.router.navigate(["/login"]);
+          this.router.navigate(["/mealplan/login"]);
+        }
+        return throwError(error);
+      })
+    );
+
+    // Subscribe to the checked result
+    return checkedResult;
   }
 
   post<T>(serviceName: string, body?: any, httpHeaders?: HttpHeaders) {
@@ -31,7 +57,28 @@ export class ApiService {
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    return this.httpClient.post<T>(url, body, options);
+    const result = this.httpClient.post<T>(url, body, options);
+    const checkedResult = result.pipe(
+      tap((result) => {
+        // Check the result here
+        if (result === null || result === undefined) {
+          throw new Error("Invalid result");
+        }
+        return result;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Handle HTTP error here
+        if (error.status === 401) {
+          // Redirect to login page if the error is unauthorized access
+          //this.router.navigate(["/login"]);
+          this.router.navigate(["/mealplan/login"]);
+        }
+        return throwError(error);
+      })
+    );
+
+    // Subscribe to the checked result
+    return checkedResult;
   }
 
   delete<T>(serviceName: string, httpHeaders?: HttpHeaders) {
@@ -39,7 +86,28 @@ export class ApiService {
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    return this.httpClient.delete<T>(url, options);
+    const result = this.httpClient.delete<T>(url, options);
+    const checkedResult = result.pipe(
+      tap((result) => {
+        // Check the result here
+        if (result === null || result === undefined) {
+          throw new Error("Invalid result");
+        }
+        return result;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Handle HTTP error here
+        if (error.status === 401) {
+          // Redirect to login page if the error is unauthorized access
+          //this.router.navigate(["/login"]);
+          this.router.navigate(["/mealplan/login"]);
+        }
+        return throwError(error);
+      })
+    );
+
+    // Subscribe to the checked result
+    return checkedResult;
   }
 
   put<T>(serviceName: string, body?: any, httpHeaders?: HttpHeaders) {
@@ -47,7 +115,28 @@ export class ApiService {
       withCredentials: false,
     };
     const url = this.getURLWithUserId(serviceName);
-    return this.httpClient.put<T>(url, body, options);
+    const result = this.httpClient.put<T>(url, body, options);
+    const checkedResult = result.pipe(
+      tap((result) => {
+        // Check the result here
+        if (result === null || result === undefined) {
+          throw new Error("Invalid result");
+        }
+        return result;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Handle HTTP error here
+        if (error.status === 401) {
+          // Redirect to login page if the error is unauthorized access
+          //this.router.navigate(["/login"]);
+          this.router.navigate(["/mealplan/login"]);
+        }
+        return throwError(error);
+      })
+    );
+
+    // Subscribe to the checked result
+    return checkedResult;
   }
 
   getURLWithUserId(serviceName: string) {
