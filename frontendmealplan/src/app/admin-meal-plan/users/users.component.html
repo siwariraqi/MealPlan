@@ -45,7 +45,7 @@
                             <span>Reset</span>
                         </button>
                         <!-- (click)="deleteUser(user);" -->
-                        <button mat-menu-item (click)="deleteUser(user.userId)">
+                        <button mat-menu-item [disabled]="admin.userId===user.userId" (click)="deleteUser(user.userId)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>
@@ -119,7 +119,7 @@
                             <span>Reset</span>
                         </button>
                         <!-- (click)="deleteUser(user);" -->
-                        <button mat-menu-item (click)="deleteUser(user.userId)">
+                        <button mat-menu-item [disabled]="admin.userId===user.userId" (click)="deleteUser(user.userId)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>

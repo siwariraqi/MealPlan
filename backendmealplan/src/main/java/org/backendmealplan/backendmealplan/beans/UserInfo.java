@@ -2,7 +2,6 @@ package org.backendmealplan.backendmealplan.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -12,8 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "userInfo")
 public class UserInfo {
-//    private static final LocalDate MAX_BIRTHDAY = LocalDate.of(2004, 1, 1);
-//    private static final LocalDate MIN_BIRTHDAY = LocalDate.of(1922, 1, 1);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +21,7 @@ public class UserInfo {
     private String unit;
 
 
-//    @Past(message = "Birthday must be valid")
+    //    @Past(message = "Birthday must be valid")
 //    @Max(value = MAX_BIRTHDAY, message = "Birthday cannot be after 2004-01-01")
 //    @Min(value = MIN_BIRTHDAY, message = "Birthday cannot be before 1922-01-01")
     @JsonIgnore

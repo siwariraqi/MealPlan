@@ -7,6 +7,7 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
 import { Plan } from 'src/app/mealplan/models/Plan';
 import { ChangePlanDialogComponent } from '../components/change-plan-dialog/change-plan-dialog.component';
+import { AuthService } from 'src/app/mealplan/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,7 @@ import { ChangePlanDialogComponent } from '../components/change-plan-dialog/chan
 })
 export class UsersComponent implements OnInit {
 
-
+    admin: User;
     public users: User[] ;
     public searchText: string = '';
     userId:number;
@@ -26,7 +27,8 @@ export class UsersComponent implements OnInit {
     public maxSize:number = 5;
     public autoHide:boolean = true;
     constructor(
-                 public dialog: MatDialog,
+                public auth: AuthService,
+                public dialog: MatDialog,
                 public adminService:AdminService,
                 public appSettings:AppSettings, 
                 public usersService:UsersService
@@ -47,9 +49,12 @@ export class UsersComponent implements OnInit {
       });
     }
   
-  
+    getLoginAdmin() {
+      this.admin = this.auth.getUserLocalStorage();
+    }
 
     ngOnInit() {
+        this.getLoginAdmin();
         this.getUsers();  
         this.filteredUsers=this.users;
     }

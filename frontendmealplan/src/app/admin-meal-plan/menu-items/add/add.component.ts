@@ -237,7 +237,7 @@ addMeal(mealDTO:MealDTO){
 
 planSelection(){
   this.adminService.getDayNumbers(this.plan).subscribe(dayNumbers => {
-    this.dayNumbers = dayNumbers;
+    this.dayNumbers = dayNumbers.sort((a, b) => a.dayNumber - b.dayNumber);
   })
 }
 
