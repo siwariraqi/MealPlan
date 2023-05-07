@@ -27,8 +27,8 @@ public class GoalBL {
 
     public void addGoal(Goal goal) {
         //check if goal exists
-        List<Goal> goals = this.goalsDAO.findByText(goal.getText());
-        if (goals.isEmpty()) {
+        Goal returnedGoal = this.goalsDAO.findByText(goal.getText());
+        if (returnedGoal==null) {
             this.goalsDAO.save(goal);
         }
     }

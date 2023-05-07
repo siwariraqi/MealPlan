@@ -20,10 +20,6 @@ public class UserInfo {
     private Double weight;
     private String unit;
 
-
-    //    @Past(message = "Birthday must be valid")
-//    @Max(value = MAX_BIRTHDAY, message = "Birthday cannot be after 2004-01-01")
-//    @Min(value = MIN_BIRTHDAY, message = "Birthday cannot be before 1922-01-01")
     @JsonIgnore
     private LocalDate birthday;
 

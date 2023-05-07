@@ -33,7 +33,7 @@
             <!-- <app-lang></app-lang> -->
             <app-fullscreen></app-fullscreen>  
             <!-- <app-messages fxShow="false" fxShow.gt-xs></app-messages> -->
-            <app-user-menu></app-user-menu> 
+            <!-- <app-user-menu></app-user-menu>  -->
         </div>
     </div>
 </mat-toolbar>
@@ -49,11 +49,9 @@
                     </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
-                    <button mat-icon-button><mat-icon>person_outline</mat-icon></button>
-                    <button mat-icon-button><mat-icon>mail_outline</mat-icon></button> 
-                    <a mat-icon-button routerLink="/mealplan/login">
-                        <mat-icon>power_settings_new</mat-icon>
-                    </a>
+                    <a mat-icon-button routerLink="/mealplan/account"> <mat-icon>settings</mat-icon> </a>
+                    <a mat-icon-button routerLink="/mealplan/account/help-support"> <mat-icon>help</mat-icon> </a>
+                    <a mat-icon-button routerLink="/mealplan/login"> <mat-icon>power_settings_new</mat-icon> </a>
                 </div>
             </div> 
             <app-admin-menu [menuItems]="menuItems" [menuParentId]="0"></app-admin-menu>

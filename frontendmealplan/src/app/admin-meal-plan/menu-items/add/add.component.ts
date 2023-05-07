@@ -7,6 +7,8 @@ import { DayNumberDTO } from 'src/app/mealplan/models/DayNumberDTO';
 import { IngredientDTO } from 'src/app/mealplan/models/IngredientDTO';
 import { MealDTO } from 'src/app/mealplan/models/MealDTO';
 import { AdminService } from 'src/app/mealplan/services/admin.service';
+import { RecipesService } from 'src/app/mealplan/services/recipes.service';
+import { ImageUploadComponent } from 'src/app/shared/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-add',
@@ -14,12 +16,14 @@ import { AdminService } from 'src/app/mealplan/services/admin.service';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+  @ViewChild('imageUpload') imageUpload: ImageUploadComponent;
+
   @ViewChild('mealNameInput') 
   mealNameInput: ElementRef;
   mealDTO:MealDTO=new MealDTO();
-  units = ['oz', 'teaspoon', 'cup', 'tablespoon', 'slice', 'lb', 'handful', 'punnet'];
-  categories = ['Meat', 'Dairy', 'Fruit', 'Vegetables', 'Others']; 
-  dietTypes = ['GLUTEN FREE', 'DAIRY FREE', 'KETO FRIENDLY', 'VEGAN FRIENDLY'];
+  units = [];
+  categories = []; 
+  dietTypes = [];
   plans=['Freemium','Basic','Premium'];
   types=['Breakfast','Lunch','Dinner','Snack']
   dayNumbers=[];
@@ -63,12 +67,33 @@ export class AddComponent implements OnInit {
   isEdit=false;
 
   mealId:number;
-  constructor(private router: Router,private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar) {}
+  constructor(private router: Router,private route: ActivatedRoute,private adminService:AdminService, public snackBar: MatSnackBar,private recipesService:RecipesService) {}
 
 
   ngOnInit(): void {
     this.getEditMealId();
+    this.getDietTypes();
+    this.getCategories();
+    this.getUnits();
     // this.imageUrl='assets/images/others/noimage.png'
+  }
+
+  public getCategories(){
+    this.recipesService.getMealCategories().subscribe(categories=>{
+      this.categories = categories;
+    })
+  }
+  public getDietTypes() {
+    this.recipesService.getDietTypesApi().subscribe(types => {
+      this.dietTypes = types;
+      console.log(this.dietTypes);
+    });
+  }
+
+  public getUnits(){
+    this.recipesService.getUnits().subscribe(units=>{
+      this.units = units;
+    })
   }
 
 
@@ -248,11 +273,14 @@ daySelection(){
   resetAll(){
     this.mealDTO=new MealDTO();
     this.MealName=''; this.PrepareTime='';this.CookTime='';this.Calories=null;this.Fat=null;
-    this.Protien=null;this.Carbs=null;this.Fibre=null;this.dietTypes=[];
+    this.Protien=null;this.Carbs=null;this.Fibre=null;this.selectedDietTypes=[];
     this.ingredients=[];this.dayPlanTypes=[];this.returnDayNumber=[];
     this.isOvernightCooking=false;this.isOvernightPreparing=false;
      this.Tip='';this.instruction='';this.Tips=[];this.ingredients=[];this.instructions=[];
-    this.fileChange('');
+        if (this.imageUpload) {
+      this.imageUpload.deleteImage();
+    }
+    
   }
 
 

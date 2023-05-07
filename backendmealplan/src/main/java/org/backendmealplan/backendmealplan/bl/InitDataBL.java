@@ -1,17 +1,22 @@
 package org.backendmealplan.backendmealplan.bl;
+
 import org.backendmealplan.backendmealplan.dao.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.backendmealplan.backendmealplan.beans.*;
 import org.backendmealplan.backendmealplan.beans.DietType;
 import org.backendmealplan.backendmealplan.enums.*;
+import org.backendmealplan.backendmealplan.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class InitDataBL {
+    private static final Random RANDOM = new Random();
+
     @Autowired
     DayPlanDAO dayPlanDAO;
     @Autowired
@@ -30,6 +35,9 @@ public class InitDataBL {
     MealsDAO mealsDAO;
 
     @Autowired
+    UserBL userBL;
+
+    @Autowired
     IngredientBL ingredientBL;
 
     @Autowired
@@ -39,16 +47,24 @@ public class InitDataBL {
     DayPlanIdDAO dayPlanIdDAO;
 
     Ingredient[] ingredients = new Ingredient[135];
-    Meal[] meals = new Meal[30];
+    Meal[] meals = new Meal[28];
     Plan freemuimPlan, basicPlan, premiumPlan;
 
     DayPlanId[] dayPlanIds = new DayPlanId[28];
+
+    User[] users = new User[8];
 
     @Autowired
     PlansDAO plansDAO;
 
     @Autowired
     DietTypesDAO dietTypesDAO;
+
+    @Autowired
+    GoalsDAO goalsDAO;
+
+    @Autowired
+    FeedbackBL feedbackBL;
 
     public void run() {
         createGoals();
@@ -62,6 +78,145 @@ public class InitDataBL {
         createDayMeals();
         createDayPlan();
         initGroceries();
+        createUsers(6);
+        addSomeFeedbacks(20);
+    }
+
+    private void addSomeFeedbacks(int feedbacksNumber) {
+        for (int i = 0; i < feedbacksNumber; i++) {
+            UserFeedback userFeedback = new UserFeedback();
+            userFeedback.setFeedbackText("sss");
+            userFeedback.setIsOnIt(RANDOM.nextBoolean());
+            userFeedback.setDate(new Date());
+            userFeedback.setRating( RANDOM.nextInt(7) - 1);
+            try {
+                feedbackBL.saveFeedback(userFeedback, users[RANDOM.nextInt(users.length)].getUserId(), meals[RANDOM.nextInt(meals.length)].getMealId());
+            } catch (userNotFoundException | MealNotFoundException | RatingNotInRangeException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void createUsers(int usersNumber) {
+        String[] firstNames = {"Maha", "Amir", "Ruba", "Eyad", "Ahmed", "Timaa", "Sewar", "Rami"};
+        String[] lastNames = {"Younis", "Mahamid", "Egbaria", "Mahamid", "Younis", "Salami", "iraqi", "Khawaly"};
+        String[] gender = {"Female", "Male", "Female", "Male", "Male", "Female", "Female", "Male"};
+        String[] domains = {"gmail.com", "yahoo.com", "hotmail.com"};
+        //create 2 admins
+        for (int i = 0; i < 2; i++) {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setGoals(generateRandomGoals());
+            UserInfo userInfo1 = userBL.addUserInfoGoals(userInfo);
+            userInfo1.setHeight(158.0);
+            userInfo1.setWeight(46.0);
+            userInfo1.setUnit("kg");
+            userInfo1.setBirthday(LocalDate.of(1999, 4, 24));
+            userInfo1.setActivity(RANDOM.nextInt(101));
+            userInfo1.setMedicalRisk(getRandomMedicalRisk());
+            userInfo1.setIsReceiveTreatment(RANDOM.nextBoolean());
+            userInfo1.setGender(gender[i + 6]);
+            try {
+                userBL.updateUserInfo(userInfo1.getInfoId(), userInfo1);
+            } catch (UNAUTHORIZEDException e) {
+                throw new RuntimeException(e);
+            }
+            //create user
+            User user = new User();
+            user.setEmail(firstNames[i + 6] + lastNames[i + 6] + "@" + domains[RANDOM.nextInt(domains.length)]);
+            user.setPassword("MyPassw0");
+            user.setUserRole(Role.Admin);
+            user.setFirstName(firstNames[i + 6]);
+            user.setLastName(lastNames[i + 6]);
+            user.setPhoneNumber(generatePhoneNumber());
+            user.setUserInfo(userInfo1);
+            user.setRegisterDate(new Date());
+            try {
+                users[i + 6] = userBL.adduser(user);
+            } catch (userExistException | InvalidUserException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        for (int i = 0; i < usersNumber; i++) {
+            //create user info
+            UserInfo userInfo = new UserInfo();
+            userInfo.setGoals(generateRandomGoals());
+            UserInfo userInfo1 = userBL.addUserInfoGoals(userInfo);
+            userInfo1.setHeight(getRandomDoubleInRange(100.0, 220.0));
+            userInfo1.setWeight(getRandomDoubleInRange(30.0, 300.0));
+            userInfo1.setUnit("kg");
+            userInfo1.setBirthday(getRandomBirthday());
+            userInfo1.setActivity(RANDOM.nextInt(101));
+            userInfo1.setMedicalRisk(getRandomMedicalRisk());
+            userInfo1.setIsReceiveTreatment(RANDOM.nextBoolean());
+            userInfo1.setGender(gender[i]);
+            try {
+                userBL.updateUserInfo(userInfo1.getInfoId(), userInfo1);
+            } catch (UNAUTHORIZEDException e) {
+                throw new RuntimeException(e);
+            }
+            //create user
+            User user = new User();
+            user.setEmail(firstNames[i] + lastNames[i] + "@" + domains[RANDOM.nextInt(domains.length)]);
+            user.setPassword("MyPassw0");
+            user.setUserRole(Role.User);
+            user.setFirstName(firstNames[i]);
+            user.setLastName(lastNames[i]);
+            user.setPhoneNumber(generatePhoneNumber());
+            user.setUserInfo(userInfo1);
+            user.setRegisterDate(new Date());
+            try {
+                users[i] = userBL.adduser(user);
+            } catch (userExistException | InvalidUserException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static String generatePhoneNumber() {
+        Random random = new Random();
+        StringBuilder phoneNumber = new StringBuilder("05");
+
+        for (int i = 0; i < 8; i++) {
+            int digit = random.nextInt(10);
+            phoneNumber.append(digit);
+        }
+
+        return phoneNumber.toString();
+    }
+
+    private Set<Goal> generateRandomGoals() {
+        int numGoals = 1 + RANDOM.nextInt(5);
+        Set<Goal> goals = new HashSet<>();
+        for (int i = 0; i < numGoals; i++) {
+            GoalType[] goalTypes = GoalType.values();
+            GoalType randomGoalType = goalTypes[RANDOM.nextInt(goalTypes.length)];
+            Goal goal = goalsDAO.findByText(randomGoalType.getValue());
+            goals.add(goal);
+        }
+        return goals;
+    }
+
+    private Double getRandomDoubleInRange(double min, double max) {
+        return min + (max - min) * RANDOM.nextDouble();
+    }
+
+    private String getRandomGender() {
+        String[] genders = {"Male", "Female", "Other"};
+        return genders[RANDOM.nextInt(genders.length)];
+    }
+
+    private String getRandomMedicalRisk() {
+        String[] risks = {"Type 2 Diabetes", "High Cholesterol", "High Blood Pressure", "Heart Disease", "Asthma"};
+        return risks[RANDOM.nextInt(risks.length)];
+    }
+
+    private LocalDate getRandomBirthday() {
+        LocalDate startDate = LocalDate.of(1922, 1, 1);
+        LocalDate endDate = LocalDate.of(2004, 1, 1);
+        long startEpochDay = startDate.toEpochDay();
+        long endEpochDay = endDate.toEpochDay();
+        long randomEpochDay = startEpochDay + RANDOM.nextInt((int) (endEpochDay - startEpochDay));
+        return LocalDate.ofEpochDay(randomEpochDay);
     }
 
     private void createMealTypes() {
@@ -1020,7 +1175,8 @@ public class InitDataBL {
         planBL.addDayPlan(dayPlan);
         plan.getDayPlanIdList().add(dayPlanId);
     }
-    private void initGroceriesPrimitive(){
+
+    private void initGroceriesPrimitive() {
         List<Meal> allMeals = mealsDAO.findAll();
         Meal currMeal = allMeals.get(0);
         groceryListBl.addMealIngredientsToGroceries(basicPlan, currMeal, 1);
@@ -1035,23 +1191,23 @@ public class InitDataBL {
        */
     }
 
-    private void initGroceries(){
+    private void initGroceries() {
         List<Plan> allPlans = planBL.getAllPlans();
-        for(int plan_idx=0; plan_idx<allPlans.size(); plan_idx++){
+        for (int plan_idx = 0; plan_idx < allPlans.size(); plan_idx++) {
             Plan currPlan = allPlans.get(plan_idx);
-            if(currPlan.getPlanName().equals("Freemium")){
+            if (currPlan.getPlanName().equals("Freemium")) {
                 continue;
             }
             List<DayPlanId> dayPlanIds = currPlan.getDayPlanIdList();
             int numberOfDays = Integer.parseInt(currPlan.getLength());
-            for(int day=1; day<=numberOfDays; day++){
-                int week = (day%7==0)? day/7 : day/7+1;
+            for (int day = 1; day <= numberOfDays; day++) {
+                int week = (day % 7 == 0) ? day / 7 : day / 7 + 1;
                 Optional<DayPlan> OptionaldayPlan = dayPlanDAO.getDayNumber(currPlan.getPlanId(), day);
-                if(OptionaldayPlan.isPresent()){
+                if (OptionaldayPlan.isPresent()) {
                     DayPlan dayPlan = OptionaldayPlan.get();
                     DayPlanId dayPlanId = dayPlan.getDayPlanKey().getDayPlanId();
-                    List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(day, dayPlanId.getDayPlanId(),currPlan.getPlanId());
-                    if(dayMeals!=null) {
+                    List<DayMeal> dayMeals = dayMealsDAO.getMealsOfDayAndDayPlanId(day, dayPlanId.getDayPlanId(), currPlan.getPlanId());
+                    if (dayMeals != null) {
                         for (int mealIdx = 0; mealIdx < dayMeals.size(); mealIdx++) {
                             this.groceryListBl.addMealIngredientsToGroceries(currPlan, dayMeals.get(mealIdx).getId().getMeal(), week);
                         }
@@ -1060,7 +1216,6 @@ public class InitDataBL {
             }
         }
     }
-
 
 
 }

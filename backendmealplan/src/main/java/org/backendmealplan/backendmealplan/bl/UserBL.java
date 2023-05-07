@@ -122,14 +122,16 @@ public class UserBL {
     */
 
   public UserInfo addUserInfoGoals(UserInfo userInfo) {
-    UserInfo added = this.usersInfoDAO.save(userInfo);
-    if(userInfo.getGoals() !=null) {
+    if (userInfo.getGoals() != null) {
       Set<Goal> goals = new HashSet<>();
+      Set<Integer> goalIds = new HashSet<>(); // Keep track of goal IDs
       for (Goal goal : userInfo.getGoals()) {
-        Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
-        if (optionalGoal.isPresent()) {
-          Goal existingGoal = optionalGoal.get();
-          goals.add(existingGoal);
+        if (goalIds.add(goal.getGoalId().intValue())) { // Check if goal ID is already present
+          Optional<Goal> optionalGoal = this.goalsDAO.findById(goal.getGoalId());
+          if (optionalGoal.isPresent()) {
+            Goal existingGoal = optionalGoal.get();
+            goals.add(existingGoal);
+          }
         }
       }
       userInfo.setGoals(goals);

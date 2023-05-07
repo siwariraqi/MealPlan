@@ -5,7 +5,7 @@
 
                 <!-- *ngIf="showImage" -->
                 <div fxFlex="40" class="px-2"  >
-                    <app-image-upload  [imageUrl]="imageUrl" [base64]="imageUrl || ''" [fileSize]="400" 
+                    <app-image-upload #imageUpload [imageUrl]="imageUrl" [base64]="imageUrl || ''" [fileSize]="400" 
                       [acceptTypes]="'image/png, image/jpeg, image/jpg'" (onFileChange)="fileChange($event)">
                     </app-image-upload>
                   </div>

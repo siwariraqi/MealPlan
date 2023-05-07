@@ -29,13 +29,21 @@ export class RecipesService {
       )  
 
   GETMEALSTIME = "meals/meal-times";
-  GETMEALSBYTIME = "meals/"
-  GETDIETTYPES = "meals/diet-types"
+  GETMEALSBYTIME = "meals/";
+  GETUNITS = "meals/units";
+  GETCATEGORIES = "meals/categories";
+  GETDIETTYPES = "meals/diet-types";
   meal: Array<DayMeal> = [];
   private selectedMeal: any;
   selectedType:string;
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
+  public getMealCategories(){
+    return this.apiService.get<string[]>(this.GETCATEGORIES);
+  }
+  public getUnits(){
+    return this.apiService.get<string[]>(this.GETUNITS);
+  }
   public getMealsTime() {
     return this.apiService.get<string[]>(this.GETMEALSTIME);
   }

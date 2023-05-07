@@ -97,4 +97,10 @@ export class ImageUploadComponent implements OnInit {
     });  
   }  
 
+  public deleteImage(){
+    this.files.length = 0;          
+    this.onFileChange.emit(this.files);
+    this.clearInput();
+  }
+
 }
