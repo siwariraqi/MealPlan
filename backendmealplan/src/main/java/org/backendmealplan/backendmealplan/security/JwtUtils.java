@@ -29,7 +29,7 @@ public class JwtUtils {
 
     private String jwtSecret = "helloHackerrr";
 
-    private int expirationAfterOneHour = 3600000;
+    private int expirationAfterOneHour = 7200000;
 
     @Autowired
     UsersDAO userDAO;
