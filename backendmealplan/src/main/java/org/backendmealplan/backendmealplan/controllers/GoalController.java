@@ -20,7 +20,6 @@ public class GoalController {
     private GoalBL goalBL;
 
     @GetMapping("all")
-    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity getAllGoals(){
         List<Goal> goalList = null;
         try {

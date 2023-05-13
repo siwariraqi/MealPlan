@@ -55,6 +55,7 @@ public class UsersController {
 
 
     @PostMapping("/choosePlan")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity<Void> choosePlan(@RequestParam Long loggedInUserId , @RequestParam Long planId) {
         try {
             User user = this.userBL.userSetPlan(loggedInUserId , planId);// update the user's plan and save
@@ -65,7 +66,8 @@ public class UsersController {
     }
 
     @PostMapping("/updateProfile")
-    public ResponseEntity updateProfile(@RequestBody User user) {
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    public ResponseEntity updateProfile(@RequestBody User user, @RequestParam Long loggedInUserId ) {
         try {
             this.userBL.updateProfile(user);
         } catch (UNAUTHORIZEDException e) {
@@ -76,6 +78,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/deleteAccount")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity deleteAccount(@RequestParam String email,
                                         @RequestParam String password,
                                         @RequestParam Long loggedInUserId ) {
@@ -91,6 +94,7 @@ public class UsersController {
     }
 
     @PostMapping("/resetAccount")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity resetAccount(@RequestParam String email,
                                        @RequestParam String password,
                                        @RequestParam Long loggedInUserId ) {
@@ -107,7 +111,8 @@ public class UsersController {
 
 
     @PostMapping("/changePassword")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request, @RequestParam long loggedInUserId) {
         try {
             this.userBL.changePassword(request.getUserId(), request.getCurrentPassword(), request.getNewPassword(), request.getConfirmPassword());
         } catch (UNAUTHORIZEDException e) {
@@ -120,6 +125,7 @@ public class UsersController {
 
 
     @GetMapping("/getUser")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     public ResponseEntity<User> getUser(@RequestParam long loggedInUserId ) {
         try {
             User user = userBL.getUser(loggedInUserId );
