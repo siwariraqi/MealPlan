@@ -10,10 +10,14 @@
                     </app-image-upload>
                   </div>
                   
-                  
 
                 <div fxFlex="60" class="px-2">
                     <div fxLayout="row wrap">
+                        <div fxFlex="500" class="mt-2 text-center w-100">
+                            <button (click)="fillFields() " mat-raised-button color="primary" type="submit"
+                                class="uppercase">Demo</button>
+                        </div>
+
                         <div fxFlex="100" fxFlex.gt-sm="100" class="px-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Meal Name</mat-label>

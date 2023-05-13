@@ -3,7 +3,7 @@ import { Menu } from "./menu.model";
 export const horizontalMenuItems = [
   new Menu(298, "REGISTER", "/mealplan/register", null, null, false, 20),
   new Menu(299, "LOGIN", "/mealplan/login", null, null, false, 20),
-  new Menu(300, "NAV.ADMIN", "/mealplan/admin", null, null, false, 0),
+  new Menu(300, "NAV.ADMIN", "/adminside", null, null, false, 0),
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
   new Menu(304, "NAV.GROCERY_LIST", "/mealplan/groceryList", null, null, false, 0),
@@ -13,7 +13,7 @@ export const horizontalMenuItems = [
 export const verticalMenuItems = [
   new Menu(298, "REGISTER", "/mealplan/register", null, null, false, 20),
   new Menu(299, "LOGIN", "/mealplan/login", null, null, false, 20),
-  new Menu(300, "NAV.ADMIN", "/mealplan/admin", null, null, false, 0),
+  new Menu(300, "NAV.ADMIN", "/adminside", null, null, false, 0),
   new Menu(301, "NAV.DAILY_PLAN", "/mealplan/meals", null, null, false, 0),
   new Menu(302, "NAV.RECIPES", "/mealplan/recipes", null, null, false, 0),
   new Menu(304, "NAV.GROCERY_LIST", "/mealplan/groceryList", null, null, false, 0),

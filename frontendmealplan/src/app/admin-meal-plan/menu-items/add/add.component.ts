@@ -213,7 +213,7 @@ OnSubmit() {
   }
   if (this.MealName && this.PrepareTime && this.CookTime && this.Calories && this.Fat && this.Protien && 
     this.Carbs && this.Fibre && this.selectedDietTypes?.length  && this.ingredients?.length && this.TipsDB 
-    && this.imageUrl ) {
+    && this.imageUrl && this.returnDayNumber?.length) {
   this.mealDTO.mealName = this.MealName;
   this.mealDTO.prepareTime = this.PrepareTime;
   this.mealDTO.cookTime = this.CookTime;
@@ -281,6 +281,38 @@ daySelection(){
       this.imageUpload.deleteImage();
     }
     
+  }
+  stam: any[];
+  fillFields(){
+    this.imageUrl = "https://i0.wp.com/www.onceuponachef.com/images/2010/03/Cashew-Chicken-8.jpg?w=1000&ssl=1"
+    this.MealName = "Cashew chicken stir fry";
+    this.CookTime = "10";
+    this.PrepareTime = "10";
+    this.Calories = 796;
+    this.Carbs = 48;
+    this.Fat = 38;
+    this.Fibre = 9;
+    this.Protien = 51;
+    this.selectedDietTypes = ["KETO FRIENDLY","DAIRY FREE"];
+    this.stam = ["Mix the cashew butter, soy sauce and 1 cup water together and set aside",
+      "Cook the noodles then drain and set aside in a bowl of cold water",
+      "Heat the oil in a large frying pan over a medium-high heat and add the garlic and chilli and fry for 2mins",
+      "Add the chicken and broccoli and fry for 5-6mins until tender",
+      "Drain the noodles and add them to the pan with the carrots and heat through",
+      "Take the pan off the heat and stir in the cashew sauce","Serve topped with cashew nuts and spring onions"]
+    for(let i=0;i<this.stam.length;i++){
+        this.instruction = this.stam[i];
+        this.addInstruction();
+    }
+    this.stam = ["Take the pan off the heat and stir in the cashew sauce","Serve topped with cashew nuts and spring onions"];
+    for(let i=0;i<this.stam.length;i++){
+      this.Tip = this.stam[i];
+      this.addTips();
+    }
+    this.ingredients = [
+    { productName: "cashew nut butter", amount: 7, unit: "oz", category: "Others" },
+    { productName: "low-sodium soy sauce", amount: 4, unit: "tablespoon", category: "Others" },
+    { productName: "vegetable oil", amount: 2, unit: "tablespoon", category: "Others" }]
   }
 
 
