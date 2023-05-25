@@ -94,6 +94,8 @@ declare var google: any;
                       Sign In
                     </button>
                   </div>
+                  <div>
+                  </div>
                   <div
                     fxLayout="row"
                     fxLayoutAlign="space-between center"
@@ -116,6 +118,8 @@ declare var google: any;
                     <mat-icon class="text-muted">vpn_key</mat-icon>
                     <span class="mx-1">Reset Password</span>
                   </button>
+                  <button (click)="fillFields() " mat-raised-button color="accent" class="uppercase rounded-button">User</button>
+                  <button (click)="fillFieldsAdmin() " mat-raised-button color="accent" class="uppercase rounded-button">Admin</button>
                 </div>
               </div>
             </div>
@@ -127,6 +131,11 @@ declare var google: any;
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+  private demoData = {
+    email: "SophiaJohnson@gmail.com",
+    password: "MyPassw0",
+  };
+
   public loginForm!: UntypedFormGroup;
   public hide = true;
   public settings: Settings;
@@ -230,5 +239,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   navigateToResetPasswordPage(): void {
     this.router.navigateByUrl("/mealplan/forgetpassword");
+  }
+  fillFields(): void {
+    this.loginForm.patchValue(this.demoData);
+  }
+  fillFieldsAdmin(): void {
+    this.demoData = {
+      email: "Sewariraqi@gmail.com",
+      password: "MyPassw0",
+    };
+    this.loginForm.patchValue(this.demoData);
   }
 }

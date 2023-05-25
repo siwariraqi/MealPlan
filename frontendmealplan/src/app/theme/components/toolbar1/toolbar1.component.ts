@@ -22,6 +22,7 @@ export class Toolbar1Component implements OnInit {
       this.cdr.detectChanges();
     });
     this.authSrv.isLoggedIn$().subscribe((isLoggedIn) => {
+      console.log(isLoggedIn + "gggggggggggggg")
       this.isLoggedIn = isLoggedIn;
       this.cdr.detectChanges();
     });

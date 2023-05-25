@@ -122,7 +122,7 @@ public class InitDataBL {
             }
             //create user
             User user = new User();
-            user.setEmail(firstNames[i + 6] + lastNames[i + 6] + "@" + domains[RANDOM.nextInt(domains.length)]);
+            user.setEmail(firstNames[i + 6] + lastNames[i + 6] + "@gmail.com");
             user.setPassword("MyPassw0");
             user.setUserRole(Role.Admin);
             user.setFirstName(firstNames[i + 6]);

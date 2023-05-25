@@ -93,6 +93,7 @@ import { User } from "../../models/User";
                     <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
                       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
+
                   </mat-form-field>
 
                   <mat-error *ngIf="err" class="mt-2"> {{ err }} </mat-error>
@@ -104,6 +105,7 @@ import { User } from "../../models/User";
                       <mat-icon>arrow_forward</mat-icon>
                     </div>
                   </div>
+                  <button (click)="fillFields() " mat-raised-button color="accent" class="uppercase">Demo</button>
                 </form>
                 <div class="divider mt-3"></div>
                 <mat-card-actions fxLayoutAlign="center center" class="text-center">
@@ -196,5 +198,16 @@ export class RegisterFormComponent implements OnInit {
 
   public goToRegisterWithGoogle() {
     this.registerSrv.incrementOnBoardingStep();
+  }
+
+  fillFields() {
+    this.registerForm.patchValue({
+      fname: "Sophia",
+      lname: "Johnson",
+      email: "SophiaJohnson@gmail.com",
+      phone: "0505198332",
+      password: "MyPassw0",
+      confirmPassword: "MyPassw0"
+    });
   }
 }
